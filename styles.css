@@ -2,13 +2,31 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #F7F5F0;          /* тёплый офф-вайт */
-  --ink: #0D0C0A;         /* почти чёрный */
+  --bg: #F7F5F0;
+  --ink: #0D0C0A;
   --ink-soft: #6B6860;
-  --accent: #FF4800;      /* выразительный оранжевый */
+  --accent: #FF4800;
   --border: #E0DDD6;
   --font-head: 'Unbounded', sans-serif;
   --font-body: 'Inter', sans-serif;
+}
+
+[data-theme="dark"] {
+  --bg: #111110;
+  --ink: #F0EDE6;
+  --ink-soft: #8A8880;
+  --accent: #FF5C1A;
+  --border: #2A2926;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111110;
+    --ink: #F0EDE6;
+    --ink-soft: #8A8880;
+    --accent: #FF5C1A;
+    --border: #2A2926;
+  }
 }
 
 html { scroll-behavior: smooth; }
@@ -59,6 +77,27 @@ body {
 }
 
 .header__link:hover { color: var(--accent); }
+
+/* Theme toggle */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: .8rem;
+  font-family: var(--font-body);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
 
 /* ===== HERO ===== */
 .hero {
