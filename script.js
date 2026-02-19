@@ -1,41 +1,43 @@
 // ===== THEME =====
-const root = document.documentElement;
-const btn = document.getElementById('themeToggle');
-const icon = document.getElementById('themeIcon');
-const label = document.getElementById('themeLabel');
-
-function getSystemDark() {
-  return window.matchMedia('(prefers-color-scheme: dark)').matches;
-}
+var root = document.documentElement;
+var btn = document.getElementById('themeToggle');
+var icon = document.getElementById('themeIcon');
+var label = document.getElementById('themeLabel');
 
 function isDark() {
-  const stored = localStorage.getItem('theme');
-  if (stored) return stored === 'dark';
-  return getSystemDark();
+  return root.getAttribute('data-theme') === 'dark';
 }
 
 function applyTheme(dark) {
   root.setAttribute('data-theme', dark ? 'dark' : 'light');
-  icon.textContent = dark ? '☀️' : '🌙';
-  label.textContent = dark ? 'Светлая' : 'Тёмная';
+  localStorage.setItem('theme', dark ? 'dark' : 'light');
+  if (icon) icon.textContent = dark ? '☀️' : '🌙';
+  if (label) label.textContent = dark ? 'Светлая' : 'Тёмная';
 }
 
+// Синхронизируем кнопку с текущей темой
 applyTheme(isDark());
 
-btn.addEventListener('click', () => {
-  const dark = root.getAttribute('data-theme') !== 'dark';
-  localStorage.setItem('theme', dark ? 'dark' : 'light');
-  applyTheme(dark);
-});
+if (btn) {
+  btn.addEventListener('click', function() {
+    applyTheme(!isDark());
+  });
+}
 
-// Follow system changes if no manual override
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-  if (!localStorage.getItem('theme')) applyTheme(e.matches);
+// Следим за изменением системной темы (если нет ручного выбора)
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+  if (!localStorage.getItem('theme')) {
+    applyTheme(e.matches);
+  }
 });
 
 // ===== FADE-IN ON SCROLL =====
-const observer = new IntersectionObserver(
-  entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+var observer = new IntersectionObserver(
+  function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  },
   { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
 );
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });

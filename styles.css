@@ -19,16 +19,6 @@
   --border: #2A2926;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #111110;
-    --ink: #F0EDE6;
-    --ink-soft: #8A8880;
-    --accent: #FF5C1A;
-    --border: #2A2926;
-  }
-}
-
 html { scroll-behavior: smooth; }
 
 body {
