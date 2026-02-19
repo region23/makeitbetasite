@@ -432,6 +432,17 @@ a.project:hover .project__arrow { transform: translate(3px, -3px); }
   color: var(--ink-soft);
 }
 
+.footer__contact {
+  font-size: .85rem;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color .2s;
+}
+
+.footer__contact:hover {
+  color: var(--accent);
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .hero__title { font-size: clamp(2.4rem, 12vw, 3.5rem); }
