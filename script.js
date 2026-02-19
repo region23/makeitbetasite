@@ -2,7 +2,7 @@
 var root = document.documentElement;
 var btn = document.getElementById('themeToggle');
 var icon = document.getElementById('themeIcon');
-var label = document.getElementById('themeLabel');
+// label removed
 
 function isDark() {
   return root.getAttribute('data-theme') === 'dark';
@@ -12,7 +12,6 @@ function applyTheme(dark) {
   root.setAttribute('data-theme', dark ? 'dark' : 'light');
   localStorage.setItem('theme', dark ? 'dark' : 'light');
   if (icon) icon.textContent = dark ? '☀️' : '🌙';
-  if (label) label.textContent = dark ? 'Светлая' : 'Тёмная';
 }
 
 // Синхронизируем кнопку с текущей темой
