@@ -157,6 +157,23 @@ body {
 
 .cta--dark:hover { background: var(--ink); }
 
+.cta--ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--border);
+}
+.cta--ghost:hover {
+  border-color: var(--ink);
+  background: transparent;
+}
+
+.cta-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 /* ===== HERO COUNTER ===== */
 .hero__counter {
   display: grid;
@@ -165,7 +182,7 @@ body {
 }
 
 .counter-item {
-  padding: 28px 0;
+  padding: 28px 0 28px 20px;
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
