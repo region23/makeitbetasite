@@ -68,23 +68,6 @@ body {
 
 .header__link:hover { color: var(--accent); }
 
-/* Theme toggle */
-.theme-toggle {
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: border-color .2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.theme-toggle:hover { border-color: var(--accent); }
-
 /* ===== HERO ===== */
 .hero {
   padding: 96px 0 0;
