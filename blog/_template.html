@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../styles.css" />
   <link rel="stylesheet" href="../blog.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
   <script>
     (function() {
       var stored = localStorage.getItem('theme');
@@ -72,5 +73,13 @@
   </footer>
 
   <script src="../../script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('pre code').forEach(function (el) {
+        hljs.highlightElement(el);
+      });
+    });
+  </script>
 </body>
 </html>

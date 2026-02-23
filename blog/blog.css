@@ -194,26 +194,40 @@
   border-radius: 3px;
 }
 
-/* Code blocks */
+/* Code blocks — highlight.js (atom-one-dark) */
 .post-body pre {
-  background: #1A1917;
   border-radius: 6px;
-  padding: 20px 24px;
+  padding: 0;           /* hljs adds its own padding */
   overflow-x: auto;
   margin: 24px 0;
   border: 1px solid #2A2926;
 }
 
-[data-theme="dark"] .post-body pre { background: #0D0C0B; border-color: #222120; }
-
-.post-body pre code {
-  background: none;
-  padding: 0;
-  border-radius: 0;
+/* Override hljs container to match brand */
+.post-body pre code.hljs {
+  border-radius: 6px;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: .875rem;
-  color: #E8E4DC;
   line-height: 1.65;
+  padding: 20px 24px;
+  background: #1A1917;  /* brand dark — overrides atom-one-dark */
+}
+
+/* Не подсвеченные блоки (fallback) */
+.post-body pre code:not(.hljs) {
+  display: block;
+  background: #1A1917;
+  color: #E8E4DC;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: .875rem;
+  line-height: 1.65;
+  padding: 20px 24px;
+}
+
+[data-theme="dark"] .post-body pre code.hljs,
+[data-theme="dark"] .post-body pre code:not(.hljs) {
+  background: #0D0C0B;
 }
 
 /* Translator footer */

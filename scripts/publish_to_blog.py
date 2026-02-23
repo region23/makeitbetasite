@@ -73,18 +73,20 @@ def md_to_html(md: str) -> str:
             if not in_code:
                 flush_list()
                 in_code = True
-                code_lang = line[3:].strip()
+                code_lang = line[3:].strip().lower()
                 code_lines = []
             else:
                 in_code = False
                 code_text = '\n'.join(code_lines)
-                html_parts.append(f'<pre><code>{esc(code_text)}</code></pre>')
+                lang_class = f' class="language-{code_lang}"' if code_lang else ''
+                html_parts.append(f'<pre><code{lang_class}>{esc(code_text)}</code></pre>')
                 code_lang = ''
             continue
 
         if in_code:
             code_lines.append(line)
             continue
+
 
         # Headings
         if line.startswith('#### '):
