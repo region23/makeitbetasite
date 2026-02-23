@@ -240,6 +240,18 @@
 .post-translator a { color: var(--ink); font-weight: 600; text-decoration: none; }
 .post-translator a:hover { color: var(--accent); }
 
+/* ─── App-like mobile: no horizontal overflow ─────────────────── */
+/* Prevents the page from being dragged left/right on touch screens.
+   pre blocks scroll internally via overflow-x: auto (set above). */
+html, body { overflow-x: hidden; }
+
+.post-body pre {
+  max-width: 100%;                      /* never wider than the viewport */
+  -webkit-overflow-scrolling: touch;    /* smooth momentum scroll on iOS */
+}
+
+.post-body img { max-width: 100%; height: auto; }
+
 /* ─── Responsive ──────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .blog-wrap { padding: 0 20px; }
