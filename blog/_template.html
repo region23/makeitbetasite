@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>$TITLE — Make It Beta</title>
+  <meta name="description" content="$DESCRIPTION" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../blog.css" />
+  <script>
+    (function() {
+      var stored = localStorage.getItem('theme');
+      var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="wrap header__wrap">
+      <a href="/" class="logo">Make It Beta<sup>🧪</sup></a>
+      <nav style="display:flex;align-items:center;gap:24px;">
+        <a href="/blog/" class="header__link">Блог</a>
+        <a href="https://t.me/pavlenkodev" class="header__link" target="_blank">@pavlenkodev</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+          <span id="themeIcon">🌙</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="blog-wrap">
+
+    <nav class="post-breadcrumb">
+      <a href="/">Главная</a> <span>→</span>
+      <a href="/blog/">Блог</a> <span>→</span>
+      <span style="color:var(--ink);">$TITLE_SHORT</span>
+    </nav>
+
+    <header class="post-header">
+      $CATEGORY_TAG
+      <h1>$TITLE</h1>
+      <div class="post-meta">
+        <time>$DATE_RU</time>
+        <span class="post-meta__sep">·</span>
+        <span>$READ_TIME чтения</span>
+        $AUTHOR_META
+      </div>
+    </header>
+
+    $ORIGINAL_BLOCK
+
+    <article class="post-body">
+      $CONTENT
+    </article>
+
+    <footer class="post-translator">
+      $TRANSLATOR_BLOCK
+    </footer>
+
+  </div>
+
+  <footer class="footer" style="border-top:1px solid var(--border);">
+    <div class="wrap footer__wrap">
+      <span class="footer__copy">© 2026 Make It Beta</span>
+      <a href="https://t.me/pavlenkodev" class="footer__contact" target="_blank">@pavlenkodev ↗</a>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+</body>
+</html>

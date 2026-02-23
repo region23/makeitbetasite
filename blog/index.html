@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Блог — Make It Beta</title>
+  <meta name="description" content="Статьи об ИИ, разработке и AI-first компаниях от команды Make It Beta." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="blog.css" />
+  <script>
+    (function() {
+      var stored = localStorage.getItem('theme');
+      var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="wrap header__wrap">
+      <a href="/" class="logo">Make It Beta<sup>🧪</sup></a>
+      <nav style="display:flex;align-items:center;gap:24px;">
+        <a href="/blog/" class="header__link" style="color:var(--ink);">Блог</a>
+        <a href="https://t.me/pavlenkodev" class="header__link" target="_blank">@pavlenkodev</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+          <span id="themeIcon">🌙</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="blog-hero">
+    <div class="wrap">
+      <div class="hero__label">Блог</div>
+      <h1 class="hero__title">Статьи об<br>ИИ и <em>разработке.</em></h1>
+    </div>
+  </section>
+
+  <!-- POSTS LIST -->
+  <section style="padding: 0 0 96px;">
+    <div class="wrap">
+      <div class="blog-list" id="postsList">
+        <!-- JS renders posts here -->
+        <noscript>
+          <p style="color:var(--ink-soft);padding:40px 0;">Включите JavaScript для просмотра статей.</p>
+        </noscript>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer" style="border-top:1px solid var(--border);">
+    <div class="wrap footer__wrap">
+      <span class="footer__copy">© 2026 Make It Beta</span>
+      <a href="https://t.me/pavlenkodev" class="footer__contact" target="_blank">@pavlenkodev ↗</a>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+  <script>
+    const MONTHS = ['января','февраля','марта','апреля','мая','июня',
+                    'июля','августа','сентября','октября','ноября','декабря'];
+
+    function formatDate(iso) {
+      const [y, m, d] = iso.split('-').map(Number);
+      return `${d} ${MONTHS[m-1]} ${y}`;
+    }
+
+    fetch('posts.json')
+      .then(r => r.json())
+      .then(posts => {
+        const list = document.getElementById('postsList');
+        if (!posts.length) {
+          list.innerHTML = '<p style="color:var(--ink-soft);padding:48px 0;">Скоро будут статьи.</p>';
+          return;
+        }
+        list.innerHTML = posts.map(p => `
+          <a href="/blog/${p.slug}/" class="blog-card">
+            <span class="blog-card__date">${formatDate(p.date)}</span>
+            <div class="blog-card__body">
+              <div class="blog-card__title">${p.title}</div>
+              <div class="blog-card__meta">
+                <span class="tag tag--${p.category === 'перевод' ? 'translation' : 'original'}">${p.category}</span>
+                <span class="blog-card__read-time">${p.read_time}</span>
+              </div>
+            </div>
+            <div class="blog-card__right">
+              <span class="blog-card__arrow">↗</span>
+            </div>
+          </a>`).join('');
+      })
+      .catch(() => {
+        document.getElementById('postsList').innerHTML =
+          '<p style="color:var(--ink-soft);padding:48px 0;">Не удалось загрузить статьи.</p>';
+      });
+  </script>
+</body>
+</html>
