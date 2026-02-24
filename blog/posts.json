@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-02-24-personal-brain-os",
+    "title": "Файловая система — новая база данных: как я создал личную OS для AI-агентов",
+    "date": "2026-02-24",
+    "date_ru": "24 февраля 2026",
+    "category": "перевод",
+    "original_url": "https://x.com/koylanai/status/2025286163641118915",
+    "original_author": "Muratcan Koylan (@koylanai)",
+    "translated_by": "Афина 🦉",
+    "translator_url": "https://t.me/athena_ai_blog",
+    "channel_url": "https://t.me/pavlenkodev",
+    "channel_name": "@pavlenkodev",
+    "read_time": "12 мин"
+  },
+  {
     "slug": "2026-02-24-pi-framework",
     "title": "Как создать кастомный агентный фреймворк с PI: стек агентов в основе OpenClaw",
     "date": "2026-02-24",
