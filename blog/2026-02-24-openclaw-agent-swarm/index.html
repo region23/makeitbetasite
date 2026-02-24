@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenClaw + Codex/Claude Code: команда разработчиков из одного человека — Make It Beta</title>
+  <meta name="description" content="OpenClaw + Codex/Claude Code: команда разработчиков из одного человека" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../blog.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+  <script>
+    (function() {
+      var stored = localStorage.getItem('theme');
+      var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="wrap header__wrap">
+      <a href="/" class="logo">Make It Beta<sup>🧪</sup></a>
+      <nav style="display:flex;align-items:center;gap:24px;">
+        <a href="/blog/" class="header__link">Блог</a>
+        <a href="https://t.me/pavlenkodev" class="header__link" target="_blank">@pavlenkodev</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+          <span id="themeIcon">🌙</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="blog-wrap">
+
+    <nav class="post-breadcrumb">
+      <a href="/">Главная</a> <span>→</span>
+      <a href="/blog/">Блог</a> <span>→</span>
+      <span style="color:var(--ink);">OpenClaw + Codex/Claude Code: команда разработчиков из одного человека_SHORT</span>
+    </nav>
+
+    <header class="post-header">
+      <span class="tag tag--translation">перевод</span>
+      <h1>OpenClaw + Codex/Claude Code: команда разработчиков из одного человека</h1>
+      <div class="post-meta">
+        <time>24 февраля 2026</time>
+        <span class="post-meta__sep">·</span>
+        <span>10 мин чтения</span>
+        
+      </div>
+    </header>
+
+    <div class="post-original">
+      Оригинал: <a href="https://x.com/elvissun/status/2025920521871716562" target="_blank">Elvis (@elvissun)</a>
+    </div>
+
+    <article class="post-body">
+      <p>Я больше не использую Codex и Claude Code напрямую.</p>
+<p>Я использую OpenClaw как оркестрационный слой. Мой оркестратор, Зои, спаунит агентов, пишет им промпты, выбирает нужную модель для каждой задачи, следит за прогрессом и пишет мне в Telegram, когда PR&#x27;ы готовы к мержу.</p>
+<p>Результаты за последние 4 недели:</p>
+<ul>
+<li><strong>94 коммита за один день</strong> — самый продуктивный день, при том что у меня было 3 клиентских звонка и я ни разу не открыл редактор. В среднем около 50 коммитов в день.</li>
+<li><strong>7 PR&#x27;ов за 30 минут</strong> — от идеи до продакшна молниеносно, потому что код и валидация в основном автоматизированы.</li>
+<li><strong>Коммиты → MRR</strong> — я использую это для реального B2B SaaS, который строю: бандлю с founder-led продажами и доставляю большинство фичереквестов в тот же день. Скорость конвертирует лиды в платящих клиентов.</li>
+</ul>
+<figure><img src="https://pbs.twimg.com/media/HByXnBmW8AANOl9.jpg" alt="Git-история выглядит как работа целой команды разработчиков" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Мой git-history выглядит так, будто я только что нанял команду разработчиков. На самом деле это просто я: перешёл от управления Claude Code к управлению OpenClaw-агентом, который управляет флотом других агентов — Claude Code и Codex.</p>
+<p><strong>Успешность:</strong> система решает почти все маленькие и средние задачи с первого раза без вмешательства.</p>
+<p><strong>Стоимость:</strong> ~$100/месяц за Claude и $90/месяц за Codex, но начать можно с $20.</p>
+<p>Вот почему это работает лучше, чем использовать Codex или Claude Code напрямую:</p>
+<blockquote><p>Codex и Claude Code знают очень мало о вашем бизнесе. Они видят код. Они не видят полной картины.</p></blockquote>
+<p>OpenClaw меняет уравнение. Он выступает оркестрационным слоем между вами и всеми агентами — хранит весь мой бизнес-контекст (данные клиентов, заметки с встреч, прошлые решения, что сработало, что провалилось) в Obsidian-хранилище и переводит исторический контекст в точные промпты для каждого coding-агента. Агенты остаются сосредоточены на коде. Оркестратор работает на уровне высокой стратегии.</p>
+<p>Вот как система работает на высоком уровне:</p>
+<figure><img src="https://pbs.twimg.com/media/HB0NSAEW0AAYPOF.jpg" alt="Архитектура: OpenClaw-оркестратор + флот Codex/Claude Code агентов" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>На прошлой неделе Stripe написали о своей системе фоновых агентов под названием «Minions» — параллельные coding-агенты на основе централизованного оркестрационного слоя. Я случайно построил то же самое, но оно работает локально на моём Mac mini.</p>
+<p>Прежде чем рассказать, как это настроить, — объясню, почему вам вообще нужен оркестратор.</p>
+<h2>Почему один ИИ не может делать всё</h2>
+<p>Контекстное окно — игра с нулевой суммой. Нужно выбирать, что туда попадает.</p>
+<p>Заполните кодом — не останется места для бизнес-контекста. Заполните историей клиентов — не останется места для кодовой базы. Именно поэтому двухуровневая система работает: каждый ИИ загружен ровно тем, что ему нужно.</p>
+<p>У OpenClaw и Codex кардинально разный контекст:</p>
+<figure><img src="https://pbs.twimg.com/media/HB0EN2hXcAAbGi9.png" alt="Разделение контекста: бизнес-слой vs. кодовый слой" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Специализация через контекст, а не через разные модели.</p>
+<h2>Полный воркфлоу из 8 шагов</h2>
+<p>Разберём реальный пример с прошлой недели.</p>
+<h3>Шаг 1: Запрос клиента → скоупинг с Зои</h3>
+<p>У меня был звонок с клиентом из агентства. Они хотели переиспользовать конфигурации, уже настроенные для команды.</p>
+<p>После звонка я обсудил запрос с Зои. Поскольку все мои заметки с встреч автоматически синхронизируются в Obsidian-хранилище — никаких объяснений с моей стороны не потребовалось. Мы вместе проработали фичу и пришли к системе шаблонов, которая позволяет сохранять и редактировать существующие конфигурации.</p>
+<p>Затем Зои делает три вещи:</p>
+<ol>
+<li>Пополняет кредиты, чтобы сразу разблокировать клиента — у неё есть admin API access.</li>
+<li>Достаёт конфиг клиента из prod-базы — у неё read-only доступ к prod DB (у моих Codex-агентов этого никогда не будет), чтобы получить текущую конфигурацию, которая включается в промпт.</li>
+<li>Спаунит Codex-агента — с детальным промптом, содержащим весь контекст.</li>
+</ol>
+<h3>Шаг 2: Запуск агента</h3>
+<p>Каждый агент получает свой worktree (изолированную ветку) и tmux-сессию:</p>
+<pre><code class="language-bash"># Создаём worktree + запускаем агента
+git worktree add ../feat-custom-templates -b feat/custom-templates origin/main
+cd ../feat-custom-templates &amp;&amp; pnpm install
+
+tmux new-session -d -s &quot;codex-templates&quot; \
+  -c &quot;/Users/elvis/Documents/GitHub/medialyst-worktrees/feat-custom-templates&quot; \
+  &quot;$HOME/.codex-agent/run-agent.sh templates gpt-5.3-codex high&quot;</code></pre>
+<p>Агент работает в tmux-сессии с полным терминальным логгингом через скрипт.</p>
+<p>Вот как мы запускаем агентов:</p>
+<pre><code class="language-bash"># Codex
+codex --model gpt-5.3-codex \
+  -c &quot;model_reasoning_effort=high&quot; \
+  --dangerously-bypass-approvals-and-sandbox \
+  &quot;Your prompt here&quot;
+
+# Claude Code
+claude --model claude-opus-4.5 \
+  --dangerously-skip-permissions \
+  -p &quot;Your prompt here&quot;</code></pre>
+<p>Раньше я использовал <code>codex exec</code> или <code>claude -p</code>, но недавно перешёл на tmux.</p>
+<p>tmux значительно лучше, потому что перенаправление по ходу задачи — это мощный инструмент. Агент идёт не туда? Не убивайте его:</p>
+<pre><code class="language-bash"># Неправильный подход — просто остановить:
+tmux send-keys -t codex-templates &quot;Stop. Focus on the API layer first, not the UI.&quot; Enter
+
+# Нужно больше контекста:
+tmux send-keys -t codex-templates &quot;The schema is in src/types/template.ts. Use that.&quot; Enter</code></pre>
+<p>Задача отслеживается в <code>.clawdbot/active-tasks.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;id&quot;: &quot;feat-custom-templates&quot;,
+  &quot;tmuxSession&quot;: &quot;codex-templates&quot;,
+  &quot;agent&quot;: &quot;codex&quot;,
+  &quot;description&quot;: &quot;Custom email templates for agency customer&quot;,
+  &quot;repo&quot;: &quot;medialyst&quot;,
+  &quot;worktree&quot;: &quot;feat-custom-templates&quot;,
+  &quot;branch&quot;: &quot;feat/custom-templates&quot;,
+  &quot;startedAt&quot;: 1740268800000,
+  &quot;status&quot;: &quot;running&quot;,
+  &quot;notifyOnComplete&quot;: true
+}</code></pre>
+<p>По завершению обновляется с номером PR и статусами проверок:</p>
+<pre><code class="language-json">{
+  &quot;status&quot;: &quot;done&quot;,
+  &quot;pr&quot;: 341,
+  &quot;completedAt&quot;: 1740275400000,
+  &quot;checks&quot;: {
+    &quot;prCreated&quot;: true,
+    &quot;ciPassed&quot;: true,
+    &quot;claudeReviewPassed&quot;: true,
+    &quot;geminiReviewPassed&quot;: true
+  },
+  &quot;note&quot;: &quot;All checks passed. Ready to merge.&quot;
+}</code></pre>
+<h3>Шаг 3: Мониторинг в цикле</h3>
+<p>Cron-задача запускается каждые 10 минут и следит за всеми агентами. По сути, это улучшенный Ralph Loop — подробнее чуть позже.</p>
+<p>Но она не опрашивает агентов напрямую — это было бы дорого. Вместо этого она запускает скрипт, который читает JSON-реестр и проверяет:</p>
+<pre><code class="language-bash">.clawdbot/check-agents.sh</code></pre>
+<p>Скрипт на 100% детерминирован и крайне эффективен по токенам:</p>
+<ul>
+<li>Проверяет, живы ли tmux-сессии</li>
+<li>Проверяет открытые PR&#x27;ы на отслеживаемых ветках</li>
+<li>Проверяет статус CI через <code>gh cli</code></li>
+<li>Автоматически перезапускает упавших агентов (максимум 3 попытки), если CI не прошёл или ревью дало критические замечания</li>
+<li>Оповещает только если нужно человеческое вмешательство</li>
+</ul>
+<p>Я не слежу за терминалами. Система сама говорит мне, когда смотреть.</p>
+<h3>Шаг 4: Агент создаёт PR</h3>
+<p>Агент коммитит, пушит и открывает PR через <code>gh pr create --fill</code>. В этот момент я уведомления не получаю — PR сам по себе ещё не значит «готово».</p>
+<p>Определение готовности (очень важно, чтобы агент это знал):</p>
+<ul>
+<li>PR создан</li>
+<li>Ветка синхронизирована с main (нет конфликтов)</li>
+<li>CI проходит (lint, types, unit tests, E2E)</li>
+<li>Ревью Codex прошло</li>
+<li>Ревью Claude Code прошло</li>
+<li>Ревью Gemini прошло</li>
+<li>Скриншоты прикреплены (если изменялся UI)</li>
+</ul>
+<h3>Шаг 5: Автоматическое код-ревью</h3>
+<p>Каждый PR рецензируется тремя AI-моделями. Они ловят разное:</p>
+<ul>
+<li><strong>Codex Reviewer</strong> — исключителен по части edge cases. Делает самое тщательное ревью. Ловит логические ошибки, отсутствующую обработку ошибок, race conditions. Процент ложных срабатываний очень низкий.</li>
+<li><strong>Gemini Code Assist Reviewer</strong> — бесплатный и невероятно полезный. Ловит проблемы безопасности, проблемы масштабируемости, которые другие агенты пропускают. И предлагает конкретные исправления. Обязателен к установке.</li>
+<li><strong>Claude Code Reviewer</strong> — в основном бесполезен: склонен к излишней осторожности. Много «рассмотрите добавление...» предложений, которые обычно являются оверинжинирингом. Я игнорирую всё, кроме пометок critical. Критических проблем он сам редко находит, но подтверждает то, что отмечают другие ревьюеры.</li>
+</ul>
+<p>Все трое постят комментарии напрямую в PR.</p>
+<h3>Шаг 6: Автоматическое тестирование</h3>
+<p>Наш CI-пайплайн прогоняет большой объём автотестов:</p>
+<ul>
+<li>Lint и TypeScript-проверки</li>
+<li>Unit-тесты</li>
+<li>E2E-тесты</li>
+<li>Playwright-тесты против preview-окружения (идентичного prod)</li>
+</ul>
+<p>На прошлой неделе я добавил новое правило: если PR меняет UI — в описании PR должен быть скриншот. Иначе CI падает. Это резко сокращает время ревью — я вижу ровно что изменилось, не кликая по preview.</p>
+<h3>Шаг 7: Ревью человека</h3>
+<p>Теперь я получаю уведомление в Telegram: «PR #341 готов к ревью».</p>
+<p>К этому моменту:</p>
+<ul>
+<li>CI прошёл</li>
+<li>Три AI-ревьюера одобрили код</li>
+<li>Скриншоты показывают изменения UI</li>
+<li>Все edge cases задокументированы в комментариях ревью</li>
+</ul>
+<p>Моё ревью занимает 5–10 минут. Многие PR&#x27;ы я мержу, не читая код — скриншот показывает мне всё необходимое.</p>
+<h3>Шаг 8: Мерж</h3>
+<p>PR мержится. Ежедневная cron-задача чистит осиротевшие worktrees и task registry JSON.</p>
+<h2>Ralph Loop V2</h2>
+<p>По сути, это Ralph Loop, но лучше.</p>
+<p>Ralph Loop: достаёт контекст из памяти → генерирует вывод → оценивает результаты → сохраняет обучение. Но большинство реализаций гоняют один и тот же промпт в каждом цикле. Дистиллированные знания улучшают будущие ретривалы, но сам промпт остаётся статичным.</p>
+<p>Наша система иная. Когда агент падает, Зои не просто перезапускает его с тем же промптом. Она смотрит на ошибку с полным бизнес-контекстом и разбирается, как разблокировать:</p>
+<ul>
+<li><strong>Агент исчерпал контекст?</strong> «Сосредоточься только на этих трёх файлах.»</li>
+<li><strong>Агент пошёл не туда?</strong> «Стоп. Клиент хотел X, не Y. Вот что он сказал на встрече.»</li>
+<li><strong>Агенту нужно уточнение?</strong> «Вот письмо клиента и чем занимается его компания.»</li>
+</ul>
+<p>Зои сопровождает агентов до завершения. У неё есть контекст, которого нет у агентов — история клиентов, заметки с встреч, что пробовали раньше, почему не сработало. Она использует этот контекст, чтобы писать лучшие промпты при каждой повторной попытке.</p>
+<p>Но она также не ждёт, пока я назначу задачи. Она сама находит работу проактивно:</p>
+<ul>
+<li><strong>Утром:</strong> сканирует Sentry → находит 4 новые ошибки → спаунит 4 агента для расследования и исправления</li>
+<li><strong>После встреч:</strong> сканирует заметки → помечает 3 фичереквеста от клиентов → спаунит 3 Codex-агента</li>
+<li><strong>Вечером:</strong> сканирует git log → спаунит Claude Code для обновления changelog и документации для клиентов</li>
+</ul>
+<p>Я иду на прогулку после клиентского звонка. Возвращаюсь в Telegram: «7 PR&#x27;ов готовы к ревью. 3 фичи, 4 багфикса.»</p>
+<p>Когда агенты успешно справляются — паттерн логируется. «Эта структура промпта работает для billing-фич.» «Codex нужны type-определения заранее.» «Всегда включай пути к тест-файлам.»</p>
+<p>Сигналы успеха: CI прошёл, все три код-ревью одобрили, человек смержил. Любой сбой запускает цикл. Со временем Зои пишет лучшие промпты — потому что помнит, что уехало в прод.</p>
+<h2>Выбор правильного агента</h2>
+<p>Не все coding-агенты одинаковы. Краткий справочник:</p>
+<p><strong>Codex</strong> — мой рабочий конь. Бэкенд-логика, сложные баги, мультифайловые рефакторинги — всё, что требует рассуждений по всей кодовой базе. Медленнее, но тщательнее. Использую для 90% задач.</p>
+<p><strong>Claude Code</strong> — быстрее и лучше во фронтенд-работе. Меньше проблем с разрешениями, поэтому отлично подходит для git-операций. (Раньше использовал его больше для повседневной работы, но Codex 5.3 теперь просто лучше и быстрее.)</p>
+<p><strong>Gemini</strong> — другая суперсила: дизайнерское чутьё. Для красивых UI я сначала прошу Gemini сгенерировать HTML/CSS-спецификацию, а потом передаю это Claude Code для реализации в нашей компонентной системе. Gemini проектирует — Claude строит.</p>
+<p>Зои выбирает правильного агента для каждой задачи и маршрутизирует вывод между ними. Баг в billing-системе идёт к Codex. Исправление стиля кнопки — к Claude Code. Новый дизайн дашборда начинается с Gemini.</p>
+<h2>Как настроить</h2>
+<p>Скопируйте всю эту статью в OpenClaw и скажите ему: «Реализуй этот setup агентного роя для моей кодовой базы».</p>
+<p>Он прочитает архитектуру, создаст скрипты, настроит структуру директорий и сконфигурирует cron-мониторинг. Готово за 10 минут.</p>
+<p>Никаких курсов я вам не продаю.</p>
+<h2>Узкое горлышко, которого никто не ждёт</h2>
+<p>Вот в чём я упираюсь сейчас: оперативная память.</p>
+<p>Каждому агенту нужен свой worktree. Каждому worktree нужны свои <code>node_modules</code>. Каждый агент запускает сборки, type-проверки, тесты. Пять агентов одновременно — это пять параллельных TypeScript-компиляторов, пять test-runner&#x27;ов, пять наборов зависимостей в памяти.</p>
+<p>Мой Mac Mini с 16 ГБ упирается в потолок на 4–5 агентах, не начав свопиться — и нужно чтобы они не пытались собираться одновременно.</p>
+<p>Поэтому я купил Mac Studio M4 Max с 128 ГБ RAM ($3 500) для этой системы. Приедет в конце марта — расскажу, стоило ли оно того.</p>
+<h2>Дальше: компания одного человека на миллион</h2>
+<p>В 2026 году мы увидим огромное количество компаний одного человека с миллионным оборотом. Рычаг колоссальный для тех, кто умеет строить рекурсивно самосовершенствующихся агентов.</p>
+<p>Вот как это выглядит: AI-оркестратор как расширение вас самих (как Зои для меня), делегирующий работу специализированным агентам, которые отвечают за разные бизнес-функции. Разработка. Поддержка клиентов. Операции. Маркетинг. Каждый агент сосредоточен на том, в чём хорош. Вы сохраняете лазерный фокус и полный контроль.</p>
+<p>Следующее поколение предпринимателей не будет нанимать команду из 10 человек, чтобы делать то, что один человек с правильной системой делает сам. Они будут строить так — оставаясь маленькими, двигаясь быстро, шипая каждый день.</p>
+<p>Сейчас вокруг куча AI-слопа. Куча хайпа вокруг агентов и «mission control&#x27;ов» без реального строительства чего-то полезного. Красивые демо без real-world пользы.</p>
+<p>Я стараюсь делать наоборот: меньше хайпа, больше документирования строительства настоящего бизнеса. Реальные клиенты, реальная выручка, реальные коммиты в продакшн и реальные потери тоже.</p>
+<p>Что я строю? Agentic PR — компания одного человека, которая конкурирует с enterprise PR-гигантами. Агенты, которые помогают стартапам получать пресс-покрытие без ретейнера $10k/месяц.</p>
+<p>Если хотите видеть, как далеко я зайду — следите.</p>
+    </article>
+
+    <footer class="post-translator">
+      Перевела <a href="https://t.me/athena_ai_blog">Афина 🦉</a> — специально для канала <a href="https://t.me/pavlenkodev">@pavlenkodev</a>
+    </footer>
+
+  </div>
+
+  <footer class="footer" style="border-top:1px solid var(--border);">
+    <div class="wrap footer__wrap">
+      <span class="footer__copy">© 2026 Make It Beta</span>
+      <a href="https://t.me/pavlenkodev" class="footer__contact" target="_blank">@pavlenkodev ↗</a>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('pre code').forEach(function (el) {
+        hljs.highlightElement(el);
+      });
+    });
+  </script>
+</body>
+</html>

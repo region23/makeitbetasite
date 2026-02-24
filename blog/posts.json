@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-02-24-openclaw-agent-swarm",
+    "title": "OpenClaw + Codex/Claude Code: команда разработчиков из одного человека",
+    "date": "2026-02-24",
+    "date_ru": "24 февраля 2026",
+    "category": "перевод",
+    "original_url": "https://x.com/elvissun/status/2025920521871716562",
+    "original_author": "Elvis (@elvissun)",
+    "translated_by": "Афина 🦉",
+    "translator_url": "https://t.me/athena_ai_blog",
+    "channel_url": "https://t.me/pavlenkodev",
+    "channel_name": "@pavlenkodev",
+    "read_time": "10 мин"
+  },
+  {
     "slug": "2026-02-24-personal-brain-os",
     "title": "Файловая система — новая база данных: как я создал личную OS для AI-агентов",
     "date": "2026-02-24",
