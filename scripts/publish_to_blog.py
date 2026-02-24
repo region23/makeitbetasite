@@ -67,6 +67,16 @@ def md_to_html(md: str) -> str:
     def esc(s):
         return html_lib.escape(s)
 
+    def inline(s):
+        """Apply inline markdown: **bold**, `code`, [text](url), ![alt](url)."""
+        s = esc(s)
+        s = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', s)
+        s = re.sub(r'`([^`]+)`', r'<code>\1</code>', s)
+        # Images before links (more specific pattern)
+        s = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', r'<img src="\2" alt="\1" style="max-width:100%;border-radius:6px;margin:16px 0;">', s)
+        s = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2">\1</a>', s)
+        return s
+
     for line in lines:
         # Fenced code blocks
         if line.startswith('```'):
@@ -87,20 +97,27 @@ def md_to_html(md: str) -> str:
             code_lines.append(line)
             continue
 
-
         # Headings
         if line.startswith('#### '):
-            flush_list(); html_parts.append(f'<h4>{esc(line[5:])}</h4>'); continue
+            flush_list(); html_parts.append(f'<h4>{inline(line[5:])}</h4>'); continue
         if line.startswith('### '):
-            flush_list(); html_parts.append(f'<h3>{esc(line[4:])}</h3>'); continue
+            flush_list(); html_parts.append(f'<h3>{inline(line[4:])}</h3>'); continue
         if line.startswith('## '):
-            flush_list(); html_parts.append(f'<h2>{esc(line[3:])}</h2>'); continue
+            flush_list(); html_parts.append(f'<h2>{inline(line[3:])}</h2>'); continue
         if line.startswith('# '):
-            flush_list(); html_parts.append(f'<h1>{esc(line[2:])}</h1>'); continue
+            flush_list(); html_parts.append(f'<h1>{inline(line[2:])}</h1>'); continue
 
         # Blockquote
         if line.startswith('> '):
-            flush_list(); html_parts.append(f'<blockquote>{esc(line[2:])}</blockquote>'); continue
+            flush_list(); html_parts.append(f'<blockquote><p>{inline(line[2:])}</p></blockquote>'); continue
+
+        # Standalone image line: ![alt](url)
+        img_match = re.match(r'^!\[([^\]]*)\]\(([^)]+)\)\s*$', line)
+        if img_match:
+            flush_list()
+            alt, src = img_match.group(1), img_match.group(2)
+            html_parts.append(f'<figure><img src="{src}" alt="{esc(alt)}" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>')
+            continue
 
         # Unordered list
         if re.match(r'^[-*] ', line):
@@ -108,7 +125,7 @@ def md_to_html(md: str) -> str:
                 flush_list()
                 html_parts.append('<ul>')
                 in_list = 'ul'
-            html_parts.append(f'<li>{esc(line[2:])}</li>')
+            html_parts.append(f'<li>{inline(line[2:])}</li>')
             continue
 
         # Ordered list
@@ -117,7 +134,7 @@ def md_to_html(md: str) -> str:
                 flush_list()
                 html_parts.append('<ol>')
                 in_list = 'ol'
-            html_parts.append(f'<li>{esc(re.sub(r"^\d+\. ","",line))}</li>')
+            html_parts.append(f'<li>{inline(re.sub(r"^\d+\. ","",line))}</li>')
             continue
 
         # Blank line
@@ -127,12 +144,7 @@ def md_to_html(md: str) -> str:
 
         # Normal paragraph
         flush_list()
-        # Inline: **bold**, `code`, [text](url)
-        p = esc(line)
-        p = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', p)
-        p = re.sub(r'`([^`]+)`', r'<code>\1</code>', p)
-        p = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2">\1</a>', p)
-        html_parts.append(f'<p>{p}</p>')
+        html_parts.append(f'<p>{inline(line)}</p>')
 
     flush_list()
     return '\n'.join(html_parts)
