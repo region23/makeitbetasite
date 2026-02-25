@@ -17,6 +17,11 @@ import sys
 
 
 def apply_full_line_styles(text: str, inline_styles):
+    """Best-effort inline styling.
+
+    We only apply styles when they cover the whole line, otherwise we risk
+    breaking offsets used by entityRanges (links/media).
+    """
     if not text:
         return text
     for st in inline_styles or []:
@@ -28,6 +33,36 @@ def apply_full_line_styles(text: str, inline_styles):
                 return f"**{text}**"
             if style == "Italic":
                 return f"*{text}*"
+    return text
+
+
+def apply_entity_links(text: str, entity_ranges, entity_map):
+    """Convert LINK entityRanges to markdown links in-place.
+
+    X Article blocks can carry links as entityRanges inside unstyled text.
+    We rewrite from right to left to keep offsets stable.
+    """
+    if not text or not entity_ranges:
+        return text
+
+    # Only handle LINK entities; ignore others here.
+    ranges = []
+    for r in entity_ranges:
+        try:
+            key = r.get("key")
+            ent = entity_map.get(key)
+            if ent and ent.get("type") == "LINK":
+                ranges.append((r.get("offset", 0), r.get("length", 0), ent.get("data", {}).get("url")))
+        except Exception:
+            continue
+
+    # rewrite right-to-left
+    for off, ln, url in sorted(ranges, key=lambda x: x[0], reverse=True):
+        if not url or ln <= 0:
+            continue
+        label = text[off:off+ln]
+        text = text[:off] + f"[{label}]({url})" + text[off+ln:]
+
     return text
 
 
@@ -60,6 +95,8 @@ def main():
     for b in blocks:
         t = b.get("type")
         text = b.get("text", "")
+        # Preserve links before styling (styling may wrap whole line, safe).
+        text = apply_entity_links(text, b.get("entityRanges") or [], entity_map)
         text = apply_full_line_styles(text, b.get("inlineStyleRanges"))
 
         if t == "header-two":
