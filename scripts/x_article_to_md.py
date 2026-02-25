@@ -117,10 +117,17 @@ def main():
             if not ers:
                 continue
             ent = entity_map.get(ers[0].get("key"))
+            # Some fxtwitter responses omit/empty entityMap for atomic blocks.
+            # We still preserve the *presence* of the insert to keep structure.
             if not ent:
+                out.append("---")
+                out.append("")
                 continue
-            if ent.get("type") == "MEDIA":
-                items = (ent.get("data") or {}).get("mediaItems") or []
+            et = ent.get("type")
+            data = ent.get("data") or {}
+
+            if et == "MEDIA":
+                items = data.get("mediaItems") or []
                 if not items:
                     continue
                 mid = str(items[0].get("mediaId"))
@@ -128,11 +135,38 @@ def main():
                 if url:
                     out.append(f"![Иллюстрация]({url})")
                     out.append("")
-            elif ent.get("type") == "LINK":
-                url = (ent.get("data") or {}).get("url")
+                continue
+
+            if et == "LINK":
+                url = data.get("url")
                 if url:
                     out.append(url)
                     out.append("")
+                continue
+
+            if et == "TWEET":
+                tid = data.get("tweetId")
+                if tid:
+                    out.append(f"> Встроенный твit: https://x.com/i/status/{tid}")
+                    out.append("")
+                else:
+                    out.append("---")
+                    out.append("")
+                continue
+
+            if et == "MARKDOWN":
+                md = data.get("markdown")
+                if md:
+                    out.append(md.strip())
+                    out.append("")
+                else:
+                    out.append("---")
+                    out.append("")
+                continue
+
+            # Unknown atomic insert
+            out.append("---")
+            out.append("")
             continue
 
         # Default: treat as paragraph
