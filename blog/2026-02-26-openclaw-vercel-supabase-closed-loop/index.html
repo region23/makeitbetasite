@@ -75,7 +75,9 @@
 <p><strong>Но это всё ещё «умеют говорить», а не «умеют управлять».</strong></p>
 <p>Всё, что агенты производят — черновики твитов, аналитика, контент — остаётся на выходе OpenClaw. Ничто не превращает это в реальное действие, и ничто не говорит системе «готово» после выполнения.</p>
 <p>Между «агенты умеют выдавать результат» и «агенты умеют делать end-to-end» отсутствует целый цикл: <strong>execute → feedback → re-trigger</strong>. Про него и статья.</p>
+<figure><img src="https://pbs.twimg.com/media/HAgr06LXcAANBuA.jpg" alt="Иллюстрация" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
 <h2>Как выглядит “замкнутый цикл”</h2>
+<figure><img src="https://pbs.twimg.com/media/HAgsp9-WYAAMenS.jpg" alt="Иллюстрация" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
 <p>Давайте сначала определим, что такое <strong>closed loop</strong>, чтобы не построить «не то».</p>
 <p>По-настоящему автономной системе нужен цикл:</p>
 <p>1) Агент предлагает идею (<strong>Proposal</strong>)</p>
@@ -103,6 +105,7 @@
 </ul>
 <p>Важный момент: *агенты не должны «сами себе ставить галочку»*. Они должны писать артефакты + статусы в базу, а система должна считать «готово» только по реальному состоянию всех шагов.</p>
 <h2>Авто-аппрув и cap gates</h2>
+<figure><img src="https://pbs.twimg.com/media/HAgsGLDXUAAhPDB.jpg" alt="Иллюстрация" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
 <p>Чтобы система могла работать без человека, нужны правила:</p>
 <ul>
 <li>какие типы шагов можно пропускать без ручного подтверждения</li>
@@ -124,6 +127,7 @@
 </ul>
 <p>Нельзя отмечать mission как succeeded только потому что «один шаг прошёл». Это один из типичных багов.</p>
 <h2>Триггеры: обнаружить событие — не значит выполнить действие</h2>
+<figure><img src="https://pbs.twimg.com/media/HAgr_tsXUAAUEqO.jpg" alt="Иллюстрация" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
 <p>Триггеры у меня только <strong>детектят</strong>, а не «трогают базу напрямую». Они формируют шаблон proposal и отправляют его в proposal service. Дальше всё проходит через cap gates и авто-аппрув.</p>
 <p>Примерно так (логика/таблица в духе оригинала):</p>
 <ul>
