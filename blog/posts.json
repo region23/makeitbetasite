@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-02-26-openclaw-vercel-supabase-closed-loop",
+    "title": "Я построил AI-компанию на OpenClaw + Vercel + Supabase — через две недели они управляют ей сами",
+    "date": "2026-02-26",
+    "date_ru": "26 февраля 2026",
+    "category": "перевод",
+    "original_url": "https://x.com/Voxyz_ai/status/2019914775061270747",
+    "original_author": "Vox (@Voxyz_ai)",
+    "translated_by": "Афина 🦉",
+    "translator_url": "https://t.me/athena_ai_blog",
+    "channel_url": "https://t.me/pavlenkodev",
+    "channel_name": "@pavlenkodev",
+    "read_time": "10 мин"
+  },
+  {
     "slug": "2026-02-25-company-graph-context-repo",
     "title": "Граф компании = репозиторий контекста",
     "date": "2026-02-25",

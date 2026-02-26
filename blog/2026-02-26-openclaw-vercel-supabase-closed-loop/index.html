@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Я построил AI-компанию на OpenClaw + Vercel + Supabase — через две недели они управляют ей сами — Make It Beta</title>
+  <meta name="description" content="Я построил AI-компанию на OpenClaw + Vercel + Supabase — через две недели они управляют ей сами" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../blog.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+  <script>
+    (function() {
+      var stored = localStorage.getItem('theme');
+      var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="wrap header__wrap">
+      <a href="/" class="logo">Make It Beta<sup>🧪</sup></a>
+      <nav style="display:flex;align-items:center;gap:24px;">
+        <a href="/blog/" class="header__link">Блог</a>
+        <a href="https://t.me/pavlenkodev" class="header__link" target="_blank">@pavlenkodev</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+          <span id="themeIcon">🌙</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="blog-wrap">
+
+    <nav class="post-breadcrumb">
+      <a href="/">Главная</a> <span>→</span>
+      <a href="/blog/">Блог</a> <span>→</span>
+      <span style="color:var(--ink);">Я построил AI-компанию на OpenClaw + Vercel + Supabase — через две недели они управляют ей сами_SHORT</span>
+    </nav>
+
+    <header class="post-header">
+      <span class="tag tag--translation">перевод</span>
+      <h1>Я построил AI-компанию на OpenClaw + Vercel + Supabase — через две недели они управляют ей сами</h1>
+      <div class="post-meta">
+        <time>26 февраля 2026</time>
+        <span class="post-meta__sep">·</span>
+        <span>10 мин чтения</span>
+        
+      </div>
+    </header>
+
+    <div class="post-original">
+      Оригинал: <a href="https://x.com/Voxyz_ai/status/2019914775061270747" target="_blank">Vox (@Voxyz_ai)</a>
+    </div>
+
+    <article class="post-body">
+      <figure><img src="https://pbs.twimg.com/media/HAgo9VqWQAAlPKS.jpg" alt="Обложка" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<blockquote><p>6 AI-агентов, 1 VPS, 1 база данных Supabase — от «агенты умеют разговаривать» до «агенты автономно управляют сайтом» у меня заняло две недели. В этой статье — что именно «не хватает между», как это закрыть, и архитектура, которую можно забрать себе и применить.</p></blockquote>
+<h2>Стартовая точка: у вас уже есть OpenClaw. И что дальше?</h2>
+<p>Если вы в последнее время игрались с AI-агентами, высок шанс, что у вас уже поднят OpenClaw.</p>
+<p>Он закрывает большую проблему: даёт Claude (или другой LLM) инструменты — браузинг, работу с файлами, выполнение команд, расписания. Можно назначать cron-задачи агентам: ежедневные посты, почасовые «интел-сканы», периодические исследовательские отчёты.</p>
+<p>Я тоже начинал(а) с этого.</p>
+<p>Мой проект называется <strong>VoxYZ Agent World</strong> — это 6 AI-агентов, которые автономно ведут сайт из «пиксельного офиса». Стек довольно простой:</p>
+<ul>
+<li><strong>OpenClaw (на VPS)</strong>: «мозг» агентов — круглые столы (roundtable), cron, deep research</li>
+<li><strong>Next.js + Vercel</strong>: фронтенд сайта + API слой</li>
+<li><strong>Supabase</strong>: единый источник правды для состояния (proposals, missions, events, memories)</li>
+</ul>
+<p>Шесть ролей, у каждой своя работа: <strong>Minion</strong> принимает решения, <strong>Sage</strong> анализирует стратегию, <strong>Scout</strong> собирает разведданные, <strong>Quill</strong> пишет контент, <strong>Xalt</strong> ведёт соцсети, <strong>Observer</strong> делает проверку качества.</p>
+<p>Cron-задачи в OpenClaw заставляют их «приходить на работу» каждый день. Roundtable даёт им обсуждать, голосовать и приходить к консенсусу.</p>
+<p><strong>Но это всё ещё «умеют говорить», а не «умеют управлять».</strong></p>
+<p>Всё, что агенты производят — черновики твитов, аналитика, контент — остаётся на выходе OpenClaw. Ничто не превращает это в реальное действие, и ничто не говорит системе «готово» после выполнения.</p>
+<p>Между «агенты умеют выдавать результат» и «агенты умеют делать end-to-end» отсутствует целый цикл: <strong>execute → feedback → re-trigger</strong>. Про него и статья.</p>
+<h2>Как выглядит “замкнутый цикл”</h2>
+<p>Давайте сначала определим, что такое <strong>closed loop</strong>, чтобы не построить «не то».</p>
+<p>По-настоящему автономной системе нужен цикл:</p>
+<p>1) Агент предлагает идею (<strong>Proposal</strong>)</p>
+<p>2) Проверка авто-аппрува (<strong>Auto-Approve</strong>)</p>
+<p>3) Создание миссии (<strong>Mission</strong>)</p>
+<p>4) Выполнение шагов (<strong>Steps</strong>)</p>
+<p>5) Обратная связь в базу (статусы, логи, артефакты)</p>
+<p>6) Триггеры/реакции запускают следующий виток</p>
+<p>Без этого вы получаете «агенты пишут», но не «агенты делают».</p>
+<h2>Центральная мысль: *истина должна жить в базе*</h2>
+<p>Если у вас есть Supabase (или любая БД), то <strong>вся система должна опираться на неё</strong>:</p>
+<ul>
+<li>Proposals, missions, steps</li>
+<li>лимиты и политики</li>
+<li>события и журналы</li>
+<li>очереди реакций</li>
+</ul>
+<p>OpenClaw — это отличный «мозг + руки», но <strong>контрольный контур</strong> (approval/monitoring) и «память о том, что реально произошло» должны быть снаружи и быть проверяемыми.</p>
+<h2>Proposal → Mission → Step: минимальные сущности</h2>
+<p>В моём случае это выглядит так:</p>
+<ul>
+<li><strong>Proposal</strong> — предложение выполнить работу (пока pending)</li>
+<li><strong>Mission</strong> — одобренная работа (approved/running/succeeded/failed)</li>
+<li><strong>Step</strong> — конкретный исполняемый шаг (queued/running/succeeded/failed)</li>
+</ul>
+<p>Важный момент: *агенты не должны «сами себе ставить галочку»*. Они должны писать артефакты + статусы в базу, а система должна считать «готово» только по реальному состоянию всех шагов.</p>
+<h2>Авто-аппрув и cap gates</h2>
+<p>Чтобы система могла работать без человека, нужны правила:</p>
+<ul>
+<li>какие типы шагов можно пропускать без ручного подтверждения</li>
+<li>дневные/часовые квоты</li>
+<li>rate limits на внешние API</li>
+</ul>
+<p>Эти правила я храню в <strong>ops_policy</strong> (JSON), чтобы можно было менять поведение без деплоя.</p>
+<h2>Исполнение: worker на VPS и контракт обновления статусов</h2>
+<p>Я использую worker, который берёт queued step, резервирует его, выполняет и возвращает результат:</p>
+<ul>
+<li>обновляет <code>status</code></li>
+<li>пишет <code>last_error</code> при падении</li>
+<li>кладёт артефакты (текст, ссылки, файлы)</li>
+</ul>
+<p>После каждого шага обязательно вызывается <code>maybeFinalizeMissionIfDone</code>:</p>
+<ul>
+<li>если <strong>любой</strong> step failed → mission failed</li>
+<li>если <strong>все</strong> steps succeeded → mission succeeded</li>
+</ul>
+<p>Нельзя отмечать mission как succeeded только потому что «один шаг прошёл». Это один из типичных багов.</p>
+<h2>Триггеры: обнаружить событие — не значит выполнить действие</h2>
+<p>Триггеры у меня только <strong>детектят</strong>, а не «трогают базу напрямую». Они формируют шаблон proposal и отправляют его в proposal service. Дальше всё проходит через cap gates и авто-аппрув.</p>
+<p>Примерно так (логика/таблица в духе оригинала):</p>
+<ul>
+<li>Новый твит (engagement &gt; 5%) → Growth анализирует почему он завирусился (через 2 часа)</li>
+<li>Mission failed → Sage диагностирует причину (через 1 час)</li>
+<li>Новый контент опубликован → Observer проверяет качество (через 2 часа)</li>
+<li>Insight собрал много апвоутов → авто-промоут в permanent memory (через 4 часа)</li>
+</ul>
+<p>Cooldown важен. Без него один вирусный твит будет триггерить анализ на каждом heartbeat (например, каждые 5 минут).</p>
+<h2>Матрица реакций (reaction matrix)</h2>
+<p>Самая интересная часть — спонтанное взаимодействие агентов.</p>
+<p>В таблице <code>ops_policy</code> хранится <code>reaction_matrix</code>:</p>
+<pre><code class="language-json">{
+  &quot;patterns&quot;: [
+    { &quot;source&quot;: &quot;twitter-alt&quot;, &quot;tags&quot;: [&quot;tweet&quot;,&quot;posted&quot;], &quot;target&quot;: &quot;growth&quot;,
+      &quot;type&quot;: &quot;analyze&quot;, &quot;probability&quot;: 0.3, &quot;cooldown&quot;: 120 },
+    { &quot;source&quot;: &quot;*&quot;, &quot;tags&quot;: [&quot;mission:failed&quot;], &quot;target&quot;: &quot;brain&quot;,
+      &quot;type&quot;: &quot;diagnose&quot;, &quot;probability&quot;: 1.0, &quot;cooldown&quot;: 60 }
+  ]
+}</code></pre>
+<p>Xalt постит твит → с вероятностью 30% Growth анализирует его эффективность. Любая миссия падает → с вероятностью 100% Sage диагностирует.</p>
+<p><code>probability</code> — это не баг, а фича. 100% детерминизм = робот. Немного случайности = ощущение настоящей команды, где «иногда кто-то откликается, иногда нет».</p>
+<h2>Self-healing: системы будут застревать</h2>
+<p>Рестарты VPS, сетевые глюки, таймауты API — шаги могут зависнуть в статусе <code>running</code>, хотя по факту никто уже ничего не выполняет.</p>
+<p>В heartbeat у меня есть <code>recoverStaleSteps</code>:</p>
+<pre><code class="language-ts">// 30 минут без прогресса → помечаем failed → проверяем, можно ли финализировать миссию
+const STALE_THRESHOLD_MS = 30 * 60 * 1000;
+
+const { data: stale } = await sb
+  .from(&#x27;ops_mission_steps&#x27;)
+  .select(&#x27;id, mission_id&#x27;)
+  .eq(&#x27;status&#x27;, &#x27;running&#x27;)
+  .lt(&#x27;reserved_at&#x27;, staleThreshold);
+
+for (const step of stale) {
+  await sb.from(&#x27;ops_mission_steps&#x27;).update({
+    status: &#x27;failed&#x27;,
+    last_error: &#x27;Stale: no progress for 30 minutes&#x27;,
+  }).eq(&#x27;id&#x27;, step.id);
+  await maybeFinalizeMissionIfDone(sb, step.mission_id);
+}</code></pre>
+<p><code>maybeFinalizeMissionIfDone</code> проверяет все steps в миссии: любой failed = миссия failed, все completed = success. Больше нет ситуации «один шаг прошёл — значит вся миссия success».</p>
+<h2>Полная архитектура</h2>
+<p>Три слоя с чёткими зонами ответственности:</p>
+<ul>
+<li><strong>OpenClaw (VPS)</strong>: Think + Execute (brain + hands)</li>
+<li><strong>Vercel</strong>: Approve + Monitor (control plane)</li>
+<li><strong>Supabase</strong>: All state (shared cortex)</li>
+</ul>
+<figure><img src="https://pbs.twimg.com/media/HAgrUcPWMAA4VL2.jpg" alt="Иллюстрация" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<h2>Что можно забрать себе</h2>
+<p>Если у вас OpenClaw + Vercel + Supabase, вот минимальный чеклист «замкнутого цикла»:</p>
+<h3>1) Таблицы в базе (Supabase)</h3>
+<p>Нужно минимум это:</p>
+<p>| Таблица | Назначение |</p>
+<p>|---|---|</p>
+<p>| <code>ops_mission_proposals</code> | proposals (pending/accepted/rejected) |</p>
+<p>| <code>ops_missions</code> | missions (approved/running/succeeded/failed) |</p>
+<p>| <code>ops_mission_steps</code> | шаги выполнения (queued/running/succeeded/failed) |</p>
+<p>| <code>ops_agent_events</code> | event stream (все действия агентов) |</p>
+<p>| <code>ops_policy</code> | политики (auto_approve, x_daily_quota и т.п. как JSON) |</p>
+<p>| <code>ops_trigger_rules</code> | правила триггеров |</p>
+<p>| <code>ops_agent_reactions</code> | очередь реакций |</p>
+<p>| <code>ops_action_runs</code> | execution logs |</p>
+<h3>2) Proposal service (один файл)</h3>
+<p>Сведите создание proposal + cap gates + auto-approve + создание mission в одну функцию. Все источники (API, triggers, reactions) должны вызывать её. Это хаб всего цикла.</p>
+<h3>3) Policy-driven конфигурация (таблица <code>ops_policy</code>)</h3>
+<p>Не хардкодьте лимиты. Все переключатели поведения должны жить в <code>ops_policy</code>.</p>
+<pre><code class="language-json">// auto_approve: какие типы шагов можно пропускать автоматически
+{ &quot;enabled&quot;: true, &quot;allowed_step_kinds&quot;: [&quot;draft_tweet&quot;,&quot;crawl&quot;,&quot;analyze&quot;,&quot;write_content&quot;] }
+
+// x_daily_quota: дневной лимит твитов
+{ &quot;limit&quot;: 8 }
+
+// worker_policy: исполняет ли Vercel шаги (false = только VPS)
+{ &quot;enabled&quot;: false }</code></pre>
+<p>Можно менять политики в любой момент без редеплоя.</p>
+<h3>4) Heartbeat (один API route + одна строка в crontab)</h3>
+<p><code>/api/ops/heartbeat</code> на Vercel. Crontab на VPS, который дергает его каждые 5 минут. Внутри: оценка триггеров, обработка reaction queue, промоут инсайтов, очистка stale задач.</p>
+<h3>5) Контракт VPS worker</h3>
+<p>Каждый <code>step kind</code> должен маппиться на worker. После выполнения шага worker вызывает <code>maybeFinalizeMissionIfDone</code>, чтобы корректно финализировать миссию. Никогда не отмечайте mission как succeeded «потому что один шаг завершился».</p>
+<h2>Таймлайн на 2 недели</h2>
+<p>| Фаза | Время | Что было сделано |</p>
+<p>|---|---:|---|</p>
+<p>| Инфраструктура | было заранее | OpenClaw VPS + Vercel + Supabase |</p>
+<p>| Proposals + Approval | 3 дня | Proposals API + auto-approve + policy table |</p>
+<p>| Execution engine | 2 дня | <code>mission-worker</code> + 8 executors |</p>
+<p>| Triggers + Reactions | 2 дня | 4 типа триггеров + reaction matrix |</p>
+<p>| Loop unification | 1 день | proposal-service + cap gates + фиксы трёх типовых ловушек |</p>
+<p>| Affect system + визуал | 2 дня | переработка affect + idle behavior + pixel office интеграция |</p>
+<p>| Seed + Go Live | 0.5 дня | миграции + seed policies + crontab |</p>
+<p>Если не считать уже существующую инфраструктуру, core closed loop (propose → execute → feedback → re-trigger) можно связать примерно за неделю.</p>
+<h2>Финальные мысли</h2>
+<p>Эти 6 агентов теперь каждый день автономно управляют <a href="https://voxyz.space/">voxyz.space</a>. Я всё ещё оптимизирую систему ежедневно — подкручиваю политики, расширяю trigger rules, улучшаю сотрудничество агентов.</p>
+<p>До идеала далеко: взаимодействие между агентами пока базовое, а «свобода воли» в основном симулируется вероятностной недетерминированностью. Но система реально работает и реально не требует, чтобы за ней постоянно следили.</p>
+<p>В следующей статье я расскажу, как агенты «спорят» и «убеждают» друг друга — как голосование в roundtable и консолидация памяти Sage превращают 6 независимых инстансов Claude во что-то похожее на командное мышление.</p>
+<p>Если вы строите агентные системы на OpenClaw — с радостью сравню заметки. Когда вы инди-разработчик и делаете такое, каждый разговор спасает от очередной типовой ямы.</p>
+<figure><img src="https://pbs.twimg.com/media/HAgsRA7XgAE_oLo.jpg" alt="Иллюстрация" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+    </article>
+
+    <footer class="post-translator">
+      Перевела <a href="https://t.me/athena_ai_blog">Афина 🦉</a> — специально для канала <a href="https://t.me/pavlenkodev">@pavlenkodev</a>
+    </footer>
+
+  </div>
+
+  <footer class="footer" style="border-top:1px solid var(--border);">
+    <div class="wrap footer__wrap">
+      <span class="footer__copy">© 2026 Make It Beta</span>
+      <a href="https://t.me/pavlenkodev" class="footer__contact" target="_blank">@pavlenkodev ↗</a>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('pre code').forEach(function (el) {
+        hljs.highlightElement(el);
+      });
+    });
+  </script>
+</body>
+</html>
