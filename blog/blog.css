@@ -37,10 +37,12 @@
   font-weight: 700;
   font-size: .95rem;
   letter-spacing: -.02em;
+  line-height: 1.25;
   transition: color .2s;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* allow long titles to wrap instead of truncating */
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
 }
 
 .blog-card__meta {
