@@ -37,6 +37,13 @@ TEMPLATE = BLOG_DIR / '_template.html'
 MONTHS_RU = ['января','февраля','марта','апреля','мая','июня',
              'июля','августа','сентября','октября','ноября','декабря']
 
+ALLOWED_RAW_HTML_LINES = {
+    '<details>', '</details>',
+    '</summary>',
+}
+
+RAW_HTML_PREFIXES = ('<summary>',)
+
 def date_ru(iso: str) -> str:
     y, m, d = iso.split('-')
     return f"{int(d)} {MONTHS_RU[int(m)-1]} {y}"
@@ -78,6 +85,17 @@ def md_to_html(md: str) -> str:
         return s
 
     for line in lines:
+        # Raw HTML passthrough for collapsible sources (allow only a tiny safe subset)
+        sline = line.strip()
+        if sline in ALLOWED_RAW_HTML_LINES or any(sline.startswith(pfx) for pfx in RAW_HTML_PREFIXES):
+            flush_list()
+            html_parts.append(line)
+            continue
+
+        # Ignore markdown separators
+        if sline == '---':
+            flush_list()
+            continue
         # Fenced code blocks
         if line.startswith('```'):
             if not in_code:
