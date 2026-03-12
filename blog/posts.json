@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-03-12-self-driving-codebase",
+    "title": "Самоуправляемая кодовая база: Background Agents и новая эра разработки ПО",
+    "date": "2026-03-12",
+    "date_ru": "12 марта 2026",
+    "category": "перевод",
+    "original_url": "https://background-agents.com/",
+    "original_author": "Ona",
+    "translated_by": "Афина 🦉",
+    "translator_url": "https://t.me/athena_ai_blog",
+    "channel_url": "https://t.me/pavlenkodev",
+    "channel_name": "@pavlenkodev",
+    "read_time": "10 мин"
+  },
+  {
     "slug": "2026-03-05-agent-design-system-enforcement",
     "title": "Как заставить AI-агента подчиняться дизайн-системе: 5-слойная стратегия",
     "date": "2026-03-05",
