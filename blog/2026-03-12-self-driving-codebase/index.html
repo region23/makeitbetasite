@@ -54,25 +54,26 @@
     </header>
 
     <div class="post-original">
-      Оригинал: <a href="https://background-agents.com/" target="_blank">Ona (Lou Bichard)</a>
+      Оригинал: <a href="https://background-agents.com/" target="_blank">Ona</a>
     </div>
 
     <article class="post-body">
       <h1>Самоуправляемая кодовая база: Background Agents и новая эра разработки ПО</h1>
-<figure><img src="images/og-image.jpg" alt="Background Agents" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
 <h2>Background agents работают на всех этапах SDLC</h2>
 <p>Процессы разработки ПО проектировались вокруг ограничений человека за клавиатурой. Теперь агенты работают автономно, охватывая тысячи репозиториев в фоновом режиме. Этот тренд уже набирает обороты в таких компаниях, как Stripe, которые недавно опубликовали материал о своей <a href="https://stripe.dev/blog/minions-stripes-one-shot-end-to-end-coding-agents">платформе Minions</a>, <a href="https://builders.ramp.com/post/why-we-built-our-background-agent">Ramp</a> и <a href="https://engineering.atspotify.com/2025/11/spotifys-background-coding-agent-part-1">Spotify</a>. Старые процессы больше не справляются с этими изменениями. Теперь каждый инженерный лидер задаёт один и тот же вопрос: <strong>как перейти от текущего процесса доставки к самоуправляемой кодовой базе?</strong></p>
+<figure><img src="images/sdlc.svg" alt="SDLC Pipeline" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
 <h2>Наши системы упираются в localhost</h2>
 <p>Автодополнение превратилось в coding-агентов. Coding-агенты превратились в три coding-агента, работающих параллельно на вашем ноутбуке. Инженеры стали использовать worktrees, всё больше терминалов, запасные Mac Mini. Что угодно, лишь бы запустить больше агентов.</p>
 <p>Но localhost не был создан для этого. Агенты конфликтуют за ресурсы машины, секреты оказываются под угрозой, и всё останавливается, когда машина уходит в сон.</p>
 <p>Для инди-разработчиков это работает, но для <strong>профессиональной инженерии это неприемлемо</strong>. Нужно отвязать инженеров от рабочих станций. Агенты должны работать в фоне — безопасно и масштабируемо.</p>
-<blockquote><p>📖 <a href="https://ona.com/stories/the-last-year-of-localhost?utm_source=background-agents&amp;utm_medium=microsite&amp;utm_campaign=background-agent-manual">The Last Year of Localhost</a> — Johannes Landgraf, сооснователь Ona</p></blockquote>
+<blockquote><p>📖 Читайте: <a href="https://ona.com/stories/the-last-year-of-localhost?utm_source=background-agents&amp;utm_medium=microsite&amp;utm_campaign=background-agent-manual">The Last Year of Localhost</a> — Johannes Landgraf, сооснователь Ona</p></blockquote>
 <h2>Ложная вершина</h2>
 <h3>Скорость отдельного разработчика ≠ скорость организации</h3>
 <p>Вы внедрили coding-агентов. Инженеры стали быстрее. Pull request&#x27;ы хлынули потоком.</p>
 <p>Но cycle time не сдвинулся. Метрики DORA стоят на месте. Бэклог растёт.</p>
 <p>Потому что прирост компаундится на уровне индивида, а не организации. Чем дольше вы инвестируете в coding-агентов, не трогая систему вокруг них, тем глубже закапываетесь.</p>
 <p><strong>Это и есть ложная вершина.</strong></p>
+<figure><img src="images/false_summit.svg" alt="False Summit" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
 <h2>Ответ: агенты, работающие в фоне</h2>
 <p>Coding-агент требует вашу машину и ваше внимание. Background agent — ни того, ни другого. Он работает в собственном окружении разработки в облаке: полный тулчейн, тестовый набор, всё необходимое. Полностью отвязан от вашего устройства и вашей сессии.</p>
 <p>Запустите его с ноутбука, проверьте результат с телефона. Триггером может быть PR, тред в Slack, тикет в Linear, вебхук — или просто ручной запуск.</p>
@@ -88,9 +89,13 @@
 <h3>Среда разработки: агенту нужен компьютер</h3>
 <p>Агенты, работающие в фоне, нуждаются в собственном окружении выполнения с полным тулчейном, возможностью запускать тесты и доступом к системам через секреты.</p>
 <p>Окружения должны быть изолированными и воспроизводимыми, максимально приближенными к продакшену, чтобы обеспечить работу флотов агентов. Всё остальное строится поверх этого.</p>
-<p><strong>Паттерн 1: Агент имеет dev-окружение.</strong> Агент получает полноценную среду разработки — VM с dev-контейнером, вашей кодовой базой, тестовым набором, базами данных и доступом к внутренней сети. Это максимально близко к тому, как работает человек-разработчик. Каждое предприятие, публично поделившееся своей архитектурой агентов — включая Stripe, Ramp и Spotify — выбрало именно этот паттерн.</p>
-<p><strong>Паттерн 2: Sandbox как инструмент.</strong> Агент работает на сервере или локально. Когда ему нужно выполнить код, он вызывает отдельную удалённую песочницу через API. Песочница выполняет код и возвращает результат. Это обеспечивает некоторую изоляцию секретов и выполнения, но агент может только выполнять код, а не полноценно разрабатывать. Лучше подходит для компаний, создающих агентские продукты, чем для организаций, улучшающих собственные инженерные процессы.</p>
-<blockquote><p>📖 <a href="https://ona.com/stories/dont-build-a-coding-agent-sandbox?utm_source=background-agents&amp;utm_medium=microsite&amp;utm_campaign=background-agent-manual">Don&#x27;t Build Your Own Sandbox</a> — Lou Bichard, Field CTO at Ona</p></blockquote>
+<p><strong>Паттерн 1: Агент имеет dev-окружение</strong></p>
+<figure><img src="images/pattern1.svg" alt="Pattern 1: Agent has dev environment" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Агент получает полноценную среду разработки — VM с dev-контейнером, вашей кодовой базой, тестовым набором, базами данных и доступом к внутренней сети. Это максимально близко к тому, как работает человек-разработчик. Каждое предприятие, публично поделившееся своей архитектурой агентов — включая Stripe, Ramp и Spotify — выбрало именно этот паттерн.</p>
+<p><strong>Паттерн 2: Sandbox как инструмент</strong></p>
+<figure><img src="images/pattern2.svg" alt="Pattern 2: Sandbox as tool" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Агент работает на сервере или локально. Когда ему нужно выполнить код, он вызывает отдельную удалённую песочницу через API. Песочница выполняет код и возвращает результат. Это обеспечивает некоторую изоляцию секретов и выполнения, но агент может только выполнять код, а не полноценно разрабатывать. Лучше подходит для компаний, создающих агентские продукты, чем для организаций, улучшающих собственные инженерные рабочие процессы.</p>
+<blockquote><p>📖 Читайте: <a href="https://ona.com/stories/dont-build-a-coding-agent-sandbox?utm_source=background-agents&amp;utm_medium=microsite&amp;utm_campaign=background-agent-manual">Don&#x27;t Build Your Own Sandbox</a> — Lou Bichard, Field CTO в Ona</p></blockquote>
 <h3>Governance: enforcement на уровне runtime, а не промпта</h3>
 <p>Агенты — это акторы в вашей системе. Им нужны те же контроли, что и человеческим контрибьюторам: идентификация, разрешения, аудит-трейлы.</p>
 <p>Разница: governance, установленный через системный промпт («пожалуйста, не удаляйте файлы»), — это рекомендация. Governance, установленный на уровне исполнения — deny-листы, scoped credentials, детерминированная блокировка команд — это реальный governance. Без этого команды безопасности заблокируют автономных агентов. И будут правы.</p>
@@ -104,8 +109,7 @@
 <li><strong>⊞ Agent fleets</strong> — одна задача на множество репозиториев. Каждый агент работает независимо и вносит свой вклад.</li>
 <li><strong>◉ Agent swarms</strong> — много агентов, один результат. Каждый агент работает над своей гранью, результаты сходятся в единый деливерабл.</li>
 </ul>
-<h3>Mobile</h3>
-<p>Запустите одного или множество агентов прямо с телефона или из iMessage. Одно сообщение — и флот разлетается по задачам. Новый TDD — Taxi Driven Development.</p>
+<p><strong>📱 Mobile</strong> — запустите одного или множество агентов прямо с телефона или из iMessage. Одно сообщение — и флот разлетается по задачам. Новый TDD — Taxi Driven Development.</p>
 <h3>Координация флота: один интент, каждый репозиторий</h3>
 <p>Обновить один репозиторий — задача coding-агента. Обновить 500 — задача флота. Та же песочница, реплицированная на каждый репозиторий, которому нужны изменения — параллельное развёртывание, отслеживание прогресса, агрегированные результаты. Именно здесь индивидуальная продуктивность превращается в организационную пропускную способность.</p>
 <h2>Шаг 02: Найдите узкие места в системе</h2>
@@ -113,43 +117,36 @@
 <p><strong>Код-ревью, которые копятся быстрее, чем когда-либо.</strong> PR&#x27;ы лежат часами, пока вы переключаете контекст. В масштабе очереди на ревью растут, и lead time остаётся на месте, несмотря на ускорение кодинга. Background agent ревьюит каждый PR до того, как его увидит человек, — и ревьюеры фокусируются на дизайне, а не на форматировании.</p>
 <h2>Шаг 03: Масштабируйте вашу фабрику ПО</h2>
 <p>Инженерная организация — это индустриальная система. Сегодня разработчики стоят на каждом участке: пишут, ревьюят, тестируют. Background agents меняют операционную модель. Фабрика работает, но ваши инженеры переходят с позиции *in the loop* на позицию *on the loop*.</p>
+<figure><img src="images/factory.svg" alt="Software Factory" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
 <ul>
-<li>Каждый PR ревьюится агентом до того, как его увидит человек</li>
-<li>CI-фейлы исследуются и чинятся прежде, чем разработчику придёт оповещение</li>
-<li>Разработчики никогда не резолвят merge-конфликты на PR&#x27;ах агентов вручную</li>
-<li>Агенты проводят первичное расследование каждого продакшен-инцидента</li>
-<li>Уязвимости безопасности патчатся за часы, а не за спринты</li>
+<li>✅ Каждый PR ревьюится агентом до того, как его увидит человек</li>
+<li>✅ Падения CI расследуются и чинятся до того, как разработчик получит уведомление</li>
+<li>✅ Разработчики никогда вручную не разрешают merge-конфликты в PR от агентов</li>
+<li>✅ Агенты проводят первичное расследование каждого инцидента в продакшене</li>
+<li>✅ Уязвимости безопасности патчатся за часы, а не за спринты</li>
 </ul>
-<blockquote><p>📖 <a href="https://ona.com/stories/industrializing-software-development?utm_source=background-agents&amp;utm_medium=microsite&amp;utm_campaign=background-agent-manual">Industrializing Software Development</a> — Christian Weichel, сооснователь Ona</p></blockquote>
+<blockquote><p>📖 Читайте: <a href="https://ona.com/stories/industrializing-software-development?utm_source=background-agents&amp;utm_medium=microsite&amp;utm_campaign=background-agent-manual">Industrializing Software Development</a> — Christian Weichel, сооснователь Ona</p></blockquote>
 <h2>К самоуправляемой кодовой базе</h2>
-<h3>Ваши инженеры не в цикле. Они над циклом.</h3>
+<p><strong>Ваши инженеры не в цикле. Они над циклом.</strong></p>
 <p>Фабрика работает. Код пишется, ревьюится, тестируется, деплоится — непрерывно, автономно. Ваши инженеры наблюдают. Устанавливают ограничения. Верифицируют результаты.</p>
 <h2>FAQ</h2>
-<p><strong>Можно ли просто запустить coding-агентов в фоне на ноутбуке?</strong></p>
-<p>Технически — да, но это не масштабируется. Агенты конфликтуют за ресурсы машины, секреты оказываются под угрозой, а всё останавливается, когда ноутбук засыпает. Для профессиональной разработки нужна облачная инфраструктура.</p>
-<p><strong>Какая инфраструктура нужна background agents?</strong></p>
-<p>Пять примитивов: изолированное окружение выполнения, governance на уровне runtime, подключение к внутренним системам (за firewall), триггеры автоматизации и координация флотов агентов.</p>
-<p><strong>Безопасны ли background agents?</strong></p>
-<p>При правильном governance — да. Ключевое: enforcement на уровне исполнения (deny-листы, scoped credentials, блокировка команд), а не на уровне промпта.</p>
-<p><strong>Background agents заменяют разработчиков?</strong></p>
-<p>Нет. Они меняют роль разработчика с «в цикле» на «над циклом». Инженеры переходят от написания кода к наблюдению, установке ограничений и верификации результатов.</p>
-<p><strong>Какие типичные сценарии использования?</strong></p>
-<p>Код-ревью, миграция CI-пайплайнов, патчинг CVE-уязвимостей, обновление зависимостей, lint-проверки, миграция легаси-кода (например, COBOL → Java).</p>
-<p><strong>Чем background agents отличаются от CI/CD-пайплайнов?</strong></p>
-<p>CI/CD выполняет детерминированные, заранее определённые шаги. Background agents принимают решения, адаптируются к контексту и выполняют задачи, требующие рассуждений — от написания кода до расследования инцидентов.</p>
+<p><strong>Можно ли просто запустить coding-агентов в фоне на ноутбуке?</strong> Технически — да, но это не масштабируется. Агенты конфликтуют за ресурсы, секреты оказываются под угрозой, всё останавливается, когда машина засыпает.</p>
+<p><strong>Какая инфраструктура нужна background agents?</strong> Песочницы для изолированного выполнения, governance на уровне runtime, подключение к внутренним системам (IAM, базы, API), триггеры и координация флотов.</p>
+<p><strong>Background agents безопасны?</strong> При правильной реализации — да. Ключ: governance на уровне исполнения (deny-листы, scoped credentials), а не через промпт.</p>
+<p><strong>Background agents заменят разработчиков?</strong> Нет. Они переводят разработчиков из позиции «в цикле» в позицию «над циклом» — наблюдение, установка ограничений, верификация результатов.</p>
 <h2>Дополнительное чтение</h2>
 <ol>
-<li><a href="https://engineering.atspotify.com/2025/11/spotifys-background-coding-agent-part-1">Spotify&#x27;s Background Coding Agent — Part 1</a></li>
-<li><a href="https://engineering.atspotify.com/2025/11/context-engineering-background-coding-agents-part-2">Context Engineering — Background Coding Agents Part 2</a> (Spotify)</li>
-<li><a href="https://engineering.atspotify.com/2025/12/feedback-loops-background-coding-agents-part-3">Feedback Loops — Background Coding Agents Part 3</a> (Spotify)</li>
-<li><a href="https://builders.ramp.com/post/why-we-built-our-background-agent">Why We Built Our Background Agent</a> (Ramp)</li>
+<li><a href="https://engineering.atspotify.com/2025/11/spotifys-background-coding-agent-part-1">Spotify&#x27;s Background Coding Agent (Part 1)</a></li>
+<li><a href="https://engineering.atspotify.com/2025/11/context-engineering-background-coding-agents-part-2">Context Engineering — Background Coding Agents (Part 2)</a></li>
+<li><a href="https://engineering.atspotify.com/2025/12/feedback-loops-background-coding-agents-part-3">Feedback Loops — Background Coding Agents (Part 3)</a></li>
+<li><a href="https://builders.ramp.com/post/why-we-built-our-background-agent">Why We Built Our Background Agent — Ramp</a></li>
 <li><a href="https://stripe.dev/blog/minions-stripes-one-shot-end-to-end-coding-agents">Minions: Stripe&#x27;s One-Shot End-to-End Coding Agents</a></li>
-<li><a href="https://stripe.dev/blog/minions-stripes-one-shot-end-to-end-coding-agents-part-2">Minions — Part 2</a> (Stripe)</li>
-<li><a href="https://ona.com/stories/time-between-disengagements-the-rise-of-the-software-conductor">Time Between Disengagements: The Rise of the Software Conductor</a> (Ona)</li>
-<li><a href="https://ona.com/stories/industrializing-software-development">Industrializing Software Development</a> (Ona)</li>
-<li><a href="https://cursor.com/blog/long-running-agents">Towards Self-Driving Codebases</a> (Cursor)</li>
-<li><a href="https://cursor.com/blog/self-driving-codebases">Expanding Our Long-Running Agents Research Preview</a> (Cursor)</li>
-<li><a href="https://x.com/hwchase17/status/2021261552222158955">The Two Patterns by Which Agents Connect Sandboxes</a> (LangChain)</li>
+<li><a href="https://stripe.dev/blog/minions-stripes-one-shot-end-to-end-coding-agents-part-2">Minions Part 2 — Stripe</a></li>
+<li><a href="https://ona.com/stories/time-between-disengagements-the-rise-of-the-software-conductor">Time Between Disengagements: The Rise of the Software Conductor — Ona</a></li>
+<li><a href="https://ona.com/stories/industrializing-software-development">Industrializing Software Development — Ona</a></li>
+<li><a href="https://cursor.com/blog/long-running-agents">Towards Self-Driving Codebases — Cursor</a></li>
+<li><a href="https://cursor.com/blog/self-driving-codebases">Expanding Our Long-Running Agents Research Preview — Cursor</a></li>
+<li><a href="https://x.com/hwchase17/status/2021261552222158955">The Two Patterns by Which Agents Connect Sandboxes — LangChain</a></li>
 </ol>
     </article>
 
