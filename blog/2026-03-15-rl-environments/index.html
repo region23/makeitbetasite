@@ -110,10 +110,12 @@
 <h2>NVIDIA NeMo Gym</h2>
 <p><a href="https://github.com/NVIDIA-NeMo/Gym">NeMo Gym</a> — open-source библиотека для построения и масштабирования RL-окружений, проверенная в бою при разработке семейства моделей Nemotron 3.</p>
 <p>NeMo Gym решает описанные проблемы, обеспечивая чёткое разделение сбора роллаутов и обучения, стандартизацию траекторий с использованием OpenAI Responses API и инфраструктуру для управления жизненным циклом ресурсов, масштабируемую до тысяч параллельных окружений.</p>
+<figure><img src="https://unsloth.ai/cgi/image/Figure_1_gOriy5UAqPJ-cmKMadLYp.png?width=3840&quality=80&format=auto" alt="Архитектура NeMo Gym: разделение оркестрации роллаутов окружения от обучения и генерации модели" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
 <p>В NeMo Gym <strong>задачи</strong> определяют, что агент должен выполнить. <strong>Ресурсы</strong> предоставляют внешнее состояние, с которым агент взаимодействует — инструменты, базы данных, sandboxed-исполнение, — а также логику верификации для оценки результатов. <strong>Model Interface</strong> управляет генерацией, производя действия модели на каждом шаге: текст, вызовы инструментов, код. <strong>Агент</strong> оркестрирует каждый роллаут: вызывает модель для генерации действий, обновляет состояние окружения через серверы ресурсов и собирает финальную награду.</p>
 <p>NVIDIA NeMo Gym интегрируется с библиотеками RL-обучения — NeMo RL, Unsloth, Hugging Face TRL и другими, реализующими алгоритмы обучения (например, GRPO) для обновления модели. NeMo Gym собирает траектории роллаутов и награды из окружения и передаёт их фреймворку обучения, который управляет обновлением политики и обслуживает обновлённую модель для следующего раунда роллаутов.</p>
 <h2>Путь RLVR-практика: от бенчмарков к обучению</h2>
 <p>Прежде чем написать хоть одну строку кода, важно понять двухфазный путь RLVR-практика.</p>
+<figure><img src="https://unsloth.ai/cgi/image/Figure2_krKcCuK8VRU_nQ8EbQD03.png?width=3840&quality=80&format=auto" alt="В RLVR-процессе подготовка окружения предшествует обучению модели и определяет его" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
 <h3>Фаза 1: Подготовка окружения</h3>
 <ul>
 <li><strong>Бенчмаркинг:</strong> Оцените базовую модель, чтобы выявить конкретные пробелы в способностях (например, ошибки в многошаговой математике или галлюцинации в аргументах инструментов).</li>
@@ -242,6 +244,7 @@ async def verify(self, session_id, agent_response, ground_truth):
 <li><a href="https://docs.nvidia.com/nemo/gym/latest/environment-tutorials/index.html">Туториалы NeMo Gym по окружениям</a> и <a href="https://docs.nvidia.com/nemo/gym/latest/training-tutorials/index.html">по обучению</a> помогут построить кастомные RL-окружения.</li>
 <li><a href="https://github.com/NVIDIA-NeMo/Gym">NeMo Gym на GitHub</a>: Основная библиотека для построения и оркестрации верифицируемых RL-окружений.</li>
 </ul>
+<p>L-окружений.</p>
     </article>
 
     <footer class="post-translator">
