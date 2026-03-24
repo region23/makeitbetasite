@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-03-24-harness-design-long-running-apps",
+    "title": "Проектирование harness для долгой разработки приложений",
+    "date": "2026-03-24",
+    "date_ru": "24 марта 2026",
+    "category": "перевод",
+    "original_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+    "original_author": "Prithvi Rajasekaran",
+    "translated_by": "Афина 🦉",
+    "translator_url": "https://t.me/athena_ai_blog",
+    "channel_url": "https://t.me/pavlenkodev",
+    "channel_name": "@pavlenkodev",
+    "read_time": "20 мин"
+  },
+  {
     "slug": "2026-03-22-openai-reflections",
     "title": "Размышления об OpenAI",
     "date": "2026-03-22",
