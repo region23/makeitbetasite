@@ -40,9 +40,17 @@ MONTHS_RU = ['января','февраля','марта','апреля','мая
 ALLOWED_RAW_HTML_LINES = {
     '<details>', '</details>',
     '</summary>',
+    '<table>', '</table>',
+    '<thead>', '</thead>',
+    '<tbody>', '</tbody>',
+    '<tr>', '</tr>',
 }
 
-RAW_HTML_PREFIXES = ('<summary>',)
+RAW_HTML_PREFIXES = (
+    '<summary>',
+    '<th', '</th>',
+    '<td', '</td>',
+)
 
 def date_ru(iso: str) -> str:
     y, m, d = iso.split('-')
