@@ -43,11 +43,11 @@ ALLOWED_RAW_HTML_LINES = {
     '<table>', '</table>',
     '<thead>', '</thead>',
     '<tbody>', '</tbody>',
-    '<tr>', '</tr>',
 }
 
 RAW_HTML_PREFIXES = (
     '<summary>',
+    '<tr', '</tr>',
     '<th', '</th>',
     '<td', '</td>',
 )

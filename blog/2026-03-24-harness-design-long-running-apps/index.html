@@ -103,11 +103,11 @@
 <p>В таблице ниже показан тип harness, время работы и общая стоимость.</p>
 <table>
 <thead>
-<p>&lt;tr&gt;&lt;th&gt;Harness&lt;/th&gt;&lt;th&gt;Длительность&lt;/th&gt;&lt;th&gt;Стоимость&lt;/th&gt;&lt;/tr&gt;</p>
+<tr><th>Harness</th><th>Длительность</th><th>Стоимость</th></tr>
 </thead>
 <tbody>
-<p>&lt;tr&gt;&lt;td&gt;Solo&lt;/td&gt;&lt;td&gt;20 мин&lt;/td&gt;&lt;td&gt;$9&lt;/td&gt;&lt;/tr&gt;</p>
-<p>&lt;tr&gt;&lt;td&gt;Полный harness&lt;/td&gt;&lt;td&gt;6 ч&lt;/td&gt;&lt;td&gt;$200&lt;/td&gt;&lt;/tr&gt;</p>
+<tr><td>Solo</td><td>20 мин</td><td>$9</td></tr>
+<tr><td>Полный harness</td><td>6 ч</td><td>$200</td></tr>
 </tbody>
 </table>
 <p>Harness оказался более чем в 20 раз дороже, но разница в качестве результата была видна сразу.</p>
@@ -121,12 +121,12 @@
 <p>Изучая логи, было ясно, что evaluator удерживал реализацию в рамках спецификации. В каждом спринте он проходил по критериям тестирования спринт-контракта и проверял работающее приложение через Playwright, фиксируя баги при любом расхождении с ожидаемым поведением. Контракты были детальными — только у Sprint 3 было 27 критериев, покрывающих редактор уровней — а находки evaluator были достаточно конкретными, чтобы действовать по ним без дополнительного расследования. В таблице ниже приведены несколько примеров проблем, выявленных нашим evaluator:</p>
 <table>
 <thead>
-<p>&lt;tr&gt;&lt;th&gt;Критерий контракта&lt;/th&gt;&lt;th&gt;Заключение evaluator&lt;/th&gt;&lt;/tr&gt;</p>
+<tr><th>Критерий контракта</th><th>Заключение evaluator</th></tr>
 </thead>
 <tbody>
-<p>&lt;tr&gt;&lt;td&gt;Инструмент прямоугольной заливки позволяет нажать и протянуть для заполнения прямоугольной области выбранным тайлом&lt;/td&gt;&lt;td&gt;FAIL — Инструмент размещает тайлы только в начальной и конечной точках протяжки вместо заполнения области. Функция &lt;code&gt;fillRectangle&lt;/code&gt; существует, но не срабатывает корректно при &lt;code&gt;mouseUp&lt;/code&gt;.&lt;/td&gt;&lt;/tr&gt;</p>
-<p>&lt;tr&gt;&lt;td&gt;Пользователь может выбирать и удалять размещённые точки появления сущностей&lt;/td&gt;&lt;td&gt;FAIL — Обработчик клавиши Delete в &lt;code&gt;LevelEditor.tsx:892&lt;/code&gt; требует установки и selection, и &lt;code&gt;selectedEntityId&lt;/code&gt;, но клик по сущности устанавливает только &lt;code&gt;selectedEntityId&lt;/code&gt;. Условие должно быть &lt;code&gt;selection || (selectedEntityId &amp;&amp; activeLayer === &#x27;entity&#x27;)&lt;/code&gt;.&lt;/td&gt;&lt;/tr&gt;</p>
-<p>&lt;tr&gt;&lt;td&gt;Пользователь может переупорядочить кадры анимации через API&lt;/td&gt;&lt;td&gt;FAIL — Маршрут &lt;code&gt;PUT /frames/reorder&lt;/code&gt; определён после маршрутов &lt;code&gt;/{frame_id}&lt;/code&gt;. FastAPI сопоставляет &lt;code&gt;&#x27;reorder&#x27;&lt;/code&gt; как целое число &lt;code&gt;frame_id&lt;/code&gt; и возвращает 422: &quot;unable to parse string as an integer.&quot;&lt;/td&gt;&lt;/tr&gt;</p>
+<tr><td>Инструмент прямоугольной заливки позволяет нажать и протянуть для заполнения прямоугольной области выбранным тайлом</td><td>FAIL — Инструмент размещает тайлы только в начальной и конечной точках протяжки вместо заполнения области. Функция <code>fillRectangle</code> существует, но не срабатывает корректно при <code>mouseUp</code>.</td></tr>
+<tr><td>Пользователь может выбирать и удалять размещённые точки появления сущностей</td><td>FAIL — Обработчик клавиши Delete в <code>LevelEditor.tsx:892</code> требует установки и selection, и <code>selectedEntityId</code>, но клик по сущности устанавливает только <code>selectedEntityId</code>. Условие должно быть <code>selection || (selectedEntityId && activeLayer === 'entity')</code>.</td></tr>
+<tr><td>Пользователь может переупорядочить кадры анимации через API</td><td>FAIL — Маршрут <code>PUT /frames/reorder</code> определён после маршрутов <code>/{frame_id}</code>. FastAPI сопоставляет <code>'reorder'</code> как целое число <code>frame_id</code> и возвращает 422: "unable to parse string as an integer."</td></tr>
 </tbody>
 </table>
 <p>Добиться от evaluator такого уровня работы стоило усилий. Из коробки Claude — слабый QA-агент. В ранних запусках я наблюдал, как он выявлял реальные проблемы, а затем убеждал себя, что они не так уж важны, и одобрял работу. Он также склонен был тестировать поверхностно, не проверяя крайние случаи, из-за чего более тонкие баги часто проскальзывали. Цикл настройки состоял в том, чтобы читать логи evaluator, находить примеры расхождения его суждений с моими и обновлять промпт QA для решения этих проблем. Потребовалось несколько раундов такого цикла разработки, прежде чем evaluator стал оценивать работу так, как я считал адекватным. Даже тогда результаты harness демонстрировали пределы возможностей модели в плане QA: мелкие проблемы с макетом, местами неинтуитивные взаимодействия и необнаруженные баги в глубоко вложенных функциях, которые evaluator не протестировал достаточно тщательно. Запас для роста верификации явно оставался при дальнейшей настройке. Но по сравнению с solo-запуском, где центральная функция приложения просто не работала, прогресс был очевиден.</p>
@@ -147,17 +147,17 @@
 <p>Большая часть времени пришлась на builder, который связно работал более двух часов без декомпозиции на спринты, которая была нужна Opus 4.5.</p>
 <table>
 <thead>
-<p>&lt;tr&gt;&lt;th&gt;Агент и фаза&lt;/th&gt;&lt;th&gt;Длительность&lt;/th&gt;&lt;th&gt;Стоимость&lt;/th&gt;&lt;/tr&gt;</p>
+<tr><th>Агент и фаза</th><th>Длительность</th><th>Стоимость</th></tr>
 </thead>
 <tbody>
-<p>&lt;tr&gt;&lt;td&gt;Planner&lt;/td&gt;&lt;td&gt;4,7 мин&lt;/td&gt;&lt;td&gt;$0,46&lt;/td&gt;&lt;/tr&gt;</p>
-<p>&lt;tr&gt;&lt;td&gt;Build (Раунд 1)&lt;/td&gt;&lt;td&gt;2 ч 7 мин&lt;/td&gt;&lt;td&gt;$71,08&lt;/td&gt;&lt;/tr&gt;</p>
-<p>&lt;tr&gt;&lt;td&gt;QA (Раунд 1)&lt;/td&gt;&lt;td&gt;8,8 мин&lt;/td&gt;&lt;td&gt;$3,24&lt;/td&gt;&lt;/tr&gt;</p>
-<p>&lt;tr&gt;&lt;td&gt;Build (Раунд 2)&lt;/td&gt;&lt;td&gt;1 ч 2 мин&lt;/td&gt;&lt;td&gt;$36,89&lt;/td&gt;&lt;/tr&gt;</p>
-<p>&lt;tr&gt;&lt;td&gt;QA (Раунд 2)&lt;/td&gt;&lt;td&gt;6,8 мин&lt;/td&gt;&lt;td&gt;$3,09&lt;/td&gt;&lt;/tr&gt;</p>
-<p>&lt;tr&gt;&lt;td&gt;Build (Раунд 3)&lt;/td&gt;&lt;td&gt;10,9 мин&lt;/td&gt;&lt;td&gt;$5,88&lt;/td&gt;&lt;/tr&gt;</p>
-<p>&lt;tr&gt;&lt;td&gt;QA (Раунд 3)&lt;/td&gt;&lt;td&gt;9,6 мин&lt;/td&gt;&lt;td&gt;$4,06&lt;/td&gt;&lt;/tr&gt;</p>
-<p>&lt;tr&gt;&lt;td&gt;Итого V2 Harness&lt;/td&gt;&lt;td&gt;3 ч 50 мин&lt;/td&gt;&lt;td&gt;$124,70&lt;/td&gt;&lt;/tr&gt;</p>
+<tr><td>Planner</td><td>4,7 мин</td><td>$0,46</td></tr>
+<tr><td>Build (Раунд 1)</td><td>2 ч 7 мин</td><td>$71,08</td></tr>
+<tr><td>QA (Раунд 1)</td><td>8,8 мин</td><td>$3,24</td></tr>
+<tr><td>Build (Раунд 2)</td><td>1 ч 2 мин</td><td>$36,89</td></tr>
+<tr><td>QA (Раунд 2)</td><td>6,8 мин</td><td>$3,09</td></tr>
+<tr><td>Build (Раунд 3)</td><td>10,9 мин</td><td>$5,88</td></tr>
+<tr><td>QA (Раунд 3)</td><td>9,6 мин</td><td>$4,06</td></tr>
+<tr><td>Итого V2 Harness</td><td>3 ч 50 мин</td><td>$124,70</td></tr>
 </tbody>
 </table>
 <p>Как и с предыдущим harness, planner развернул однострочный промпт в полную спецификацию. По логам было видно, что generator хорошо спланировал приложение и архитектуру агента, подключил агента и протестировал его перед передачей на QA.</p>
