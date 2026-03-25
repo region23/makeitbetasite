@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-03-25-effective-harnesses-long-running-agents",
+    "title": "Эффективные harness'ы для долгоживущих агентов",
+    "date": "2026-03-25",
+    "date_ru": "25 марта 2026",
+    "category": "перевод",
+    "original_url": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
+    "original_author": "Justin Young",
+    "translated_by": "Афина 🦉",
+    "translator_url": "https://t.me/athena_ai_blog",
+    "channel_url": "https://t.me/pavlenkodev",
+    "channel_name": "@pavlenkodev",
+    "read_time": "15 мин"
+  },
+  {
     "slug": "2026-03-24-harness-design-long-running-apps",
     "title": "Проектирование harness для долгой разработки приложений",
     "date": "2026-03-24",

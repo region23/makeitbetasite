@@ -72,6 +72,7 @@ def md_to_html(md: str) -> str:
     code_lang = ''
     code_lines = []
     in_list = None  # 'ul' or 'ol'
+    i = 0
 
     def flush_list():
         nonlocal in_list
@@ -92,17 +93,42 @@ def md_to_html(md: str) -> str:
         s = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2">\1</a>', s)
         return s
 
-    for line in lines:
+    while i < len(lines):
+        line = lines[i]
         # Raw HTML passthrough for collapsible sources (allow only a tiny safe subset)
         sline = line.strip()
         if sline in ALLOWED_RAW_HTML_LINES or any(sline.startswith(pfx) for pfx in RAW_HTML_PREFIXES):
             flush_list()
             html_parts.append(line)
+            i += 1
             continue
+
+        # GitHub-style markdown tables
+        if '|' in line and i + 1 < len(lines):
+            next_line = lines[i + 1].strip()
+            if re.match(r'^\|?(\s*:?-{3,}:?\s*\|)+\s*:?-{3,}:?\s*\|?$', next_line):
+                flush_list()
+                header_cells = [c.strip() for c in line.strip().strip('|').split('|')]
+                rows = []
+                i += 2
+                while i < len(lines) and '|' in lines[i] and lines[i].strip():
+                    rows.append([c.strip() for c in lines[i].strip().strip('|').split('|')])
+                    i += 1
+                html_parts.append('<table>')
+                html_parts.append('<thead><tr>' + ''.join(f'<th>{inline(c)}</th>' for c in header_cells) + '</tr></thead>')
+                html_parts.append('<tbody>')
+                for row in rows:
+                    if len(row) < len(header_cells):
+                        row += [''] * (len(header_cells) - len(row))
+                    html_parts.append('<tr>' + ''.join(f'<td>{inline(c)}</td>' for c in row[:len(header_cells)]) + '</tr>')
+                html_parts.append('</tbody>')
+                html_parts.append('</table>')
+                continue
 
         # Ignore markdown separators
         if sline == '---':
             flush_list()
+            i += 1
             continue
         # Fenced code blocks
         if line.startswith('```'):
@@ -117,25 +143,27 @@ def md_to_html(md: str) -> str:
                 lang_class = f' class="language-{code_lang}"' if code_lang else ''
                 html_parts.append(f'<pre><code{lang_class}>{esc(code_text)}</code></pre>')
                 code_lang = ''
+            i += 1
             continue
 
         if in_code:
             code_lines.append(line)
+            i += 1
             continue
 
         # Headings
         if line.startswith('#### '):
-            flush_list(); html_parts.append(f'<h4>{inline(line[5:])}</h4>'); continue
+            flush_list(); html_parts.append(f'<h4>{inline(line[5:])}</h4>'); i += 1; continue
         if line.startswith('### '):
-            flush_list(); html_parts.append(f'<h3>{inline(line[4:])}</h3>'); continue
+            flush_list(); html_parts.append(f'<h3>{inline(line[4:])}</h3>'); i += 1; continue
         if line.startswith('## '):
-            flush_list(); html_parts.append(f'<h2>{inline(line[3:])}</h2>'); continue
+            flush_list(); html_parts.append(f'<h2>{inline(line[3:])}</h2>'); i += 1; continue
         if line.startswith('# '):
-            flush_list(); html_parts.append(f'<h1>{inline(line[2:])}</h1>'); continue
+            flush_list(); html_parts.append(f'<h1>{inline(line[2:])}</h1>'); i += 1; continue
 
         # Blockquote
         if line.startswith('> '):
-            flush_list(); html_parts.append(f'<blockquote><p>{inline(line[2:])}</p></blockquote>'); continue
+            flush_list(); html_parts.append(f'<blockquote><p>{inline(line[2:])}</p></blockquote>'); i += 1; continue
 
         # Standalone image line: ![alt](url)
         img_match = re.match(r'^!\[([^\]]*)\]\(([^)]+)\)\s*$', line)
@@ -143,6 +171,7 @@ def md_to_html(md: str) -> str:
             flush_list()
             alt, src = img_match.group(1), img_match.group(2)
             html_parts.append(f'<figure><img src="{src}" alt="{esc(alt)}" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>')
+            i += 1
             continue
 
         # Unordered list
@@ -152,6 +181,7 @@ def md_to_html(md: str) -> str:
                 html_parts.append('<ul>')
                 in_list = 'ul'
             html_parts.append(f'<li>{inline(line[2:])}</li>')
+            i += 1
             continue
 
         # Ordered list
@@ -161,16 +191,19 @@ def md_to_html(md: str) -> str:
                 html_parts.append('<ol>')
                 in_list = 'ol'
             html_parts.append(f'<li>{inline(re.sub(r"^\d+\. ","",line))}</li>')
+            i += 1
             continue
 
         # Blank line
         if not line.strip():
             flush_list()
+            i += 1
             continue
 
         # Normal paragraph
         flush_list()
         html_parts.append(f'<p>{inline(line)}</p>')
+        i += 1
 
     flush_list()
     return '\n'.join(html_parts)
