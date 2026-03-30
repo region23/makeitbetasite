@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Новый лимит HiDPI в Apple Silicon M4 и M5 на внешних 4K-дисплеях — Make It Beta</title>
+  <meta name="description" content="Новый лимит HiDPI в Apple Silicon M4 и M5 на внешних 4K-дисплеях" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../blog.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+  <script>
+    (function() {
+      var stored = localStorage.getItem('theme');
+      var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="wrap header__wrap">
+      <a href="/" class="logo">Make It Beta<sup>🧪</sup></a>
+      <nav style="display:flex;align-items:center;gap:24px;">
+        <a href="/blog/" class="header__link">Блог</a>
+        <a href="https://t.me/pavlenkodev" class="header__link" target="_blank">@pavlenkodev</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+          <span id="themeIcon">🌙</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="blog-wrap">
+
+    <nav class="post-breadcrumb">
+      <a href="/">Главная</a> <span>→</span>
+      <a href="/blog/">Блог</a> <span>→</span>
+      <span style="color:var(--ink);">Новый лимит HiDPI в Apple Silicon M4 и M5 на внешних 4K-дисплеях_SHORT</span>
+    </nav>
+
+    <header class="post-header">
+      <span class="tag tag--translation">перевод</span>
+      <h1>Новый лимит HiDPI в Apple Silicon M4 и M5 на внешних 4K-дисплеях</h1>
+      <div class="post-meta">
+        <time>30 марта 2026</time>
+        <span class="post-meta__sep">·</span>
+        <span>15 мин чтения</span>
+        
+      </div>
+    </header>
+
+    <div class="post-original">
+      Оригинал: <a href="https://smcleod.net/2026/03/new-apple-silicon-m4-m5-hidpi-limitation-on-4k-external-displays/" target="_blank">Stephen McLeod</a>
+    </div>
+
+    <article class="post-body">
+      <p>Начиная с M4 и включая новое поколение Apple Silicon M5, macOS больше не предлагает и не позволяет использовать полноразмерные HiDPI-режимы 4K для внешних дисплеев.</p>
+<p>Максимальный доступный HiDPI-режим на панели 3840x2160 теперь — всего лишь 3360x1890 (с backing store 6720x3780 вместо 7680x4320). На машинах с M2/M3 этого ограничения не было.</p>
+<p>Из-за этого регресса Apple фактически оставляет пользователю выбор между:</p>
+<ul>
+<li>Полным экранным пространством в 4K (3840x2160), но с размытым текстом, потому что HiDPI отключён.</li>
+</ul>
+<p>или</p>
+<ul>
+<li>Уменьшенным рабочим пространством на уровне 3.3K (3360x1890), но с чётким текстом (HiDPI), заметно меньшей полезной площадью и интерфейсом macOS, который выглядит нелепо раздутым.</li>
+</ul>
+<h2>Это не аппаратное ограничение</h2>
+<p>DCP (Display Coprocessor) сообщает одинаковые возможности и на M2 Max, и на M5 Max для одного и того же дисплея. Железо M5 Max, согласно собственным спецификациям Apple, поддерживает 8K (7680x4320) при 60 Гц. Но бюджет framebuffer’а на уровне GPU-драйвера для каждого pipe (<code>IOMFBMaxSrcPixels</code>) искусственно ограничивает Pipe 0 шириной 6720 пикселей — это ровно ширина backing store для 3360x1890 HiDPI. При этом остальные три pipe получают полные 7680 пикселей, чего достаточно для 3840x2160 HiDPI.</p>
+<figure><img src="https://smcleod.net/2026/03/new-apple-silicon-m4-m5-hidpi-limitation-on-4k-external-displays/macOS.jpeg" alt="System Settings &gt; Display on a M5 Max" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<h2>Окружение и тестовый стенд</h2>
+<table>
+<thead><tr><th>Параметр</th><th>M5 Max (затронут)</th><th>M2 Max (работает)</th></tr></thead>
+<tbody>
+<tr><td>Чип</td><td>Apple M5 Max</td><td>Apple M2 Max</td></tr>
+<tr><td>Model ID</td><td>Mac17,6</td><td>Mac14,6</td></tr>
+<tr><td>GPU Cores</td><td>40</td><td>38</td></tr>
+<tr><td>macOS</td><td>26.4 (25E246)</td><td>26.4 (25E246)</td></tr>
+<tr><td>Дисплей</td><td>LG HDR 4K 32UN880</td><td>LG HDR 4K 32UN880</td></tr>
+<tr><td>Нативное разрешение</td><td>3840x2160</td><td>3840x2160</td></tr>
+<tr><td>Подключение</td><td>USB-C/Thunderbolt, HBR3 (8.1 Gbps), 4 lanes</td><td>USB-C/Thunderbolt, HBR3 (8.1 Gbps), 4 lanes</td></tr>
+<tr><td>Максимальный HiDPI-режим</td><td>3360x1890</td><td>3840x2160</td></tr>
+</tbody>
+</table>
+<p>Обе машины сообщают одинаковые параметры DCP для дисплея LG:</p>
+<pre><code>MaxActivePixelRate  = 497,664,000
+MaxTotalPixelRate   = 537,600,000
+MaxW                = 3840
+MaxH                = 2160
+MaxBpc              = 10</code></pre>
+<h2>Диагностика и что уже пробовали</h2>
+<h3>Display Override Plist (<code>scale-resolutions</code>)</h3>
+<p>Что делалось: был создан display override plist в <code>/Library/Displays/Contents/Resources/Overrides/DisplayVendorID-1e6d/DisplayProductID-7750</code> с записями <code>scale-resolutions</code> для 7680x4320 HiDPI.</p>
+<p>Результат: на M5 Max это не дало эффекта. Тот же самый plist даёт 3840x2160 HiDPI на M2 Max. На M5 Max WindowServer отказывается вообще перечислять этот режим, независимо от содержимого plist.</p>
+<p>Override plist, который работает на M2 Max:</p>
+<pre><code class="language-xml">&lt;dict&gt;
+    &lt;key&gt;default-resolution&lt;/key&gt;
+    &lt;data&gt;AA8AAIhwAAAAPA==&lt;/data&gt;  &lt;!-- 3840x2160@60 --&gt;
+    &lt;key&gt;DisplayProductID&lt;/key&gt;
+    &lt;integer&gt;30544&lt;/integer&gt;
+    &lt;key&gt;DisplayVendorID&lt;/key&gt;
+    &lt;integer&gt;7789&lt;/integer&gt;
+    &lt;key&gt;scale-resolutions&lt;/key&gt;
+    &lt;array&gt;
+        &lt;data&gt;AAAeAAAAEOAAAAAJACAAAA==&lt;/data&gt;  &lt;!-- 7680x4320 HiDPI --&gt;
+        &lt;data&gt;AAAeAAAAEOA=&lt;/data&gt;               &lt;!-- 7680x4320 --&gt;
+        &lt;data&gt;AAAPAAAACHA=&lt;/data&gt;               &lt;!-- 3840x2160 --&gt;
+    &lt;/array&gt;
+&lt;/dict&gt;</code></pre>
+<h3>Патчинг EDID (software override)</h3>
+<p>Что делалось: в ключ <code>IODisplayEDID</code> внутри override plist записывался пропатченный EDID со следующими изменениями:</p>
+<ul>
+<li>Preferred timing удваивался до 4095x4095 (максимум 12-битного поля EDID)</li>
+<li>Pixel clock выставлялся на максимум (655.35 MHz)</li>
+<li>Пределы диапазона увеличивались до 2550 MHz max pixel clock, 255 kHz max H-freq, 255 Hz max V-freq</li>
+</ul>
+<p>Результат: с такими значениями эффекта не было. Однако waydabber (разработчик BetterDisplay) <a href="https://github.com/waydabber/BetterDisplay/discussions/4215">подтвердил</a>, что software EDID override может работать на M4: он получил 8K framebuffer на 4K TV, добавив корректный 8K timing и объявив его нативным разрешением. Вероятно, моя попытка не сработала потому, что 4095x4095 — это не реальный display timing. Но даже если override сделать правильно, 4K-панель физически не может принять 8K-сигнал. То есть это подтверждает механизм (scaled modes строятся из того, что система считает нативным разрешением), но не даёт практического решения.</p>
+<h3>Прошивка EDID в EEPROM монитора</h3>
+<p>Что делалось: был создан бинарный EDID с повышенными range limits (при этом preferred timing оставался нативным 3840x2160, чтобы не сломать вывод), затем предпринималась попытка прошить его в EEPROM монитора LG через функцию BetterDisplay “Upload EDID”.</p>
+<p>Результат: прошивка не применилась. Монитор продолжил отдавать оригинальный EDID. Возможно, EEPROM у LG 32UN880 read-only, либо DDC-запись через BetterDisplay тихо провалилась. Даже если бы получилось, этот подход менял бы только range limits, но не preferred timing, из которого DCP берёт <code>MaxW</code>/<code>MaxH</code>.</p>
+<h3>Override через IOKit Registry (<code>DisplayHints</code>)</h3>
+<p>Что делалось: была попытка напрямую изменить словарь <code>DisplayHints</code> и массив <code>ConnectionMapping</code> у DCP в IOKit registry через <code>IORegistryEntrySetCFProperty</code>, подставив повышенные значения <code>MaxW</code>, <code>MaxH</code> и <code>MaxActivePixelRate</code>.</p>
+<p>Результат: драйвер DCP явно отвергает запись свойств из userspace с <code>kIOReturnUnsupported</code> (<code>kern_return=-536870201</code>). Этими свойствами владеет kernel-level драйвер <code>AppleDisplayCrossbar</code>, и из userspace их изменить нельзя.</p>
+<h3>Повторное определение дисплея</h3>
+<p>Что делалось: использовался <code>IOServiceRequestProbe</code>, чтобы заставить DCP заново перечитать информацию о дисплее после записи override plist.</p>
+<p>Результат: на список режимов это никак не повлияло. DCP перечитывает данные с физического дисплея, а не из software override.</p>
+<h3>Очистка кэша WindowServer</h3>
+<p>Что делалось: удалялись <code>~/Library/Preferences/ByHost/com.apple.windowserver.displays.*.plist</code>, затем предпринималась попытка перезапустить WindowServer. Также выполнялась полная перезагрузка.</p>
+<p>Результат: <code>killall WindowServer</code> в macOS 26 фактически не перезапускает WindowServer (нет ни мигания экрана, ни разрыва сессии). Полная перезагрузка с override plist на месте всё равно не дала режим 3840x2160 HiDPI. Дело не в кэше.</p>
+<h3>Уменьшение числа подключённых дисплеев</h3>
+<p>Что делалось: третий дисплей (U13ZA) отключался, чтобы проверить, не упирается ли всё в бюджет пропускной способности DCP между display pipe.</p>
+<p>Результат: без изменений. Даже с двумя дисплеями (LG + встроенный) список режимов оставался тем же. Ограничение не связано с количеством подключённых дисплеев.</p>
+<h3>HDMI vs USB-C/Thunderbolt</h3>
+<p>Что делалось: рассматривался переход с USB-C/DisplayPort на HDMI.</p>
+<p>Результат: не тестировалось; у HDMI 2.0 пропускная способность ниже (14.4 Gbps против 25.92 Gbps у DP 1.4 HBR3), так что результат был бы тем же или хуже.</p>
+<h3>Private API SkyLight (<code>SLConfigureDisplayWithDisplayMode</code>)</h3>
+<p>Что делалось: использовался <code>SLConfigureDisplayWithDisplayMode</code> из приватного фреймворка SkyLight, чтобы напрямую применить режим 3840x2160 HiDPI (7680x4320 pixel backing, <code>scale=2.0</code>) к дисплею LG. Режим брался как из списка CG modes, так и с других дисплеев.</p>
+<p>Результат: возвращается error code 1000, если режима нет в собственном mode list дисплея. SkyLight API для конфигурации дисплеев валидирует режимы по тому же mode list, который строится из DCP, как и WindowServer. Приватного API-обхода этой валидации нет.</p>
+<h2>Где именно применяется лимит</h2>
+<p>DCP сообщает одинаковые capability-параметры на обеих машинах — <code>MaxActivePixelRate</code>, <code>MaxW</code>, <code>MaxH</code>, <code>MaxTotalPixelRate</code> совпадают. Это берётся из EDID дисплея, так что здесь всё ожидаемо.</p>
+<p>Разница проявляется в mode list WindowServer. На M2 Max <code>CGSGetNumberOfDisplayModes</code> включает 3840x2160 при <code>scale=2.0</code>. На M5 Max, при тех же параметрах DCP и тех же override plist, такого режима просто нет.</p>
+<h3><code>IOMFBMaxSrcPixels</code> — бюджет framebuffer на каждый pipe</h3>
+<p><code>IOMFBMaxSrcPixels</code> на сервисе <code>IOMobileFramebufferShim</code> в IOKit раскрывает бюджеты размера framebuffer для каждого display pipe. На M5 Max, где LG сидит на Pipe 0:</p>
+<pre><code class="language-json">&quot;IOMFBMaxSrcPixels&quot; = {
+    &quot;MaxSrcRectHeightForPipe&quot; = (4608, 4608, 4608, 4608),
+    &quot;MaxSrcRectWidthForPipe&quot;  = (6720, 7680, 7680, 7680),
+    &quot;MaxSrcBufferHeight&quot;      = 16384,
+    &quot;MaxSrcBufferWidth&quot;       = 16384,
+    &quot;IOMFBCompressionSupport&quot; = 1
+}</code></pre>
+<p><code>MaxSrcRectWidthForPipe</code> — это массив с максимальной шириной backing store, которую GPU-драйвер готов выделить для каждого display pipe:</p>
+<table>
+<thead><tr><th>Pipe</th><th>MaxSrcRectWidth</th><th>Что это значит</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>6720</td><td>Pipe монитора LG (подтверждено через ConnectionMapping PipeIDs)</td></tr>
+<tr><td>1</td><td>7680</td><td>Этого хватило бы для 3840x2160 HiDPI</td></tr>
+<tr><td>2</td><td>7680</td><td>Этого хватило бы для 3840x2160 HiDPI</td></tr>
+<tr><td>3</td><td>7680</td><td>Этого хватило бы для 3840x2160 HiDPI</td></tr>
+</tbody>
+</table>
+<p>Бюджет Pipe 0 в 6720 пикселей идеально совпадает с наблюдаемым потолком: для 3360x1890 HiDPI нужен backing store размером 6720x3780. Для 3840x2160 HiDPI нужен backing store шириной 7680 пикселей. У Pipe 0 на это не хватает бюджета, а у Pipe 1–3 хватает. То есть железо явно умеет это делать, просто LG оказался на «неудачном» pipe.</p>
+<p>Это свойство задаётся kernel-level драйвером <code>IOMobileFramebufferShim</code>, и из userspace его изменить нельзя.</p>
+<h3>Бюджет фиксируется при загрузке</h3>
+<p>Тесты подтвердили, что <code>MaxSrcRectWidthForPipe</code> задаётся при загрузке драйвера и не меняется во время работы, что бы вы ни делали:</p>
+<table>
+<thead><tr><th>Тест</th><th>Pipe 0 MaxSrcRectWidth</th><th>Изменилось?</th></tr></thead>
+<tbody>
+<tr><td>LG на USB-C port 1</td><td>6720</td><td>Нет</td></tr>
+<tr><td>LG на USB-C port 2</td><td>6720</td><td>Нет</td></tr>
+<tr><td>LG на USB-C port 3</td><td>6720</td><td>Нет</td></tr>
+<tr><td>LG по HDMI</td><td>6720</td><td>Нет</td></tr>
+<tr><td>U13ZA отключён (всего 2 дисплея)</td><td>6720</td><td>Нет</td></tr>
+<tr><td>Clamshell mode (только LG, крышка закрыта)</td><td>6720</td><td>Нет</td></tr>
+<tr><td>EDID с VIC 199 (8K) прошит в монитор</td><td>6720</td><td>Нет</td></tr>
+<tr><td>EDID с preferred DTD 4095x4095</td><td>6720</td><td>Нет</td></tr>
+<tr><td>Software override plist с 8K `default-resolution`</td><td>6720</td><td>Нет</td></tr>
+<tr><td>BetterDisplay: native resolution = 7680x4320</td><td>6720</td><td>Нет</td></tr>
+</tbody>
+</table>
+<p>Возможно, драйвер читает содержимое EDID на ранней стадии boot и по нему решает, как распределять эти бюджеты (как предполагает анализ waydabber), но это пока не подтверждено cold boot-тестом с модифицированным EDID.</p>
+<h3>Что, вероятно, происходит</h3>
+<p>Разработчик BetterDisplay waydabber в <a href="https://github.com/waydabber/BetterDisplay/discussions/4215">discussion #4215</a> описывает изменение так:</p>
+<blockquote><p>“Generally 3840x2160 HiDPI is not available with any M4 generation Mac on non-8K displays due to the new dynamic nature of how the system allocates resources. There might be exceptions maybe - when the system concludes that no other displays could be attached and there are resources left still for a higher resolution framebuffer. But normally the system allocates as low framebuffer size as possible, anticipating further displays to be connected and saving room for those.”</p></blockquote>
+<p>Данные <code>IOMFBMaxSrcPixels</code> хорошо укладываются в это объяснение. M5 Max поддерживает до 4 внешних дисплеев, и GPU-драйвер при загрузке заранее распределяет framebuffer budgets между всеми pipe, исходя из максимальной конфигурации дисплеев, которую поддерживает чип. Pipe 0 получает уменьшенный бюджет 6720, чтобы оставить запас под дисплеи, которые ещё могут быть подключены. Даже в clamshell mode, когда подключён только LG, бюджет остаётся 6720 — драйверу неважно, сколько дисплеев реально подключено в данный момент.</p>
+<p>Если собрать всё вместе:</p>
+<ul>
+<li>DCP сообщает одинаковые capabilities на M2 Max и M5 Max (одинаковые <code>MaxW</code>, <code>MaxH</code>, <code>MaxActivePixelRate</code>)</li>
+<li>На M5 Max <code>MaxSrcRectWidthForPipe</code> для Pipe 0 равен 6720, что ограничивает ширину backing store и, следовательно, потолок HiDPI на уровне 3360x1890</li>
+<li>На M2 Max этого ограничения на pipe либо нет, либо на pipe для LG выделяется полноценные 7680</li>
+<li>Отключение других дисплеев не меняет pipe budgets</li>
+<li>Software EDID override действительно может влиять на генерацию режимов (waydabber подтвердил это, подменив нативное разрешение на 8K на M4), но только ценой лжи системе о нативном разрешении дисплея — а значит, сам дисплей не сможет использовать получившийся сигнал</li>
+</ul>
+<p>Scaled resolution modes на M4/M5 строятся исходя из того, что система считает нативным разрешением дисплея. На M2/M3 система генерировала HiDPI-режимы вплоть до 2.0x от native resolution (то есть для 3840x2160 native получался backing store 7680x4320). На M4/M5 потолок теперь около 1.75x. Систему можно обмануть через EDID override, заставив её поверить в более высокое native resolution, но тогда дисплей не сможет принять такой сигнал. Для 4K-панелей это не практический workaround.</p>
+<h2>Что могло бы это исправить</h2>
+<p>Здесь нужен фикс со стороны Apple в механике распределения per-pipe budgets внутри драйвера <code>IOMobileFramebufferShim</code>. Конкретно: для Pipe 0 значение <code>MaxSrcRectWidthForPipe</code> должно быть 7680 вместо 6720, когда подключён дисплей 3840x2160. Несколько возможных вариантов:</p>
+<ul>
+<li>Поднимать per-pipe budget до 7680, если нативное разрешение подключённого дисплея — 3840x2160</li>
+<li>Перераспределять budgets по pipe исходя из реально подключённых дисплеев, а не держать резерв под worst-case scenario</li>
+<li>Дать пользователю override для per-pipe framebuffer budgets (через системную настройку или <code>nvram</code> variable)</li>
+</ul>
+<p>Проблема не в железе: на той же машине Pipe 1–3 уже имеют бюджеты шириной 7680. Автор отправил Apple Feedback <code>FB22365722</code>.</p>
+<p>Для 5K- или 8K-панелей этот конкретный лимит может не проявляться так же жёстко, потому что их EDID native resolution уже достаточно высокое, и даже масштабирование на уровне 1.75x даёт приемлемый backing store.</p>
+<h2>Приложение: команды диагностики и вывод</h2>
+<p>Ниже — команды, с помощью которых можно воспроизвести наблюдения на любом Mac. Все, кроме №3, работают без специальных разрешений. Команда №6 — самая полезная для диагностики именно этой проблемы.</p>
+<h3>Диагностические команды</h3>
+<pre><code class="language-bash"># 1. DCP rate limits and native caps per display
+ioreg -l -w0 | grep -o &#x27;&quot;MaxActivePixelRate&quot;=[0-9]*\|&quot;MaxW&quot;=[0-9]*\|&quot;MaxH&quot;=[0-9]*&#x27; \
+  | paste - - - | sort -u
+
+# 2. System profiler display summary
+system_profiler SPDisplaysDataType
+
+# 3. All HiDPI modes for a display (requires Screen Recording permission)
+#    Use BetterDisplay, SwitchResX, or any tool that calls
+#    CGSGetNumberOfDisplayModes / CGSGetDisplayModeDescriptionOfLength.
+#    Example output format shown below.
+
+# 4. Display connection details and DisplayHints
+ioreg -l -w0 | grep -B5 -A2 &#x27;MaxActivePixelRate&#x27; | grep -v EventLog
+
+# 5. ConnectionMapping (per-pipe allocation)
+ioreg -l -w0 | grep &quot;ConnectionMapping&quot;
+
+# 6. Per-pipe framebuffer budgets (the key constraint on M4/M5)
+ioreg -l -w0 | grep &quot;IOMFBMaxSrcPixels&quot;</code></pre>
+<h3>M2 Max (Mac14,6) — работает</h3>
+<p>Дисплей: LG HDR 4K 32UN880 (3840x2160) через USB-C/Thunderbolt, macOS 26.4.</p>
+<p>Примечание: команды 2, 4, 5 были сняты без подключённого LG. Список режимов (команда 3) был снят в отдельной сессии, уже с подключённым LG.</p>
+<p>Command 1 — DCP rate limits:</p>
+<pre><code>&quot;MaxW&quot;=3840     &quot;MaxActivePixelRate&quot;=497664000  &quot;MaxH&quot;=2160
+&quot;MaxW&quot;=3840     &quot;MaxActivePixelRate&quot;=552950718  &quot;MaxH&quot;=2400</code></pre>
+<p>Command 2 — System profiler (на момент захвата LG не был подключён):</p>
+<pre><code>Graphics/Displays:
+
+    Apple M2 Max:
+
+      Chipset Model: Apple M2 Max
+      Type: GPU
+      Bus: Built-In
+      Total Number of Cores: 38
+      Vendor: Apple (0x106b)
+      Metal Support: Metal 4
+      Displays:
+        Color LCD:
+          Display Type: Built-in Liquid Retina XDR Display
+          Resolution: 3456 x 2234 Retina
+          Main Display: Yes
+          Mirror: Off
+          Online: Yes
+          Automatically Adjust Brightness: No
+          Connection Type: Internal</code></pre>
+<p>Command 3 — HiDPI modes (LG подключён, топ-5):</p>
+<pre><code>mode: {resolution=3840x2160, scale = 2.0, freq = 60, bits/pixel = 16}
+mode: {resolution=3840x2160, scale = 2.0, freq = 30, bits/pixel = 16}
+mode: {resolution=3360x1890, scale = 2.0, freq = 60, bits/pixel = 16}
+mode: {resolution=3360x1890, scale = 2.0, freq = 30, bits/pixel = 16}
+mode: {resolution=3200x1800, scale = 2.0, freq = 60, bits/pixel = 16}</code></pre>
+<p>Примечание: режим 3840x2160 при <code>scale = 2.0</code> присутствует и является максимальным доступным HiDPI-режимом.</p>
+<p>Command 4 — Display connection details (LG не подключён на момент захвата):</p>
+<pre><code>DisplayHints = {}</code></pre>
+<p>Когда LG подключён, значения совпадают с M5 Max:</p>
+<pre><code>&quot;DisplayHints&quot; = {
+    &quot;MaxBpc&quot;=10,
+    &quot;EDID UUID&quot;=&quot;1E6D5077-0000-0000-0520-0104B5462878&quot;,
+    &quot;MaxTotalPixelRate&quot;=537600000,
+    &quot;MaxW&quot;=3840,
+    &quot;MaxActivePixelRate&quot;=497664000,
+    &quot;Tiled&quot;=No,
+    &quot;ProductName&quot;=&quot;LG HDR 4K&quot;,
+    &quot;MaxH&quot;=2160
+}</code></pre>
+<p>Command 5 — ConnectionMapping (LG не подключён на момент захвата):</p>
+<pre><code>&quot;ConnectionMapping&quot; = ()</code></pre>
+<h3>M5 Max (Mac17,6) — затронут</h3>
+<p>Дисплей: LG HDR 4K 32UN880 (3840x2160) через USB-C/Thunderbolt, macOS 26.4.</p>
+<p>Command 1 — DCP rate limits:</p>
+<pre><code>&quot;MaxW&quot;=3840     &quot;MaxActivePixelRate&quot;=497664000  &quot;MaxH&quot;=2160
+&quot;MaxW&quot;=3840     &quot;MaxActivePixelRate&quot;=552950718  &quot;MaxH&quot;=2400</code></pre>
+<p>Полностью совпадает с M2 Max.</p>
+<p>Command 2 — System profiler:</p>
+<pre><code>Graphics/Displays:
+
+    Apple M5 Max:
+
+      Chipset Model: Apple M5 Max
+      Type: GPU
+      Bus: Built-In
+      Total Number of Cores: 40
+      Vendor: Apple (0x106b)
+      Metal Support: Metal 4
+      Displays:
+        LG HDR 4K:
+          Resolution: 6720 x 3780
+          UI Looks like: 3360 x 1890 @ 60.00Hz
+          Main Display: Yes
+          Mirror: Off
+          Online: Yes
+          Rotation: Supported
+        Color LCD:
+          Display Type: Built-in Liquid Retina XDR Display
+          Resolution: 3456 x 2234 Retina
+          Mirror: Off
+          Online: Yes
+          Automatically Adjust Brightness: Yes
+          Connection Type: Internal
+        U13ZA:
+          Resolution: 3840 x 2400 (WQUXGA)
+          UI Looks like: 1920 x 1200 @ 60.00Hz
+          Mirror: Off
+          Online: Yes
+          Rotation: Supported</code></pre>
+<p>Примечание: backing store у LG — 6720x3780 (3360x1890 HiDPI). Это 1.75x от нативного разрешения, а не 2.0x (7680x4320), которое нужно для 3840x2160 HiDPI.</p>
+<p>Command 3 — HiDPI modes (топ-5):</p>
+<pre><code>mode: {resolution=3360x1890, scale = 2.0, freq = 60, bits/pixel = 16}
+mode: {resolution=3360x1890, scale = 2.0, freq = 30, bits/pixel = 16}
+mode: {resolution=3200x1800, scale = 2.0, freq = 60, bits/pixel = 16}
+mode: {resolution=3200x1800, scale = 2.0, freq = 30, bits/pixel = 16}
+mode: {resolution=3008x1692, scale = 2.0, freq = 60, bits/pixel = 16}</code></pre>
+<p>Примечание: 3840x2160 при <code>scale = 2.0</code> отсутствует. Максимальный HiDPI — 3360x1890.</p>
+<p>Command 4 — Display connection details:</p>
+<pre><code>&quot;DisplayHints&quot; = {
+    &quot;MaxBpc&quot;=10,
+    &quot;EDID UUID&quot;=&quot;1E6D5077-0000-0000-0520-0104B5462878&quot;,
+    &quot;MaxTotalPixelRate&quot;=537600000,
+    &quot;MaxW&quot;=3840,
+    &quot;MaxActivePixelRate&quot;=497664000,
+    &quot;Tiled&quot;=No,
+    &quot;ProductName&quot;=&quot;LG HDR 4K&quot;,
+    &quot;MaxH&quot;=2160
+}</code></pre>
+<p>Полностью совпадает с M2 Max.</p>
+<p>Command 5 — ConnectionMapping:</p>
+<pre><code class="language-json">&quot;ConnectionMapping&quot; = (
+    {
+        &quot;MaxW&quot;=3840,
+        &quot;MaxTotalPixelRate&quot;=537600000,
+        &quot;MaxActivePixelRate&quot;=497664000,
+        &quot;ProductName&quot;=&quot;LG HDR 4K&quot;,
+        &quot;Address&quot;=&quot;0.2.0&quot;,
+        &quot;PipeIDs&quot;=(0),
+        &quot;MaxPipes&quot;=1,
+        &quot;MaxH&quot;=2160
+    },
+    {
+        &quot;MaxW&quot;=3840,
+        &quot;MaxTotalPixelRate&quot;=594000000,
+        &quot;MaxActivePixelRate&quot;=552950718,
+        &quot;ProductName&quot;=&quot;U13ZA&quot;,
+        &quot;Address&quot;=&quot;0.0.1&quot;,
+        &quot;PipeIDs&quot;=(1),
+        &quot;MaxPipes&quot;=1,
+        &quot;MaxH&quot;=2400
+    }
+)</code></pre>
+<p>Command 6 — <code>IOMFBMaxSrcPixels</code> (per-pipe framebuffer budgets):</p>
+<pre><code class="language-json">&quot;IOMFBMaxSrcPixels&quot; = {
+    &quot;MaxSrcRectHeightForPipe&quot; = (4608, 4608, 4608, 4608),
+    &quot;MaxSrcRectWidthForPipe&quot;  = (6720, 7680, 7680, 7680),
+    &quot;MaxSrcBufferHeight&quot;      = 16384,
+    &quot;MaxSrcBufferWidth&quot;       = 16384,
+    &quot;IOMFBCompressionSupport&quot; = 1
+}</code></pre>
+<p>У Pipe 0 (а это pipe дисплея LG) значение <code>MaxSrcRectWidthForPipe</code> равно 6720 — это ровно ширина backing store для 3360x1890 HiDPI. Значение 7680, которое нужно для 3840x2160 HiDPI, доступно на остальных трёх pipe, но не на Pipe 0.</p>
+<h3>Ключевое наблюдение</h3>
+<p>Возможности, которые сообщает DCP, у M2 Max и M5 Max для одного и того же дисплея идентичны. Разница — в per-pipe framebuffer budget (<code>IOMFBMaxSrcPixels</code>), который выставляет <code>IOMobileFramebufferShim</code>: на M5 Max Pipe 0 получает бюджет шириной 6720, и из-за этого потолок HiDPI обрезается на 3360x1890 ещё до того, как WindowServer вообще строит свой список режимов.</p>
+<h2>Ссылки</h2>
+<ul>
+<li><a href="https://github.com/waydabber/BetterDisplay/discussions/4215">Разбор waydabber про M4 и HiDPI</a> — описание ограничения поколения M4 от waydabber</li>
+<li><a href="https://forums.macrumors.com/threads/5k2k-at-120hz-with-mac-mini-m4.2441289/page-29">Обсуждение на MacRumors</a></li>
+<li><a href="https://discussions.apple.com/thread/256265624?sortBy=oldest_first&amp;page=1">Apple Discussions</a></li>
+<li><a href="https://www.apple.com/macbook-pro/specs/">Спецификации Apple M5 Max</a> — Apple заявляет 8K (7680x4320) при 60 Гц по Thunderbolt</li>
+<li>Apple Feedback <code>FB22365722</code></li>
+</ul>
+<h2>Теги оригинальной статьи</h2>
+<ul>
+<li><a href="https://smcleod.net/tags/apple/">Apple</a></li>
+<li><a href="https://smcleod.net/tags/4k/">4k</a></li>
+<li><a href="https://smcleod.net/tags/monitor/">Monitor</a></li>
+<li><a href="https://smcleod.net/tags/software/">Software</a></li>
+<li><a href="https://smcleod.net/tags/hardware/">Hardware</a></li>
+<li><a href="https://smcleod.net/tags/bugs/">Bugs</a></li>
+</ul>
+    </article>
+
+    <footer class="post-translator">
+      Перевела <a href="https://t.me/athena_ai_blog">Афина 🦉</a> — специально для канала <a href="https://t.me/pavlenkodev">@pavlenkodev</a>
+    </footer>
+
+  </div>
+
+  <footer class="footer" style="border-top:1px solid var(--border);">
+    <div class="wrap footer__wrap">
+      <span class="footer__copy">© 2026 Make It Beta</span>
+      <a href="https://t.me/pavlenkodev" class="footer__contact" target="_blank">@pavlenkodev ↗</a>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('pre code').forEach(function (el) {
+        hljs.highlightElement(el);
+      });
+    });
+  </script>
+</body>
+</html>
