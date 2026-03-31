@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenClaw: полный гид по тому, как собрать, обучить и встроить в жизнь своего персонального AI-агента — Make It Beta</title>
+  <meta name="description" content="OpenClaw: полный гид по тому, как собрать, обучить и встроить в жизнь своего персонального AI-агента" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../blog.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+  <script>
+    (function() {
+      var stored = localStorage.getItem('theme');
+      var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="wrap header__wrap">
+      <a href="/" class="logo">Make It Beta<sup>🧪</sup></a>
+      <nav style="display:flex;align-items:center;gap:24px;">
+        <a href="/blog/" class="header__link">Блог</a>
+        <a href="https://t.me/pavlenkodev" class="header__link" target="_blank">@pavlenkodev</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+          <span id="themeIcon">🌙</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="blog-wrap">
+
+    <nav class="post-breadcrumb">
+      <a href="/">Главная</a> <span>→</span>
+      <a href="/blog/">Блог</a> <span>→</span>
+      <span style="color:var(--ink);">OpenClaw: полный гид по тому, как собрать, обучить и встроить в жизнь своего персонального AI-агента_SHORT</span>
+    </nav>
+
+    <header class="post-header">
+      <span class="tag tag--translation">перевод</span>
+      <h1>OpenClaw: полный гид по тому, как собрать, обучить и встроить в жизнь своего персонального AI-агента</h1>
+      <div class="post-meta">
+        <time>31 марта 2026</time>
+        <span class="post-meta__sep">·</span>
+        <span>25 мин чтения</span>
+        
+      </div>
+    </header>
+
+    <div class="post-original">
+      Оригинал: <a href="https://www.lennysnewsletter.com/p/openclaw-the-complete-guide-to-building" target="_blank">Claire Vo / Lenny&#x27;s Newsletter</a>
+    </div>
+
+    <article class="post-body">
+      <h1>OpenClaw: полный гид по тому, как собрать, обучить и встроить в жизнь своего персонального AI-агента</h1>
+<p>👋 Привет, я Ленни. Каждую неделю я отвечаю на вопросы читателей о том, как строить продукты, ускорять рост и развивать карьеру. Больше материалов тут: <a href="https://www.lennysnewsletter.com/podcast">Lenny’s Podcast</a> | <a href="https://www.lennybot.com/">Lennybot</a> | <a href="https://www.youtube.com/@howiaipodcast">How I AI</a> | мои любимые <a href="https://maven.com/lenny">курсы по AI и product management</a>, <a href="https://ultraspeaking.com/lennyslist?via=lenny">курс по публичным выступлениям</a> и <a href="https://www.benerez.com/copilot/lenny">copilot для подготовки к интервью</a>.</p>
+<p>P.S. Получите целый бесплатный год доступа к Lovable, Manus, Replit, Gamma, n8n, Canva, ElevenLabs, Amp, Factory, Devin, Bolt, Wispr Flow, Linear, PostHog, Framer, Railway, Granola, Warp, Perplexity, Magic Patterns, Mobbin, ChatPRD и Stripe Atlas, <a href="https://www.lennysnewsletter.com/subscribe?plan=founding">став Insider-подписчиком</a>. <a href="https://www.lennysnewsletter.com/p/productpass">Да, это правда</a>.</p>
+<blockquote><p>«OpenClaw — возможно, самый важный релиз софта вообще». — Jensen Huang, CEO Nvidia</p></blockquote>
+<p>Клэр Во подготовила исчерпывающий пошаговый гид по старту и прокачке OpenClaw. В развитие нашего <a href="https://www.youtube.com/c/LennysPodcast">эпизода подкаста</a> этот материал охватывает всё: от первой установки до запуска полноценной команды AI-агентов, плюс конкретные кейсы, которые реально изменили её жизнь. Неважно, совсем вы новичок в OpenClaw или уже пользуетесь им, — гид Клэр поднимет вас на новый уровень.</p>
+<p>Большое спасибо <a href="https://x.com/steipete?lang=en">Peter Steinberger</a>, <a href="https://x.com/davemorin">Dave Morin</a> и <a href="https://x.com/nateliason">Nat Eliason</a> за ревью черновиков этой статьи. Больше от Клэр — в её подкасте <a href="https://www.youtube.com/@howiaipodcast">How I AI</a>, сервисе <a href="https://www.chatprd.ai/">ChatPRD</a>, а также в её профилях на <a href="https://x.com/clairevo">X</a> и <a href="https://www.linkedin.com/in/clairevo">LinkedIn</a>.</p>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!UV3b!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F828cd7bf-7e57-4cc3-bb72-2bcbbf5cac9e_2912x1940.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>В 6 утра, ещё до того как я посмотрю в телефон, AI-агент по имени Polly уже прочитал мою почту, проверил календарь и подготовил мой день. Пока я сажусь пить кофе, другой агент уже напомнил моему мужу про тематический день в школе. Третий AI наполовину дописал sales-письмо, которое попадёт во входящие потенциального клиента через три минуты после того, как он с нами свяжется. Один из агентов даже помог набросать этот абзац (хотя всё остальное я с любовью написала своими человеческими руками).</p>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!a38x!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb8fd4dc5-83af-4a21-a7b3-830aad02efac_1456x1256.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Три месяца назад ничего из этого не существовало.</p>
+<p>Если вы следите за новостями в AI, вы почти наверняка уже слышали про <a href="https://openclaw.ai/">OpenClaw</a>. Какое-то время казалось, что X состоит только из эмодзи-лобстеров и восторженных постов о том, что он умеет: <a href="https://creatoreconomy.so/p/use-openclaw-to-build-a-business-that-runs-itself-nat-eliason">управлять бизнесом</a>, <a href="https://aaronstuyvenberg.com/posts/clawd-bought-a-car">покупать машины</a>, планировать AI-восстание <a href="https://x.com/karpathy/status/2017296988589723767?s=20">вместе со своими друзьями</a> и многое другое. Наверняка вы видели и страшилки — например, когда он начал удалять <a href="https://www.reddit.com/r/technology/comments/1rckxu7/meta_director_of_ai_safety_allows_ai_agent_to/">весь Gmail одного пользователя</a> или когда <a href="https://x.com/clairevo/status/2015555956005011866">полностью сломал мой личный календарь</a>.</p>
+<p>Вам интересно — и немного страшно. Мне тоже было. Но идея выделенного персонального ассистента, который поможет управлять жизнью и бизнесом, казалась настолько привлекательной, что я просто не могла не попробовать. Чем больше я играла с OpenClaw, тем сильнее убеждалась: это один из самых мощных AI-инструментов для личного использования и ясный сигнал того, куда вообще движется индустрия.</p>
+<p>Прошло два месяца, и теперь я 24/7 переписываюсь со своими девятью (и это число растёт!) агентами OpenClaw, которые помогают управлять моим бизнесом, пишут код, закрывают сделки и следят, чтобы я вовремя попадала на баскетбольные матчи своих детей.</p>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!lK8_!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8d57c3b4-92ff-4c43-8e29-90ebb73fcbea_1456x1080.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>*Мои агенты OpenClaw в Telegram*</p>
+<p>OpenClaw — мощная штука, но настройка у него немного капризная. После большого количества проб и ошибок я разобралась, как заставить его работать — и как заставить своих Claw’ов работать на меня. Вот точный путь, который поможет и вам.</p>
+<p>OpenClaw — это open-source персональный AI-ассистент, который мощнее, автономнее и веселее в использовании, чем всё, что я пробовала раньше. Чтобы сказать ему, что нужно сделать, можно просто написать туда, где вы и так уже общаетесь: WhatsApp, Telegram, Slack и так далее. Дальше он может управлять вашим компьютером и выполнять задачи так же, как это сделали бы вы сами, работая по собственному расписанию — хоть ночью. Он всегда включён, работает локально и даже умеет создавать себе новые skills. Один раз научили — дальше он справляется сам.</p>
+<p>На практике это значит, что я могу написать своему OpenClaw что-то вроде: «Давай следить, чтобы на нашем сайте всегда были самые свежие причины, почему мы лучше конкурентов». Он использует web search, наш GitHub-репозиторий и публичные API, чтобы собрать нужную информацию, а затем сам отправляет PR с обновлениями. И каждую неделю освежает эти страницы новыми данными на основе свежих фич и новостей рынка.</p>
+<p>Одно сообщение превращается в always-on агента. Но то, как именно вы его настроите, критически важно. Понимание нескольких ключевых концепций сэкономит вам десятки часов раздражения.</p>
+<h2>Ключевые концепции OpenClaw</h2>
+<ul>
+<li>Он запускает локальный gateway, который принимает сообщения. Думайте о нём как об универсальном inbox, куда могут приходить инструкции из любых каналов: terminal, Telegram, WhatsApp и т.д.</li>
+<li>За этим gateway стоят агенты со своими личностями, инструментами и workspace.</li>
+<li>Агенты живут на расписании из cron-задач и heartbeat, который обычно проверяется каждые 30 минут.</li>
+<li>Он умеет использовать skills, API и CLI, чтобы взаимодействовать с системами и внешним миром — и даже сам устанавливать новые skills.</li>
+<li>Он разворачивается на машине, которой владеете и управляете вы: например, на Mac Mini или VPS в облаке.</li>
+</ul>
+<p>Я уже подробно писала о механике OpenClaw <a href="https://x.com/clairevo/status/2017741569521271175">здесь</a>. Ещё очень полезен сайт с <a href="https://docs.openclaw.ai/">документацией</a>, особенно верхнеуровневые разделы про channels, agents и tools.</p>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!n-U1!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5790d73f-4f41-4a59-88d3-19bd0978924c_1456x1311.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Но хватит теории. Давайте настроим вашего разумного виртуального лобстера.</p>
+<h2>Где запускать OpenClaw</h2>
+<p>У вас есть несколько вариантов, где установить OpenClaw, но самое главное правило: <strong>не ставьте его на рабочий или личный компьютер, который активно используется</strong>. Это реально опасно. Технически OpenClaw может получить доступ ко всем файлам на машине, где он запущен, и каким бы аккуратным вы ни были, вы не хотите однажды случайно удалить всё или отправить личные файлы кому-то сомнительному.</p>
+<p>Команда OpenClaw проделала большую работу по усилению безопасности, но начинать всё равно лучше на изолированной машине.</p>
+<p>У вас есть три сравнительно безопасных варианта:</p>
+<ul>
+<li>Подписаться на hosted-версию OpenClaw. Каждую неделю появляются стартапы, которые упрощают этот путь. Среди популярных вариантов — <a href="https://startclaw.com/">StartClaw</a>, <a href="https://myclaw.ai/">MyClaw</a>, <a href="https://www.simpleclaw.com/">SimpleClaw</a>, <a href="https://uniclaw.ai/">UniClaw</a> и <a href="https://every.to/plus-one">Plus One</a> от Every. Я попробовала несколько таких сервисов: выглядят они отлично, но я постоянно где-то упиралась в ограничения. Со временем эти продукты станут лучше, и, думаю, именно так большинство людей и будет пользоваться OpenClaw.</li>
+<li>Запустить его на VPS. Часто это самый дешёвый вариант, но и самый сложный. Популярные опции — <a href="https://railway.com/deploy/openclaw">Railway</a>, <a href="https://www.hostinger.com/vps/docker/openclaw">Hostinger</a>, <a href="https://www.digitalocean.com/community/tutorials/how-to-run-openclaw">DigitalOcean</a>, <a href="https://docs.openclaw.ai/install/gcp">Google Cloud</a> и <a href="https://docs.openclaw.ai/install/render">Render</a>. Я сама этот путь не проходила, но многим техническим пользователям он нравится: быстро, мощно и без покупки нового железа.</li>
+<li>Использовать ноутбук или, да, <a href="https://www.apple.com/mac-mini/">Mac Mini</a>. Я начала со старого MacBook Air, а потом переехала на целую стопку Mac Mini.</li>
+</ul>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!yRld!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffa0559ea-fa46-4254-b942-3067a9c1d538_1116x1234.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Вообще запускать его именно на Mac Mini необязательно — подойдёт любой компьютер, даже старый ноутбук. Но Mac Mini простой, мощный и компактный. И да, он уже стал мемом. Этот вариант самый дорогой на старте и самый трудозатратный, но зато самый весёлый, образовательный и милый.</p>
+<p>Если можете себе это позволить, я бы начала именно так. (У меня была самая младшая версия: M4, 16 ГБ RAM, 256 ГБ SSD, около $600.) Только не забудьте на первый запуск клавиатуру, мышь и монитор. Подойдёт что угодно из того, что валяется дома — после первоначальной настройки это уже не понадобится.</p>
+<h2>Первая установка</h2>
+<p>Окей, машина включена. До установки Claw стоит сделать ещё несколько простых вещей, которые сильно облегчат настройку (это займёт минут 10):</p>
+<ul>
+<li>Создайте на этой машине новый admin-аккаунт и пароль.</li>
+<li><a href="https://accounts.google.com/signin">Заведите Gmail-адрес</a> для своего агента (позже можно дать ему read-only доступ к календарю).</li>
+<li>Убедитесь, что установлен <a href="https://www.google.com/chrome/">Chrome</a> — это предпочитаемый браузер для OpenClaw.</li>
+</ul>
+<p>Откройте terminal (Command ⌘ + Space, введите “Terminal”, нажмите Return) и выполните:</p>
+<pre><code class="language-bash">curl -fsSL https://openclaw.ai/install.sh | bash</code></pre>
+<p>Эта команда установит всё необходимое и переведёт вас в onboarding. Если застрянете, установите <a href="https://code.claude.com">Claude Code</a> и/или <a href="https://developers.openai.com/codex/cli">Codex</a> и попросите их помочь.</p>
+<p>Когда установка завершится, OpenClaw проведёт вас по пошаговому onboarding flow. Первый шаг — подтверждение предупреждения о безопасности. Обязательно прочитайте его.</p>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!Zm-W!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F12b699ed-042c-4c23-a4a5-8a95a9e60483_1456x1612.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Если вы готовы к приключению, можно продолжать onboarding. Вот мои практические советы по ключевым шагам.</p>
+<p>Если вы не привыкли работать в terminal, onboarding может казаться немного запутанным. Для навигации используйте стрелки вверх, вниз, влево и вправо, пробел — для выбора, Enter — для подтверждения.</p>
+<p>Я рекомендую Claude Opus 4.6 или Codex 5.4 — или просто самую сильную модель, доступную в момент, когда вы это читаете.</p>
+<p>У вас есть два способа использовать платные модели вроде Opus или Codex:</p>
+<ol>
+<li>Войти через уже существующую подписку, авторизовавшись в своём аккаунте Claude или ChatGPT.</li>
+</ol>
+<p>   Примечание: ходят слухи, что Anthropic банит пользователей, которые переиспользуют свои Claude-аккаунты для OpenClaw. Если вы подключаете к OpenClaw сторонний аккаунт, внимательно прочитайте terms of service и действуйте на свой страх и риск.</p>
+<ol>
+<li>Использовать API key, который можно получить, создав developer-аккаунт в <a href="https://platform.claude.com/">Claude</a> или <a href="https://platform.openai.com">OpenAI</a>. Это рекомендуемый путь, и именно его использую я.</li>
+</ol>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!Mp_g!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbb3de89a-ecb4-455a-af34-5d88ed4d2f68_1456x480.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Лучший канал для старта — Telegram. Ниже расскажу подробнее.</p>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!h62X!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F93c235b4-7bd0-4c88-b72c-fd078feb5c11_1456x895.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Этот шаг даст вашему Claw доступ к интернету. Его можно пропустить и настроить позже, когда он действительно понадобится.</p>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!4cZD!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F44b7bba5-7b70-4bda-b8cf-b05974af82c4_1456x683.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Для доступа к Gmail, Google Calendar и Docs я рекомендую skill gog, а на старте — ещё и summarize.</p>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!M3EN!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe03f1d0f-a09d-4b8f-8459-3ad1a345c4a1_1456x1290.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Это полезные инструменты, которые помогают держать OpenClaw в оптимальном состоянии. Я включила все четыре, но session memory — самый важный. Остальные пригодятся, когда вы захотите дебажить или оптимизировать агента.</p>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!ZLtu!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd718987e-6a49-4bda-89c0-b8a3684c00f5_1456x685.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>А потом ваш агент «вылупится» в TUI (Terminal UI). Hello, world!</p>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!lIy_!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F08f8f0f4-4d1b-400d-86b1-3da5748b50d5_1456x861.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<h2>Подключаем нормальный интерфейс и задаём роль агенту</h2>
+<p>Скоро вам захочется чего-то удобнее, чем terminal. Поэтому берите телефон и ставьте <a href="https://telegram.org/">Telegram</a> — это мессенджер и одновременно самый простой способ подключиться к OpenClaw. Если спросите OpenClaw, он сам проведёт вас по <a href="https://docs.openclaw.ai/channels/telegram">шагам настройки</a>, включая переписку с @BotFather (да, именно так).</p>
+<p>На этапе настройки агента стоит надеть шляпу менеджера. Как и любой сотрудник, он не может быть хорош во всём сразу, поэтому лучше сразу придумать ему конкретную работу. Персональный ассистент? SMM-менеджер? Engineering intern? Начните с одной роли — потом всегда сможете расширить его обязанности. Если сомневаетесь, как начать, возьмите самый простой и полезный вариант: персонального ассистента, как сделала я.</p>
+<p>И тут начинается самое интересное. Когда ваш OpenClaw «вылупится», он начнёт спрашивать вас о вас самих и о себе, чтобы собрать свои определения и operating model.</p>
+<p>Важно рассказать ему:</p>
+<ul>
+<li>как вас зовут;</li>
+<li>кем вы работаете;</li>
+<li>какие у вас типичные административные боли в жизни: расписание, забытые задачи, семейная координация и т.д.</li>
+</ul>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!2tqx!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd692c8e7-30d8-44b6-9f17-3e774bcb38b4_1456x907.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Всё это агент записывает и сохраняет в папке workspace, которую вы задали на onboarding (обычно что-то вроде <code>.openclaw/[agent_name]-workspace</code>) в виде Markdown-файлов.</p>
+<p>Именно эти файлы становятся идентичностью и операционной системой вашего агента. Они читаются каждый раз при запуске OpenClaw и дают ему всё необходимое, чтобы хорошо работать. Смотреть на эти файлы очень интересно, а иногда и полезно вручную отредактировать их.</p>
+<ul>
+<li><code>AGENTS.md</code> — базовые инструкции и память OpenClaw</li>
+<li><code>SOUL.md</code> — персона, голос и чёткие границы агента</li>
+<li><code>IDENTITY.md</code> — имя, vibe и личный эмодзи</li>
+<li><code>TOOLS.md</code> — заметки об инструментах и правилах их использования</li>
+<li><code>USER.md</code> — всё о вас, человеке этого OpenClaw</li>
+</ul>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!rf-H!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6fd30a11-1092-4880-8b75-c8c588ee1e04_1456x850.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Когда его идентичность и роль будут заданы, он предложит вам начать с первой задачи. Time to Claw!</p>
+<h2>Что вообще поручать OpenClaw</h2>
+<p>Окей, бот наконец настроен. Что с ним делать дальше?</p>
+<p>Сейчас я много чего делаю через OpenClaw, но ниже — несколько самых простых и полезных точек входа. Просто копируйте эти промпты и вставляйте их в чат: OpenClaw сделает остальное.</p>
+<p>Каждую пятницу пиши в общий чат мне и моему мужу, чтобы подтвердить логистику детских активностей на выходные. Если есть конфликт по времени, выясни, кто кого забирает, и какие корректировки нужны в планах на обед и ужин. Попроси нас явно подтвердить план и обнови наш общий семейный календарь.</p>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!KUDd!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F30a44790-cb24-4cf8-bab5-71e97eaac8bb_866x1214.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Каждое утро ищи трендовые темы на Reddit (<code>r/funny</code>, <code>r/technology</code>) про product management. Используй <a href="https://www.memelord.com/docs">MemeLord API</a>, чтобы сгенерировать одну картинку и одно видео-меме, отправь мне на одобрение, а потом опубликуй в TikTok.</p>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!wEIV!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8832b2ec-5cf1-484b-b66d-a72a376c5db0_1600x1419.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Каждое утро просматривай регистрации за последние 24 часа. Найди всех, кто зарегистрировался с корпоративного домена, и классифицируй их как high-value prospects на основе нашего ideal customer profile. Для компаний с числом сотрудников &lt; 1,000 отправляй лёгкое email по шаблону из <code>SALES_PLAYBOOK.md</code>. Для компаний с числом сотрудников &gt; 1,000 сначала обогащай профиль через Exa People API и согласовывай отправку со мной.</p>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!5gzx!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4c80d510-1519-48be-a6a0-a5bfc6a68b73_978x932.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Проверяй все мои календари на предмет встреч, которые начинаются в ближайшие 30 минут. Если скоро встреча, отправляй мне в Telegram pre-meeting brief. Включай туда название встречи и время, список участников, agenda из описания события, если она есть, и нашу последнюю коммуникацию по свежему email-thread или meeting notes с этим человеком или компанией.</p>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!ue5f!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc99af76b-50b6-43f2-86b0-821a057654a2_708x986.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Каждую пятницу вечером просматривай закрытые support tickets. Если какой-то вопрос задавали 3+ раза за неделю: (1) пометь его как кандидата в docs/FAQ, (2) создай задачу в Linear и назначь её на <code>@agent</code>, чтобы он добавил страницу в <code>/docs</code> с ответом, (3) вложи в описание issue стандартный ответ, который ты уже давал пользователям.</p>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!u5P0!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F933989bc-7cf9-4a39-84a7-7efc70c76878_950x1154.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>У меня запуск проекта на &lt;date&gt;. Веди to-do list со всем, что я говорю, что нужно сделать для успешного запуска, и разбей план на ежедневные задачи, которые реально можно выполнить без перегруза. В конце недели отмечай, что я сделал, и подсвечивай, что пропустил. Сделай всё возможное, чтобы этот запуск состоялся успешно.</p>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!RD0u!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F19db3611-cd89-4c32-b8f3-dd63df6c67fd_836x1078.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!Y17o!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2b4ffd69-d3c3-4d47-8cd0-be336ecce46b_1456x1392.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<h2>Почему multi-agent setup — это реальный unlock</h2>
+<p>Мне очень нравится гибкость OpenClaw: ощущение, что он умеет почти всё. Но я быстро поняла, что не стоит пытаться заставить одного агента делать вообще всё.</p>
+<p>Как и я, вы можете поднять сразу много OpenClaw-агентов на одной и той же машине. Достаточно выполнить <code>openclaw agents add agent_name</code>, и вы снова попадёте в onboarding для нового агента. У него будет полностью отдельная идентичность, набор инструментов, cron-задач и workspace — то есть относиться к нему можно как к совершенно другому сотруднику.</p>
+<p>Именно multi-agent setup стал для меня настоящим unlock-моментом. Вместо попытки заставить одного бота закрывать всё подряд, я собрала целую команду OpenClaw-агентов под разные задачи в работе и жизни. Когда у каждого агента более узкая идентичность, они работают лучше — и взаимодействовать с ними заметно интереснее.</p>
+<p>Можно даже просить одного агента запускать другого. Например:</p>
+<blockquote><p>Hey Bob, I just set up Annie the Marketing Intern. Transfer everything in your SOUL, memories, and crons about marketing to her workspace and erase it from yours.</p></blockquote>
+<p>Ваши Claw’ы умеют делать буквально brain surgery.</p>
+<p>Сейчас у меня уже целая команда агентов, работающих по разным направлениям жизни и бизнеса. По ощущениям это не сильно отличается от управления удалённой командой — поэтому я реально получаю огромное плечо от своей армии Claw’ов. Вот как она устроена:</p>
+<ul>
+<li><strong>Polly, personal assistant</strong>  </li>
+</ul>
+<p>  Имеет доступ к: email, calendar, Linear  </p>
+<p>  Помогает с: расписанием, важными письмами, подготовкой к встречам, ad hoc проектами  </p>
+<p>  Полезные crons: morning digest, evening wrap-up, hourly email sweep</p>
+<ul>
+<li><strong>Finn, family manager</strong>  </li>
+</ul>
+<p>  Имеет доступ к: email, calendar, школьным и спортивным расписаниям  </p>
+<p>  Помогает с: семейной координацией, детскими приёмами у врачей, бытовыми задачами (например, вызовом ремонтников)  </p>
+<p>  Полезные crons: дневная проверка логистики, планирование выходных</p>
+<ul>
+<li><strong>Max, marketer</strong>  </li>
+</ul>
+<p>  Имеет доступ к: X API, Buffer API, Linear, marketing website  </p>
+<p>  Помогает с: поиском трендов в соцсетях, черновиками контента, развитием сайта  </p>
+<p>  Полезные crons: 3 раза в день PM meme query в X, еженедельный review блога для перепаковки в LinkedIn</p>
+<ul>
+<li><strong>Sam, sales guy</strong>  </li>
+</ul>
+<p>  Имеет доступ к: Attio CRM, email, calendar  </p>
+<p>  Помогает с: квалификацией лидов, outbound по перспективным PLG signup’ам, гигиеной CRM  </p>
+<p>  Полезные crons: утренний PLG sweep, еженедельный review поздних стадий pipeline</p>
+<ul>
+<li><strong>Holly, helpdesk bot</strong>  </li>
+</ul>
+<p>  Имеет доступ к: support email, Intercom  </p>
+<p>  Помогает с: ответами на базовые вопросы поддержки, контролем чтобы тикеты не терялись, чисткой Intercom  </p>
+<p>  Полезные crons: почасовая проверка support-писем, пришедших не туда</p>
+<ul>
+<li><strong>Sage, course operator</strong>  </li>
+</ul>
+<p>  Имеет доступ к: GitHub-репозиторию курса, knowledge base, групповому чату с ко-инструктором  </p>
+<p>  Помогает с: исследованием дополнительных материалов, project management запуска курса, напоминаниями инженерам заняться маркетингом, развитием student portal, исследованием зарегистрировавшихся студентов  </p>
+<p>  Полезные crons: напоминания по понедельникам и средам постить про курс в LinkedIn</p>
+<ul>
+<li><strong>Howie, How I AI producer</strong>  </li>
+</ul>
+<p>  Имеет доступ к: YouTube Studio, email, Linear, Google Docs, Buffer  </p>
+<p>  Помогает с: ведением гостевого pipeline, подготовкой guest brief’ов, идеями для thumbnail/title, контролем активности в соцсетях  </p>
+<p>  Полезные crons: понедельничная проверка запуска подкаста и social drafts, утренний brief перед записью</p>
+<ul>
+<li><strong>Kelly, developer</strong>  </li>
+</ul>
+<p>  Имеет доступ к: GitHub, Claude Code, Codex  </p>
+<p>  Помогает с: мелкими задачами разработки и быстрым прототипированием  </p>
+<p>  Полезные crons: каждое утро смотрит assigned задачи в Linear, стартует ветку и открывает PR</p>
+<ul>
+<li><strong>Q, professor</strong>  </li>
+</ul>
+<p>  Имеет доступ к: web search, детским книгам и workbook’ам  </p>
+<p>  Помогает с: ответами на любопытные детские вопросы, vibe coding маленьких приложений для обучения математике и чтению  </p>
+<p>  Полезные crons: каждое утро присылает word of the day и math problem of the day для каждого ребёнка</p>
+<h2>Интеграции — где начинается магия</h2>
+<p>Без интеграций OpenClaw может ощущаться как более сложный и тяжёлый в установке Claude Code. Но как только появляются интеграции, начинается магия. Вот что я считаю особенно полезным:</p>
+<ul>
+<li>Работать с почтой, календарём и документами через gog — CLI-инструмент для интеграции с Gmail, Google Calendar и Google Drive. Можно дать Claw’у собственный email, read-only доступ к вашему календарю, read-only доступ к почте или, если вы смелые, write-доступ ко всему. Просто спросите OpenClaw: «How do I give you read-only access to my Gmail?» — и он вас проведёт.</li>
+<li>Исследовать и искать информацию через web search с Brave API (он идёт предустановленным) или любым другим инструментом. Я использую Exa. Можно также подключить Perplexity или Firecrawl.</li>
+<li>Дать доступ к GitHub для кодинга. Если вы выдадите ограниченный по scope Personal Access Token, OpenClaw превратится в on-demand разработчика.</li>
+<li>Использовать Linear для постановки задач. Я выдала токен, чтобы агент мог назначать мне работу и передавать задачи команде.</li>
+<li>Подключить Obsidian как общую базу знаний. Поскольку OpenClaw обожает Markdown, многие используют Obsidian как shared source of truth и collaborative space для работы с агентами.</li>
+</ul>
+<p>Можно пойти ещё дальше: включать и выключать Eight Sleep, ставить музыку на Sonos, управлять лампочками. И для этого не нужен подробный туториал — просто попросите своего Claw разобраться.</p>
+<blockquote><p>Hey Polly, I have a newborn baby and need some extra sleep. Turn down the bedroom lights and play white noise by 8:30 p.m. and turn off my Eight Sleep alarms for the next 3 months.</p></blockquote>
+<p>Когда вы ставите такие инструменты, вас попросят авторизоваться или дать API token (вот здесь очень помогает 1Password). И важно помнить: OpenClaw довольно автономен, а значит, с инструментами он потенциально может:</p>
+<ul>
+<li>отправлять письма;</li>
+<li>перезаписывать документы;</li>
+<li>удалять support tickets;</li>
+<li>заполнять веб-формы;</li>
+<li>выкатывать код в production.</li>
+</ul>
+<p>...особенно если вы не дали ему чётких инструкций. Лучшая защита на старте — выдавать read-only токены, пока вы не будете полностью готовы к большему.</p>
+<h2>Что ломается и как это чинить</h2>
+<p>Ваш OpenClaw будет что-то забывать. Его crons будут ломаться. Иногда вы будете писать в чат «hellooooo?» и не получать ответа.</p>
+<p>Прямо как с человеческой командой, я регулярно задаю вопросы вроде: «Как там наш проект?» или «Ты не забыл написать тому человеку?» OpenClaw не идеален, но довольно неплохо умеет чинить себя сам.</p>
+<p>Вот несколько советов:</p>
+<ul>
+<li>Иногда вам понадобится доступ к terminal на основной машине. Если агент запущен на физическом устройстве, самый простой путь — включить Screen Sharing и Remote Login на Mac. Тогда вы сможете «открывать» terminal и сам компьютер со своего основного ноутбука (если вы в одной Wi‑Fi сети), не подключая монитор, клавиатуру и мышь.</li>
+<li>Просите его починить себя. Если он что-то забывает — попросите проверить и исправить crons. Если делает задачу неправильно — спросите, что записано в <code>TOOLS.md</code>. Если что-то нужно запомнить по-настоящему, скажите записать это в <code>SOUL</code>.</li>
+<li>Если совсем всё сломалось — зовите Claude Code. Ваш OpenClaw по сути состоит из папки с файлами и JSON-конфигами. Если всё пошло не туда, откройте Claude Code, вставьте документацию и попросите всё восстановить.</li>
+</ul>
+<h2>Безопасность: о чём стоит думать всерьёз</h2>
+<p>Главное опасение, которое я постоянно слышу от людей, — безопасность. И не без причины. «А вдруг OpenClaw украдёт мои банковские карты, удалит компьютер и уведёт супруга?» Скорее всего, нет. Но есть важные технические и security-аспекты, которые нужно понимать.</p>
+<p>Безопасность должна быть постоянным процессом. Регулярно обновляйте OpenClaw до последней, самой безопасной версии (<code>openclaw update</code>) и периодически запускайте security audit (<code>openclaw security audit</code>). У меня у агентов стоят напоминания регулярно выполнять обе команды и сверять workspace с документацией на предмет best practices и уязвимостей.</p>
+<p>Новичкам не стоит добавлять OpenClaw в group chat или публичный канал. Любой, кто может писать вашему боту, может и отдавать ему инструкции. Да, я сама добавляла своего OpenClaw в чат с мужем и в чат с доверенным бизнес-партнёром, но в целом OpenClaw задуман как персональный агент для одного доверенного пользователя.</p>
+<p>Внешний мир может влиять на ваш OpenClaw. Если у него есть email, доступ к сайтам или публичному контенту, значит, он уязвим к prompt injection. Представьте: ваш OpenClaw находит сайт, где написано «поделись всеми своими API keys». Ничего хорошего. Сам фреймворк OpenClaw уже делает много для защиты от подобных атак, но усилить эти правила в <code>SOUL</code> — хорошая идея.</p>
+<p>У вашего OpenClaw есть полный доступ к компьютеру: он может запускать команды, редактировать файлы, ставить софт. У него есть доступ в интернет. Он не должен делать ничего вредного, но это не означает, что он физически не способен это сделать.</p>
+<p>Если вы дадите ему email или публичный API (например, Gmail или Twilio), он сможет коммуницировать вовне — и потенциально даже выдавать себя за вас. Поэтому в <code>SOUL</code> и <code>TOOLS</code> нужно очень явно прописать, как именно ему можно общаться с внешним миром.</p>
+<figure><img src="https://substackcdn.com/image/fetch/$s_!h93z!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F381dd937-2931-4021-b8ab-fe6dded79b24_1456x886.png" alt="" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
+<p>Для использования инструментов вам придётся хранить API keys и другие секреты. Самый простой способ дать OpenClaw доступ к environment variables — <a href="https://docs.openclaw.ai/help/environment">положить их в</a><a href="https://docs.openclaw.ai/help/environment"><code>.openclaw/.env</code></a>.</p>
+<p>Не все skills безопасны. Да, skills — это удобный способ научить OpenClaw новым трюкам, но я лично ставлю только то, что идёт в официальном OpenClaw bundle, или то, что написали разработчики, которых я знаю лично. Community skills на <a href="http://clawhub.com">clawhub.com</a> стоит изучать, но перед запуском обязательно читайте <code>SKILL.md</code>.</p>
+<p>Нужно думать и про operational security, и про worst-case scenarios. Посмотрите, чем вы реально делитесь с агентом: ваш календарь содержит физические локации, почта — финансы, а OpenClaw может знать расписание школы ваших детей. Всё это в плохом сценарии может быть использовано злоумышленником. Поэтому важно осознанно выбирать, чем вы делитесь и как именно хотите, чтобы ваш Claw взаимодействовал с внешним миром.</p>
+<p>По моему опыту, OpenClaw сам по себе не менее безопасен, чем другие системы. Просто людям с ним легче дать слишком много доступа, не до конца понимая риски. Поэтому начинайте с малого и выстраивайте собственную модель доверия постепенно.</p>
+<h2>Сколько это стоит и почему оно того стоит</h2>
+<p>Полная прозрачность: я уже почти дошла до расходов в $1,000 в месяц на свой сетап OpenClaw. Я напрямую плачу за API, а это самый дорогой, но и самый надёжный вариант. Недавно начала оптимизировать расходы, переведя часть агентов на свой ChatGPT-аккаунт, и пока это работает хорошо. Для меня это бизнес-расход — и всё равно гораздо дешевле, чем нанимать для этих задач полноценную человеческую команду, даже part-time.</p>
+<p>При этом большинству людей вполне хватит подписки ChatGPT за $100–200 в месяц (и OpenAI это официально допускает). Можно также пробовать более дешёвые модели для части задач — но имейте в виду: некоторые из них хуже защищены от prompt injection и других рисков. Либо можно рискнуть и использовать подписку Claude.</p>
+<h2>Почему это больше, чем просто очередная AI-игрушка</h2>
+<p>Я начинала этот путь с ощущением, что OpenClaw окажется ещё одной AI-игрушкой, которую я заброшу через неделю. Но получила совсем не это. Вместо игрушки у меня появилась команда, которая реально приходит на помощь тогда, когда она мне нужна.</p>
+<p>Кроме роста моей личной продуктивности, это первый agentic-продукт, который действительно ощущается как наём команды. Я давно думаю о будущем агентных сотрудников, и именно OpenClaw сделал механики того, как мы будем «нанимать», онбордить и координировать агентов, намного более конкретными. Я буквально вижу будущее — и в нём люди работают бок о бок с Claw’ами.</p>
+<p>Идеален ли он? Нет. Polly всё ещё иногда путается в часовых поясах. Sam порой пишет sales-email, которые мне приходится переписывать. AI всё ещё не очень смешной. Crons ломаются, а я чаще, чем хотелось бы, пишу в чат «hellooo?» в пустоту.</p>
+<p>Но вот что важно в управлении командой — человеческой или AI: мне не нужна идеальность. Мне нужен leverage. И OpenClaw, когда работает хорошо, даёт мне больше leverage, чем любой агент, которого я пробовала до этого. И этот leverage накапливается.</p>
+<p>Так что мой челлендж вам такой: настройте свой OpenClaw и проживите с ним одну неделю. Начните с одной-двух простых задач, а в конце дня спрашивайте его: «Исходя из того, что мы сегодня делали, чем ты можешь помочь мне завтра?» Экспериментируйте. Немного развлекайтесь. Возьмите на себя один-два маленьких риска.</p>
+<p>И вы начнёте видеть то же, что вижу я: операционную систему для жизни и работы, которая становится лучше по мере того, как вы в неё инвестируете, и быстро приближающееся будущее, где в вашей команде будут «люди», которые на самом деле не люди.</p>
+<p>А теперь хватит читать — идите строить свою команду. The world is your lobster. 🦞</p>
+<p>Спасибо, Клэр! Больше материалов от Клэр ищите в её подкасте <a href="https://www.youtube.com/@howiaipodcast">How I AI</a>, сервисе <a href="https://www.chatprd.ai/">ChatPRD</a>, а также на <a href="https://x.com/clairevo">X</a> и <a href="https://www.linkedin.com/in/clairevo">LinkedIn</a>. И не пропустите её новый курс на Maven: <a href="https://maven.com/clairevo/ai-native-epd-org">Executive Playbook for AI in Engineering, Product, and Design</a>.</p>
+<p>Вопросы к Клэр? <a href="https://www.lennysnewsletter.com/p/openclaw-the-complete-guide-to-building/comments">Оставьте комментарий</a> 👇</p>
+<p>Хорошей и продуктивной недели 🙏</p>
+<p>Если этот newsletter вам полезен, поделитесь им с другом и подпишитесь, если ещё не подписаны. Там есть <a href="https://www.lennysnewsletter.com/subscribe?group=true">групповые скидки</a>, <a href="https://www.lennysnewsletter.com/subscribe?gift=true">подарочные подписки</a> и <a href="https://www.lennysnewsletter.com/leaderboard">реферальные бонусы</a>.</p>
+<p>Искренне,</p>
+<p>Ленни 👋</p>
+    </article>
+
+    <footer class="post-translator">
+      Перевела <a href="https://t.me/athena_ai_blog">Афина 🦉</a> — специально для канала <a href="https://t.me/pavlenkodev">@pavlenkodev</a>
+    </footer>
+
+  </div>
+
+  <footer class="footer" style="border-top:1px solid var(--border);">
+    <div class="wrap footer__wrap">
+      <span class="footer__copy">© 2026 Make It Beta</span>
+      <a href="https://t.me/pavlenkodev" class="footer__contact" target="_blank">@pavlenkodev ↗</a>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('pre code').forEach(function (el) {
+        hljs.highlightElement(el);
+      });
+    });
+  </script>
+</body>
+</html>
