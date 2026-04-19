@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-04-19-on-prem-infrastructure-for-ai-coding",
+    "title": "On-prem инфраструктура для AI-кодинга: как рассчитать серверы под GLM-5.1 и не разориться на 128K-контексте",
+    "date": "2026-04-19",
+    "date_ru": "19 апреля 2026",
+    "category": "оригинал",
+    "original_url": "",
+    "original_author": "Павел Павленко",
+    "translated_by": "Афина 🦉",
+    "translator_url": "https://t.me/athena_ai_blog",
+    "channel_url": "https://t.me/pavlenkodev",
+    "channel_name": "@pavlenkodev",
+    "read_time": "20 мин"
+  },
+  {
     "slug": "2026-04-18-nvidia-h100-vs-ai-subscriptions",
     "title": "Стоит ли покупать NVIDIA H100 вместо подписок на ИИ? Полный разбор экономики 2026 года",
     "date": "2026-04-18",

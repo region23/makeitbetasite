@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>On-prem инфраструктура для AI-кодинга: как рассчитать серверы под GLM-5.1 и не разориться на 128K-контексте — Make It Beta</title>
+  <meta name="description" content="On-prem инфраструктура для AI-кодинга: как рассчитать серверы под GLM-5.1 и не разориться на 128K-контексте" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../blog.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+  <script>
+    (function() {
+      var stored = localStorage.getItem('theme');
+      var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="wrap header__wrap">
+      <a href="/" class="logo">Make It Beta<sup>🧪</sup></a>
+      <nav style="display:flex;align-items:center;gap:24px;">
+        <a href="/blog/" class="header__link">Блог</a>
+        <a href="https://t.me/pavlenkodev" class="header__link" target="_blank">@pavlenkodev</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+          <span id="themeIcon">🌙</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="blog-wrap">
+
+    <nav class="post-breadcrumb">
+      <a href="/">Главная</a> <span>→</span>
+      <a href="/blog/">Блог</a> <span>→</span>
+      <span style="color:var(--ink);">On-prem инфраструктура для AI-кодинга: как рассчитать серверы под GLM-5.1 и не разориться на 128K-контексте_SHORT</span>
+    </nav>
+
+    <header class="post-header">
+      <span class="tag tag--original">оригинал</span>
+      <h1>On-prem инфраструктура для AI-кодинга: как рассчитать серверы под GLM-5.1 и не разориться на 128K-контексте</h1>
+      <div class="post-meta">
+        <time>19 апреля 2026</time>
+        <span class="post-meta__sep">·</span>
+        <span>20 мин чтения</span>
+        
+      </div>
+    </header>
+
+    
+
+    <article class="post-body">
+      <h1>On-prem инфраструктура для AI-кодинга: как рассчитать серверы под GLM-5.1 и не разориться на 128K-контексте</h1>
+<p>Вопрос «купить H100 или платить за Claude/Codex» окончательно устарел. Для российской компании в 2026 году правильный вопрос звучит иначе: <strong>можем ли мы построить on-prem coding-инфраструктуру на GLM-5.1 так, чтобы разработчики реально работали с длинным контекстом, а не стояли в очереди к GPU?</strong></p>
+<p>В этой статье мы не рассматриваем абстрактный чат на 4–8K токенов. Мы считаем реальный agentic coding-сценарий (Cline, Roo Code, Kilo Code или внутренние аналоги), который читает файлы, вызывает инструменты, смотрит diff-ы, запускает тесты и постоянно держит огромный контекст.</p>
+<p>Целевая модель — <strong>GLM-5.1</strong>. Это флагманская MoE-модель Z.AI для сложных инженерных задач: <strong>200K</strong> context, tool use, coding agents и выдающиеся результаты на SWE-Bench Pro / NL2Repo. В конфигурации модели указаны 78 слоев, 256 routed experts, 8 experts per token, <code>kv_lora_rank=512</code>, <code>qk_rope_head_dim=64</code> и <code>max_position_embeddings=202752</code>. Эти параметры критичны не только для качества, но и для расчета пропускной способности.</p>
+<h2>Главное допущение: 1 активный разработчик = 128K контекста</h2>
+<p>Для сценария coding-agent нельзя считать пользователей по метрикам простых чатов. В разработке контекст забивается моментально: system prompt, описания инструментов, история действий, файлы, выводы тестов и фрагменты документации. </p>
+<p>Поэтому закладываем жесткий стандарт:</p>
+<p><strong>1 активный разработчик = 128K input/context + 16K reserve на генерацию = 144K hot tokens.</strong></p>
+<p>Речь идет не о размере штата, а о количестве людей, которые *прямо сейчас* ждут ответа от модели. И здесь возникает главный bottleneck: формат NVFP4 радикально сжимает веса модели, но <strong>не отменяет стоимость KV-кэша</strong>.</p>
+<p>Raw KV-cache для одной 144K-сессии GLM-5.1 рассчитывается по формуле:</p>
+<p>$$144000 \times 78 \times (512 + 64) \times \text{bytes\_per\_element}$$</p>
+<ul>
+<li><strong>BF16 KV-cache:</strong> $\approx$ <strong>12.9 GB</strong> на одну активную сессию.</li>
+<li><strong>FP8 KV-cache:</strong> $\approx$ <strong>6.5 GB</strong> (при поддержке бэкендом).</li>
+</ul>
+<p>На практике к этому добавляется запас на runtime buffers, фрагментацию аллокатора, CUDA graphs и overhead планировщика. </p>
+<p><strong>Ключевой вывод:</strong> сервер может вместить веса GLM-5.1, но все равно захлебнется от множества одновременных 128K-сессий.</p>
+<h2>Два пути: FP8 против NVFP4</h2>
+<p>Для запуска GLM-5.1 существуют два принципиальных подхода.</p>
+<p><strong>1. Путь FP8 (H200/B200-class)</strong></p>
+<p>Естественный выбор для H200. Фреймворк vLLM демонстрирует запуск GLM-5.1-FP8 на 8×H200 141GB (tensor parallel 8). Бенчмарки показывают пиковый throughput около 800 tokens/s, но mean Time To First Token (TTFT) уходит за 13 секунд даже на коротких запросах. Это надежный ориентир, но он не отражает нагрузку 128K.</p>
+<p><strong>2. Путь NVFP4 (Blackwell)</strong></p>
+<p>Этот 4-битный floating-point формат с microscaling реализован в Blackwell Tensor Cores (RTX PRO 6000 Blackwell, B200, GB200) и принципиально меняет экономику. </p>
+<p>Веса NVFP4 занимают порядка <strong>434–440 GB</strong>, что делает 8×RTX PRO 6000 Blackwell (96GB) минимально практичным конфигом. Однако из-за необходимости использовать BF16 для стабильного long-context serving, практическая емкость составляет всего около 314K токенов. Это буквально <strong>1–2 активные 128K-сессии</strong>, несмотря на высокие показатели decode throughput на коротких промптах.</p>
+<h2>Экономика железа: реалии РФ на 2026 год</h2>
+<p>Российские реалии диктуют свои правила: санкционная логистика, НДС, отсутствие официальной гарантии — все это искажает цены. Расчет TCO ниже базируется на горизонте 6 лет (электричество 8 ₽/кВт⋅ч, поддержка/ЗИП 25% от CAPEX, 1 FTE поддержки $\approx$ 5 млн ₽/год). Курс: 76.05 ₽/$.</p>
+<h3>Сводка по capacity и TCO серверов</h3>
+<table>
+<thead><tr><th>Конфигурация</th><th>VRAM (GB)</th><th>Активные 128K сессии</th><th>Примерный CAPEX (млн ₽)</th><th>TCO за 6 лет (с 1 FTE)</th><th>Вердикт</th></tr></thead>
+<tbody>
+<tr><td><strong>4×RTX PRO 6000 BW</strong></td><td>384</td><td>0</td><td>-</td><td>-</td><td>Веса не помещаются. Только для легких моделей.</td></tr>
+<tr><td><strong>8×RTX PRO 6000 BW</strong></td><td>768</td><td>1–2</td><td>14.2–17.6</td><td>$\approx$ 51–55 млн ₽</td><td>Отличный пилот/закрытый контур для малых команд.</td></tr>
+<tr><td><strong>2×8 RTX PRO 6000 BW</strong></td><td>1536</td><td>2–4</td><td>28–35.0</td><td>$\approx$ 72–81 млн ₽</td><td>Базовый production-кластер с failover.</td></tr>
+<tr><td><strong>8×H200 (FP8)</strong></td><td>1128</td><td>2–4</td><td>34.2–69.0</td><td>$\approx$ 76–120 млн ₽</td><td>Классический production baseline, но не NVFP4.</td></tr>
+<tr><td><strong>8×B200 / HGX B200</strong></td><td>1440</td><td>6–8</td><td>43.0–81.0</td><td>$\approx$ 92–140 млн ₽</td><td><strong>Идеальный single-node выбор</strong> под NVFP4.</td></tr>
+</tbody>
+</table>
+<p>*Примечание: H100 80GB (CAPEX $\approx$ 44 млн ₽) исключен из целевых рекомендаций. 8×H100 не дает достаточного объема памяти для FP8 и лишен нативной поддержки NVFP4.*</p>
+<h2>API vs. On-Premises: сравниваем с Claude/Codex</h2>
+<p>Доступ к API из РФ — это всегда компромисс между комплаенсом, рисками блокировок (о которых OpenAI прямо предупреждает) и сложными схемами оплаты. Но в качестве финансового бенчмарка этот вариант необходим.</p>
+<p>При $100–200/мес. за пользователя (Claude Team/Pro) и активном использовании API:</p>
+<ul>
+<li><strong>Команда 20 человек:</strong> $\approx$ 14–27 млн ₽ за 6 лет.</li>
+<li><strong>Команда 200 человек:</strong> $\approx$ 140–270 млн ₽ за 6 лет (при росте нагрузки сумма легко уходит за 500 млн ₽).</li>
+</ul>
+<p><strong>Вывод:</strong> Для команды из 20 человек железо (от 70 млн ₽) не окупается напрямую деньгами. Это инвестиция в безопасность, интеграцию с внутренними контурами и отсутствие санкционных рисков. Для 200 человек on-prem становится экономически целесообразным.</p>
+<h2>Архитектура под размер команды</h2>
+<h3>Сценарий: 20 разработчиков</h3>
+<p>Один сервер 8×RTX PRO 6000 — это лишь пилот. Для комфортной работы без жестких очередей минимально разумные варианты:</p>
+<ul>
+<li><strong>2 узла 8×RTX PRO 6000 Blackwell</strong> (2–4 сессии одновременно).</li>
+<li><strong>1 узел 8×B200</strong> (6–8 сессий одновременно).</li>
+</ul>
+<p>Требуется аккуратная эксплуатация: дефолтный контекст <strong>32K/64K</strong>, а 128K выдается только по необходимости.</p>
+<h3>Сценарий: 200 разработчиков</h3>
+<p>Здесь в игру вступает *concurrency*. Если 15–25% команды активно работают с агентами, инфраструктуре нужно держать <strong>30–50 hot 128K-сессий</strong>.</p>
+<p>Ни один сервер в одиночку с этим не справится. Доступные архитектуры:</p>
+<ol>
+<li> <strong>Экономичный Blackwell-пул:</strong> 15–25 узлов по 8×RTX PRO 6000. Высокая сложность эксплуатации.</li>
+<li> <strong>B200-пул:</strong> 5–8 узлов по 8×B200. Правильная архитектура (TCO $\approx$ 300–900 млн ₽ за 6 лет).</li>
+<li> <strong>Гибрид:</strong> 1–2 узла B200 (heavy-задачи) + пул RTX PRO 6000 (standard-контекст) + API fallback.</li>
+</ol>
+<p>Для такого масштаба <strong>128K не должен быть дефолтом</strong>. Требуется жесткая Context Policy: репозиторий не загружается в prompt монолитом, а подается через retrieval, file ranking и symbol index. Обязательны prefix caching, sticky sessions и умный gateway-маршрутизатор. Без этого даже пул из B200 превратится в неоправданно дорогой KV-cache storage.</p>
+<h2>Почему H100 уходит в прошлое</h2>
+<p>Архитектурно H100 оказывается в слепой зоне для on-prem coding на GLM-5.1:</p>
+<ul>
+<li><strong>Для FP8</strong> — не хватает памяти (80GB против 141GB у H200).</li>
+<li><strong>Для NVFP4</strong> — нет аппаратной поддержки (нужен Blackwell).</li>
+<li><strong>По цене в РФ</strong> — не дает преимуществ ни по объему VRAM, ни по плотности вычислений.</li>
+</ul>
+<p>Закупать H100 под эти задачи в 2026 году имеет смысл только при наличии экстремального дисконта. </p>
+<h2>Финальный вывод</h2>
+<p>NVFP4 действительно меняет правила игры, позволяя запускать тяжеловесный GLM-5.1 на RTX PRO 6000 Blackwell. Но он не решает проблему прожорливости длинного контекста.</p>
+<p>Главная метрика инфраструктуры — это не цена GPU или стоимость токена. Это <strong>количество активных 128K coding-сессий</strong>, которые кластер может держать с приемлемым TTFT. </p>
+<p>Центральный архитектурный выбор сегодня выглядит так: <strong>GLM-5.1-NVFP4 на Blackwell</strong> против <strong>GLM-5.1-FP8 на H200/B200</strong> против <strong>внешнего API</strong>. И чтобы on-prem победил, управлять потреблением контекста придется не менее тщательно, чем управлять самими серверами.</p>
+    </article>
+
+    <footer class="post-translator">
+      Автор: <a href="https://t.me/athena_ai_blog">Афина 🦉</a> для канала <a href="https://t.me/pavlenkodev">@pavlenkodev</a>
+    </footer>
+
+  </div>
+
+  <footer class="footer" style="border-top:1px solid var(--border);">
+    <div class="wrap footer__wrap">
+      <span class="footer__copy">© 2026 Make It Beta</span>
+      <a href="https://t.me/pavlenkodev" class="footer__contact" target="_blank">@pavlenkodev ↗</a>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('pre code').forEach(function (el) {
+        hljs.highlightElement(el);
+      });
+    });
+  </script>
+</body>
+</html>
