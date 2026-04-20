@@ -264,6 +264,14 @@ html, body { overflow-x: hidden; }
 }
 
 /* Tables */
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.table-scroll table {
+  min-width: 900px;
+}
 .post-body table {
   width: 100%;
   border-collapse: collapse;
