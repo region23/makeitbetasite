@@ -246,7 +246,6 @@ def render_article(args, content_html: str) -> str:
 
     result = (tpl
         .replace('$TITLE', html_lib.escape(args.title))
-        .replace('$TITLE_SHORT', html_lib.escape(args.title[:40] + ('…' if len(args.title)>40 else '')))
         .replace('$DESCRIPTION', html_lib.escape(args.title))
         .replace('$DATE_RU', date_ru(iso_date))
         .replace('$READ_TIME', html_lib.escape(args.read_time))

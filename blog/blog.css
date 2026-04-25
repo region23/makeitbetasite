@@ -82,9 +82,21 @@
 /* ─── Article page ───────────────────────────────────────────── */
 
 .blog-wrap {
-  max-width: 740px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 0 32px;
+}
+
+/* narrower column for body text, wider for tables/media */
+.post-body {
+  max-width: 780px;
+}
+.post-body table,
+.post-body .table-scroll,
+.post-body pre,
+.post-body figure,
+.post-body img {
+  max-width: 1040px;
 }
 
 /* Breadcrumb */
