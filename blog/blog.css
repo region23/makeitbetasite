@@ -87,16 +87,28 @@
   padding: 0 32px;
 }
 
-/* narrower column for body text, wider for tables/media */
+/* Text stays readable at ~780px, tables/code/media break out to full wrap width */
 .post-body {
+  max-width: 100%;
+}
+.post-body > p,
+.post-body > h2,
+.post-body > h3,
+.post-body > h4,
+.post-body > ul,
+.post-body > ol,
+.post-body > blockquote {
   max-width: 780px;
 }
-.post-body table,
-.post-body .table-scroll,
-.post-body pre,
-.post-body figure,
-.post-body img {
+
+/* Breakout: tables, code, images stretch to full 1040px */
+.post-body > table,
+.post-body > .table-scroll,
+.post-body > pre,
+.post-body > figure,
+.post-body > img {
   max-width: 1040px;
+  width: 100%;
 }
 
 /* Breadcrumb */
