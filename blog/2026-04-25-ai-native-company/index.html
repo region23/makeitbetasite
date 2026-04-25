@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI-native компании: как строить организацию, где AI — операционная система, а не инструмент — Make It Beta</title>
+  <meta name="description" content="AI-native компании: как строить организацию, где AI — операционная система, а не инструмент" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../blog.css?v=3" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+  <script>
+    (function() {
+      var stored = localStorage.getItem('theme');
+      var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="wrap header__wrap">
+      <a href="/" class="logo">Make It Beta<sup>🧪</sup></a>
+      <nav style="display:flex;align-items:center;gap:24px;">
+        <a href="/blog/" class="header__link">Блог</a>
+        <a href="https://t.me/pavlenkodev" class="header__link" target="_blank">@pavlenkodev</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+          <span id="themeIcon">🌙</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="blog-wrap">
+
+    <nav class="post-breadcrumb">
+      <a href="/">Главная</a> <span>→</span>
+      <a href="/blog/">Блог</a> <span>→</span>
+      <span style="color:var(--ink);">AI-native компании: как строить организацию, где AI — операционная система, а не инструмент</span>
+    </nav>
+
+    <header class="post-header">
+      <span class="tag tag--original">оригинал</span>
+      <h1>AI-native компании: как строить организацию, где AI — операционная система, а не инструмент</h1>
+      <div class="post-meta">
+        <time>25 апреля 2026</time>
+        <span class="post-meta__sep">·</span>
+        <span>22 мин чтения</span>
+        
+      </div>
+    </header>
+
+    
+
+    <article class="post-body">
+      <h1>AI-native компании</h1>
+<h1>1. Что такое AI-native компания на практике</h1>
+<p><strong>AI-native компания — это организация, где AI является частью операционной системы компании, а не внешним инструментом.</strong></p>
+<p>То есть AI встроен в то, как компания:</p>
+<p>принимает решения;</p>
+<p>пишет и проверяет код;</p>
+<p>собирает customer feedback;</p>
+<p>планирует спринты;</p>
+<p>делает поддержку;</p>
+<p>проводит найм;</p>
+<p>ведёт документацию;</p>
+<p>анализирует инциденты;</p>
+<p>управляет знаниями;</p>
+<p>оценивает риски;</p>
+<p>перераспределяет ресурсы.</p>
+<p>Эта статья вдохновлена подкастом Дианы Ху из YC. Её идея звучит так: AI-native — это компания, где AI не “надстройка к текущим процессам”, а слой интеллекта, через который проходят рабочие процессы; важные процессы становятся <strong>queryable</strong>, то есть понятными и доступными для агентов, а организация строится вокруг closed loops. (<a href="https://podcasts.apple.com/us/podcast/y-combinator-startup-podcast/id1236907421?utm_source=chatgpt.com">Apple Podcasts</a>)</p>
+<p>Главная мысль: <strong>AI-native — это не про количество AI-инструментов. Это про качество обратной связи.</strong></p>
+<p>Обычная компания работает так:</p>
+<p>решение → выполнение → отчёт → митинг → интерпретация менеджером → следующее решение.</p>
+<p>AI-native компания работает так:</p>
+<p>цель → артефакты → агентный анализ → действие → измерение результата → обновление процесса.</p>
+<p>Разница не косметическая. Во втором случае компания начинает учиться быстрее.</p>
+<h1>2. Пять признаков настоящей AI-native компании</h1>
+<h2>1. Компания queryable</h2>
+<p>У компании есть машинно-читаемый слой контекста: код, задачи, PR, инциденты, продажи, саппорт, звонки с клиентами, продуктовая аналитика, решения, ADR, roadmap, OKR, документация, найм, фидбек сотрудников.</p>
+<p>Не “всё лежит в Notion”, а именно:</p>
+<p>данные доступны агентам по правам;</p>
+<p>у каждого артефакта есть владелец;</p>
+<p>важные решения имеют traceability;</p>
+<p>можно спросить: “почему мы делаем эту фичу?” — и получить цепочку от customer call до тикета, PR, релиза и метрики adoption.</p>
+<p>MCP и похожие протоколы полезны именно здесь: они стандартизируют подключение AI-приложений к внешним данным, инструментам и workflow, но требуют строгого контроля доступа и безопасности. (<a href="https://www.anthropic.com/news/model-context-protocol">Anthropic</a>)</p>
+<h2>2. Каждый важный процесс имеет closed loop</h2>
+<p>Closed loop — это не “агент что-то посоветовал”. Это контур:</p>
+<p>захват данных;</p>
+<p>интерпретация;</p>
+<p>действие;</p>
+<p>проверка результата;</p>
+<p>обновление правил.</p>
+<p>Пример для разработки:</p>
+<p>агент читает саппорт, customer calls, analytics, GitLab, Jira;</p>
+<p>предлагает приоритеты спринта;</p>
+<p>DRI утверждает;</p>
+<p>агенты помогают писать код и тесты;</p>
+<p>CI/evals проверяют;</p>
+<p>после релиза агент сравнивает результат с ожидаемыми customer outcomes;</p>
+<p>следующее планирование учитывает фактический эффект.</p>
+<h2>3. Спеки, тесты и evals становятся важнее кода</h2>
+<p>В старом мире основной артефакт инженера — код.</p>
+<p>В AI-native мире основной артефакт инженера — <strong>точное описание желаемого поведения</strong>:</p>
+<p>spec;</p>
+<p>acceptance criteria;</p>
+<p>test harness;</p>
+<p>eval set;</p>
+<p>сценарии;</p>
+<p>invariants;</p>
+<p>пример плохого и хорошего результата;</p>
+<p>ограничения;</p>
+<p>rollback conditions.</p>
+<p>Код становится всё более производным артефактом. StrongDM описывает “software factory”, где люди задают намерение, сценарии и ограничения, а агенты генерируют код, валидируют поведение и итеративно улучшают результат; это радикальный пример, но направление понятно: ценность смещается от ручного написания кода к проектированию проверки результата. (<a href="https://www.strongdm.com/blog/the-strongdm-software-factory-building-software-with-ai">strongdm.com</a>)</p>
+<h2>4. Люди управляют результатами, агенты выполняют всё больше действий</h2>
+<p>В AI-native компании человек не исчезает. Меняется его роль.</p>
+<p>Плохая модель: “AI заменит людей”.</p>
+<p>Хорошая модель: “люди переходят выше по стеку абстракции”.</p>
+<p>Инженер меньше пишет boilerplate, больше формулирует поведение системы.</p>
+<p>PM меньше собирает статусы, больше принимает продуктовые решения.</p>
+<p>Менеджер меньше маршрутизирует информацию, больше отвечает за outcome.</p>
+<p>Саппорт меньше вручную отвечает на повторяющиеся вопросы, больше улучшает knowledge base и продукт.</p>
+<p>Anthropic в своём гайде по агентам подчёркивает похожую идею: начинать нужно с простых, измеримых workflow, усложняя систему только тогда, когда это реально улучшает outcome; агенты полезны там, где есть инструменты, обратная связь из среды, ясные критерии успеха и контрольные точки для человека. (<a href="https://www.anthropic.com/research/building-effective-agents">Anthropic</a>)</p>
+<h2>5. Экономика компании считает не только headcount, но и token budget</h2>
+<p>В старой компании масштабирование часто означает: нанять больше людей.</p>
+<p>В AI-native компании вопрос звучит иначе:</p>
+<p>можем ли мы купить больше интеллектуальной пропускной способности через модели, инструменты, evals и automation?</p>
+<p>Но здесь важен баланс. “Больше токенов” — не самоцель. DORA отдельно предупреждает, что AI в разработке даёт индивидуальные выгоды, но может ухудшать стабильность и throughput, если у команды слабые инженерные практики; robust testing, small batches, user-centricity и platform engineering остаются критичными. (<a href="https://dora.dev/research/2024/dora-report/">dora.dev</a>)</p>
+<h1>3. Базовая архитектура AI-native компании</h1>
+<p>Независимо от размера компании, я бы строил её как шесть слоёв.</p>
+<h2>Слой 1. Context layer</h2>
+<p>Это “память компании”.</p>
+<p>Сюда входят:</p>
+<p>документы;</p>
+<p>код;</p>
+<p>таски;</p>
+<p>PR;</p>
+<p>customer calls;</p>
+<p>саппорт;</p>
+<p>CRM;</p>
+<p>продуктовая аналитика;</p>
+<p>инциденты;</p>
+<p>постмортемы;</p>
+<p>решения;</p>
+<p>финансовые данные;</p>
+<p>политики;</p>
+<p>найм;</p>
+<p>внутренние коммуникации.</p>
+<p>Главное — не просто собрать всё в data lake. Data lake сам по себе не делает компанию queryable. Нужны права доступа, индексация, семантический поиск, нормализация сущностей, связи между артефактами и понятные API для агентов.</p>
+<h2>Слой 2. Agent/tool layer</h2>
+<p>Это слой, через который агенты могут действовать.</p>
+<p>Примеры действий:</p>
+<p>создать тикет;</p>
+<p>собрать PR;</p>
+<p>запустить тесты;</p>
+<p>сделать summary звонка;</p>
+<p>найти похожий инцидент;</p>
+<p>сгенерировать release notes;</p>
+<p>проверить контракт API;</p>
+<p>подготовить ответ саппорта;</p>
+<p>создать draft решения;</p>
+<p>запустить эксперимент;</p>
+<p>отправить алерт.</p>
+<p>Критично: агентам нельзя давать “человеческие” безлимитные права. У каждого агента должна быть identity, scope, audit log, owner и policy.</p>
+<h2>Слой 3. AI gateway</h2>
+<p>Это единая точка управления моделями.</p>
+<p>Она отвечает за:</p>
+<p>выбор модели под задачу;</p>
+<p>routing между моделями;</p>
+<p>лимиты;</p>
+<p>стоимость;</p>
+<p>логирование;</p>
+<p>redaction PII;</p>
+<p>кэширование;</p>
+<p>fallback;</p>
+<p>observability;</p>
+<p>оценку качества;</p>
+<p>контроль latency;</p>
+<p>контроль vendor lock-in.</p>
+<p>Без AI gateway компания быстро превращается в хаос: разные команды покупают разные инструменты, данные текут наружу, стоимость непонятна, качество не сравнивается.</p>
+<h2>Слой 4. Evals layer</h2>
+<p>Это самый недооценённый слой.</p>
+<p>Для AI-native компании evals — аналог CI/CD для AI-процессов.</p>
+<p>Нужны:</p>
+<p>golden datasets;</p>
+<p>регрессионные наборы;</p>
+<p>human review samples;</p>
+<p>LLM-as-judge там, где допустимо;</p>
+<p>security red-team cases;</p>
+<p>customer outcome checks;</p>
+<p>offline evals перед релизом;</p>
+<p>online monitoring после релиза;</p>
+<p>drift detection;</p>
+<p>ручной override.</p>
+<p>Без evals агенты превращаются в генератор уверенной случайности.</p>
+<h2>Слой 5. Workflow layer</h2>
+<p>AI должен жить не в отдельном “портале с чатиком”, а там, где работает человек:</p>
+<p>IDE;</p>
+<p>Slack/Teams;</p>
+<p>Jira/Linear;</p>
+<p>GitHub/GitLab;</p>
+<p>CRM;</p>
+<p>support console;</p>
+<p>BI;</p>
+<p>CI/CD;</p>
+<p>incident management;</p>
+<p>docs.</p>
+<p>Чем дальше AI от реального workflow, тем ниже adoption.</p>
+<h2>Слой 6. Governance layer</h2>
+<p>Governance — это не комитет, который запрещает. Это система, которая позволяет безопасно ускоряться.</p>
+<p>Сюда входят:</p>
+<p>AI inventory;</p>
+<p>классификация use cases по риску;</p>
+<p>data classification;</p>
+<p>model/vendor registry;</p>
+<p>approval policies;</p>
+<p>security reviews;</p>
+<p>audit logs;</p>
+<p>incident response;</p>
+<p>training;</p>
+<p>юридические ограничения;</p>
+<p>регулярный пересмотр evals.</p>
+<p>NIST AI RMF задаёт полезную рамку для управления рисками AI-систем, а ISO/IEC 42001 описывает требования к AI management system — то есть к управлению AI как постоянной организационной способности, а не разовому проекту. (<a href="https://www.nist.gov/itl/ai-risk-management-framework">NIST</a>)</p>
+<p>Для компаний, работающих в ЕС, это уже не абстракция: AI Act вступил в силу 1 августа 2024 года, AI literacy и запреты применяются с 2 февраля 2025 года, правила для GPAI — с 2 августа 2025 года, а большинство правил и transparency obligations начинают применяться с 2 августа 2026 года. (<a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai">Digital Strategy</a>)</p>
+<h1>4. Как строить AI-native стартап с нуля</h1>
+<p>Стартап имеет главное преимущество: <strong>нет legacy-процессов, legacy-оргструктуры и legacy-привычек</strong>.</p>
+<p>Поэтому ошибка стартапа — копировать старую компанию, только с AI tools.</p>
+<p>Правильная стратегия: с первого дня строить компанию как <strong>маленькую, быструю, queryable систему.</strong></p>
+<h2>День 0: не нанимайте людей, пока не построили company OS</h2>
+<p>До первых наймов нужно завести минимальную “операционную систему”:</p>
+<p>единый workspace для документов;</p>
+<p>систему задач;</p>
+<p>репозиторий;</p>
+<p>CI/CD;</p>
+<p>инструмент записи customer calls;</p>
+<p>центральный канал коммуникации;</p>
+<p>AI gateway или хотя бы стандартизированный доступ к моделям;</p>
+<p>базовые правила data/security;</p>
+<p>спеку “как мы работаем с AI”;</p>
+<p>репозиторий prompts/specs/evals;</p>
+<p>шаблоны product spec, tech spec, decision record, postmortem.</p>
+<p>Важный принцип: <strong>любой важный разговор должен оставлять артефакт</strong>.</p>
+<p>Не потому что бюрократия, а потому что агент не может учиться из устной культуры.</p>
+<h2>Первый hiring principle: нанимайте не “исполнителей”, а AI-усиленных строителей</h2>
+<p>В AI-native стартапе не нужны люди, которые ждут чёткой задачи и потом делают кусок работы. Нужны люди, которые умеют:</p>
+<p>разобраться в проблеме;</p>
+<p>сформулировать spec;</p>
+<p>дать агентам контекст;</p>
+<p>построить проверку результата;</p>
+<p>быстро собрать прототип;</p>
+<p>оценить качество;</p>
+<p>исправить систему, а не только конкретный баг.</p>
+<p>Это касается не только инженеров. AI-native sales, support, ops, design, marketing — все должны уметь приходить не с “идеей”, а с работающим черновиком, прототипом, анализом или автоматизацией.</p>
+<h2>Не создавайте отделы слишком рано</h2>
+<p>Для раннего стартапа лучше мыслить ролями:</p>
+<p>founder/AI-founder — человек, который лично показывает, как компания использует AI;</p>
+<p>DRI — directly responsible individual за конкретный outcome;</p>
+<p>IC-builder — человек, который строит руками, агентами и инструментами;</p>
+<p>domain expert — человек, который знает клиента и реальность домена;</p>
+<p>platform-minded engineer — человек, который превращает повторяющуюся работу в систему.</p>
+<p>Смысл не в красивых титулах. Смысл в том, что <strong>ответственность должна быть за outcome, а не за процесс</strong>.</p>
+<h2>Customer discovery loop</h2>
+<p>Самый первый closed loop стартапа должен быть не про код, а про клиента.</p>
+<p>Пример:</p>
+<p>каждый customer call записывается;</p>
+<p>агент делает summary, extracts pains, objections, jobs-to-be-done;</p>
+<p>агент сравнивает новый звонок с предыдущими;</p>
+<p>раз в неделю агент собирает карту повторяющихся болей;</p>
+<p>founder вручную проверяет выводы;</p>
+<p>roadmap обновляется на основе реальных сигналов;</p>
+<p>следующие вопросы клиентам генерируются из gaps.</p>
+<p>Но нельзя делегировать AI главный founder job: <strong>почувствовать боль клиента</strong>. AI помогает увидеть паттерны, но founder должен лично говорить с пользователями.</p>
+<h2>Product development loop</h2>
+<p>Каждая фича должна идти по цепочке:</p>
+<p>customer signal;</p>
+<p>problem statement;</p>
+<p>success metric;</p>
+<p>spec;</p>
+<p>acceptance criteria;</p>
+<p>test/eval harness;</p>
+<p>agent implementation;</p>
+<p>human review of behavior;</p>
+<p>release;</p>
+<p>post-release measurement;</p>
+<p>learning update.</p>
+<p>Плохой процесс:</p>
+<p>“Сделай мне dashboard”.</p>
+<p>Хороший процесс:</p>
+<p>“Пользователь compliance manager не понимает, какие vendor risks требуют реакции сегодня. Нужно, чтобы за 30 секунд он увидел top-5 рисков, причину, confidence, recommended action и audit trail. Успех: 70% beta-users используют dashboard минимум 3 раза в неделю, среднее время triage падает с 40 до 15 минут. Вот 12 сценариев, где dashboard должен дать правильный результат”.</p>
+<p>Во втором случае агенту есть что строить и что проверять.</p>
+<h2>Software factory для стартапа</h2>
+<p>Не надо сразу строить “dark factory”, где люди вообще не смотрят код. Это подходит только для очень зрелых, хорошо проверяемых контуров.</p>
+<p>Лучше идти по уровням:</p>
+<p><strong>Уровень 1. AI pair programming</strong></p>
+<p>Инженер пишет код с ассистентом.</p>
+<p><strong>Уровень 2. Delegated tasks</strong></p>
+<p>Агенту дают маленькие задачи: написать тесты, сделать refactor, добавить endpoint, подготовить migration.</p>
+<p><strong>Уровень 3. Agent PRs</strong></p>
+<p>Агент сам делает PR по spec, прогоняет тесты, пишет summary, человек ревьюит.</p>
+<p><strong>Уровень 4. Spec-driven development</strong></p>
+<p>Основной труд человека — spec/evals. Агент пишет implementation. Человек проверяет поведение, а не каждую строку.</p>
+<p><strong>Уровень 5. Factory</strong></p>
+<p>Для ограниченных доменов: fully specified tasks, strong test harness, scenario validation, automatic iteration, human review только outcome.</p>
+<p>Для раннего стартапа оптимальный целевой уровень — 3–4. Уровень 5 можно применять точечно: SDK, CRUD, internal tools, migration scripts, docs, test generation, data transformations.</p>
+<h2>Как должен выглядеть спринт в AI-native стартапе</h2>
+<p>В воскресенье вечером или понедельник утром агент читает:</p>
+<p>customer calls;</p>
+<p>support tickets;</p>
+<p>product analytics;</p>
+<p>sales notes;</p>
+<p>open bugs;</p>
+<p>previous sprint commitments;</p>
+<p>merged PRs;</p>
+<p>incidents;</p>
+<p>usage metrics.</p>
+<p>Он предлагает:</p>
+<p>что реально было сделано;</p>
+<p>что не дало результата;</p>
+<p>какие customer problems усилились;</p>
+<p>какие задачи стоит удалить;</p>
+<p>какие 3–5 outcomes важнее всего на неделю;</p>
+<p>какие specs готовы к agent implementation;</p>
+<p>где нет достаточной ясности.</p>
+<p>Команда не тратит полдня на status update. Люди спорят о приоритетах, assumptions и customer impact.</p>
+<h2>Стартаповая метрика AI-native зрелости</h2>
+<p>Не меряйте “сколько кода написал AI”. Это vanity metric.</p>
+<p>Лучше мерить:</p>
+<p>сколько времени от customer signal до production change;</p>
+<p>сколько гипотез проверяется в неделю;</p>
+<p>сколько задач закрываются без ручного coordination;</p>
+<p>какая доля specs имеет acceptance criteria и evals;</p>
+<p>стоимость tokens на shipped outcome;</p>
+<p>доля задач, где агент дошёл до working PR;</p>
+<p>доля agent PRs, которые прошли без серьёзной переделки;</p>
+<p>количество escaped defects;</p>
+<p>скорость onboarding нового человека;</p>
+<p>время ответа на customer issue;</p>
+<p>время от incident до postmortem и fix.</p>
+<h2>90-дневный план для стартапа</h2>
+<h3>Первые 7 дней</h3>
+<p>Создайте company OS: docs, tasks, repo, CI, AI tools, meeting capture, customer call capture, decision log.</p>
+<p>Напишите один документ: <strong>“Как мы работаем AI-native”</strong>.</p>
+<p>В нём должны быть правила:</p>
+<p>все важные решения фиксируются;</p>
+<p>каждая фича начинается со spec;</p>
+<p>каждая фича имеет success metric;</p>
+<p>каждый агентный workflow имеет owner;</p>
+<p>AI output не считается правдой без проверки;</p>
+<p>код без тестов/evals не считается готовым;</p>
+<p>customer context важнее внутреннего мнения.</p>
+<h3>Дни 8–30</h3>
+<p>Запустите customer discovery loop.</p>
+<p>Соберите 20–40 customer conversations.</p>
+<p>Постройте pain map.</p>
+<p>Создайте agent-assisted research workflow.</p>
+<p>Сделайте первый MVP через spec-driven process.</p>
+<p>Настройте baseline evals.</p>
+<p>Заведите weekly learning review.</p>
+<h3>Дни 31–60</h3>
+<p>Переведите разработку на agent PRs.</p>
+<p>Каждая задача должна иметь:</p>
+<p>problem;</p>
+<p>expected behavior;</p>
+<p>constraints;</p>
+<p>test cases;</p>
+<p>definition of done;</p>
+<p>rollback plan.</p>
+<p>Сделайте агента для:</p>
+<p>создания тестов;</p>
+<p>анализа PR;</p>
+<p>release notes;</p>
+<p>bug reproduction;</p>
+<p>поиска похожих issues;</p>
+<p>обновления docs.</p>
+<h3>Дни 61–90</h3>
+<p>Создайте первые настоящие closed loops:</p>
+<p>support → product backlog;</p>
+<p>usage analytics → roadmap;</p>
+<p>sales objections → positioning;</p>
+<p>incidents → reliability improvements;</p>
+<p>PR defects → spec quality improvements.</p>
+<p>После 90 дней у вас должна быть не “команда с AI-инструментами”, а маленькая компания, которая учится быстрее конкурентов.</p>
+<h1>5. Как сделать AI-native существующую software-компанию на 300 человек</h1>
+<p>Здесь другой контекст.</p>
+<p>У компании уже есть:</p>
+<p>продукт;</p>
+<p>клиенты;</p>
+<p>legacy-код;</p>
+<p>инциденты;</p>
+<p>релизные процессы;</p>
+<p>менеджеры;</p>
+<p>команды;</p>
+<p>политики;</p>
+<p>security constraints;</p>
+<p>коммерческие обязательства;</p>
+<p>люди, которые справедливо боятся хаоса.</p>
+<p>Поэтому нельзя просто сказать: “теперь все работаем агентами”.</p>
+<p>Нужна стратегия миграции.</p>
+<h2>Главный принцип: не делайте big bang</h2>
+<p>Для компании на 300 человек правильный подход — <strong>dual operating model</strong>.</p>
+<p>С одной стороны, вы постепенно делаете текущую компанию queryable и AI-assisted.</p>
+<p>С другой стороны, вы создаёте несколько AI-native pods, которые строят новые контуры с нуля и показывают, как должна выглядеть новая модель работы.</p>
+<p>То есть:</p>
+<p>core business продолжает безопасно работать;</p>
+<p>lighthouse teams доказывают новые подходы;</p>
+<p>AI platform team строит общую инфраструктуру;</p>
+<p>governance защищает компанию от утечек и безумия;</p>
+<p>leadership меняет систему стимулов.</p>
+<p>McKinsey в 2025 году писали, что AI уже широко используется, но большинство организаций всё ещё не масштабировали AI до enterprise-level value; высокие результаты чаще связаны не с отдельными инструментами, а с redesign workflows, лидерским ownership и внедрением AI в несколько функций. (<a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai">McKinsey &amp; Company</a>)</p>
+<h2>Этап 1. Диагностика: где компания теряет скорость</h2>
+<p>Начните не с выбора модели, а с value stream mapping.</p>
+<p>Для software-компании на 300 человек я бы смотрел такие потоки:</p>
+<p>идея → roadmap;</p>
+<p>roadmap → spec;</p>
+<p>spec → implementation;</p>
+<p>implementation → review;</p>
+<p>review → release;</p>
+<p>release → adoption;</p>
+<p>support issue → bug fix;</p>
+<p>incident → root cause → prevention;</p>
+<p>new engineer → productive engineer;</p>
+<p>customer feedback → product decision.</p>
+<p>В каждом потоке найдите:</p>
+<p>где ждём людей;</p>
+<p>где теряется информация;</p>
+<p>где много ручной координации;</p>
+<p>где плохие specs;</p>
+<p>где слабые тесты;</p>
+<p>где менеджеры собирают статусы;</p>
+<p>где саппорт повторяет одно и то же;</p>
+<p>где клиентский сигнал не доходит до product/engineering.</p>
+<p>AI-native трансформация начинается именно там.</p>
+<h2>Этап 2. Сделать компанию queryable</h2>
+<p>Для зрелой компании это самый важный фундамент.</p>
+<p>Подключите к единому context layer:</p>
+<p>GitHub/GitLab;</p>
+<p>Jira/Linear;</p>
+<p>Confluence/Notion/Google Docs/Yandex 360/Внутреннее хранилище;</p>
+<p>Telegram/Express/Slack/Teams;</p>
+<p>CI/CD;</p>
+<p>observability;</p>
+<p>incident management;</p>
+<p>support system;</p>
+<p>CRM;</p>
+<p>product analytics;</p>
+<p>feature flags;</p>
+<p>customer calls;</p>
+<p>architecture docs;</p>
+<p>security policies.</p>
+<p>Но подключение должно быть не “скормить всё LLM”. Нужны:</p>
+<p>RBAC/ABAC;</p>
+<p>data classification;</p>
+<p>PII handling;</p>
+<p>tenant boundaries;</p>
+<p>audit;</p>
+<p>retention policy;</p>
+<p>source attribution;</p>
+<p>freshness;</p>
+<p>owner у каждого источника;</p>
+<p>механизм удаления/исправления данных.</p>
+<p>Цель: любой сотрудник с правами может спросить:</p>
+<p>“Почему этот epic в roadmap?”</p>
+<p>“Какие клиенты просили эту фичу?”</p>
+<p>“Какие incident patterns повторялись за квартал?”</p>
+<p>“Какие модули чаще всего ломаются после релизов?”</p>
+<p>“Какие PR зависают на review дольше всего?”</p>
+<p>“Где у нас test coverage не соответствует business criticality?”</p>
+<h2>Этап 3. Сначала ускорить разработку, но не сломать engineering fundamentals</h2>
+<p>Для software-компании самый естественный первый контур — SDLC.</p>
+<p>Но опасность в том, что AI ускоряет написание кода, а bottleneck переезжает в review, тесты, архитектуру и прод.</p>
+<p>Поэтому первые use cases:</p>
+<p>codebase Q&amp;A для onboarding;</p>
+<p>test generation;</p>
+<p>PR summary;</p>
+<p>PR risk analysis;</p>
+<p>security review draft;</p>
+<p>bug reproduction from support ticket;</p>
+<p>legacy code explanation;</p>
+<p>migration assistant;</p>
+<p>release notes;</p>
+<p>incident summary;</p>
+<p>documentation update;</p>
+<p>contract test generation;</p>
+<p>flaky test triage.</p>
+<p>GitHub в своих best practices для Copilot отдельно подчёркивает необходимость понимать сильные и слабые стороны инструмента, подбирать правильный режим под задачу, создавать хорошие prompts и проверять работу AI. (<a href="https://docs.github.com/en/copilot/get-started/best-practices">GitHub Docs</a>)</p>
+<h2>Этап 4. Ввести AI Opportunity Map</h2>
+<p>Не надо запускать 100 пилотов.</p>
+<p>Составьте карту из 20–50 use cases, но выберите 5–7 lighthouse.</p>
+<p>Оценивайте каждый use case по таким критериям:</p>
+<p>размер business impact;</p>
+<p>частота процесса;</p>
+<p>стоимость текущего ручного труда;</p>
+<p>качество доступного контекста;</p>
+<p>проверяемость результата;</p>
+<p>риск ошибки;</p>
+<p>регуляторный риск;</p>
+<p>сложность интеграции;</p>
+<p>готовность команды;</p>
+<p>наличие owner;</p>
+<p>возможность измерить KPI за 4–8 недель.</p>
+<p>Лучшие первые use cases — те, где:</p>
+<p>много повторяющейся работы;</p>
+<p>есть хороший контекст;</p>
+<p>результат можно проверить;</p>
+<p>ошибка не катастрофична;</p>
+<p>человек может approve;</p>
+<p>есть быстрый feedback loop.</p>
+<p>Плохие первые use cases:</p>
+<p>стратегические решения без ground truth;</p>
+<p>сложная архитектура без тестов;</p>
+<p>high-risk compliance без governance;</p>
+<p>автономные действия в production;</p>
+<p>агенты с широкими правами;</p>
+<p>“универсальный корпоративный ассистент для всего”.</p>
+<h2>Этап 5. Создать AI Platform Team</h2>
+<p>Для компании на 300 человек нужен небольшой, но сильный AI Platform Team.</p>
+<p>Не “центр инноваций”, который делает демо. А команда, которая строит инфраструктуру, чтобы остальные могли безопасно ускоряться.</p>
+<p>Состав:</p>
+<p>AI platform lead;</p>
+<p>staff/principal engineer;</p>
+<p>LLMOps / AI infrastructure engineer;</p>
+<p>data engineer;</p>
+<p>security engineer;</p>
+<p>developer experience engineer;</p>
+<p>evals engineer;</p>
+<p>product manager for internal platform;</p>
+<p>representative from legal/compliance part-time.</p>
+<p>Задачи команды:</p>
+<p>AI gateway;</p>
+<p>model/vendor registry;</p>
+<p>prompt/spec/eval repository;</p>
+<p>agent identity;</p>
+<p>MCP/tools governance;</p>
+<p>logging;</p>
+<p>cost allocation;</p>
+<p>approved patterns;</p>
+<p>sandbox environments;</p>
+<p>AI SDLC guidelines;</p>
+<p>training;</p>
+<p>reference implementations;</p>
+<p>eval harness;</p>
+<p>security reviews;</p>
+<p>internal support.</p>
+<p>Очень важно: platform team не должна делать все AI use cases сама. Она должна создавать paved road.</p>
+<h2>Этап 6. Lighthouse teams</h2>
+<p>Выберите 3–5 команд, которые станут AI-native первыми.</p>
+<p>Критерии выбора:</p>
+<p>у команды сильный tech lead;</p>
+<p>есть измеримый поток работы;</p>
+<p>есть поддержка product owner;</p>
+<p>есть боль, которую все признают;</p>
+<p>есть тесты или возможность быстро построить evals;</p>
+<p>не самый критичный production-риск;</p>
+<p>команда готова менять процесс, а не просто “попробовать tool”.</p>
+<p>Примеры lighthouse:</p>
+<p>команда, которая поддерживает legacy-модуль;</p>
+<p>команда, у которой много support-driven bugs;</p>
+<p>платформенная команда, делающая internal tools;</p>
+<p>QA automation team;</p>
+<p>команда API/SDK;</p>
+<p>команда документации/developer portal.</p>
+<h2>Этап 7. Перестроить sprint planning</h2>
+<p>В обычной компании sprint planning часто превращается в менеджерскую церемонию.</p>
+<p>AI-native sprint planning должен выглядеть так:</p>
+<p>агент заранее анализирует предыдущий sprint;</p>
+<p>находит незавершённые commitments;</p>
+<p>сравнивает shipped work с customer impact;</p>
+<p>поднимает customer feedback;</p>
+<p>показывает defects и incidents;</p>
+<p>предлагает candidate priorities;</p>
+<p>проверяет capacity;</p>
+<p>находит dependency risks;</p>
+<p>генерирует draft plan.</p>
+<p>Люди не тратят время на сбор фактов. Люди обсуждают trade-offs.</p>
+<h2>Этап 8. Перестроить роль менеджеров</h2>
+<p>В компании на 300 человек AI-native трансформация почти всегда упирается в middle management.</p>
+<p>Не потому что менеджеры плохие, а потому что большая часть их работы исторически была “information routing”:</p>
+<p>собрать статус;</p>
+<p>пересказать наверх;</p>
+<p>спустить вниз;</p>
+<p>согласовать;</p>
+<p>напомнить;</p>
+<p>сделать отчёт;</p>
+<p>собрать митинг.</p>
+<p>Если компания становится queryable, значительная часть этой работы автоматизируется.</p>
+<p>Новая роль менеджера:</p>
+<p>держать outcome;</p>
+<p>снимать организационные блокеры;</p>
+<p>развивать людей;</p>
+<p>управлять конфликтами приоритетов;</p>
+<p>следить за качеством решений;</p>
+<p>строить систему, а не собирать статусы;</p>
+<p>помогать команде использовать AI правильно;</p>
+<p>отвечать за customer/business result.</p>
+<p>Часть менеджеров станет DRI/value-stream owners.</p>
+<p>Часть уйдёт в platform/product/program roles.</p>
+<p>Часть станет people leaders.</p>
+<p>Часть, возможно, окажется лишней — но начинать трансформацию с “сократим людей” опасно. DORA в AI-assisted development отдельно рекомендует думать о reinvested capacity, а не только о headcount reduction: сначала высвободившуюся ёмкость лучше направлять на снижение rework, качество, customer value и платформенные улучшения. (<a href="https://cloud.google.com/resources/content/dora-roi-of-ai-assisted-software-development">Google Cloud</a>)</p>
+<h1>6. 180-дневный roadmap для компании на 300 человек</h1>
+<h2>Дни 0–30: baseline и правила игры</h2>
+<p>Сделайте inventory:</p>
+<p>какие AI-инструменты уже используются;</p>
+<p>какие данные могут утекать;</p>
+<p>какие команды экспериментируют;</p>
+<p>какие процессы самые медленные;</p>
+<p>какие инженерные метрики сейчас;</p>
+<p>какие продуктовые метрики;</p>
+<p>где больше всего rework;</p>
+<p>где больше всего support load;</p>
+<p>где слабые тесты;</p>
+<p>где есть сильные лидеры для lighthouse.</p>
+<p>Определите baseline:</p>
+<p>lead time;</p>
+<p>PR cycle time;</p>
+<p>deployment frequency;</p>
+<p>change failure rate;</p>
+<p>MTTR;</p>
+<p>escaped defects;</p>
+<p>support ticket resolution time;</p>
+<p>onboarding time;</p>
+<p>test coverage;</p>
+<p>release predictability;</p>
+<p>developer satisfaction;</p>
+<p>стоимость rework.</p>
+<p>В конце 30 дней должны появиться:</p>
+<p>AI policy;</p>
+<p>approved tools list;</p>
+<p>data classification rules;</p>
+<p>AI platform backlog;</p>
+<p>первые lighthouse teams;</p>
+<p>AI Opportunity Map;</p>
+<p>baseline metrics;</p>
+<p>план обучения.</p>
+<h2>Дни 31–60: queryable foundation</h2>
+<p>Подключите ключевые источники:</p>
+<p>repo;</p>
+<p>tasks;</p>
+<p>docs;</p>
+<p>support;</p>
+<p>incidents;</p>
+<p>CI/CD;</p>
+<p>product analytics;</p>
+<p>customer calls.</p>
+<p>Настройте:</p>
+<p>search/RAG;</p>
+<p>permissions;</p>
+<p>source citations;</p>
+<p>agent logs;</p>
+<p>cost tracking;</p>
+<p>PII redaction;</p>
+<p>AI gateway;</p>
+<p>первые approved agent tools.</p>
+<p>Сделайте первые internal agents:</p>
+<p>codebase Q&amp;A;</p>
+<p>support-to-bug assistant;</p>
+<p>PR summary/risk assistant;</p>
+<p>incident summarizer;</p>
+<p>release notes assistant;</p>
+<p>documentation assistant.</p>
+<h2>Дни 61–90: lighthouse loops</h2>
+<p>Каждая lighthouse team должна внедрить 2–3 closed loops.</p>
+<p>Например:</p>
+<p>support ticket → reproduction → failing test → PR suggestion;</p>
+<p>customer call → product insight → roadmap candidate;</p>
+<p>incident → postmortem → prevention task → verification;</p>
+<p>spec → generated tests → implementation → eval;</p>
+<p>PR → risk analysis → targeted review.</p>
+<p>К 90-му дню важно показать не демо, а outcome:</p>
+<p>PR cycle time снизился;</p>
+<p>test coverage вырос;</p>
+<p>onboarding ускорился;</p>
+<p>support resolution time уменьшился;</p>
+<p>release notes стали автоматическими;</p>
+<p>меньше повторяющихся bugs;</p>
+<p>меньше ручного status reporting.</p>
+<h2>Дни 91–180: масштабирование и оргизменения</h2>
+<p>Расширьте successful patterns на 30–50% engineering teams.</p>
+<p>Создайте:</p>
+<p>internal AI academy;</p>
+<p>prompt/spec/eval library;</p>
+<p>agent marketplace;</p>
+<p>approved MCP/tool registry;</p>
+<p>AI champions network;</p>
+<p>monthly AI operating review;</p>
+<p>AI risk review board;</p>
+<p>software factory для bounded tasks.</p>
+<p>Начните менять оргструктуру:</p>
+<p>value-stream ownership;</p>
+<p>меньше статусных митингов;</p>
+<p>меньше ручного reporting;</p>
+<p>больше DRI;</p>
+<p>platform team как product;</p>
+<p>manager scorecards по outcomes;</p>
+<p>engineering scorecards с AI metrics;</p>
+<p>перенос людей из координации в создание систем.</p>
+<h1>7. Software factory для существующей компании</h1>
+<p>Для 300-person software company software factory лучше запускать не на всём продукте, а на ограниченных доменах.</p>
+<p>Подходящие домены:</p>
+<p>SDK generation;</p>
+<p>API client updates;</p>
+<p>documentation;</p>
+<p>test generation;</p>
+<p>migration scripts;</p>
+<p>internal CRUD tools;</p>
+<p>data pipeline transformations;</p>
+<p>frontend variants;</p>
+<p>contract tests;</p>
+<p>dependency upgrades;</p>
+<p>legacy modernization;</p>
+<p>support bug reproduction.</p>
+<p>Неподходящие первые домены:</p>
+<p>ядро продукта без тестов;</p>
+<p>security-critical auth flows;</p>
+<p>billing logic без strong invariants;</p>
+<p>regulated/high-risk features;</p>
+<p>сложные архитектурные изменения;</p>
+<p>production actions без sandbox.</p>
+<p>Минимальная software factory должна иметь:</p>
+<p>NLSpec или structured spec;</p>
+<p>acceptance criteria;</p>
+<p>scenario set;</p>
+<p>test harness;</p>
+<p>sandbox;</p>
+<p>agent loop;</p>
+<p>CI/CD integration;</p>
+<p>human approval checkpoint;</p>
+<p>audit log;</p>
+<p>rollback;</p>
+<p>post-release monitoring.</p>
+<p>Ключевой сдвиг: человек ревьюит не “каждую строку”, а:</p>
+<p>правильность spec;</p>
+<p>полноту сценариев;</p>
+<p>качество evals;</p>
+<p>поведение системы;</p>
+<p>production impact;</p>
+<p>риски.</p>
+<h1>8. Governance: как ускоряться и не устроить катастрофу</h1>
+<p>Для AI-native компании governance должен быть встроен в workflow.</p>
+<h2>Минимальный AI governance kit</h2>
+<p>Нужны:</p>
+<p>AI use case registry;</p>
+<p>model registry;</p>
+<p>data classification;</p>
+<p>vendor risk assessment;</p>
+<p>prompt/tool versioning;</p>
+<p>eval results;</p>
+<p>human approval policy;</p>
+<p>audit logs;</p>
+<p>AI incident process;</p>
+<p>red-teaming;</p>
+<p>security review;</p>
+<p>training;</p>
+<p>retention/deletion policy.</p>
+<h2>Security risks</h2>
+<p>Для LLM-приложений и агентов обязательно учитывайте OWASP Top 10 for LLM Applications: prompt injection, insecure output handling, training data poisoning, model denial of service, supply chain vulnerabilities и другие классы рисков. (<a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/?utm_source=chatgpt.com">OWASP Foundation</a>)</p>
+<p>Практические правила:</p>
+<p>агент не должен иметь broad admin access;</p>
+<p>каждый tool call логируется;</p>
+<p>опасные действия требуют approval;</p>
+<p>prod-действия идут через sandbox/canary;</p>
+<p>секреты не доступны напрямую модели;</p>
+<p>MCP/tools проходят security review;</p>
+<p>prompt injection тестируется;</p>
+<p>external content считается недоверенным;</p>
+<p>agent identity отделена от human identity;</p>
+<p>все действия можно отозвать, откатить или расследовать.</p>
+<h2>Human-in-the-loop по уровням риска</h2>
+<p>Низкий риск: агент делает сам, человек проверяет выборочно.</p>
+<p>Средний риск: агент готовит, человек approve.</p>
+<p>Высокий риск: агент анализирует, человек действует.</p>
+<p>Критический риск: агент только помогает с информацией, решение остаётся у ответственного лица.</p>
+<h1>9. Культура AI-native компании</h1>
+<p>Технология без культуры даст локальный прирост, но не трансформацию.</p>
+<p>Нужны новые нормы.</p>
+<h2>Норма 1. “Prototype before opinion”</h2>
+<p>Если человек предлагает идею, он приходит не с презентацией, а с прототипом, симуляцией, анализом или working draft.</p>
+<h2>Норма 2. “No artifact — no decision”</h2>
+<p>Решение без артефакта не существует для компании. Агент не может его найти, новый сотрудник не может понять, почему так, команда не может учиться.</p>
+<h2>Норма 3. “Specs are leverage”</h2>
+<p>Плохой spec создаёт плохой AI-output. Поэтому writing specs становится ключевым навыком.</p>
+<h2>Норма 4. “Evals over vibes”</h2>
+<p>Впечатляющее демо ничего не значит без evals. AI-native компания доверяет не красивому ответу модели, а воспроизводимой проверке.</p>
+<h2>Норма 5. “Managers own outcomes, not status”</h2>
+<p>Статус должен собираться автоматически из артефактов. Человеческое время нужно тратить на решения.</p>
+<h2>Норма 6. “AI literacy is mandatory”</h2>
+<p>В ЕС AI literacy уже стала частью AI Act timeline, но даже вне regulation это must-have: сотрудники должны понимать ограничения моделей, риски, правила использования данных и способы проверки результата. (<a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai">Digital Strategy</a>)</p>
+<h1>10. Главные анти-паттерны</h1>
+<h2>Анти-паттерн 1. “Дадим всем Copilot и назовём это трансформацией”</h2>
+<p>Это повысит локальную производительность части людей, но не сделает компанию AI-native.</p>
+<h2>Анти-паттерн 2. “Сначала построим огромный data lake”</h2>
+<p>Data lake без workflow, permissions, semantic layer и agents — это дорогой архив.</p>
+<h2>Анти-паттерн 3. “Сделаем корпоративного чатбота для всего”</h2>
+<p>Универсальный чатбот обычно становится игрушкой. Лучше встроенные агенты в конкретные процессы.</p>
+<h2>Анти-паттерн 4. “Будем мерить процент AI-generated code”</h2>
+<p>Это почти бесполезно. Важны lead time, defects, adoption, customer value, cost per outcome.</p>
+<h2>Анти-паттерн 5. “Сразу автономные агенты в production”</h2>
+<p>Без evals, sandbox, approval и audit это не AI-native, а negligence.</p>
+<h2>Анти-паттерн 6. “AI strategy отдадим innovation lab”</h2>
+<p>Если CEO/CTO/product/engineering leadership не меняют свою работу, компания не изменится.</p>
+<h2>Анти-паттерн 7. “Сократим людей, а потом разберёмся”</h2>
+<p>Это убивает доверие и learning capacity. Сначала надо доказать, где AI реально высвобождает ёмкость, и направить её на качество, скорость, customer value и новые продукты.</p>
+<h1>11. Что должно получиться в итоге</h1>
+<h2>AI-native стартап</h2>
+<p>Через 6–12 месяцев у хорошего AI-native стартапа:</p>
+<p>маленькая команда делает объём работы, который раньше требовал нескольких функций;</p>
+<p>customer feedback напрямую питает roadmap;</p>
+<p>каждая фича имеет spec/evals;</p>
+<p>агенты пишут значимую часть кода, тестов и документации;</p>
+<p>founders лично задают AI-культуру;</p>
+<p>компания queryable с первого дня;</p>
+<p>нет лишних менеджерских слоёв;</p>
+<p>скорость обучения выше скорости найма.</p>
+<h2>AI-native компания на 300 человек</h2>
+<p>Через 12–18 месяцев у зрелой компании:</p>
+<p>большая часть инженерной работы видима и queryable;</p>
+<p>status reporting почти автоматизирован;</p>
+<p>support, product и engineering связаны closed loops;</p>
+<p>AI platform стала внутренним продуктом;</p>
+<p>команды используют agentic workflows в SDLC;</p>
+<p>software factories работают в ограниченных доменах;</p>
+<p>governance встроен в процесс;</p>
+<p>менеджеры отвечают за outcomes, а не за маршрутизацию информации;</p>
+<p>метрики показывают не “AI adoption”, а улучшение cycle time, quality, support, adoption и revenue impact.</p>
+<h1>12. Выводы</h1>
+<p>Для стартапа:</p>
+<p><strong>Сначала AI-native operating system, потом найм. Сначала specs/evals, потом код. Сначала customer loop, потом масштабирование.</strong></p>
+<p>Для компании на 300 человек:</p>
+<p><strong>Сначала queryable foundation, потом lighthouse loops. Сначала governance и evals, потом автономия. Сначала outcome metrics, потом оргизменения.</strong></p>
+<p>Главный критерий простой: если AI исчезнет завтра, ваша компания просто потеряет инструмент — значит, она не AI-native. Если AI исчезнет завтра, и вся операционная модель компании начнёт ломаться, потому что процессы, контекст, скорость принятия решений и delivery уже построены вокруг intelligence layer, — вот тогда компания действительно стала AI-native.</p>
+    </article>
+
+    <footer class="post-translator">
+      Автор: <a href="https://t.me/pavlenkodev">Павел Павленко</a> для канала <a href="https://t.me/pavlenkodev">@pavlenkodev</a>
+    </footer>
+
+  </div>
+
+  <footer class="footer" style="border-top:1px solid var(--border);">
+    <div class="wrap footer__wrap">
+      <span class="footer__copy">© 2026 Make It Beta</span>
+      <a href="https://t.me/pavlenkodev" class="footer__contact" target="_blank">@pavlenkodev ↗</a>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('pre code').forEach(function (el) {
+        hljs.highlightElement(el);
+      });
+    });
+  </script>
+</body>
+</html>

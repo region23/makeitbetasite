@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-04-25-ai-native-company",
+    "title": "AI-native компании: как строить организацию, где AI — операционная система, а не инструмент",
+    "date": "2026-04-25",
+    "date_ru": "25 апреля 2026",
+    "category": "оригинал",
+    "original_url": "",
+    "original_author": "",
+    "translated_by": "Павел Павленко",
+    "translator_url": "https://t.me/pavlenkodev",
+    "channel_url": "https://t.me/pavlenkodev",
+    "channel_name": "@pavlenkodev",
+    "read_time": "22 мин"
+  },
+  {
     "slug": "2026-04-19-on-prem-infrastructure-for-ai-coding",
     "title": "On-prem инфраструктура для AI-кодинга: как рассчитать серверы под GLM-5.1 и не разориться на 128K-контексте",
     "date": "2026-04-19",
