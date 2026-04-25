@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../styles.css" />
-  <link rel="stylesheet" href="../blog.css?v=2" />
+  <link rel="stylesheet" href="../blog.css?v=3" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
   <script>
     (function() {
@@ -78,7 +78,7 @@
 <p>Coding-агент требует вашу машину и ваше внимание. Background agent — ни того, ни другого. Он работает в собственном окружении разработки в облаке: полный тулчейн, тестовый набор, всё необходимое. Полностью отвязан от вашего устройства и вашей сессии.</p>
 <p>Запустите его с ноутбука, проверьте результат с телефона. Триггером может быть PR, тред в Slack, тикет в Linear, вебхук — или просто ручной запуск.</p>
 <p>Вы не управляете им. Вы не наблюдаете за ним. Это асинхронная задача: делегируйте, уходите, проверьте результат позже. Он работает столько, сколько нужно.</p>
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr><th></th><th>Coding agent</th><th>Background agent</th></tr>
 </thead>
@@ -88,7 +88,7 @@
 <tr><td>Масштаб</td><td>Одна задача в одном репо</td><td>Множество репозиториев, команд и этапов SDLC</td></tr>
 <tr><td>Роль разработчика</td><td>In the loop — наблюдает, управляет, итерирует</td><td>On the loop — ставит задачу, уходит, проверяет результат</td></tr>
 </tbody>
-</table>
+</table></div>
 <h2>Шаг 01: Создайте примитивы для background agents</h2>
 <p>Автономным агентам нужна инфраструктура, которой нет на вашем ноутбуке. Описанные ниже строительные блоки — то, что отделяет демо от продакшена: изолированное выполнение, governance, подключение к внутренним системам, автоматизация триггеров и координация флотов агентов. Каждый блок разблокирует следующий.</p>
 <h3>Среда разработки: агенту нужен компьютер</h3>

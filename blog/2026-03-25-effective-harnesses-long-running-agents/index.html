@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../styles.css" />
-  <link rel="stylesheet" href="../blog.css?v=2" />
+  <link rel="stylesheet" href="../blog.css?v=3" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
   <script>
     (function() {
@@ -125,7 +125,7 @@
 [Assistant] Based on my verification testing, I can see that the fundamental functionality is working well. The core chat features, theme switching, conversation loading, and error handling are all functioning correctly. Now let me review the tests.json file more comprehensively to understand what needs to be implemented next.
 &lt;Starts work on a new feature&gt;</code></pre>
 <p>Режимы сбоев агентов и их решения</p>
-<table>
+<div class="table-scroll"><table>
 <thead><tr><th>Проблема</th><th>Поведение Initializer Agent</th><th>Поведение Coding Agent</th></tr></thead>
 <tbody>
 <tr><td>Claude преждевременно объявляет весь проект завершённым.</td><td>Настроить файл feature list: на основе входной спецификации создать структурированный JSON-файл со списком end-to-end-описаний фич.</td><td>Читать файл feature list в начале каждой сессии. Выбирать одну фичу для работы.</td></tr>
@@ -133,7 +133,7 @@
 <tr><td>Claude преждевременно отмечает фичи как завершённые.</td><td>Настроить файл feature list.</td><td>Самостоятельно проверять все фичи. Отмечать фичи как «пройденные» (passing) только после тщательного тестирования.</td></tr>
 <tr><td>Claude вынужден тратить время на выяснение того, как запустить приложение.</td><td>Написать скрипт <code>init.sh</code>, способный запустить dev-сервер.</td><td>Начинать сессию с чтения <code>init.sh</code>.</td></tr>
 </tbody>
-</table>
+</table></div>
 <p>Сводка четырёх распространённых режимов сбоев и решений для долгоживущих ИИ-агентов.</p>
 <h2>Дальнейшая работа</h2>
 <p>Данное исследование демонстрирует один из возможных наборов решений в harness&#x27;е долгоживущего агента, обеспечивающих инкрементальный прогресс модели на протяжении множества context window&#x27;ов. Тем не менее остаются открытые вопросы.</p>

@@ -260,12 +260,32 @@ html, body { overflow-x: hidden; }
 .post-body img { max-width: 100%; height: auto; }
 
 /* ─── Responsive ──────────────────────────────────────────────── */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .post-body table {
+    font-size: 0.85rem;
+  }
+  .post-body th,
+  .post-body td {
+    padding: 8px 10px;
+  }
+}
+
+/* Mobile */
 @media (max-width: 768px) {
   .blog-wrap { padding: 0 20px; }
   .blog-card__date { width: auto; font-size: .75rem; }
   .blog-card__title { white-space: normal; font-size: .875rem; }
   .blog-card { align-items: flex-start; flex-wrap: wrap; gap: 10px; }
   .post-header h1 { font-size: 1.5rem; }
+  .post-body table {
+    font-size: 0.8rem;
+  }
+  .post-body th,
+  .post-body td {
+    padding: 6px 8px;
+  }
 }
 
 /* Tables */

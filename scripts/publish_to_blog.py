@@ -114,6 +114,7 @@ def md_to_html(md: str) -> str:
                 while i < len(lines) and '|' in lines[i] and lines[i].strip():
                     rows.append([c.strip() for c in lines[i].strip().strip('|').split('|')])
                     i += 1
+                html_parts.append('<div class="table-scroll">')
                 html_parts.append('<table>')
                 html_parts.append('<thead><tr>' + ''.join(f'<th>{inline(c)}</th>' for c in header_cells) + '</tr></thead>')
                 html_parts.append('<tbody>')
@@ -123,6 +124,7 @@ def md_to_html(md: str) -> str:
                     html_parts.append('<tr>' + ''.join(f'<td>{inline(c)}</td>' for c in row[:len(header_cells)]) + '</tr>')
                 html_parts.append('</tbody>')
                 html_parts.append('</table>')
+                html_parts.append('</div>')
                 continue
 
         # Ignore markdown separators

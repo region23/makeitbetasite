@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../styles.css" />
-  <link rel="stylesheet" href="../blog.css?v=2" />
+  <link rel="stylesheet" href="../blog.css?v=3" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
   <script>
     (function() {
@@ -72,7 +72,7 @@
 <p>DCP (Display Coprocessor) сообщает одинаковые возможности и на M2 Max, и на M5 Max для одного и того же дисплея. Железо M5 Max, согласно собственным спецификациям Apple, поддерживает 8K (7680x4320) при 60 Гц. Но бюджет framebuffer’а на уровне GPU-драйвера для каждого pipe (<code>IOMFBMaxSrcPixels</code>) искусственно ограничивает Pipe 0 шириной 6720 пикселей — это ровно ширина backing store для 3360x1890 HiDPI. При этом остальные три pipe получают полные 7680 пикселей, чего достаточно для 3840x2160 HiDPI.</p>
 <figure><img src="https://smcleod.net/2026/03/new-apple-silicon-m4-m5-hidpi-limitation-on-4k-external-displays/macOS.jpeg" alt="System Settings &gt; Display on a M5 Max" style="max-width:100%;border-radius:8px;margin:24px 0;display:block;"></figure>
 <h2>Окружение и тестовый стенд</h2>
-<table>
+<div class="table-scroll"><table>
 <thead><tr><th>Параметр</th><th>M5 Max (затронут)</th><th>M2 Max (работает)</th></tr></thead>
 <tbody>
 <tr><td>Чип</td><td>Apple M5 Max</td><td>Apple M2 Max</td></tr>
@@ -84,7 +84,7 @@
 <tr><td>Подключение</td><td>USB-C/Thunderbolt, HBR3 (8.1 Gbps), 4 lanes</td><td>USB-C/Thunderbolt, HBR3 (8.1 Gbps), 4 lanes</td></tr>
 <tr><td>Максимальный HiDPI-режим</td><td>3360x1890</td><td>3840x2160</td></tr>
 </tbody>
-</table>
+</table></div>
 <p>Обе машины сообщают одинаковые параметры DCP для дисплея LG:</p>
 <pre><code>MaxActivePixelRate  = 497,664,000
 MaxTotalPixelRate   = 537,600,000
@@ -152,7 +152,7 @@ MaxBpc              = 10</code></pre>
     &quot;IOMFBCompressionSupport&quot; = 1
 }</code></pre>
 <p><code>MaxSrcRectWidthForPipe</code> — это массив с максимальной шириной backing store, которую GPU-драйвер готов выделить для каждого display pipe:</p>
-<table>
+<div class="table-scroll"><table>
 <thead><tr><th>Pipe</th><th>MaxSrcRectWidth</th><th>Что это значит</th></tr></thead>
 <tbody>
 <tr><td>0</td><td>6720</td><td>Pipe монитора LG (подтверждено через ConnectionMapping PipeIDs)</td></tr>
@@ -160,12 +160,12 @@ MaxBpc              = 10</code></pre>
 <tr><td>2</td><td>7680</td><td>Этого хватило бы для 3840x2160 HiDPI</td></tr>
 <tr><td>3</td><td>7680</td><td>Этого хватило бы для 3840x2160 HiDPI</td></tr>
 </tbody>
-</table>
+</table></div>
 <p>Бюджет Pipe 0 в 6720 пикселей идеально совпадает с наблюдаемым потолком: для 3360x1890 HiDPI нужен backing store размером 6720x3780. Для 3840x2160 HiDPI нужен backing store шириной 7680 пикселей. У Pipe 0 на это не хватает бюджета, а у Pipe 1–3 хватает. То есть железо явно умеет это делать, просто LG оказался на «неудачном» pipe.</p>
 <p>Это свойство задаётся kernel-level драйвером <code>IOMobileFramebufferShim</code>, и из userspace его изменить нельзя.</p>
 <h3>Бюджет фиксируется при загрузке</h3>
 <p>Тесты подтвердили, что <code>MaxSrcRectWidthForPipe</code> задаётся при загрузке драйвера и не меняется во время работы, что бы вы ни делали:</p>
-<table>
+<div class="table-scroll"><table>
 <thead><tr><th>Тест</th><th>Pipe 0 MaxSrcRectWidth</th><th>Изменилось?</th></tr></thead>
 <tbody>
 <tr><td>LG на USB-C port 1</td><td>6720</td><td>Нет</td></tr>
@@ -179,7 +179,7 @@ MaxBpc              = 10</code></pre>
 <tr><td>Software override plist с 8K `default-resolution`</td><td>6720</td><td>Нет</td></tr>
 <tr><td>BetterDisplay: native resolution = 7680x4320</td><td>6720</td><td>Нет</td></tr>
 </tbody>
-</table>
+</table></div>
 <p>Возможно, драйвер читает содержимое EDID на ранней стадии boot и по нему решает, как распределять эти бюджеты (как предполагает анализ waydabber), но это пока не подтверждено cold boot-тестом с модифицированным EDID.</p>
 <h3>Что, вероятно, происходит</h3>
 <p>Разработчик BetterDisplay waydabber в <a href="https://github.com/waydabber/BetterDisplay/discussions/4215">discussion #4215</a> описывает изменение так:</p>
