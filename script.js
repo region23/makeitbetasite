@@ -63,3 +63,20 @@ var observer = new IntersectionObserver(
   { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
 );
 document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
+
+// ===== MOBILE MENU =====
+var hamburger = document.getElementById('hamburger');
+var nav = document.getElementById('headerNav');
+if (hamburger && nav) {
+  hamburger.addEventListener('click', function() {
+    hamburger.classList.toggle('is-open');
+    nav.classList.toggle('is-open');
+  });
+  // Close on nav link click
+  nav.querySelectorAll('.header__link').forEach(function(link) {
+    link.addEventListener('click', function() {
+      hamburger.classList.remove('is-open');
+      nav.classList.remove('is-open');
+    });
+  });
+}
