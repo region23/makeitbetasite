@@ -68,6 +68,12 @@ body {
 
 .header__link:hover { color: var(--accent); }
 
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
 /* Theme toggle */
 .theme-toggle {
   background: none;
