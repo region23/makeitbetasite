@@ -18,7 +18,7 @@ Landing page / portfolio site for Make It Beta (makeitbeta.ru) — an AI-first p
 - Russian language for content
 
 ## Portfolio (8 projects)
-1. GeekGPT (geekgpt.ru) — агрегатор нейронок (LLM, изображения, видео). 1037 пользователей.
+1. GeekGPT (geekgpt.pro) — агрегатор нейронок (LLM, изображения, видео). 1037 пользователей.
 2. GoPublic (gopublic.su) — аналог ngrok для РФ, туннели для локальных сервисов
 3. Бжушка (@bjushkabot) — AI-нутрициолог в Telegram
 4. Foodzy — улучшение фото блюд для кафе/ресторанов
