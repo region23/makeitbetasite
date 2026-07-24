@@ -181,5 +181,19 @@ class SourceRegisterTests(unittest.TestCase):
         self.assertNotIn("Опубликовано: 2026-05", google_entry)
 
 
+class LayoutStylesheetTests(unittest.TestCase):
+    def test_reading_measure_and_scorecard_grid_are_responsive(self) -> None:
+        css = (ROOT / "ai_native_book" / "assets" / "book-v2.css").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("--measure: 82ch;", css)
+        self.assertIn("minmax(12rem, 1fr)", css)
+        self.assertIn(
+            "grid-template-columns: repeat(3, minmax(0, 1fr));", css
+        )
+        self.assertIn("grid-template-columns: 1fr;", css)
+
+
 if __name__ == "__main__":
     unittest.main()

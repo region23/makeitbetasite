@@ -23,7 +23,7 @@
     "URW Palladio L", Georgia, serif;
   --font-meta: ui-monospace, "SFMono-Regular", Menlo, Consolas,
     "Liberation Mono", monospace;
-  --measure: 72ch;
+  --measure: 82ch;
   --shell: 90rem;
   --rail: 17.5rem;
   --s1: 0.25rem;
@@ -1140,7 +1140,7 @@ mark,
   }
 
   .score-options {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .score-options label {
@@ -1156,6 +1156,12 @@ mark,
 
   .source-meta {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 70rem) {
+  .score-options {
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
   }
 }
 
