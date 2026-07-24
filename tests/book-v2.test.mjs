@@ -5,6 +5,7 @@ import {
   computeProfile,
   decodeState,
   encodeState,
+  routeStepsFor,
   serializeState,
   scorecardToMarkdown,
 } from "../ai_native_book/assets/book-v2.js";
@@ -202,4 +203,36 @@ test("markdown contains all eight dimensions, minimum, and managed status", () =
   assert.match(result, /Минимальный балл:\s*3/i);
   assert.match(result, /Управляемый процесс:\s*да/i);
   assert.doesNotMatch(result, /средн/i);
+});
+
+test("reading routes expose an explicit ordered list of table-of-contents anchors", () => {
+  const startup = [
+    "#ch1",
+    "#ch2",
+    "#first-managed-loop",
+    "#ch3",
+    "#ch4",
+    "#ch12",
+  ];
+  const mature = [
+    "#ch1",
+    "#ch2",
+    "#first-managed-loop",
+    "#ch3",
+    "#context-memory-skills",
+    "#ch6",
+    "#ch7",
+    "#ch9",
+    "#ch8",
+    "#ch5",
+    "#ch12",
+  ];
+
+  assert.deepEqual(routeStepsFor("startup"), startup);
+  assert.deepEqual(routeStepsFor("mature"), mature);
+  assert.deepEqual(routeStepsFor("unknown"), []);
+
+  const returned = routeStepsFor("startup");
+  returned.push("#sources");
+  assert.deepEqual(routeStepsFor("startup"), startup);
 });

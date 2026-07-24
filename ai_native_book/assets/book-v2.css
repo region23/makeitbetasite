@@ -231,6 +231,7 @@ input:disabled {
 .mobile-toc ul {
   margin: 0;
   padding: var(--s3) 0 var(--s3) var(--s5);
+  list-style: none;
 }
 
 .mobile-toc ul {
@@ -247,6 +248,36 @@ input:disabled {
   min-block-size: 2.75rem;
   color: var(--text-muted);
   font-size: 0.78rem;
+}
+
+.book-search label {
+  display: block;
+  margin: 0 0 var(--s3);
+  color: var(--text-subtle);
+  font: 700 0.69rem/1.35 var(--font-meta);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.book-search input {
+  width: 100%;
+  font-family: var(--font-meta);
+  font-size: 0.78rem;
+}
+
+.book-search output {
+  display: block;
+  margin-top: var(--s2);
+  color: var(--text-subtle);
+  font-family: var(--font-meta);
+  font-size: 0.69rem;
+  line-height: 1.45;
+}
+
+.mobile-search {
+  flex: 1 0 100%;
+  padding: var(--s3) 0 var(--s2);
+  border-top: 1px solid var(--border);
 }
 
 .reading-progress {
@@ -300,7 +331,9 @@ main {
 .eyebrow,
 .review-date,
 .archive-link,
-.hero-audience {
+.hero-audience,
+.hero-author,
+.route-status {
   font-family: var(--font-meta);
 }
 
@@ -344,7 +377,9 @@ main {
 }
 
 .review-date,
-.archive-link {
+.archive-link,
+.hero-author,
+.route-status {
   margin: var(--s2) 0;
   color: var(--text-subtle);
   font-size: 0.75rem;
@@ -393,12 +428,12 @@ main {
   color: var(--text);
 }
 
-.route-link:is(.active, .is-active, [aria-current="true"], [data-active="true"]) {
+.route-link:is(.active, .is-active, [aria-pressed="true"], [aria-current="true"], [data-active="true"]) {
   border: 2px solid var(--accent);
   background: var(--accent-soft);
 }
 
-.route-link:is(.active, .is-active, [aria-current="true"], [data-active="true"])::after {
+.route-link:is(.active, .is-active, [aria-pressed="true"], [aria-current="true"], [data-active="true"])::after {
   content: "Выбранный маршрут";
   display: block;
   margin-left: auto;
@@ -412,6 +447,15 @@ main {
 
 .orientation {
   padding: var(--s8) 0 var(--s7);
+}
+
+.orientation > h2 {
+  margin: 0 0 var(--s5);
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 1.65rem + 1vw, 2.4rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 .orientation > p:first-child {
@@ -1008,6 +1052,36 @@ tbody tr:target {
   gap: var(--s2) var(--s5);
 }
 
+.version-meta {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.45fr) minmax(0, 1fr);
+  margin: var(--s5) 0 var(--s7);
+  border-top: 1px solid var(--border-strong);
+}
+
+.version-meta > div {
+  display: contents;
+}
+
+.version-meta dt,
+.version-meta dd {
+  margin: 0;
+  padding: var(--s3) var(--s4);
+  border-bottom: 1px solid var(--border);
+}
+
+.version-meta dt {
+  background: var(--surface);
+  color: var(--text-muted);
+  font-family: var(--font-meta);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.version-meta dd {
+  color: var(--text);
+}
+
 .desktop-toc a:is(.active, .is-active, [aria-current="location"]),
 .mobile-toc a:is(.active, .is-active, [aria-current="location"]) {
   border-left: 2px solid var(--accent);
@@ -1021,6 +1095,23 @@ tbody tr:target {
   content: " · сейчас";
   color: var(--accent-strong);
   font-size: 0.9em;
+}
+
+.desktop-toc a.is-route-step,
+.mobile-toc a.is-route-step {
+  gap: var(--s2);
+  border-left: 2px solid var(--accent-line);
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.route-step-label {
+  margin-left: auto;
+  color: var(--accent-strong);
+  font: 700 0.64rem/1.25 var(--font-meta);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-transform: uppercase;
 }
 
 mark,
@@ -1077,6 +1168,10 @@ mark,
     display: none;
   }
 
+  .mobile-search {
+    display: none;
+  }
+
   .book-layout {
     display: grid;
     grid-template-columns: var(--rail) minmax(0, var(--measure));
@@ -1099,7 +1194,7 @@ mark,
     scrollbar-color: var(--border-strong) transparent;
   }
 
-  .desktop-toc h2,
+  .desktop-toc .toc-heading,
   .book-search label {
     display: block;
     margin: 0 0 var(--s4);
@@ -1150,21 +1245,6 @@ mark,
     border-top: 1px solid var(--border);
   }
 
-  .book-search input {
-    width: 100%;
-    font-family: var(--font-meta);
-    font-size: 0.78rem;
-  }
-
-  .book-search output {
-    display: block;
-    margin-top: var(--s3);
-    color: var(--text-subtle);
-    font-family: var(--font-meta);
-    font-size: 0.69rem;
-    line-height: 1.45;
-  }
-
   .hero {
     min-block-size: calc(100svh - 8rem);
   }
@@ -1188,7 +1268,7 @@ mark,
     margin: 0 0 var(--s1);
   }
 
-  .route-link:is(.active, .is-active, [aria-current="true"], [data-active="true"])::after {
+  .route-link:is(.active, .is-active, [aria-pressed="true"], [aria-current="true"], [data-active="true"])::after {
     margin: var(--s2) 0 0;
     padding: 0;
     text-align: left;
@@ -1202,6 +1282,14 @@ mark,
 
   .source-meta > div {
     grid-template-columns: 1fr;
+  }
+
+  .version-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .version-meta > div {
+    display: block;
   }
 
   .source-meta dt {
@@ -1230,7 +1318,7 @@ mark,
 
   .score-options label:has(input:checked),
   .check-item label:has(input:checked),
-  .route-link:is(.active, .is-active, [aria-current="true"], [data-active="true"]) {
+  .route-link:is(.active, .is-active, [aria-pressed="true"], [aria-current="true"], [data-active="true"]) {
     outline: 2px solid SelectedItem;
     outline-offset: 2px;
   }
@@ -1266,6 +1354,7 @@ mark,
   .skip-link,
   .template-actions,
   .scorecard-actions,
+  .site-footer nav,
   button {
     display: none !important;
   }

@@ -1,6 +1,29 @@
 const STORAGE_PREFIX = "ai-native-book:v2:";
 const STORAGE_KEY = `${STORAGE_PREFIX}scorecard`;
 const READING_CHECK_COUNT = 99;
+const ROUTES = Object.freeze({
+  startup: Object.freeze([
+    "#ch1",
+    "#ch2",
+    "#first-managed-loop",
+    "#ch3",
+    "#ch4",
+    "#ch12",
+  ]),
+  mature: Object.freeze([
+    "#ch1",
+    "#ch2",
+    "#first-managed-loop",
+    "#ch3",
+    "#context-memory-skills",
+    "#ch6",
+    "#ch7",
+    "#ch9",
+    "#ch8",
+    "#ch5",
+    "#ch12",
+  ]),
+});
 
 const DIMENSIONS = [
   { id: "value", name: "Ценность и портфель" },
@@ -15,6 +38,10 @@ const DIMENSIONS = [
 
 function isLevel(value) {
   return Number.isInteger(value) && value >= 0 && value <= 4;
+}
+
+export function routeStepsFor(route) {
+  return ROUTES[route]?.slice() ?? [];
 }
 
 export function computeProfile(values) {
@@ -437,46 +464,102 @@ function markSearchMatches(root, query) {
 }
 
 function initSearch(doc) {
-  const form = doc.querySelector("[data-book-search]");
-  const input = form?.querySelector('input[type="search"]');
-  const output = form?.querySelector("output");
+  const searches = Array.from(doc.querySelectorAll("[data-book-search]"))
+    .map((form) => ({
+      form,
+      input: form.querySelector('input[type="search"]'),
+      output: form.querySelector("output"),
+    }))
+    .filter(({ input, output }) => input && output);
   const root = doc.querySelector("main");
-  if (!form || !input || !output || !root) {
+  if (searches.length === 0 || !root) {
     return;
   }
 
-  const search = () => {
+  const search = (rawQuery) => {
     clearSearchMarks(root);
-    const query = input.value.trim();
+    const query = rawQuery.trim();
+    searches.forEach(({ input }) => {
+      if (input.value !== rawQuery) {
+        input.value = rawQuery;
+      }
+    });
+
+    let message;
     if (!query) {
-      output.textContent = "Введите слово или фразу для поиска по руководству.";
-      return;
+      message = "Введите слово или фразу для поиска по руководству.";
+    } else {
+      const count = markSearchMatches(root, query);
+      message =
+        count === 0
+          ? "Совпадений не найдено."
+          : `Найдено совпадений: ${count}.`;
     }
-    const count = markSearchMatches(root, query);
-    output.textContent =
-      count === 0
-        ? "Совпадений не найдено."
-        : `Найдено совпадений: ${count}.`;
+    searches.forEach(({ output }) => {
+      output.textContent = message;
+    });
   };
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    search();
+  searches.forEach(({ form, input, output }) => {
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      search(input.value);
+    });
+    input.addEventListener("input", () => search(input.value));
+    output.textContent = "Введите слово или фразу для поиска по руководству.";
   });
-  input.addEventListener("input", search);
-  output.textContent = "Введите слово или фразу для поиска по руководству.";
 }
 
 function initRoutes(doc) {
-  const links = Array.from(doc.querySelectorAll("[data-route]"));
-  links.forEach((link) => {
-    link.addEventListener("click", () => {
-      links.forEach((candidate) => {
+  const buttons = Array.from(doc.querySelectorAll("[data-route]"));
+  const tocLinks = Array.from(
+    doc.querySelectorAll(
+      ".desktop-toc a[href^='#'], .mobile-toc a[href^='#']",
+    ),
+  );
+  const status = doc.querySelector("[data-route-status]");
+
+  const clearSteps = () => {
+    tocLinks.forEach((link) => {
+      link.classList.remove("is-route-step");
+      link.removeAttribute("data-route-step");
+      link.querySelector("[data-route-step-label]")?.remove();
+    });
+  };
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      buttons.forEach((candidate) => {
         candidate.classList.remove("is-active");
-        candidate.removeAttribute("aria-current");
+        candidate.setAttribute("aria-pressed", "false");
       });
-      link.classList.add("is-active");
-      link.setAttribute("aria-current", "true");
+      button.classList.add("is-active");
+      button.setAttribute("aria-pressed", "true");
+
+      clearSteps();
+      const route = button.dataset.route;
+      const steps = routeStepsFor(route);
+      steps.forEach((target, index) => {
+        tocLinks
+          .filter((link) => link.getAttribute("href") === target)
+          .forEach((link) => {
+            link.classList.add("is-route-step");
+            link.dataset.routeStep = String(index + 1);
+            const label = doc.createElement("span");
+            label.className = "route-step-label";
+            label.dataset.routeStepLabel = "true";
+            label.textContent = `Шаг ${index + 1}`;
+            link.append(label);
+          });
+      });
+
+      if (status) {
+        const name =
+          route === "startup" ? "для стартапа" : "для зрелой компании";
+        status.textContent =
+          `Выбран маршрут ${name}. В оглавлении отмечены ${steps.length} шагов.`;
+      }
     });
   });
 }
