@@ -2,7 +2,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.check_ai_native_book import run_checks, validate_html_text
+from scripts.check_ai_native_book import (
+    _multipage_asset_errors,
+    _multipage_page_errors,
+    run_checks,
+    validate_html_text,
+)
 
 
 EXPECTED_IDS = [*(f"ch{number}" for number in range(1, 13)), "sources", "version", "changelog"]
@@ -225,6 +230,138 @@ class AssetValidationTests(unittest.TestCase):
 
         self.assertTrue(any("webvisor" in error for error in errors))
         self.assertTrue(any("sendbeacon" in error.lower() for error in errors))
+
+
+class MultipageProjectValidationTests(unittest.TestCase):
+    @staticmethod
+    def valid_multipage_html() -> str:
+        return """<!doctype html>
+<html lang="ru">
+  <head>
+    <link rel="canonical" href="https://example.test/ai_native_book/chapter-03.html">
+    <style>.skip-link { position: absolute; }</style>
+  </head>
+  <body data-page="ch3">
+    <a class="skip-link" href="#main-content">К содержанию</a>
+    <main id="main-content">
+      <h1>Глава</h1>
+      <h2>Раздел</h2>
+    </main>
+    <script src="./assets/book-v3.js"></script>
+  </body>
+</html>"""
+
+    def test_requires_shared_structural_landmarks_and_metadata(self) -> None:
+        valid = self.valid_multipage_html()
+        self.assertEqual(
+            _multipage_page_errors(valid, expected_page="ch3"),
+            [],
+        )
+
+        mutations = {
+            "skip-link": valid.replace(
+                '    <a class="skip-link" href="#main-content">К содержанию</a>\n',
+                "",
+            ),
+            "main": valid.replace(
+                '    <main id="main-content">',
+                '    <div id="main-content">',
+            ).replace("    </main>", "    </div>"),
+            "h1": valid.replace(
+                '    <main id="main-content">\n      <h1>Глава</h1>',
+                '    <h1>Глава</h1>\n    <main id="main-content">',
+            ),
+            "canonical": valid.replace(
+                '    <link rel="canonical" href="https://example.test/ai_native_book/chapter-03.html">\n',
+                "",
+            ),
+            "заголов": valid.replace("<h2>Раздел</h2>", "<h3>Раздел</h3>"),
+        }
+        for expected_fragment, html in mutations.items():
+            with self.subTest(invariant=expected_fragment):
+                errors = _multipage_page_errors(html, expected_page="ch3")
+                self.assertTrue(
+                    any(expected_fragment in error.lower() for error in errors),
+                    errors,
+                )
+
+    def test_rejects_remote_embedded_resources_and_inline_css(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            book = root / "ai_native_book"
+            assets = book / "assets"
+            assets.mkdir(parents=True)
+            page = book / "chapter-03.html"
+            (assets / "book-v3.js").write_text(
+                "document.documentElement.dataset.ready = 'true';",
+                encoding="utf-8",
+            )
+            html = """<!doctype html>
+<html lang="ru">
+  <head>
+    <style>.cover { background-image: url(https://tracker.example/pixel); }</style>
+  </head>
+  <body data-page="ch3">
+    <h1>Глава</h1>
+    <img src="https://tracker.example/pixel" alt="">
+    <script src="./assets/book-v3.js"></script>
+  </body>
+</html>"""
+
+            errors = _multipage_asset_errors(root, page, html)
+
+        self.assertTrue(
+            any("встро" in error.lower() or "ресурс" in error.lower() for error in errors),
+            errors,
+        )
+        self.assertTrue(
+            any("css" in error.lower() and "сет" in error.lower() for error in errors),
+            errors,
+        )
+
+    def test_rejects_mixed_canonical_stylesheet_and_ip_or_localhost_urls(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            book = root / "ai_native_book"
+            assets = book / "assets"
+            assets.mkdir(parents=True)
+            page = book / "chapter-03.html"
+            (assets / "book-v3.js").write_text(
+                "document.documentElement.dataset.ready = 'true';",
+                encoding="utf-8",
+            )
+            html = """<!doctype html>
+<html lang="ru">
+  <head>
+    <link rel="canonical stylesheet" href="http://127.0.0.1/tracker.css">
+    <style>.cover { background-image: url(http://127.0.0.1/pixel); }</style>
+  </head>
+  <body data-page="ch3">
+    <h1>Глава</h1>
+    <img srcset="//localhost/pixel 1x, ./cover.png 2x" alt="">
+    <script src="./assets/book-v3.js"></script>
+  </body>
+</html>"""
+
+            errors = _multipage_asset_errors(root, page, html)
+
+        self.assertTrue(
+            any("css" in error.lower() and "127.0.0.1" in error for error in errors),
+            errors,
+        )
+        self.assertTrue(
+            any("встро" in error.lower() and "localhost" in error for error in errors),
+            errors,
+        )
+        self.assertTrue(
+            any("инлайн-css" in error.lower() for error in errors),
+            errors,
+        )
+
+    def test_current_multipage_edition_passes_project_checker(self) -> None:
+        errors = run_checks(Path(__file__).resolve().parents[1], phase="all")
+
+        self.assertEqual(errors, [])
 
 
 if __name__ == "__main__":

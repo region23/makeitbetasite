@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Глава 11 — План зрелой компании: 30, 90 и 180 дней. AI-native компания v2">
+<title>Глава 11. План зрелой компании: 30, 90 и 180 дней — AI-native компания v2</title>
+<link rel="canonical" href="https://makeitbeta.ru/ai_native_book/chapter-11.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..900;1,7..72,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+html { scroll-behavior: smooth; }
+body { margin:0; background:#FBF7EE; color:#171106; font-family:Literata,"Iowan Old Style",Georgia,serif; font-size:17px; line-height:1.65; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+a { color:#9C4A0E; text-decoration-thickness:1px; text-underline-offset:.18em; }
+a:hover { color:#6E3509; text-decoration-thickness:2px; }
+::selection { background:#EADFC4; }
+.skip-link { position:fixed; top:8px; left:8px; z-index:100; padding:8px 12px; background:#171106; color:#FBF7EE; transform:translateY(-180%); transition:transform .12s ease; }
+.skip-link:focus { transform:translateY(0); }
+.hv0:hover { background:#F4EEDD; }
+.chapter-layout { max-width:1280px; margin:0 auto; padding:40px 24px 0; display:flex; gap:48px; align-items:flex-start; flex-wrap:wrap; }
+.chapter-rail { flex:1 1 200px; max-width:240px; position:sticky; top:24px; max-height:calc(100vh - 48px); overflow:auto; }
+.chapter-rail ol { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px; line-height:1.4; border-left:2px solid rgba(23,17,6,.14); }
+.chapter-rail li { padding-left:14px; }
+.chapter-rail a { text-decoration:none; color:#4A4030; }
+article { flex:999 1 480px; max-width:88ch; min-width:0; padding-bottom:64px; }
+article > p { margin:0 0 18px; text-wrap:pretty; }
+article > ul, article > ol { margin:0 0 20px; padding-left:24px; }
+article > ul, article > ol { display:flex; flex-direction:column; gap:6px; }
+article h2 { margin:48px 0 16px; font-size:27px; line-height:1.25; font-weight:800; letter-spacing:-.015em; scroll-margin-top:24px; }
+article h2:first-child { margin-top:0; }
+article h3 { margin:32px 0 10px; font-size:20px; line-height:1.35; font-weight:800; letter-spacing:-.01em; scroll-margin-top:24px; }
+article .heading-link { font-size:15px; font-weight:400; text-decoration:none; color:#C2782E; }
+article code { font-family:"JetBrains Mono",monospace; font-size:.85em; overflow-wrap:anywhere; background:#F1E7CF; padding:.08em .3em; }
+article blockquote, article .chapter-route-note { margin:0 0 18px; border-left:3px solid #9C4A0E; background:#F1E7CF; padding:12px 16px; }
+.table-wrap { overflow-x:auto; border:1px solid rgba(23,17,6,.22); margin:0 0 20px; }
+.table-wrap table { border-collapse:collapse; width:100%; min-width:620px; }
+.table-wrap caption { caption-side:top; text-align:left; font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7A6B52; padding:9px 14px; border-bottom:1px solid rgba(23,17,6,.22); background:#F4EEDD; }
+.table-wrap th { text-align:left; font-family:"JetBrains Mono",monospace; font-size:11px; line-height:1.35; letter-spacing:.06em; text-transform:uppercase; padding:9px 14px; border-bottom:2px solid #171106; vertical-align:bottom; }
+.table-wrap td { padding:9px 14px; border-bottom:1px solid rgba(23,17,6,.14); vertical-align:top; font-size:14.5px; line-height:1.5; }
+.table-wrap tbody tr:last-child td { border-bottom:0; }
+article h3 + .table-wrap { border:2px solid #171106; }
+article .source-ref { font-family:"JetBrains Mono",monospace; font-size:.78em; overflow-wrap:anywhere; }
+.work-card { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1px; border:2px solid #171106; background:rgba(23,17,6,.18); margin-top:0; }
+.work-card > p, .work-card > ul { margin:0; padding:16px 18px; background:#FBF7EE; font-size:15px; line-height:1.55; }
+.work-card > ul { padding-left:38px; }
+.work-card > p strong:first-child { display:block; margin:0 0 6px; font-family:"JetBrains Mono",monospace; font-size:10px; line-height:1.4; letter-spacing:.1em; text-transform:uppercase; color:#9C4A0E; }
+.work-card > ul:has(input[data-reading-check]) { grid-column:1/-1; list-style:none; padding:16px 18px; background:#F4EEDD; }
+.check-item label { display:flex; align-items:flex-start; gap:10px; cursor:pointer; }
+.check-item input { width:18px; height:18px; flex:0 0 auto; margin-top:3px; accent-color:#9C4A0E; }
+@media (max-width:760px) {
+  .chapter-layout { gap:28px; }
+  .chapter-rail { position:static; max-width:none; max-height:none; flex-basis:100%; }
+  article { flex-basis:100%; }
+}
+</style>
+</head>
+<body data-page="ch11">
+<a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+
+<div>
+  <div aria-hidden="true" style="position:fixed; top:0; left:0; right:0; height:3px; background:rgba(23,17,6,0.08); z-index:50">
+    <div data-progress style="height:100%; background:#9C4A0E; width:0%"></div>
+  </div>
+
+  <header style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; max-width:1280px; margin:0 auto; padding:18px 24px; border-bottom:2px solid #171106">
+    <a href="./index.html" style="font-family:'JetBrains Mono',monospace; font-size:12px; text-decoration:none; color:#4A4030">← Оглавление</a>
+    <div style="display:flex; align-items:baseline; gap:10px; margin:0 auto">
+      <span style="font-weight:700; font-size:16px">AI-native компания</span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.08em; background:#171106; color:#FBF7EE; padding:2px 6px">V2</span>
+    </div>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#7A6B52">Глава 11 из 12 · маршрут Б</span>
+  </header>
+
+  <main id="main-content">
+  <section data-screen-label="Опенер главы 11" style="max-width:1280px; margin:0 auto; padding:56px 24px 40px; border-bottom:1px solid rgba(23,17,6,0.14); display:flex; gap:32px; align-items:baseline; flex-wrap:wrap">
+    <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; font-size:clamp(72px,10vw,128px); font-weight:700; line-height:0.9; color:#C2782E">11</span>
+    <div style="flex:1 1 320px">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:#9C4A0E">Часть III · Планы изменений</p>
+      <h1 style="margin:0 0 14px; font-size:clamp(36px,5vw,56px); line-height:1.05; font-weight:800; letter-spacing:-0.02em; text-wrap:balance">План зрелой компании: 30, 90 и 180 дней</h1>
+      <p style="margin:0; font-size:15px; color:#7A6B52; max-width:44em">маршрут Б · поток · масштабирование доказанного</p>
+    </div>
+  </section>
+
+  <div class="chapter-layout">
+    <nav aria-label="В этой главе" class="chapter-rail">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#7A6B52">В этой главе</p>
+      <ol>
+        <li><a href="#результат-к-30-му-дню-2">Результат к 30-му дню</a></li>
+        <li><a href="#результат-к-90-му-дню-2">Результат к 90-му дню</a></li>
+        <li><a href="#результат-к-180-му-дню">Результат к 180-му дню</a></li>
+        <li><a href="#что-может-стать-общим-компонентом">Что может стать общим компонентом</a></li>
+        <li><a href="#управление-портфелем">Управление портфелем</a></li>
+        <li><a href="#рабочая-карточка-главы-11">Рабочая карточка главы</a></li>
+      </ol>
+    </nav>
+
+    <article data-source-section="ch5">
+      <p>Зрелая компания обычно начинает не с пустого места. У неё уже есть помощники, пилоты, поставщики, правила и теневое использование. Главная задача — связать их с одним сквозным потоком создания ценности и убрать опасные разрывы.</p>
+      <p>План не требует немедленной централизации. Общими становятся только правила, доказательства и компоненты, потребность в которых повторилась.</p>
+      <h2 id="результат-к-30-му-дню-2">Результат к 30-му дню <a class="heading-link" href="#результат-к-30-му-дню-2" aria-label="Ссылка на раздел «Результат к 30-му дню»">#</a></h2>
+      <p>Организация выбирает один поток, показывает его исходное состояние и ограничивает опасные права.</p>
+      <h3 id="дни-1-10-инвентаризация">Дни 1–10: инвентаризация <a class="heading-link" href="#дни-1-10-инвентаризация" aria-label="Ссылка на раздел «Дни 1–10: инвентаризация»">#</a></h3>
+      <div class="table-wrap"><table><caption>Дни 1–10: инвентаризация: таблица 22</caption><thead><tr><th scope="col">Действие</th><th scope="col">Владелец</th><th scope="col">Артефакт</th><th scope="col">Критерий завершения</th></tr></thead><tbody><tr><td>Собрать действующие системы и пилоты с ИИ</td><td>Руководитель программы</td><td>Реестр сценариев</td><td>Для каждой записи известны владелец, поставщик, данные и действие</td></tr><tr><td>Найти производственные права</td><td>Руководитель безопасности</td><td>Карта учётных записей</td><td>Личные и чрезмерные права отмечены</td></tr><tr><td>Найти используемые данные и поставщиков</td><td>Владелец данных и закупок</td><td>Реестр потоков данных</td><td>Известны происхождение, место обработки и договорная роль</td></tr><tr><td>Зафиксировать расходы</td><td>Финансовый партнёр</td><td>Начальный реестр затрат</td><td>Расходы связаны хотя бы со сценарием и функцией</td></tr></tbody></table></div>
+      <p>Инвентаризация не должна задерживать выбор на месяцы. Достаточно найти существенные действия, данные и расходы.</p>
+      <h3 id="дни-11-20-выбрать-сквозной-поток">Дни 11–20: выбрать сквозной поток <a class="heading-link" href="#дни-11-20-выбрать-сквозной-поток" aria-label="Ссылка на раздел «Дни 11–20: выбрать сквозной поток»">#</a></h3>
+      <div class="table-wrap"><table><caption>Дни 11–20: выбрать сквозной поток: таблица 23</caption><thead><tr><th scope="col">Действие</th><th scope="col">Владелец</th><th scope="col">Артефакт</th><th scope="col">Критерий завершения</th></tr></thead><tbody><tr><td>Нанести путь от сигнала клиента до результата</td><td>Владелец потока</td><td>Карта потока</td><td>Видны функции, системы, очереди и решения</td></tr><tr><td>Выбрать один результат</td><td>Исполнительный куратор и владелец потока</td><td>Карточка сценария</td><td>Результат значим, измерим и управляем одним владельцем</td></tr><tr><td>Измерить исходное состояние</td><td>Аналитик потока</td><td>Исходные показатели</td><td>Есть время, качество, объём, труд, расход и ошибки</td></tr><tr><td>Определить регулируемые участки</td><td>Юрист и владелец риска</td><td>Карта требований</td><td>Вопросы и ответственные записаны без готовых предположений</td></tr></tbody></table></div>
+      <p>Выбор набора несвязанных пилотов откладывает трудную часть: изменение границ между функциями. Поток заставляет увидеть передачу работы и накопление ошибок.</p>
+      <h3 id="дни-21-30-оценить-и-ограничить">Дни 21–30: оценить и ограничить <a class="heading-link" href="#дни-21-30-оценить-и-ограничить" aria-label="Ссылка на раздел «Дни 21–30: оценить и ограничить»">#</a></h3>
+      <div class="table-wrap"><table><caption>Дни 21–30: оценить и ограничить: таблица 24</caption><thead><tr><th scope="col">Действие</th><th scope="col">Владелец</th><th scope="col">Артефакт</th><th scope="col">Критерий завершения</th></tr></thead><tbody><tr><td>Провести карту зрелости</td><td>Владелец потока</td><td>Профиль восьми измерений</td><td>У каждого балла есть ссылка</td></tr><tr><td>Назначить A0–A3 действиям</td><td>Владелец результата и безопасности</td><td>Карта полномочий</td><td>Опасные действия не скрыты в общем уровне</td></tr><tr><td>Закрыть критические права</td><td>Владелец системы</td><td>Журнал изменений доступа</td><td>Производственные действия не используют личные полные права</td></tr><tr><td>Согласовать решение на 90 дней</td><td>Руководящий комитет потока</td><td>Запись решения</td><td>Есть цель, бюджет, владелец, границы и остановка</td></tr></tbody></table></div>
+      <h2 id="результат-к-90-му-дню-2">Результат к 90-му дню <a class="heading-link" href="#результат-к-90-му-дню-2" aria-label="Ссылка на раздел «Результат к 90-му дню»">#</a></h2>
+      <p>Один участок потока работает как измеримый цикл. Организация согласовала минимальные общие правила и внедрила маршрут разработки с ИИ для относящихся к нему изменений.</p>
+      <h3 id="дни-31-45-спроектировать-целевой-цикл">Дни 31–45: спроектировать целевой цикл <a class="heading-link" href="#дни-31-45-спроектировать-целевой-цикл" aria-label="Ссылка на раздел «Дни 31–45: спроектировать целевой цикл»">#</a></h3>
+      <div class="table-wrap"><table><caption>Дни 31–45: спроектировать целевой цикл: таблица 25</caption><thead><tr><th scope="col">Действие</th><th scope="col">Владелец</th><th scope="col">Артефакт</th><th scope="col">Критерий завершения</th></tr></thead><tbody><tr><td>Заполнить паспорт цикла</td><td>Владелец потока</td><td>Паспорт</td><td>Сигнал, решение, действие, проверка и резерв связаны</td></tr><tr><td>Назначить роли на границах функций</td><td>Руководители функций</td><td>Карта решений</td><td>У каждой передачи есть принимающий владелец</td></tr><tr><td>Согласовать контекст</td><td>Владельцы данных</td><td>Реестр источников</td><td>Происхождение, свежесть и доступ подтверждены</td></tr><tr><td>Выбрать минимальную среду</td><td>Архитектор и технический владелец</td><td>Запись архитектурного решения</td><td>Используются существующие компоненты, если они достаточны</td></tr></tbody></table></div>
+      <h3 id="дни-46-60-собрать-проверки-и-права">Дни 46–60: собрать проверки и права <a class="heading-link" href="#дни-46-60-собрать-проверки-и-права" aria-label="Ссылка на раздел «Дни 46–60: собрать проверки и права»">#</a></h3>
+      <div class="table-wrap"><table><caption>Дни 46–60: собрать проверки и права: таблица 26</caption><thead><tr><th scope="col">Действие</th><th scope="col">Владелец</th><th scope="col">Артефакт</th><th scope="col">Критерий завершения</th></tr></thead><tbody><tr><td>Создать набор случаев по сегментам</td><td>Владелец качества</td><td>План проверок</td><td>Обычные, редкие и вредоносные случаи представлены</td></tr><tr><td>Выдать служебную учётную запись</td><td>Владелец доступа</td><td>Карта доступа</td><td>Права ограничены действием, областью и временем</td></tr><tr><td>Согласовать договор о самостоятельности</td><td>Владелец результата</td><td>Договор</td><td>Ущерб, пределы, остановка и резерв указаны</td></tr><tr><td>Настроить журнал и сигналы</td><td>Владелец наблюдения</td><td>Схема событий</td><td>Существенный путь восстанавливается</td></tr></tbody></table></div>
+      <h3 id="дни-61-75-провести-ограниченный-выпуск">Дни 61–75: провести ограниченный выпуск <a class="heading-link" href="#дни-61-75-провести-ограниченный-выпуск" aria-label="Ссылка на раздел «Дни 61–75: провести ограниченный выпуск»">#</a></h3>
+      <div class="table-wrap"><table><caption>Дни 61–75: провести ограниченный выпуск: таблица 27</caption><thead><tr><th scope="col">Действие</th><th scope="col">Владелец</th><th scope="col">Артефакт</th><th scope="col">Критерий завершения</th></tr></thead><tbody><tr><td>Запустить на ограниченном сегменте</td><td>Владелец потока</td><td>План выпуска</td><td>Сегмент и срок наблюдения определены</td></tr><tr><td>Независимо проверить результат и ход</td><td>Владелец качества</td><td>Отчёт</td><td>Существенные расхождения разобраны</td></tr><tr><td>Испытать остановку и резерв</td><td>Владелец эксплуатации</td><td>Протокол упражнения</td><td>Процесс продолжает критическую функцию</td></tr><tr><td>Считать полную стоимость</td><td>Финансовый партнёр</td><td>Таблица стоимости</td><td>Расход связан с принятыми результатами</td></tr></tbody></table></div>
+      <h3 id="дни-76-90-закрепить-минимальные-общие-правила">Дни 76–90: закрепить минимальные общие правила <a class="heading-link" href="#дни-76-90-закрепить-минимальные-общие-правила" aria-label="Ссылка на раздел «Дни 76–90: закрепить минимальные общие правила»">#</a></h3>
+      <p>Общими на этом этапе обычно становятся не продукты, а требования:</p>
+      <ul><li>отдельная служебная учётная запись;</li><li>происхождение контекста;</li><li>минимальные события журнала;</li><li>классификация риска изменений;</li><li>описание доказательств выпуска;</li><li>порядок остановки и разбора инцидента.</li></ul>
+      <div class="table-wrap"><table><caption>Дни 76–90: закрепить минимальные общие правила: таблица 28</caption><thead><tr><th scope="col">Действие</th><th scope="col">Владелец</th><th scope="col">Артефакт</th><th scope="col">Критерий завершения</th></tr></thead><tbody><tr><td>Внедрить маршрут разработки с ИИ</td><td>Инженерный руководитель</td><td>Политика и шаблон изменения</td><td>Изменения потока проходят изоляцию, проверки и выпуск по риску</td></tr><tr><td>Убрать дублирующие правила</td><td>Руководитель программы</td><td>Короткий каталог правил</td><td>Для каждого правила есть владелец и область</td></tr><tr><td>Принять решение о продолжении</td><td>Владелец потока</td><td>Обзор дня 90</td><td>Польза, стоимость, риск и ограничения видны</td></tr><tr><td>Выбрать кандидаты на повторение</td><td>Руководящий комитет</td><td>Список гипотез</td><td>Каждый кандидат связан с реальной повторившейся потребностью</td></tr></tbody></table></div>
+      <h2 id="результат-к-180-му-дню">Результат к 180-му дню <a class="heading-link" href="#результат-к-180-му-дню" aria-label="Ссылка на раздел «Результат к 180-му дню»">#</a></h2>
+      <p>Проверенные механизмы масштабируются на второй участок или поток. Общие компоненты появляются там, где повторение подтверждено. Руководство получает портфельное решение по результату, стоимости и риску.</p>
+      <h3 id="дни-91-120-стабилизировать">Дни 91–120: стабилизировать <a class="heading-link" href="#дни-91-120-стабилизировать" aria-label="Ссылка на раздел «Дни 91–120: стабилизировать»">#</a></h3>
+      <div class="table-wrap"><table><caption>Дни 91–120: стабилизировать: таблица 29</caption><thead><tr><th scope="col">Действие</th><th scope="col">Владелец</th><th scope="col">Артефакт</th><th scope="col">Критерий завершения</th></tr></thead><tbody><tr><td>Устранить главные причины ошибок</td><td>Владельцы соответствующих систем</td><td>Журнал улучшений</td><td>Каждая причина закрыта механизмом и проверкой</td></tr><tr><td>Провести повторную оценку зрелости</td><td>Владелец потока</td><td>Новый профиль</td><td>Изменение подтверждено ссылками</td></tr><tr><td>Проверить поставщиков и зависимости</td><td>Закупки, безопасность, архитектура</td><td>Реестр зависимостей</td><td>Версии, договоры, выход и резерв известны</td></tr><tr><td>Отработать инцидент</td><td>Владелец эксплуатации</td><td>Учебный разбор</td><td>Сигнал, остановка, коммуникация и восстановление работают</td></tr></tbody></table></div>
+      <h3 id="дни-121-150-перенести-подтвержденное">Дни 121–150: перенести подтверждённое <a class="heading-link" href="#дни-121-150-перенести-подтвержденное" aria-label="Ссылка на раздел «Дни 121–150: перенести подтверждённое»">#</a></h3>
+      <div class="table-wrap"><table><caption>Дни 121–150: перенести подтверждённое: таблица 30</caption><thead><tr><th scope="col">Действие</th><th scope="col">Владелец</th><th scope="col">Артефакт</th><th scope="col">Критерий завершения</th></tr></thead><tbody><tr><td>Выбрать второй участок</td><td>Руководящий комитет</td><td>Карточка сценария</td><td>Есть собственный исходный уровень и владелец</td></tr><tr><td>Сопоставить повторяющиеся потребности</td><td>Архитектор</td><td>Матрица повторения</td><td>Общими признаны конкретные интерфейсы или правила</td></tr><tr><td>Повторно принять общий компонент</td><td>Владелец второго участка</td><td>Отчёт приёмки</td><td>Компонент проверен на новых данных и риске</td></tr><tr><td>Оставить локальным различающееся</td><td>Владельцы потоков</td><td>Запись решения</td><td>Исключения объяснены результатом, а не политикой команды</td></tr></tbody></table></div>
+      <h3 id="дни-151-180-принять-портфельное-решение">Дни 151–180: принять портфельное решение <a class="heading-link" href="#дни-151-180-принять-портфельное-решение" aria-label="Ссылка на раздел «Дни 151–180: принять портфельное решение»">#</a></h3>
+      <div class="table-wrap"><table><caption>Дни 151–180: принять портфельное решение: таблица 31</caption><thead><tr><th scope="col">Действие</th><th scope="col">Владелец</th><th scope="col">Артефакт</th><th scope="col">Критерий завершения</th></tr></thead><tbody><tr><td>Сравнить сценарии</td><td>Владелец портфеля</td><td>Портфельный обзор</td><td>Польза, стоимость, риск и зрелость показаны одинаково</td></tr><tr><td>Решить судьбу общей платформы</td><td>Технологический руководитель</td><td>Инвестиционное решение</td><td>Есть минимум два подтверждённых потребителя и владелец сервиса</td></tr><tr><td>Обновить обязательные правила</td><td>Владельцы управления</td><td>Новые версии правил</td><td>Изменения прошли проверку и имеют дату действия</td></tr><tr><td>Составить следующий план</td><td>Исполнительный куратор</td><td>План на 180 дней</td><td>Масштабируется механизм, а не обещание</td></tr></tbody></table></div>
+      <h2 id="что-может-стать-общим-компонентом">Что может стать общим компонентом <a class="heading-link" href="#что-может-стать-общим-компонентом" aria-label="Ссылка на раздел «Что может стать общим компонентом»">#</a></h2>
+      <p>После повторения организация может централизовать:</p>
+      <ul><li>выпуск краткоживущих прав;</li><li>журнал событий;</li><li>изолированную среду;</li><li>реестр моделей и навыков;</li><li>библиотеку детерминированных проверок;</li><li>расчёт расходов;</li><li>шаблоны доказательств;</li><li>аварийное отключение.</li></ul>
+      <p>Общий компонент получает владельца сервиса, показатели доступности, поддержку и порядок выхода. Иначе он превращается в зависимость без ответственности.</p>
+      <h2 id="управление-портфелем">Управление портфелем <a class="heading-link" href="#управление-портфелем" aria-label="Ссылка на раздел «Управление портфелем»">#</a></h2>
+      <p>Раз в квартал или при существенном событии руководящий комитет рассматривает каждый производственный сценарий:</p>
+      <ul><li>результат относительно исходного уровня;</li><li>полную стоимость;</li><li>профиль зрелости;</li><li>действующие A0–A3;</li><li>серьёзные ошибки и инциденты;</li><li>зависимость от поставщиков;</li><li>применимые требования;</li><li>решение расширить, сохранить, сузить или закрыть.</li></ul>
+      <p>Квартал — рекомендуемая начальная частота, а не обязательный норматив. Высокий риск или быстрые изменения требуют более частого просмотра.</p>
+      <h2 id="рабочая-карточка-главы-11">Рабочая карточка главы <a class="heading-link" href="#рабочая-карточка-главы-11" aria-label="Ссылка на раздел «Рабочая карточка главы»">#</a></h2>
+      <div class="work-card">
+      <p><strong>Решение.</strong> За 30 дней выбрать поток и закрыть опасные права, за 90 дней запустить управляемый участок, за 180 дней перенести только доказанные механизмы.</p>
+      <p><strong>Минимальный механизм.</strong> Инвентаризация, карта потока, профиль зрелости, паспорт цикла, общие обязательные правила, маршрут разработки с ИИ и портфельный обзор.</p>
+      <p><strong>Ответственный.</strong> Исполнительный куратор даёт полномочия. Владелец потока отвечает за результат. Владельцы восьми систем отвечают за механизмы. Руководящий комитет принимает портфельные решения.</p>
+      <p><strong>Артефакт.</strong> План на 180 дней, карта потока, профиль зрелости, договор цикла и обзоры дней 30, 90 и 180.</p>
+      <p><strong>Критерий готовности.</strong> Один поток показывает измеримый результат и управляемый риск. Второй потребитель отдельно принял переносимый компонент. Платформенное решение имеет доказанную потребность.</p>
+      <p><strong>Показатели результата.</strong></p>
+      <ul><li>результат сквозного потока;</li><li>время между функциями;</li><li>стоимость принятого результата;</li><li>время от изменения до проверенного выпуска;</li><li>повторное использование после приёмки;</li><li>число закрытых опасных разрывов.</li></ul>
+      <p><strong>Показатели риска.</strong></p>
+      <ul><li>сценарии без владельца;</li><li>личные или чрезмерные права;</li><li>неизвестные потоки данных;</li><li>общие компоненты без владельца сервиса;</li><li>время восстановления;</li><li>сценарии без актуального правового разбора;</li><li>концентрация поставщика.</li></ul>
+      <p><strong>Типичные ошибки.</strong></p>
+      <ul><li>начинать с корпоративного каталога моделей;</li><li>запускать десятки несвязанных пилотов;</li><li>централизовать архитектуру до доказательства;</li><li>ограничить программу технологической функцией;</li><li>измерять локальную скорость вместо потока;</li><li>переносить успешный компонент без повторной приёмки.</li></ul>
+      <p><strong>Различия маршрутов.</strong> Этот план предназначен зрелой компании. Стартап использует укороченный путь главы 10.</p>
+      <p>Если зрелая компания создаёт новый независимый продукт, отдельная команда может начать как стартап, но обязана соблюдать общие требования к данным, безопасности и правам.</p>
+      <p><strong>Чек-лист.</strong></p>
+      <ul><li class="check-item"><label><input type="checkbox" data-reading-check="0"> <span>Реестр существенных сценариев собран к дню 10.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="1"> <span>Сквозной поток выбран к дню 20.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="2"> <span>Профиль зрелости и права проверены к дню 30.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="3"> <span>Один участок выпущен ограниченно к дню 75.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="4"> <span>Общие правила и маршрут разработки действуют к дню 90.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="5"> <span>Резерв и инцидент отработаны к дню 120.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="6"> <span>Второй участок повторно принял компонент к дню 150.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="7"> <span>Портфельное и платформенное решения приняты к дню 180.</span></label></li></ul>
+      </div>
+    </article>
+  </div>
+  </main>
+
+  <footer style="border-top:2px solid #171106; margin-top:24px">
+    <div style="max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap">
+      <a href="./chapter-10.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">← Глава 10</span>
+        <span style="font-size:19px; font-weight:700">План стартапа: 30 и 90 дней</span>
+      </a>
+      <a href="./chapter-12.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px; align-items:flex-end; text-align:right; border-left:1px solid rgba(23,17,6,0.14)" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">Глава 12 →</span>
+        <span style="font-size:19px; font-weight:700">Практический комплект и следующий шаг</span>
+      </a>
+    </div>
+  </footer>
+</div>
+
+<script src="./assets/book-v3.js" defer></script>
+</body>
+</html>

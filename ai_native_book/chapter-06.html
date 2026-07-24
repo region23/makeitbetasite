@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Глава 6 — Жизненный цикл разработки программного обеспечения с ИИ. AI-native компания v2">
+<title>Глава 6. Жизненный цикл разработки программного обеспечения с ИИ — AI-native компания v2</title>
+<link rel="canonical" href="https://makeitbeta.ru/ai_native_book/chapter-06.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..900;1,7..72,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+html { scroll-behavior: smooth; }
+body { margin:0; background:#FBF7EE; color:#171106; font-family:Literata,"Iowan Old Style",Georgia,serif; font-size:17px; line-height:1.65; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+a { color:#9C4A0E; text-decoration-thickness:1px; text-underline-offset:.18em; }
+a:hover { color:#6E3509; text-decoration-thickness:2px; }
+::selection { background:#EADFC4; }
+.skip-link { position:fixed; top:8px; left:8px; z-index:100; padding:8px 12px; background:#171106; color:#FBF7EE; transform:translateY(-180%); transition:transform .12s ease; }
+.skip-link:focus { transform:translateY(0); }
+.hv0:hover { background:#F4EEDD; }
+.chapter-layout { max-width:1280px; margin:0 auto; padding:40px 24px 0; display:flex; gap:48px; align-items:flex-start; flex-wrap:wrap; }
+.chapter-rail { flex:1 1 200px; max-width:240px; position:sticky; top:24px; max-height:calc(100vh - 48px); overflow:auto; }
+.chapter-rail ol { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px; line-height:1.4; border-left:2px solid rgba(23,17,6,.14); }
+.chapter-rail li { padding-left:14px; }
+.chapter-rail a { text-decoration:none; color:#4A4030; }
+article { flex:999 1 480px; max-width:88ch; min-width:0; padding-bottom:64px; }
+article > p { margin:0 0 18px; text-wrap:pretty; }
+article > ul, article > ol { margin:0 0 20px; padding-left:24px; }
+article > ul, article > ol { display:flex; flex-direction:column; gap:6px; }
+article h2 { margin:48px 0 16px; font-size:27px; line-height:1.25; font-weight:800; letter-spacing:-.015em; scroll-margin-top:24px; }
+article h2:first-child { margin-top:0; }
+article h3 { margin:32px 0 10px; font-size:20px; line-height:1.35; font-weight:800; letter-spacing:-.01em; scroll-margin-top:24px; }
+article .heading-link { font-size:15px; font-weight:400; text-decoration:none; color:#C2782E; }
+article code { font-family:"JetBrains Mono",monospace; font-size:.85em; overflow-wrap:anywhere; background:#F1E7CF; padding:.08em .3em; }
+article blockquote, article .chapter-route-note { margin:0 0 18px; border-left:3px solid #9C4A0E; background:#F1E7CF; padding:12px 16px; }
+.table-wrap { overflow-x:auto; border:1px solid rgba(23,17,6,.22); margin:0 0 20px; }
+.table-wrap table { border-collapse:collapse; width:100%; min-width:620px; }
+.table-wrap caption { caption-side:top; text-align:left; font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7A6B52; padding:9px 14px; border-bottom:1px solid rgba(23,17,6,.22); background:#F4EEDD; }
+.table-wrap th { text-align:left; font-family:"JetBrains Mono",monospace; font-size:11px; line-height:1.35; letter-spacing:.06em; text-transform:uppercase; padding:9px 14px; border-bottom:2px solid #171106; vertical-align:bottom; }
+.table-wrap td { padding:9px 14px; border-bottom:1px solid rgba(23,17,6,.14); vertical-align:top; font-size:14.5px; line-height:1.5; }
+.table-wrap tbody tr:last-child td { border-bottom:0; }
+article h3 + .table-wrap { border:2px solid #171106; }
+article .source-ref { font-family:"JetBrains Mono",monospace; font-size:.78em; overflow-wrap:anywhere; }
+.work-card { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1px; border:2px solid #171106; background:rgba(23,17,6,.18); margin-top:0; }
+.work-card > p, .work-card > ul { margin:0; padding:16px 18px; background:#FBF7EE; font-size:15px; line-height:1.55; }
+.work-card > ul { padding-left:38px; }
+.work-card > p strong:first-child { display:block; margin:0 0 6px; font-family:"JetBrains Mono",monospace; font-size:10px; line-height:1.4; letter-spacing:.1em; text-transform:uppercase; color:#9C4A0E; }
+.work-card > ul:has(input[data-reading-check]) { grid-column:1/-1; list-style:none; padding:16px 18px; background:#F4EEDD; }
+.check-item label { display:flex; align-items:flex-start; gap:10px; cursor:pointer; }
+.check-item input { width:18px; height:18px; flex:0 0 auto; margin-top:3px; accent-color:#9C4A0E; }
+@media (max-width:760px) {
+  .chapter-layout { gap:28px; }
+  .chapter-rail { position:static; max-width:none; max-height:none; flex-basis:100%; }
+  article { flex-basis:100%; }
+}
+</style>
+</head>
+<body data-page="ch6">
+<a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+
+<div>
+  <div aria-hidden="true" style="position:fixed; top:0; left:0; right:0; height:3px; background:rgba(23,17,6,0.08); z-index:50">
+    <div data-progress style="height:100%; background:#9C4A0E; width:0%"></div>
+  </div>
+
+  <header style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; max-width:1280px; margin:0 auto; padding:18px 24px; border-bottom:2px solid #171106">
+    <a href="./index.html" style="font-family:'JetBrains Mono',monospace; font-size:12px; text-decoration:none; color:#4A4030">← Оглавление</a>
+    <div style="display:flex; align-items:baseline; gap:10px; margin:0 auto">
+      <span style="font-weight:700; font-size:16px">AI-native компания</span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.08em; background:#171106; color:#FBF7EE; padding:2px 6px">V2</span>
+    </div>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#7A6B52">Глава 6 из 12</span>
+  </header>
+
+  <main id="main-content">
+  <section data-screen-label="Опенер главы 6" style="max-width:1280px; margin:0 auto; padding:56px 24px 40px; border-bottom:1px solid rgba(23,17,6,0.14); display:flex; gap:32px; align-items:baseline; flex-wrap:wrap">
+    <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; font-size:clamp(72px,10vw,128px); font-weight:700; line-height:0.9; color:#C2782E">06</span>
+    <div style="flex:1 1 320px">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:#9C4A0E">Часть II · Операционная модель</p>
+      <h1 style="margin:0 0 14px; font-size:clamp(36px,5vw,56px); line-height:1.05; font-weight:800; letter-spacing:-0.02em; text-wrap:balance">Жизненный цикл разработки программного обеспечения с ИИ</h1>
+      <p style="margin:0; font-size:15px; color:#7A6B52; max-width:44em">изменение · изоляция · выпуск по риску</p>
+    </div>
+  </section>
+
+  <div class="chapter-layout">
+    <nav aria-label="В этой главе" class="chapter-rail">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#7A6B52">В этой главе</p>
+      <ol>
+        <li><a href="#1-согласуйте-намерение">1. Согласуйте намерение</a></li>
+        <li><a href="#2-соберите-постоянный-и-оперативный-контекст">2. Соберите постоянный и оперативный контекст</a></li>
+        <li><a href="#3-спланируйте-небольшое-изменение">3. Спланируйте небольшое изменение</a></li>
+        <li><a href="#4-создайте-изолированную-рабочую-среду">4. Создайте изолированную рабочую среду</a></li>
+        <li><a href="#5-реализуйте-с-явными-зависимостями">5. Реализуйте с явными зависимостями</a></li>
+        <li><a href="#6-выполните-обычные-тесты-и-независимые-проверки">6. Выполните обычные тесты и независимые проверки</a></li>
+        <li><a href="#7-проверьте-результат-и-ход-действий">7. Проверьте результат и ход действий</a></li>
+        <li><a href="#8-подготовьте-описание-запроса-на-слияние">8. Подготовьте описание запроса на слияние</a></li>
+        <li><a href="#9-выберите-условия-выпуска-по-риску">9. Выберите условия выпуска по риску</a></li>
+        <li><a href="#10-наблюдайте-после-выпуска">10. Наблюдайте после выпуска</a></li>
+        <li><a href="#11-превратите-инцидент-в-улучшение">11. Превратите инцидент в улучшение</a></li>
+        <li><a href="#когда-нужен-mcp">Когда нужен MCP</a></li>
+        <li><a href="#когда-нужен-a2a">Когда нужен A2A</a></li>
+        <li><a href="#когда-нужен-a2ui">Когда нужен A2UI</a></li>
+        <li><a href="#дерево-выбора-протокола">Дерево выбора протокола</a></li>
+        <li><a href="#рабочая-карточка-главы-6">Рабочая карточка главы</a></li>
+      </ol>
+    </nav>
+
+    <article data-source-section="ch6">
+      <p class="chapter-route-note">Эта глава связывает самостоятельность ИИ с маршрутом разработки и выпуском по риску. Определения A0–A3 и обязательные условия для каждого уровня приведены в разделе <a href="./chapter-08.html#уровни-a0-a3">«Уровни A0–A3»</a>.</p>
+      <p>Жизненный цикл разработки программного обеспечения с ИИ (AI SDLC) нужен не для того, чтобы генерировать больше кода. Его задача — быстрее превращать согласованное намерение в небольшое проверенное изменение и сохранять контроль до и после выпуска.</p>
+      <p>Формальные спецификации, автоматические проверки и контрольные точки создают основу производственной разработки. Сам процесс не делает риск низким: нужны права, наблюдение, откат и оценка цены ошибки. <a class="source-ref" href="./full.html#audit-G1-D1-p13">[G1-D1-p13]</a>, <code>The New SDLC With Vibe Coding_Day_1.pdf</code>, с. 13.</p>
+      <h2 id="1-согласуйте-намерение">1. Согласуйте намерение <a class="heading-link" href="#1-согласуйте-намерение" aria-label="Ссылка на раздел «1. Согласуйте намерение»">#</a></h2>
+      <p>Короткая спецификация изменения отвечает на вопросы:</p>
+      <ul><li>какую проблему решаем;</li><li>кто получит результат;</li><li>что входит и не входит в работу;</li><li>какие ограничения уже действуют;</li><li>как проверить результат;</li><li>что может сломаться;</li><li>как откатить.</li></ul>
+      <p>Спецификация задаёт намерение. Код, тесты и записи архитектурных решений могут содержать более точные действующие ограничения. Если они расходятся, команда не объявляет один документ абсолютной истиной, а устраняет противоречие.</p>
+      <p>Спецификация в репозитории задаёт общее намерение, но не отменяет более точные ограничения кода, тестов и записей решений. <a class="source-ref" href="./full.html#audit-G1-D5-p8">[G1-D5-p8]</a>, <code>Day_5_v3.pdf</code>, с. 8.</p>
+      <h2 id="2-соберите-постоянный-и-оперативный-контекст">2. Соберите постоянный и оперативный контекст <a class="heading-link" href="#2-соберите-постоянный-и-оперативный-контекст" aria-label="Ссылка на раздел «2. Соберите постоянный и оперативный контекст»">#</a></h2>
+      <p>Постоянный контекст содержит правила проекта. Оперативный — задачу, затронутые файлы, свежие данные и результаты инструментов.</p>
+      <p>Система получает только нужные части. Секреты и производственные данные не копируются в контекст по умолчанию. Каждый источник имеет происхождение и разрешённую область.</p>
+      <h2 id="3-спланируйте-небольшое-изменение">3. Спланируйте небольшое изменение <a class="heading-link" href="#3-спланируйте-небольшое-изменение" aria-label="Ссылка на раздел «3. Спланируйте небольшое изменение»">#</a></h2>
+      <p>Небольшое изменение легче понять, проверить, рецензировать и откатить. План перечисляет:</p>
+      <ul><li>затрагиваемые компоненты;</li><li>последовательность шагов;</li><li>проверки после каждого шага;</li><li>возможные точки остановки;</li><li>миграции и обратимость;</li><li>доказательства, которые войдут в описание изменения.</li></ul>
+      <p>Ускорение генерации может перенести часть ограничения в постановку, архитектуру и проверку. Это зависит от задачи и команды и не отменяет сложность реализации. <a class="source-ref" href="./full.html#audit-G1-D1-p19">[G1-D1-p19]</a></p>
+      <h2 id="4-создайте-изолированную-рабочую-среду">4. Создайте изолированную рабочую среду <a class="heading-link" href="#4-создайте-изолированную-рабочую-среду" aria-label="Ссылка на раздел «4. Создайте изолированную рабочую среду»">#</a></h2>
+      <p>Код, подготовленный системой или внешней зависимостью, запускается в краткоживущей изолированной среде.</p>
+      <p>Минимальные ограничения:</p>
+      <ul><li>нет производственных секретов;</li><li>нет личной сессии разработчика;</li><li>сеть закрыта или разрешена по необходимости;</li><li>файловая система ограничена рабочим каталогом;</li><li>процесс имеет предел времени и ресурсов;</li><li>зависимости устанавливаются из проверенных источников;</li><li>результат можно удалить целиком.</li></ul>
+      <p>Список разрешённых доменов не является достаточной защитой. Разрешённый ресурс может вернуть вредоносный материал или принять лишние данные. <a class="source-ref" href="./full.html#audit-G1-D4-p15">[G1-D4-p15]</a>, <code>Vibe Coding Agent Security and Evaluation_Day_4.pdf</code>, с. 15.</p>
+      <p>Имена новых пакетов проверяют по происхождению и закрепляют по версии. Галлюцинация имени зависимости создаёт риск цепочки поставок. <a class="source-ref" href="./full.html#audit-G1-D4-p14">[G1-D4-p14]</a>, тот же материал, с. 14.</p>
+      <h2 id="5-реализуйте-с-явными-зависимостями">5. Реализуйте с явными зависимостями <a class="heading-link" href="#5-реализуйте-с-явными-зависимостями" aria-label="Ссылка на раздел «5. Реализуйте с явными зависимостями»">#</a></h2>
+      <p>Среда фиксирует:</p>
+      <ul><li>модель и её режим;</li><li>версию инструкции;</li><li>навыки и вспомогательные материалы;</li><li>доступные инструменты;</li><li>внешние серверы;</li><li>пределы прав и расходов;</li><li>историю существенных действий.</li></ul>
+      <p>Если обычный генератор или правило выполняет шаг надёжнее, используйте его. Многоагентная схема появляется только при независимых участниках, границах ответственности или длительных распределённых задачах.</p>
+      <h2 id="6-выполните-обычные-тесты-и-независимые-проверки">6. Выполните обычные тесты и независимые проверки <a class="heading-link" href="#6-выполните-обычные-тесты-и-независимые-проверки" aria-label="Ссылка на раздел «6. Выполните обычные тесты и независимые проверки»">#</a></h2>
+      <p>Обычные тесты проверяют детерминированные свойства. Набор оценочных проверок исследует вероятностное поведение. Оба вида нужны вместе. <a class="source-ref" href="./full.html#audit-G1-D5-p30">[G1-D5-p30]</a>, <code>Day_5_v3.pdf</code>, с. 30.</p>
+      <p>Проверки включают:</p>
+      <ul><li>сборку, типы и формат;</li><li>модульные и интеграционные тесты;</li><li>статический анализ;</li><li>анализ зависимостей;</li><li>испытания безопасности и поведения;</li><li>проверку интерфейса в отрисованном виде;</li><li>сохранённые случаи прошлых дефектов;</li><li>независимую проверку существенных предположений.</li></ul>
+      <p>Успешная сборка и тесты являются нижней границей, но не полным доказательством. <a class="source-ref" href="./full.html#audit-G1-D4-p30">[G1-D4-p30]</a>, <code>Vibe Coding Agent Security and Evaluation_Day_4.pdf</code>, с. 30.</p>
+      <p>Если система исправляет серьёзный дефект, она не должна незаметно ослабить воспроизводящий тест. Изменение такого теста получает отдельное обоснование и рецензию. Для обычной разработки тест можно менять, когда изменилось согласованное поведение. <a class="source-ref" href="./full.html#audit-G1-D4-p23">[G1-D4-p23]</a></p>
+      <h2 id="7-проверьте-результат-и-ход-действий">7. Проверьте результат и ход действий <a class="heading-link" href="#7-проверьте-результат-и-ход-действий" aria-label="Ссылка на раздел «7. Проверьте результат и ход действий»">#</a></h2>
+      <p>Рецензент проверяет:</p>
+      <ul><li>соответствие намерению;</li><li>границы изменения;</li><li>архитектурные последствия;</li><li>обработку ошибок;</li><li>данные и права;</li><li>фактические результаты тестов;</li><li>необычные вызовы инструментов;</li><li>попытки обойти запрет;</li><li>новые зависимости и сетевые обращения.</li></ul>
+      <p>Для интерфейса проверяется отрисованный результат, управление с клавиатуры и поведение на нужных экранах. Исходный код не показывает все визуальные и интерактивные дефекты. <a class="source-ref" href="./full.html#audit-G1-D4-p36">[G1-D4-p36]</a></p>
+      <h2 id="8-подготовьте-описание-запроса-на-слияние">8. Подготовьте описание запроса на слияние <a class="heading-link" href="#8-подготовьте-описание-запроса-на-слияние" aria-label="Ссылка на раздел «8. Подготовьте описание запроса на слияние»">#</a></h2>
+      <p>ИИ может подготовить черновик. Автор изменения подтверждает его точность.</p>
+      <p>Обязательные поля:</p>
+      <ul><li>цель;</li><li>что изменено и что намеренно не изменено;</li><li>ссылка на спецификацию;</li><li>доказательства проверок;</li><li>риск и возможные точки поломки;</li><li>данные, права и зависимости;</li><li>порядок отката;</li><li>известные ограничения;</li><li>план наблюдения после выпуска.</li></ul>
+      <p>ИИ может подготовить сводку, точки возможной поломки и оценку риска. Автор изменения отвечает за их точность. <a class="source-ref" href="./full.html#audit-G1-D5-p19">[G1-D5-p19]</a>, <code>Day_5_v3.pdf</code>, с. 19.</p>
+      <h2 id="9-выберите-условия-выпуска-по-риску">9. Выберите условия выпуска по риску <a class="heading-link" href="#9-выберите-условия-выпуска-по-риску" aria-label="Ссылка на раздел «9. Выберите условия выпуска по риску»">#</a></h2>
+      <div class="table-wrap"><table><caption>9. Выберите условия выпуска по риску: таблица 7</caption><thead><tr><th scope="col">Класс изменения</th><th scope="col">Пример</th><th scope="col">Минимальное условие выпуска</th></tr></thead><tbody><tr><td>Низкий, обратимый</td><td>Текст внутренней справки</td><td>Автоматические проверки, владелец, быстрый откат</td></tr><tr><td>Средний</td><td>Изменение рабочего сценария без чувствительных прав</td><td>Независимая рецензия, ограниченный выпуск, наблюдение</td></tr><tr><td>Высокий</td><td>Права, платежи, персональные данные, безопасность</td><td>Разделение ролей, явное согласование, испытанный откат, усиленное наблюдение</td></tr><tr><td>Необратимый или плохо наблюдаемый</td><td>Внешнее юридически значимое действие</td><td>Человеческое решение; автоматизация только вспомогательных шагов</td></tr></tbody></table></div>
+      <p>Условное автоматическое слияние допустимо для заранее определённого низкого риска. Прохождение тестов само по себе не разрешает любой выпуск. <a class="source-ref" href="./full.html#audit-G1-D5-p20">[G1-D5-p20]</a></p>
+      <h2 id="10-наблюдайте-после-выпуска">10. Наблюдайте после выпуска <a class="heading-link" href="#10-наблюдайте-после-выпуска" aria-label="Ссылка на раздел «10. Наблюдайте после выпуска»">#</a></h2>
+      <p>Команда заранее знает:</p>
+      <ul><li>какие показатели должны измениться;</li><li>какие ошибки считать существенными;</li><li>кто получает сигнал;</li><li>когда выпуск останавливается;</li><li>как откатить;</li><li>сколько длится усиленное наблюдение.</li></ul>
+      <p>Техническая успешность выпуска не заменяет проверку результата для пользователя. Если время сократилось, но выросла доля исправлений, эффект нужно считать целиком.</p>
+      <h2 id="11-превратите-инцидент-в-улучшение">11. Превратите инцидент в улучшение <a class="heading-link" href="#11-превратите-инцидент-в-улучшение" aria-label="Ссылка на раздел «11. Превратите инцидент в улучшение»">#</a></h2>
+      <p>Сначала воспроизведите наблюдаемый сбой. Затем сохраните его как постоянную проверку, если это уместно.</p>
+      <p>Цепочка:</p>
+      <blockquote><p>инцидент → воспроизведение → причина → исправление → проверка → обновление правила или контекста → наблюдение</p></blockquote>
+      <p>Начинайте исправление с воспроизведения и сохраняйте подходящий случай как регрессионную проверку. <a class="source-ref" href="./full.html#audit-G1-D5-p14">[G1-D5-p14]</a>, <code>Day_5_v3.pdf</code>, с. 14.</p>
+      <p>Не каждый инцидент становится тестом. Иногда причина находится в правах, данных, поставщике или организационном решении. Тогда меняется соответствующий артефакт, а проверка подтверждает новый механизм.</p>
+      <h2 id="когда-нужен-mcp">Когда нужен MCP <a class="heading-link" href="#когда-нужен-mcp" aria-label="Ссылка на раздел «Когда нужен MCP»">#</a></h2>
+      <p>Протокол контекста модели (Model Context Protocol, MCP) стандартизует подключение контекста и инструментов. Проверенная на дату среза стабильная редакция — <code>2025-11-25</code>. <a class="source-ref" href="./full.html#src-MCP-2025-11-25">[MCP-2025-11-25]</a></p>
+      <p>Используйте MCP, если:</p>
+      <ul><li>несколько клиентов должны обращаться к одному инструменту;</li><li>нужен устойчивый интерфейс обнаружения возможностей;</li><li>команда готова отдельно управлять авторизацией, схемами и эксплуатацией.</li></ul>
+      <p>Не вводите MCP для одного простого внутреннего вызова, если прямой интерфейс дешевле и понятнее.</p>
+      <p>Формула <code>N × M → N + M</code> описывает сокращение числа интерфейсов, но не убирает адаптацию схем, авторизацию, семантику и эксплуатацию. <a class="source-ref" href="./full.html#audit-G1-D2-p13">[G1-D2-p13]</a>, <code>Agent Tools &amp; Interoperability_Day_2.pdf</code>, с. 13.</p>
+      <p>Стабильное расширение централизованного управления доступом было объявлено 18 июня 2026 года. Оно решает часть авторизации и не заменяет проверку сервера, данных, действий и журналов. <a class="source-ref" href="./full.html#src-MCP-2026-managed-auth">[MCP-2026-managed-auth]</a></p>
+      <h2 id="когда-нужен-a2a">Когда нужен A2A <a class="heading-link" href="#когда-нужен-a2a" aria-label="Ссылка на раздел «Когда нужен A2A»">#</a></h2>
+      <p>Протокол взаимодействия агентов (Agent-to-Agent, A2A) предназначен для связи автономных удалённых участников. Проверенный выпуск на дату среза — <code>1.0.0</code> от 12 марта 2026 года. Запись о <code>1.0.1</code> не подтвердилась. <a class="source-ref" href="./full.html#src-A2A-1-0-0">[A2A-1-0-0]</a></p>
+      <p>Используйте A2A, если участники:</p>
+      <ul><li>развёрнуты независимо;</li><li>имеют собственные длительные задачи и состояние;</li><li>должны согласовывать возможность, статус и результат через устойчивый протокол;</li><li>принадлежат разным системам или организациям.</li></ul>
+      <p>Не используйте A2A только потому, что в схеме нарисовано два агента. Внутренней функции или инструменту часто хватает обычного вызова. A2A предназначен для распределённых специализированных участников. <a class="source-ref" href="./full.html#audit-G1-D2-p22">[G1-D2-p22]</a></p>
+      <p>Юридическая и управленческая ответственность не передаётся удалённому агенту вместе с задачей. <a class="source-ref" href="./full.html#audit-G1-D2-p23">[G1-D2-p23]</a></p>
+      <h2 id="когда-нужен-a2ui">Когда нужен A2UI <a class="heading-link" href="#когда-нужен-a2ui" aria-label="Ссылка на раздел «Когда нужен A2UI»">#</a></h2>
+      <p>Протокол интерфейса от агента к пользователю (Agent-to-User Interface, A2UI) передаёт декларативное описание интерфейса, которое клиент отображает из доверенного каталога компонентов.</p>
+      <p>На дату среза текущая производственная версия — <code>0.9.1</code>. Семейство <code>0.9</code> представлено 17 апреля 2026 года. Версия <code>1.0</code> остаётся кандидатом и не называется стабильной. <a class="source-ref" href="./full.html#src-A2UI-0-9">[A2UI-0-9]</a> <a class="source-ref" href="./full.html#src-A2UI-0-9-1-current">[A2UI-0-9-1-current]</a></p>
+      <p>Используйте A2UI, если результат лучше понять и уточнить через интерактивное представление. Для короткого ответа достаточно текста. Для передачи данных может хватить структурированного формата. Для постоянного детерминированного экрана лучше обычный код.</p>
+      <p>Декларативный каталог уменьшает поверхность атаки по сравнению с произвольным кодом, но не отменяет проверку схемы, данных, событий и прав действий. <a class="source-ref" href="./full.html#audit-G1-D2-p33">[G1-D2-p33]</a></p>
+      <p>Сгенерированную структуру нужно проверить по схеме до отображения и исполнения. <a class="source-ref" href="./full.html#audit-G1-D2-p40">[G1-D2-p40]</a></p>
+      <p>A2UI может передаваться через A2A, но не зависит от него архитектурно. Тезис об обязательной связи отвергнут. <a class="source-ref" href="./full.html#audit-G1-D2-p29">[G1-D2-p29]</a></p>
+      <h2 id="дерево-выбора-протокола">Дерево выбора протокола <a class="heading-link" href="#дерево-выбора-протокола" aria-label="Ссылка на раздел «Дерево выбора протокола»">#</a></h2>
+      <ol><li>Нужен только текстовый ответ? Верните текст.</li><li>Нужны структурированные данные? Используйте обычную схему данных.</li><li>Модель должна вызывать локальный инструмент? Начните с прямого ограниченного интерфейса.</li><li>Несколько клиентов подключаются к общим инструментам? Рассмотрите MCP.</li><li>Взаимодействуют независимые удалённые участники с длительными задачами? Рассмотрите A2A.</li><li>Пользователю нужен динамический интерфейс из доверенного каталога? Рассмотрите A2UI.</li><li>Для каждого «да» отдельно проверьте доверие, права, наблюдение, стоимость и резерв.</li></ol>
+      <p>Протокол — вариант интерфейса. Он не заменяет операционную модель.</p>
+      <h2 id="рабочая-карточка-главы-6">Рабочая карточка главы <a class="heading-link" href="#рабочая-карточка-главы-6" aria-label="Ссылка на раздел «Рабочая карточка главы»">#</a></h2>
+      <div class="work-card">
+      <p><strong>Решение.</strong> Установить маршрут от согласованного намерения до наблюдаемого выпуска для каждого класса риска.</p>
+      <p><strong>Минимальный механизм.</strong> Небольшое изменение, изолированная среда, обычные и независимые проверки, описание риска, условия выпуска и разбор инцидента.</p>
+      <p><strong>Ответственный.</strong> Автор изменения отвечает за доказательства. Владелец компонента отвечает за выпуск. Владелец продукта подтверждает результат. Специалист по безопасности задаёт обязательные проверки для риска.</p>
+      <p><strong>Артефакт.</strong> Версионируемая спецификация, план изменения, журнал проверок, описание запроса на слияние и план наблюдения.</p>
+      <p><strong>Критерий готовности.</strong> Независимый рецензент может связать намерение, код, тесты, права, риск, выпуск и фактический результат. Откат воспроизводим.</p>
+      <p><strong>Показатели результата.</strong></p>
+      <ul><li>время от согласованного намерения до принятого выпуска;</li><li>размер и частота изменений;</li><li>доля изменений без возврата;</li><li>время рецензирования;</li><li>результат для пользователя после выпуска.</li></ul>
+      <p><strong>Показатели риска.</strong></p>
+      <ul><li>доля выпусков без независимого доказательства;</li><li>дефекты, ушедшие в рабочую среду;</li><li>изменения тестов без обоснования;</li><li>новые зависимости без проверки происхождения;</li><li>нарушения изоляции и прав;</li><li>время обнаружения и восстановления.</li></ul>
+      <p><strong>Типичные ошибки.</strong></p>
+      <ul><li>считать генерацию кода решённой задачей;</li><li>передавать системе весь репозиторий и секреты;</li><li>делать большие изменения ради скорости;</li><li>считать тесты той же системы независимыми;</li><li>автоматически выпускать по одному зелёному сигналу;</li><li>выбирать протокол раньше границы задачи.</li></ul>
+      <p><strong>Различия маршрутов.</strong> Стартап закрепляет простой маршрут для одного репозитория и класса изменений.</p>
+      <p>Зрелая компания согласует классы риска, общие доказательства и изолированные среды для сквозного потока. Она не навязывает один инструмент всем командам, если общий механизм ещё не доказан.</p>
+      <p><strong>Чек-лист.</strong></p>
+      <ul><li class="check-item"><label><input type="checkbox" data-reading-check="0"> <span>Намерение и границы изменения согласованы.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="1"> <span>Постоянный и оперативный контекст разделены.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="2"> <span>Изменение мало и имеет точки остановки.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="3"> <span>Среда изолирована от личных и производственных секретов.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="4"> <span>Обычные тесты дополнены независимыми проверками.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="5"> <span>Результат и ход действий проверены.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="6"> <span>Описание изменения содержит доказательства и риск.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="7"> <span>Условия выпуска зависят от класса риска.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="8"> <span>Наблюдение и откат назначены до выпуска.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="9"> <span>Инцидент превращается в подходящее постоянное улучшение.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="10"> <span>MCP, A2A или A2UI выбраны только по задаче.</span></label></li></ul>
+      </div>
+    </article>
+  </div>
+  </main>
+
+  <footer style="border-top:2px solid #171106; margin-top:24px">
+    <div style="max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap">
+      <a href="./chapter-05.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">← Глава 5</span>
+        <span style="font-size:19px; font-weight:700">Контекст, память и навыки</span>
+      </a>
+      <a href="./chapter-07.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px; align-items:flex-end; text-align:right; border-left:1px solid rgba(23,17,6,0.14)" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">Глава 7 →</span>
+        <span style="font-size:19px; font-weight:700">Проверки качества и наблюдение</span>
+      </a>
+    </div>
+  </footer>
+</div>
+
+<script src="./assets/book-v3.js" defer></script>
+</body>
+</html>

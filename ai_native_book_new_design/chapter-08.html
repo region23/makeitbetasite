@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Глава 8 — Полномочия, безопасность и устойчивость. AI-native компания v2">
+<title>Глава 8. Полномочия, безопасность и устойчивость — AI-native компания v2</title>
+<link rel="canonical" href="https://makeitbeta.ru/ai_native_book/chapter-08.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..900;1,7..72,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+html { scroll-behavior: smooth; }
+body { margin:0; background:#FBF7EE; color:#171106; font-family:Literata,"Iowan Old Style",Georgia,serif; font-size:17px; line-height:1.65; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+a { color:#9C4A0E; text-decoration-thickness:1px; text-underline-offset:.18em; }
+a:hover { color:#6E3509; text-decoration-thickness:2px; }
+::selection { background:#EADFC4; }
+.skip-link { position:fixed; top:8px; left:8px; z-index:100; padding:8px 12px; background:#171106; color:#FBF7EE; transform:translateY(-180%); transition:transform .12s ease; }
+.skip-link:focus { transform:translateY(0); }
+.hv0:hover { background:#F4EEDD; }
+.chapter-layout { max-width:1280px; margin:0 auto; padding:40px 24px 0; display:flex; gap:48px; align-items:flex-start; flex-wrap:wrap; }
+.chapter-rail { flex:1 1 200px; max-width:240px; position:sticky; top:24px; max-height:calc(100vh - 48px); overflow:auto; }
+.chapter-rail ol { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px; line-height:1.4; border-left:2px solid rgba(23,17,6,.14); }
+.chapter-rail li { padding-left:14px; }
+.chapter-rail a { text-decoration:none; color:#4A4030; }
+article { flex:999 1 480px; max-width:88ch; min-width:0; padding-bottom:64px; }
+article > p { margin:0 0 18px; text-wrap:pretty; }
+article > ul, article > ol { margin:0 0 20px; padding-left:24px; }
+article > ul, article > ol { display:flex; flex-direction:column; gap:6px; }
+article h2 { margin:48px 0 16px; font-size:27px; line-height:1.25; font-weight:800; letter-spacing:-.015em; scroll-margin-top:24px; }
+article h2:first-child { margin-top:0; }
+article h3 { margin:32px 0 10px; font-size:20px; line-height:1.35; font-weight:800; letter-spacing:-.01em; scroll-margin-top:24px; }
+article .heading-link { font-size:15px; font-weight:400; text-decoration:none; color:#C2782E; }
+article code { font-family:"JetBrains Mono",monospace; font-size:.85em; overflow-wrap:anywhere; background:#F1E7CF; padding:.08em .3em; }
+article blockquote, article .chapter-route-note { margin:0 0 18px; border-left:3px solid #9C4A0E; background:#F1E7CF; padding:12px 16px; }
+.table-wrap { overflow-x:auto; border:1px solid rgba(23,17,6,.22); margin:0 0 20px; }
+.table-wrap table { border-collapse:collapse; width:100%; min-width:620px; }
+.table-wrap caption { caption-side:top; text-align:left; font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7A6B52; padding:9px 14px; border-bottom:1px solid rgba(23,17,6,.22); background:#F4EEDD; }
+.table-wrap th { text-align:left; font-family:"JetBrains Mono",monospace; font-size:11px; line-height:1.35; letter-spacing:.06em; text-transform:uppercase; padding:9px 14px; border-bottom:2px solid #171106; vertical-align:bottom; }
+.table-wrap td { padding:9px 14px; border-bottom:1px solid rgba(23,17,6,.14); vertical-align:top; font-size:14.5px; line-height:1.5; }
+.table-wrap tbody tr:last-child td { border-bottom:0; }
+article h3 + .table-wrap { border:2px solid #171106; }
+article .source-ref { font-family:"JetBrains Mono",monospace; font-size:.78em; overflow-wrap:anywhere; }
+.work-card { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1px; border:2px solid #171106; background:rgba(23,17,6,.18); margin-top:0; }
+.work-card > p, .work-card > ul { margin:0; padding:16px 18px; background:#FBF7EE; font-size:15px; line-height:1.55; }
+.work-card > ul { padding-left:38px; }
+.work-card > p strong:first-child { display:block; margin:0 0 6px; font-family:"JetBrains Mono",monospace; font-size:10px; line-height:1.4; letter-spacing:.1em; text-transform:uppercase; color:#9C4A0E; }
+.work-card > ul:has(input[data-reading-check]) { grid-column:1/-1; list-style:none; padding:16px 18px; background:#F4EEDD; }
+.check-item label { display:flex; align-items:flex-start; gap:10px; cursor:pointer; }
+.check-item input { width:18px; height:18px; flex:0 0 auto; margin-top:3px; accent-color:#9C4A0E; }
+@media (max-width:760px) {
+  .chapter-layout { gap:28px; }
+  .chapter-rail { position:static; max-width:none; max-height:none; flex-basis:100%; }
+  article { flex-basis:100%; }
+}
+</style>
+</head>
+<body data-page="ch8">
+<a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+
+<div>
+  <div aria-hidden="true" style="position:fixed; top:0; left:0; right:0; height:3px; background:rgba(23,17,6,0.08); z-index:50">
+    <div data-progress style="height:100%; background:#9C4A0E; width:0%"></div>
+  </div>
+
+  <header style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; max-width:1280px; margin:0 auto; padding:18px 24px; border-bottom:2px solid #171106">
+    <a href="./index.html" style="font-family:'JetBrains Mono',monospace; font-size:12px; text-decoration:none; color:#4A4030">← Оглавление</a>
+    <div style="display:flex; align-items:baseline; gap:10px; margin:0 auto">
+      <span style="font-weight:700; font-size:16px">AI-native компания</span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.08em; background:#171106; color:#FBF7EE; padding:2px 6px">V2</span>
+    </div>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#7A6B52">Глава 8 из 12</span>
+  </header>
+
+  <main id="main-content">
+  <section data-screen-label="Опенер главы 8" style="max-width:1280px; margin:0 auto; padding:56px 24px 40px; border-bottom:1px solid rgba(23,17,6,0.14); display:flex; gap:32px; align-items:baseline; flex-wrap:wrap">
+    <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; font-size:clamp(72px,10vw,128px); font-weight:700; line-height:0.9; color:#C2782E">08</span>
+    <div style="flex:1 1 320px">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:#9C4A0E">Часть II · Операционная модель</p>
+      <h1 style="margin:0 0 14px; font-size:clamp(36px,5vw,56px); line-height:1.05; font-weight:800; letter-spacing:-0.02em; text-wrap:balance">Полномочия, безопасность и устойчивость</h1>
+      <p style="margin:0; font-size:15px; color:#7A6B52; max-width:44em">права · A0–A3 · устойчивость</p>
+    </div>
+  </section>
+
+  <div class="chapter-layout">
+    <nav aria-label="В этой главе" class="chapter-rail">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#7A6B52">В этой главе</p>
+      <ol>
+        <li><a href="#четыре-роли-в-одном-действии">Четыре роли в одном действии</a></li>
+        <li><a href="#отдельная-служебная-учетная-запись">Отдельная служебная учётная запись</a></li>
+        <li><a href="#нулевые-фоновые-полномочия">Нулевые фоновые полномочия</a></li>
+        <li><a href="#политика-вне-инструкции">Политика вне инструкции</a></li>
+        <li><a href="#модель-угроз">Модель угроз</a></li>
+        <li><a href="#изоляция">Изоляция</a></li>
+        <li><a href="#уровни-a0-a3">Уровни A0–A3</a></li>
+        <li><a href="#почему-зрелость-не-повышает-a-автоматически">Почему зрелость не повышает A автоматически</a></li>
+        <li><a href="#договор-о-самостоятельности">Договор о самостоятельности</a></li>
+        <li><a href="#устойчивость">Устойчивость</a></li>
+        <li><a href="#правовая-навигация">Правовая навигация</a></li>
+        <li><a href="#рабочая-карточка-главы-8">Рабочая карточка главы</a></li>
+      </ol>
+    </nav>
+
+    <article data-source-section="ch9">
+      <p>Безопасный процесс начинается с ясного разделения: ИИ-система получает права на действие, а люди и организация сохраняют ответственность за решение, границы и последствия.</p>
+      <p>Фраза «агент отвечает за действие» опасна двусмысленностью. Система может технически исполнить действие. Она не принимает на себя юридическую ответственность и не освобождает человека, который утвердил процесс.</p>
+      <h2 id="четыре-роли-в-одном-действии">Четыре роли в одном действии <a class="heading-link" href="#четыре-роли-в-одном-действии" aria-label="Ссылка на раздел «Четыре роли в одном действии»">#</a></h2>
+      <p>Для значимого действия запишите:</p>
+      <ol><li><strong>Инициатор</strong> — кто поставил цель.</li><li><strong>Владелец результата</strong> — кто отвечает за итог и меняет границы.</li><li><strong>Исполнитель</strong> — человек, обычная программа или ИИ-система.</li><li><strong>Проверяющий или согласующий</strong> — кто независимо подтверждает допустимость.</li></ol>
+      <p>При низком уровне риска один человек может совмещать роли. При высоком уровне риска выдачу права, выполнение и проверку разделяют.</p>
+      <h2 id="отдельная-служебная-учетная-запись">Отдельная служебная учётная запись <a class="heading-link" href="#отдельная-служебная-учетная-запись" aria-label="Ссылка на раздел «Отдельная служебная учётная запись»">#</a></h2>
+      <p>ИИ-система не должна наследовать полные права разработчика или оператора.</p>
+      <p>Служебная учётная запись позволяет:</p>
+      <ul><li>выдать минимальные права;</li><li>отличить инициатора от исполнителя;</li><li>ограничить область и время;</li><li>отозвать доступ без блокировки человека;</li><li>связать действие с версией процесса;</li><li>расследовать инцидент.</li></ul>
+      <p>NIST рассматривает отдельные учётные записи, полномочия и границы программных агентов. Это концептуальный материал, а не отраслевой норматив. <a class="source-ref" href="./full.html#src-NIST-2026-agent-id">[NIST-2026-agent-id]</a></p>
+      <p>Для рабочего процесса используйте отдельную наблюдаемую учётную запись с ограниченными делегированными правами. <a class="source-ref" href="./full.html#audit-G1-D4-p18">[G1-D4-p18]</a>, <code>Vibe Coding Agent Security and Evaluation_Day_4.pdf</code>, с. 18.</p>
+      <h2 id="нулевые-фоновые-полномочия">Нулевые фоновые полномочия <a class="heading-link" href="#нулевые-фоновые-полномочия" aria-label="Ссылка на раздел «Нулевые фоновые полномочия»">#</a></h2>
+      <p>Практичная исходная позиция: вне действия у системы нет привилегированных прав. Право выдаётся на конкретную операцию, область и время.</p>
+      <p>В записи права есть:</p>
+      <ul><li>разрешённое действие;</li><li>ресурс и область;</li><li>максимальный объём;</li><li>срок;</li><li>инициатор;</li><li>основание;</li><li>обязательная проверка;</li><li>событие отзыва.</li></ul>
+      <p>Постоянный широкий доступ удобнее в настройке, но увеличивает возможный ущерб от ошибочного или вредоносного входа.</p>
+      <h2 id="политика-вне-инструкции">Политика вне инструкции <a class="heading-link" href="#политика-вне-инструкции" aria-label="Ссылка на раздел «Политика вне инструкции»">#</a></h2>
+      <p>Инструкция к модели полезна для направления поведения. Она не является главным блокирующим механизмом для платежа, удаления данных, изменения прав или выпуска в рабочую среду.</p>
+      <p>Запрет закрепляют:</p>
+      <ul><li>в правах учётной записи;</li><li>в программной проверке;</li><li>в схеме инструмента;</li><li>в лимите суммы или объёма;</li><li>в обязательном согласовании;</li><li>в изолированной среде;</li><li>в сетевом ограничении;</li><li>в неизменяемом журнале, если это нужно.</li></ul>
+      <p>Контекст влияет на поведение, но не заменяет такую защиту. Тезис Google о контексте как новой границе безопасности отвергнут. <a class="source-ref" href="./full.html#audit-G1-D4-p10">[G1-D4-p10]</a>, <code>Vibe Coding Agent Security and Evaluation_Day_4.pdf</code>, с. 10.</p>
+      <h2 id="модель-угроз">Модель угроз <a class="heading-link" href="#модель-угроз" aria-label="Ссылка на раздел «Модель угроз»">#</a></h2>
+      <p>Минимальная модель угроз рассматривает:</p>
+      <ul><li>вредоносную инструкцию во входных данных;</li><li>ошибочный выбор инструмента;</li><li>чрезмерные права;</li><li>утечку через запрос, журнал или внешний сервис;</li><li>подмену сервера или навыка;</li><li>вредоносную зависимость;</li><li>загрязнение постоянной памяти;</li><li>неконтролируемый цикл действий;</li><li>ошибочное согласование человеком;</li><li>отказ поставщика или модели;</li><li>незаметное ухудшение поведения.</li></ul>
+      <p>NIST в аналитическом материале 2026 года рассматривает риски инструментов, идентичности, данных и действий. Сводка ответов не является окончательным стандартом, но помогает построить перечень вопросов. <a class="source-ref" href="./full.html#src-NIST-2026-agent-security">[NIST-2026-agent-security]</a></p>
+      <p>OWASP дополняет его открытой отраслевой моделью угроз. <a class="source-ref" href="./full.html#src-OWASP-AGENTIC-TOP10-2026">[OWASP-AGENTIC-TOP10-2026]</a></p>
+      <h2 id="изоляция">Изоляция <a class="heading-link" href="#изоляция" aria-label="Ссылка на раздел «Изоляция»">#</a></h2>
+      <p>Недоверенный код и инструмент запускаются в краткоживущей среде с минимальными правами и ограниченной сетью. <a class="source-ref" href="./full.html#audit-G1-D4-p13">[G1-D4-p13]</a>, <code>Vibe Coding Agent Security and Evaluation_Day_4.pdf</code>, с. 13.</p>
+      <p>Изоляция проверяется действием:</p>
+      <ul><li>попыткой прочитать запрещённый файл;</li><li>попыткой обратиться к закрытому адресу;</li><li>превышением времени или памяти;</li><li>попыткой использовать отсутствующий секрет;</li><li>удалением среды и повторным чистым запуском.</li></ul>
+      <p>Наличие контейнера в схеме не доказывает изоляцию.</p>
+      <h2 id="уровни-a0-a3">Уровни A0–A3 <a class="heading-link" href="./chapter-08.html#уровни-a0-a3" aria-label="Ссылка на раздел «Уровни A0–A3»">#</a></h2>
+      <p>Уровень назначается конкретному типу действия в конкретном процессе.</p>
+      <h3 id="a0-советует">A0 — советует <a class="heading-link" href="#a0-советует" aria-label="Ссылка на раздел «A0 — советует»">#</a></h3>
+      <p>Система анализирует или готовит материал для чтения. Она не запускает действие и не подготавливает привилегированную операцию к немедленному выполнению.</p>
+      <p><strong>Примеры:</strong> объяснить отклонение, предложить варианты, подготовить черновик отчёта.</p>
+      <p><strong>Минимальные условия:</strong> допустимые данные, проверка результата, явное указание ограничений.</p>
+      <h3 id="a1-подготавливает">A1 — подготавливает <a class="heading-link" href="#a1-подготавливает" aria-label="Ссылка на раздел «A1 — подготавливает»">#</a></h3>
+      <p>Система создаёт готовое изменение. Человек проверяет его и отдельно запускает применение.</p>
+      <p><strong>Примеры:</strong> подготовить изменение кода, платёжное поручение, письмо, изменение прав.</p>
+      <p><strong>Минимальные условия:</strong> отделённое применение, понятное сравнение, подтверждение человека, запись решения.</p>
+      <p>Человек должен совершить осмысленное действие. Кнопка «подтвердить» без видимого содержания создаёт видимость контроля.</p>
+      <h3 id="a2-исполняет-в-заданных-границах">A2 — исполняет в заданных границах <a class="heading-link" href="#a2-исполняет-в-заданных-границах" aria-label="Ссылка на раздел «A2 — исполняет в заданных границах»">#</a></h3>
+      <p>Система выполняет обратимые низкорисковые действия в ограниченном наборе систем.</p>
+      <p><strong>Примеры:</strong> запустить тесты в изоляции, создать запрос на слияние, обновить метку внутренней записи.</p>
+      <p><strong>Обязательные условия:</strong></p>
+      <ul><li>отдельная служебная учётная запись;</li><li>ограниченная область;</li><li>обратимость;</li><li>проверяемый результат;</li><li>пределы времени, расходов и числа действий;</li><li>журнал;</li><li>наблюдение;</li><li>испытанный откат;</li><li>автоматическое прекращение при нарушении границы.</li></ul>
+      <h3 id="a3-ведет-ограниченный-цикл">A3 — ведёт ограниченный цикл <a class="heading-link" href="#a3-ведет-ограниченный-цикл" aria-label="Ссылка на раздел «A3 — ведёт ограниченный цикл»">#</a></h3>
+      <p>Система наблюдает, принимает решения и действует в узкой области. Значимые переходы защищены согласованиями.</p>
+      <p><strong>Обязательные условия:</strong></p>
+      <ul><li>все условия A2;</li><li>узкая и стабильная область;</li><li>показатель надёжности по сегментам;</li><li>постоянное наблюдение;</li><li>автоматические условия остановки;</li><li>ручной или ограниченный режим;</li><li>подтверждённая история работы на A2;</li><li>отдельное решение о каждом опасном переходе.</li></ul>
+      <p>Универсального уровня «делай всё» нет.</p>
+      <h2 id="почему-зрелость-не-повышает-a-автоматически">Почему зрелость не повышает A автоматически <a class="heading-link" href="#почему-зрелость-не-повышает-a-автоматически" aria-label="Ссылка на раздел «Почему зрелость не повышает A автоматически»">#</a></h2>
+      <p>Зрелость показывает способность управлять процессом. Автономия показывает право системы действовать.</p>
+      <p>Управляемая медицинская рекомендация может навсегда остаться на A0. Зрелая система подготовки платежа может оставаться на A1.</p>
+      <p>Процесс автоматического запуска тестов может работать на A2 уже при умеренной зрелости, если среда изолирована и действие не затрагивает рабочую систему.</p>
+      <p>Повышение A требует доказательств именно для действия. Общий балл процесса не подходит.</p>
+      <h2 id="договор-о-самостоятельности">Договор о самостоятельности <a class="heading-link" href="#договор-о-самостоятельности" aria-label="Ссылка на раздел «Договор о самостоятельности»">#</a></h2>
+      <p>Перед A2 или A3 владелец подписывает рабочий договор:</p>
+      <div class="table-wrap"><table><caption>Договор о самостоятельности: таблица 9</caption><thead><tr><th scope="col">Поле</th><th scope="col">Содержание</th></tr></thead><tbody><tr><td>Действие</td><td>Точный тип операции</td></tr><tr><td>Системы</td><td>Где операция разрешена</td></tr><tr><td>Владелец</td><td>Конкретный человек, отвечающий за результат</td></tr><tr><td>Максимальный ущерб</td><td>Верхняя граница одного ошибочного действия</td></tr><tr><td>Обратимость</td><td>Способ и предельное время отката</td></tr><tr><td>Проверки</td><td>Обязательные правила и пороги</td></tr><tr><td>Пределы</td><td>Время, расход, число действий, объём данных</td></tr><tr><td>Согласования</td><td>Переходы, которые остаются за человеком</td></tr><tr><td>Журнал</td><td>События, версии и срок хранения</td></tr><tr><td>Остановка</td><td>Условия автоматического понижения или прекращения</td></tr><tr><td>Резерв</td><td>Ручной или ограниченный режим</td></tr><tr><td>Пересмотр</td><td>Дата и события внеплановой проверки</td></tr></tbody></table></div>
+      <p>Смена модели, ухудшение показателя или инцидент могут автоматически понизить уровень. Возврат требует нового доказательства.</p>
+      <h2 id="устойчивость">Устойчивость <a class="heading-link" href="#устойчивость" aria-label="Ссылка на раздел «Устойчивость»">#</a></h2>
+      <p>Критический процесс должен пережить три класса отказа:</p>
+      <ol><li>модель недоступна;</li><li>качество ухудшилось;</li><li>источник или инструмент недоступен либо скомпрометирован.</li></ol>
+      <p>Варианты:</p>
+      <ul><li>ручной режим;</li><li>обычная автоматизация;</li><li>чтение без действия;</li><li>сокращённая область;</li><li>очередь до восстановления;</li><li>безопасная остановка.</li></ul>
+      <p>Резерв проверяют на практике. Документ «перейдём вручную» не доказывает, что люди, доступ и время действительно есть.</p>
+      <h2 id="правовая-навигация">Правовая навигация <a class="heading-link" href="#правовая-навигация" aria-label="Ссылка на раздел «Правовая навигация»">#</a></h2>
+      <p>Этот раздел помогает поставить вопросы юристу и специалисту по соблюдению требований. Он не является юридическим заключением.</p>
+      <h3 id="персональные-данные-в-россии">Персональные данные в России <a class="heading-link" href="#персональные-данные-в-россии" aria-label="Ссылка на раздел «Персональные данные в России»">#</a></h3>
+      <p>Федеральный закон № 152-ФЗ устанавливает обязанности оператора при обработке персональных данных. Выводы о согласии, поручении обработки, трансграничной передаче и мерах защиты зависят от фактов. <a class="source-ref" href="./full.html#src-RU-152-FZ">[RU-152-FZ]</a></p>
+      <p>С 1 июля 2025 года действуют изменения требований к первичной записи и хранению персональных данных граждан России.</p>
+      <p>Из этого не следует универсальное правило «использовать локальную модель по умолчанию». Архитектура зависит от роли организации, состава данных и операций. <a class="source-ref" href="./full.html#src-RU-PD-localization-2025">[RU-PD-localization-2025]</a></p>
+      <p>Вопросы для проверки:</p>
+      <ul><li>какие данные и цели обработки входят в процесс;</li><li>кто является оператором и обработчиком;</li><li>где происходит первичная запись и дальнейшая обработка;</li><li>какие поставщики и страны участвуют;</li><li>какие основания, договоры и меры нужны;</li><li>что попадает в запросы, журналы и память;</li><li>как исполняются права субъектов и сроки удаления.</li></ul>
+      <h3 id="регламент-ес-об-ии">Регламент ЕС об ИИ <a class="heading-link" href="#регламент-ес-об-ии" aria-label="Ссылка на раздел «Регламент ЕС об ИИ»">#</a></h3>
+      <p>Регламент ЕС об ИИ использует риск-ориентированный подход и распределяет обязанности между участниками. Применимость зависит от роли и системы. <a class="source-ref" href="./full.html#src-EU-AI-ACT-framework">[EU-AI-ACT-framework]</a></p>
+      <p>Разъяснения Европейской комиссии по статье 50 опубликованы 20 июля 2026 года. Требования прозрачности статьи 50 в общем случае начинают применяться 2 августа 2026 года.</p>
+      <p>Для отдельных ранее выпущенных систем, подпадающих под статью 50(2), действует переходный срок до 2 декабря 2026 года. <a class="source-ref" href="./full.html#src-EU-AI-ACT-2026-transparency-guidelines">[EU-AI-ACT-2026-transparency-guidelines]</a> <a class="source-ref" href="./full.html#src-EU-AI-ACT-timeline">[EU-AI-ACT-timeline]</a></p>
+      <p>Проверьте:</p>
+      <ul><li>роль поставщика или пользователя системы;</li><li>относится ли система к регулируемой категории;</li><li>какие уведомления и маркировка нужны;</li><li>какие записи и инструкции необходимо хранить;</li><li>какой срок применим к конкретной системе.</li></ul>
+      <h3 id="финансовый-рынок-россии">Финансовый рынок России <a class="heading-link" href="#финансовый-рынок-россии" aria-label="Ссылка на раздел «Финансовый рынок России»">#</a></h3>
+      <p>Банк России опубликовал 16 июня 2026 года рекомендации по безопасному применению ИИ на финансовом рынке. Они отражают отраслевые ожидания к риску, безопасности и контролю. Их нельзя автоматически переносить на организацию вне финансового рынка. <a class="source-ref" href="./full.html#src-CBR-2026-safe-ai">[CBR-2026-safe-ai]</a></p>
+      <h2 id="рабочая-карточка-главы-8">Рабочая карточка главы <a class="heading-link" href="#рабочая-карточка-главы-8" aria-label="Ссылка на раздел «Рабочая карточка главы»">#</a></h2>
+      <div class="work-card">
+      <p><strong>Решение.</strong> Назначить A0–A3 каждому действию и закрепить права, ответственность, остановку и резерв вне инструкции к модели.</p>
+      <p><strong>Минимальный механизм.</strong> Карта ролей, отдельная учётная запись, минимальные права, внешние запреты, модель угроз, договор о самостоятельности и испытанный резерв.</p>
+      <p><strong>Ответственный.</strong> Владелец результата принимает остаточный риск в пределах своих полномочий. Владелец безопасности проверяет меры. Владелец системы выдаёт права. Юрист определяет применимые требования.</p>
+      <p><strong>Артефакт.</strong> Карта полномочий, реестр рисков и договор о самостоятельности для A2/A3.</p>
+      <p><strong>Критерий готовности.</strong> Запрещённое действие блокируется технически. Разрешённое действие связано с владельцем и журналом. Понижение уровня и резерв проверены.</p>
+      <p><strong>Показатели результата.</strong></p>
+      <ul><li>доля действий с явным владельцем;</li><li>время выдачи и отзыва права;</li><li>доля процессов с испытанным резервом;</li><li>время восстановления;</li><li>доля согласований, содержащих достаточно информации.</li></ul>
+      <p><strong>Показатели риска.</strong></p>
+      <ul><li>чрезмерные или бессрочные права;</li><li>производственные действия через личные учётные записи;</li><li>попытки обхода политики;</li><li>утечки и нарушения области данных;</li><li>действия без журнала;</li><li>превышения лимитов;</li><li>время от сигнала до остановки.</li></ul>
+      <p><strong>Типичные ошибки.</strong></p>
+      <ul><li>передавать ответственность системе;</li><li>выдавать права агента через сессию сотрудника;</li><li>держать запрет только в инструкции;</li><li>считать контейнер доказательством изоляции;</li><li>повышать A по зрелости процесса;</li><li>делать согласование формальным;</li><li>трактовать регуляторную ссылку как готовый юридический вывод.</li></ul>
+      <p><strong>Различия маршрутов.</strong> Стартап ограничивает первый цикл существующими ролями, но не отказывается от отдельной учётной записи и технических запретов.</p>
+      <p>Зрелая компания добавляет разделение обязанностей, централизованный отзыв и доказательства соблюдения требований. Обе начинают с минимальных прав.</p>
+      <p><strong>Чек-лист.</strong></p>
+      <ul><li class="check-item"><label><input type="checkbox" data-reading-check="0"> <span>Инициатор, владелец, исполнитель и проверяющий различимы.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="1"> <span>У системы отдельная служебная учётная запись.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="2"> <span>Фоновые привилегированные права отсутствуют.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="3"> <span>Критические запреты действуют вне инструкции.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="4"> <span>Модель угроз охватывает данные, инструменты, память и действия.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="5"> <span>A0–A3 назначены конкретным операциям.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="6"> <span>Для A2/A3 подписан договор с пределами и остановкой.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="7"> <span>Резервный режим испытан.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="8"> <span>Применимые требования подтверждены профильными специалистами.</span></label></li></ul>
+      </div>
+    </article>
+  </div>
+  </main>
+
+  <footer style="border-top:2px solid #171106; margin-top:24px">
+    <div style="max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap">
+      <a href="./chapter-07.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">← Глава 7</span>
+        <span style="font-size:19px; font-weight:700">Проверки качества и наблюдение</span>
+      </a>
+      <a href="./chapter-09.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px; align-items:flex-end; text-align:right; border-left:1px solid rgba(23,17,6,0.14)" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">Глава 9 →</span>
+        <span style="font-size:19px; font-weight:700">Экономика и полная стоимость результата</span>
+      </a>
+    </div>
+  </footer>
+</div>
+
+<script src="./assets/book-v3.js" defer></script>
+</body>
+</html>

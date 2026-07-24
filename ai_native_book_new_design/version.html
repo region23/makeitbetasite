@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Приложение — Версия, дата среза и журнал изменений. AI-native компания v2">
+<title>Версия и журнал изменений — AI-native компания v2</title>
+<link rel="canonical" href="https://makeitbeta.ru/ai_native_book/version.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..900;1,7..72,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+.skip-link { position:fixed; top:8px; left:8px; z-index:100; padding:8px 12px; background:#171106; color:#FBF7EE; transform:translateY(-180%); transition:transform .12s ease; }
+.skip-link:focus { transform:translateY(0); }
+
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #FBF7EE; color: #171106; font-family: Literata, "Iowan Old Style", Georgia, serif; font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+a { color: #9C4A0E; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+a:hover { color: #6E3509; text-decoration-thickness: 2px; }
+::selection { background: #EADFC4; }
+
+.hv0:hover { background:#F4EEDD }
+</style>
+</head>
+<body data-page="version">
+<a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+
+<div>
+  <div aria-hidden="true" style="position:fixed; top:0; left:0; right:0; height:3px; background:rgba(23,17,6,0.08); z-index:50">
+    <div data-progress style="height:100%; background:#9C4A0E; width:0%"></div>
+  </div>
+
+  <header style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; max-width:1280px; margin:0 auto; padding:18px 24px; border-bottom:2px solid #171106">
+    <a href="./index.html" style="font-family:'JetBrains Mono',monospace; font-size:12px; text-decoration:none; color:#4A4030">← Оглавление</a>
+    <div style="display:flex; align-items:baseline; gap:10px; margin:0 auto">
+      <span style="font-weight:700; font-size:16px">AI-native компания</span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.08em; background:#171106; color:#FBF7EE; padding:2px 6px">V2</span>
+    </div>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#7A6B52">Приложение</span>
+  </header>
+
+  <main id="main-content">
+  <section data-screen-label="Опенер приложения" style="max-width:1280px; margin:0 auto; padding:56px 24px 40px; border-bottom:1px solid rgba(23,17,6,0.14); display:flex; gap:32px; align-items:baseline; flex-wrap:wrap">
+    <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; font-size:clamp(72px,10vw,128px); font-weight:700; line-height:0.9; color:#C2782E">П2</span>
+    <div style="flex:1 1 320px">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:#9C4A0E">Приложения</p>
+      <h1 style="margin:0 0 14px; font-size:clamp(36px,5vw,56px); line-height:1.05; font-weight:800; letter-spacing:-0.02em; text-wrap:balance">Версия и журнал изменений</h1>
+      <p style="margin:0; font-size:15px; color:#7A6B52; max-width:40em">Дата среза · контрольные версии · что изменилось относительно v1</p>
+    </div>
+  </section>
+
+  <div style="max-width:1280px; margin:0 auto; padding:40px 24px 0; display:flex; gap:48px; align-items:flex-start; flex-wrap:wrap">
+    <nav aria-label="В этом приложении" style="flex:1 1 200px; max-width:240px; position:sticky; top:24px">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#7A6B52">В этом приложении</p>
+      <ol style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px; line-height:1.4; border-left:2px solid rgba(23,17,6,0.14)">
+        <li style="padding-left:14px"><a href="#версия-и-дата-среза" style="text-decoration:none; color:#4A4030">Версия и дата среза</a></li>
+        <li style="padding-left:14px"><a href="#контрольные-версии" style="text-decoration:none; color:#4A4030">Контрольные версии</a></li>
+        <li style="padding-left:14px"><a href="#область-версии" style="text-decoration:none; color:#4A4030">Область версии</a></li>
+        <li style="padding-left:14px"><a href="#что-изменилось" style="text-decoration:none; color:#4A4030">Что изменилось относительно v1</a></li>
+        <li style="padding-left:14px"><a href="#сохранено" style="text-decoration:none; color:#4A4030">Сохранено</a></li>
+        <li style="padding-left:14px"><a href="#переписано" style="text-decoration:none; color:#4A4030">Переписано</a></li>
+        <li style="padding-left:14px"><a href="#добавлено" style="text-decoration:none; color:#4A4030">Добавлено</a></li>
+        <li style="padding-left:14px"><a href="#удалены-или-отвергнуты" style="text-decoration:none; color:#4A4030">Удалены или отвергнуты</a></li>
+        <li style="padding-left:14px"><a href="#исправления" style="text-decoration:none; color:#4A4030">Исправления быстро меняющихся сведений</a></li>
+        <li style="padding-left:14px"><a href="#стандарт-доказательности" style="text-decoration:none; color:#4A4030">Изменение стандарта доказательности</a></li>
+      </ol>
+    </nav>
+
+    <article style="flex:999 1 480px; max-width:88ch; min-width:0; padding-bottom:64px">
+
+      <h2 id="версия-и-дата-среза" style="margin:0 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Версия и дата среза <a href="#версия-и-дата-среза" aria-label="Ссылка на раздел «Версия и дата среза»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <dl style="margin:0 0 24px; display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px">
+        <div style="border:1px solid rgba(23,17,6,0.28); padding:12px 14px"><dt style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#7A6B52; margin-bottom:4px">Версия содержания</dt><dd style="margin:0; font-size:16px; font-weight:700">2.0</dd></div>
+        <div style="border:1px solid rgba(23,17,6,0.28); padding:12px 14px"><dt style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#7A6B52; margin-bottom:4px">Дата среза</dt><dd style="margin:0; font-size:16px; font-weight:700">24 июля 2026 года</dd></div>
+        <div style="border:1px solid rgba(23,17,6,0.28); padding:12px 14px"><dt style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#7A6B52; margin-bottom:4px">Язык</dt><dd style="margin:0; font-size:16px; font-weight:700">русский</dd></div>
+        <div style="border:1px solid rgba(23,17,6,0.28); padding:12px 14px"><dt style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#7A6B52; margin-bottom:4px">Статус определения AI-native</dt><dd style="margin:0; font-size:15px; line-height:1.4">авторское рабочее определение</dd></div>
+        <div style="border:1px solid rgba(23,17,6,0.28); padding:12px 14px"><dt style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#7A6B52; margin-bottom:4px">Статус правового раздела</dt><dd style="margin:0; font-size:15px; line-height:1.4">навигация, не юридическое заключение</dd></div>
+      </dl>
+
+      <h2 id="контрольные-версии" style="margin:40px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Контрольные версии <a href="#контрольные-версии" aria-label="Ссылка на раздел «Контрольные версии»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <div style="border:1px solid rgba(23,17,6,0.22)">
+        <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#7A6B52; padding:10px 14px; border-bottom:2px solid #171106; background:#F4EEDD">Контрольные версии: таблица 39</p>
+        <div style="display:flex; flex-direction:column">
+
+            <div style="display:flex; gap:16px; padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); align-items:baseline; flex-wrap:wrap">
+              <span style="font-weight:700; font-size:14.5px; min-width:12ch; flex:0 1 220px">MCP</span>
+              <span style="flex:1 1 300px; font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.55; color:#4A4030; overflow-wrap:anywhere">Основная стабильная редакция 2025-11-25</span>
+            </div>
+
+            <div style="display:flex; gap:16px; padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); align-items:baseline; flex-wrap:wrap">
+              <span style="font-weight:700; font-size:14.5px; min-width:12ch; flex:0 1 220px">Централизованное управление доступом MCP</span>
+              <span style="flex:1 1 300px; font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.55; color:#4A4030; overflow-wrap:anywhere">Стабильное расширение объявлено 18 июня 2026 года</span>
+            </div>
+
+            <div style="display:flex; gap:16px; padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); align-items:baseline; flex-wrap:wrap">
+              <span style="font-weight:700; font-size:14.5px; min-width:12ch; flex:0 1 220px">A2A</span>
+              <span style="flex:1 1 300px; font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.55; color:#4A4030; overflow-wrap:anywhere">Официальный выпуск 1.0.0 от 12 марта 2026 года</span>
+            </div>
+
+            <div style="display:flex; gap:16px; padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); align-items:baseline; flex-wrap:wrap">
+              <span style="font-weight:700; font-size:14.5px; min-width:12ch; flex:0 1 220px">A2UI</span>
+              <span style="flex:1 1 300px; font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.55; color:#4A4030; overflow-wrap:anywhere">Текущая производственная версия 0.9.1; 1.0 остаётся кандидатом</span>
+            </div>
+
+            <div style="display:flex; gap:16px; padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); align-items:baseline; flex-wrap:wrap">
+              <span style="font-weight:700; font-size:14.5px; min-width:12ch; flex:0 1 220px">Agent Skills</span>
+              <span style="flex:1 1 300px; font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.55; color:#4A4030; overflow-wrap:anywhere">Проверенный коммит 38a2ff82958afee88dadf4831509e6f7e9d8ef4e от 10 июля 2026 года</span>
+            </div>
+
+            <div style="display:flex; gap:16px; padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); align-items:baseline; flex-wrap:wrap">
+              <span style="font-weight:700; font-size:14.5px; min-width:12ch; flex:0 1 220px">Разъяснения по статье 50 Регламента ЕС об ИИ</span>
+              <span style="flex:1 1 300px; font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.55; color:#4A4030; overflow-wrap:anywhere">Опубликованы 20 июля 2026 года</span>
+            </div>
+
+        </div>
+      </div>
+
+      <h2 id="область-версии" style="margin:40px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Область версии <a href="#область-версии" aria-label="Ссылка на раздел «Область версии»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 18px; text-wrap:pretty">Руководство описывает операционную модель, а не конкретный набор продуктов. Названия протоколов приведены для выбора интерфейса. Организация может реализовать те же управленческие механизмы другими средствами.</p>
+      <p style="margin:0 0 18px; text-wrap:pretty">Числа в условных примерах показывают метод расчёта и не являются отраслевыми ориентирами. Пороги качества, частоту пересмотра и допустимый ущерб определяет владелец процесса с учётом риска и применимых требований.</p>
+      <p style="margin:0 0 18px; text-wrap:pretty">Материалы после 24 июля 2026 года требуют новой даты среза и записи в журнале. Обновление ссылки без изменения тезиса можно оформить как редакционное исправление.</p>
+
+      <h2 id="что-изменилось" style="margin:52px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em; border-top:2px solid #171106; padding-top:24px">Что изменилось относительно v1 <a href="#что-изменилось" aria-label="Ссылка на раздел «Что изменилось относительно v1»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <div style="overflow-x:auto; border:1px solid rgba(23,17,6,0.22)">
+        <table style="border-collapse:collapse; width:100%; min-width:920px">
+          <caption style="caption-side:top; text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#7A6B52; padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.22); background:#F4EEDD">Проверяемая матрица различий первой версии, материалов Google и v2</caption>
+          <thead><tr>
+            <th scope="col" style="text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; padding:9px 14px; border-bottom:2px solid #171106">Тема</th><th scope="col" style="text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; padding:9px 14px; border-bottom:2px solid #171106">Первая версия</th><th scope="col" style="text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; padding:9px 14px; border-bottom:2px solid #171106">Материалы Google</th><th scope="col" style="text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; padding:9px 14px; border-bottom:2px solid #171106">Решение v2</th><th scope="col" style="text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; padding:9px 14px; border-bottom:2px solid #171106">Основание</th>
+          </tr></thead>
+          <tbody style="font-size:14px; line-height:1.5">
+
+              <tr><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Определение</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Зависимость от ИИ считалась признаком</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Нормативного определения AI-native нет</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Авторское определение через управляемый цикл; зависимость признана хрупкостью</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">V1-ch12; ISO, NIST и OECD</td></tr>
+
+              <tr><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Операционная модель</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Шесть технических слоёв</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Полезны среда исполнения, контрольные точки и проверяемые зависимости</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Восемь управленческих систем со сквозными безопасностью и наблюдением</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">V1-ch3; G1-D1-p27, G1-D1-p28</td></tr>
+
+              <tr><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Самостоятельность</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Уровни описывали развитие фабрики</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Ступени прав полезны, но нуждаются в границах</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">A0–A3 назначаются конкретному действию и не следуют из зрелости</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">V1-ch6; G1-D3-p26</td></tr>
+
+              <tr><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Качество</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Основное внимание результату</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Нужно проверять результат, ход действий, изоляцию и зависимости</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Обычные тесты дополнены независимой проверкой и наблюдением</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">V1-ch7; G1-D1-p22, G1-D4-p30</td></tr>
+
+              <tr><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Экономика</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Модели, токены и инфраструктура</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Скорость генерации не отражает полную экономику</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Расходы, труд, исправления, резерв и ошибки считаются на принятый результат</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">V1-ch8; G1-D1-p40</td></tr>
+
+              <tr><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Протоколы</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Не были деревом выбора</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">MCP, A2A и A2UI решают разные интерфейсные задачи</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">Протокол выбирается после задачи, доверия, прав, стоимости и резерва</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top; text-wrap:pretty">G1-D2-p13, G1-D2-p22, G1-D2-p29</td></tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="сохранено" style="margin:40px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Сохранено <a href="#сохранено" aria-label="Ссылка на раздел «Сохранено»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <ul style="margin:0 0 18px; padding-left:22px; display:flex; flex-direction:column; gap:6px">
+        <li>управляемый цикл «сигнал → решение → действие → проверка → обучение»;</li>
+        <li>операционная модель компании;</li>
+        <li>разные маршруты стартапа и зрелой компании;</li>
+        <li>постоянная дисциплина проверок;</li>
+        <li>экономика использования ИИ;</li>
+        <li>российский контекст.</li>
+      </ul>
+
+      <h2 id="переписано" style="margin:40px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Переписано <a href="#переписано" aria-label="Ссылка на раздел «Переписано»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <div style="border:1px solid rgba(23,17,6,0.22)">
+        <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#7A6B52; padding:10px 14px; border-bottom:2px solid #171106; background:#F4EEDD">Переписано: таблица 40</p>
+        <div style="display:flex; flex-direction:column">
+
+            <div style="display:flex; gap:12px 16px; padding:12px 14px; border-bottom:1px solid rgba(23,17,6,0.14); flex-wrap:wrap">
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; color:#7A6B52; text-wrap:pretty"><code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:1px 5px; color:#171106">V1-ch1</code>: цикл автоматически ведёт к обучению</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; color:#C2782E; font-weight:700">→</span>
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; text-wrap:pretty">Результат попадает в следующий пересмотр, но критические правила меняются через контроль версий</span>
+            </div>
+
+            <div style="display:flex; gap:12px 16px; padding:12px 14px; border-bottom:1px solid rgba(23,17,6,0.14); flex-wrap:wrap">
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; color:#7A6B52; text-wrap:pretty"><code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:1px 5px; color:#171106">V1-ch2</code>: люди владеют результатами, агенты — действиями</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; color:#C2782E; font-weight:700">→</span>
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; text-wrap:pretty">Ответственность остаётся у людей и организации; ИИ получает конкретные полномочия</span>
+            </div>
+
+            <div style="display:flex; gap:12px 16px; padding:12px 14px; border-bottom:1px solid rgba(23,17,6,0.14); flex-wrap:wrap">
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; color:#7A6B52; text-wrap:pretty"><code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:1px 5px; color:#171106">V1-ch3</code>: шесть технических слоёв</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; color:#C2782E; font-weight:700">→</span>
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; text-wrap:pretty">Восемь управленческих систем; безопасность и наблюдение проходят через все</span>
+            </div>
+
+            <div style="display:flex; gap:12px 16px; padding:12px 14px; border-bottom:1px solid rgba(23,17,6,0.14); flex-wrap:wrap">
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; color:#7A6B52; text-wrap:pretty"><code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:1px 5px; color:#171106">V1-ch4</code>: путь стартапа начинается с контекста и платформы</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; color:#C2782E; font-weight:700">→</span>
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; text-wrap:pretty">Путь начинается с одного результата, исходных показателей и экономики</span>
+            </div>
+
+            <div style="display:flex; gap:12px 16px; padding:12px 14px; border-bottom:1px solid rgba(23,17,6,0.14); flex-wrap:wrap">
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; color:#7A6B52; text-wrap:pretty"><code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:1px 5px; color:#171106">V1-ch5</code>: зрелая компания строит платформу по ходу 180 дней</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; color:#C2782E; font-weight:700">→</span>
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; text-wrap:pretty">Общий компонент появляется после повторившейся и подтверждённой потребности</span>
+            </div>
+
+            <div style="display:flex; gap:12px 16px; padding:12px 14px; border-bottom:1px solid rgba(23,17,6,0.14); flex-wrap:wrap">
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; color:#7A6B52; text-wrap:pretty"><code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:1px 5px; color:#171106">V1-ch6</code>: автономия описывает развитие фабрики</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; color:#C2782E; font-weight:700">→</span>
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; text-wrap:pretty">A0–A3 назначаются конкретному действию и не следуют из зрелости</span>
+            </div>
+
+            <div style="display:flex; gap:12px 16px; padding:12px 14px; border-bottom:1px solid rgba(23,17,6,0.14); flex-wrap:wrap">
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; color:#7A6B52; text-wrap:pretty"><code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:1px 5px; color:#171106">V1-ch7</code>: проверяется результат</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; color:#C2782E; font-weight:700">→</span>
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; text-wrap:pretty">Дополнительно проверяется ход действий, права и источники</span>
+            </div>
+
+            <div style="display:flex; gap:12px 16px; padding:12px 14px; border-bottom:1px solid rgba(23,17,6,0.14); flex-wrap:wrap">
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; color:#7A6B52; text-wrap:pretty"><code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:1px 5px; color:#171106">V1-ch8</code>: экономика моделей, токенов и инфраструктуры</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; color:#C2782E; font-weight:700">→</span>
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; text-wrap:pretty">Полная стоимость принятого результата включает человека, исправления, резерв и ошибки</span>
+            </div>
+
+            <div style="display:flex; gap:12px 16px; padding:12px 14px; border-bottom:1px solid rgba(23,17,6,0.14); flex-wrap:wrap">
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; color:#7A6B52; text-wrap:pretty"><code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:1px 5px; color:#171106">V1-ch9</code>: отдельная учётная запись и права</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; color:#C2782E; font-weight:700">→</span>
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; text-wrap:pretty">Сохранено и уточнено договором о самостоятельности, внешними запретами и понижением уровня</span>
+            </div>
+
+            <div style="display:flex; gap:12px 16px; padding:12px 14px; border-bottom:1px solid rgba(23,17,6,0.14); flex-wrap:wrap">
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; color:#7A6B52; text-wrap:pretty"><code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:1px 5px; color:#171106">V1-ch10</code>: ИИ не нужен при непроверяемом результате</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; color:#C2782E; font-weight:700">→</span>
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; text-wrap:pretty">Сохранено и встроено в выбор минимально достаточного механизма</span>
+            </div>
+
+            <div style="display:flex; gap:12px 16px; padding:12px 14px; border-bottom:1px solid rgba(23,17,6,0.14); flex-wrap:wrap">
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; color:#7A6B52; text-wrap:pretty"><code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:1px 5px; color:#171106">V1-ch11</code>: артефакты и ответственность должны стать нормой</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; color:#C2782E; font-weight:700">→</span>
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; text-wrap:pretty">Для каждой рекомендации добавлены исполнитель, доказательство и момент проверки</span>
+            </div>
+
+            <div style="display:flex; gap:12px 16px; padding:12px 14px; border-bottom:1px solid rgba(23,17,6,0.14); flex-wrap:wrap">
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; color:#7A6B52; text-wrap:pretty"><code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:1px 5px; color:#171106">V1-ch12</code>: исчезновение ИИ ломает AI-native компанию</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; color:#C2782E; font-weight:700">→</span>
+              <span style="flex:1 1 280px; font-size:14px; line-height:1.5; text-wrap:pretty">Отвергнуто: такая зависимость может означать хрупкость</span>
+            </div>
+
+        </div>
+      </div>
+
+      <h2 id="добавлено" style="margin:40px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Добавлено <a href="#добавлено" aria-label="Ссылка на раздел «Добавлено»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <ul style="margin:0 0 18px; padding:0; list-style:none; display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:8px">
+
+          <li style="border-left:3px solid #5A6B35; background:rgb(90 107 53 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">карта зрелости по восьми измерениям без единого маскирующего балла;</li>
+
+          <li style="border-left:3px solid #5A6B35; background:rgb(90 107 53 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">уровни A0–A3 для конкретных действий;</li>
+
+          <li style="border-left:3px solid #5A6B35; background:rgb(90 107 53 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">паспорт первого управляемого цикла;</li>
+
+          <li style="border-left:3px solid #5A6B35; background:rgb(90 107 53 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">постоянный и оперативный контекст;</li>
+
+          <li style="border-left:3px solid #5A6B35; background:rgb(90 107 53 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">среда исполнения и контур управления;</li>
+
+          <li style="border-left:3px solid #5A6B35; background:rgb(90 107 53 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">навыки как версионируемые проверяемые зависимости;</li>
+
+          <li style="border-left:3px solid #5A6B35; background:rgb(90 107 53 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">проверка результата и хода действий;</li>
+
+          <li style="border-left:3px solid #5A6B35; background:rgb(90 107 53 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">изолированная среда и отдельная служебная учётная запись;</li>
+
+          <li style="border-left:3px solid #5A6B35; background:rgb(90 107 53 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">жизненный цикл небольших изменений с выпуском по риску;</li>
+
+          <li style="border-left:3px solid #5A6B35; background:rgb(90 107 53 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">подготовленное ИИ описание запроса на слияние с ответственностью автора;</li>
+
+          <li style="border-left:3px solid #5A6B35; background:rgb(90 107 53 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">превращение инцидента в подходящую постоянную проверку;</li>
+
+          <li style="border-left:3px solid #5A6B35; background:rgb(90 107 53 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">деревья выбора MCP, A2A и A2UI;</li>
+
+          <li style="border-left:3px solid #5A6B35; background:rgb(90 107 53 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">полная стоимость принятого результата;</li>
+
+          <li style="border-left:3px solid #5A6B35; background:rgb(90 107 53 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">планы стартапа на 30 и 90 дней;</li>
+
+          <li style="border-left:3px solid #5A6B35; background:rgb(90 107 53 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">план зрелой компании на 30, 90 и 180 дней;</li>
+
+          <li style="border-left:3px solid #5A6B35; background:rgb(90 107 53 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">тринадцать практических шаблонов.</li>
+
+      </ul>
+
+      <h2 id="удалены-или-отвергнуты" style="margin:40px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Удалены или отвергнуты <a href="#удалены-или-отвергнуты" aria-label="Ссылка на раздел «Удалены или отвергнуты»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <ul style="margin:0 0 18px; padding:0; list-style:none; display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:8px">
+
+          <li style="border-left:3px solid #A83E1F; background:rgb(168 62 31 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">зависимость от ИИ как признак зрелости;</li>
+
+          <li style="border-left:3px solid #A83E1F; background:rgb(168 62 31 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">обязательная многоагентная архитектура;</li>
+
+          <li style="border-left:3px solid #A83E1F; background:rgb(168 62 31 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">чрезмерный акцент на поиске по векторной базе;</li>
+
+          <li style="border-left:3px solid #A83E1F; background:rgb(168 62 31 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">локальное размещение модели по умолчанию как якобы прямое следствие 152-ФЗ;</li>
+
+          <li style="border-left:3px solid #A83E1F; background:rgb(168 62 31 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">контекст как достаточная граница безопасности;</li>
+
+          <li style="border-left:3px solid #A83E1F; background:rgb(168 62 31 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">языковая модель как главный барьер опасного действия;</li>
+
+          <li style="border-left:3px solid #A83E1F; background:rgb(168 62 31 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">тесты той же системы как единственное доказательство;</li>
+
+          <li style="border-left:3px solid #A83E1F; background:rgb(168 62 31 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">универсальные проценты производительности;</li>
+
+          <li style="border-left:3px solid #A83E1F; background:rgb(168 62 31 / 6%); padding:9px 12px; font-size:14.5px; line-height:1.5; text-wrap:pretty">формулы «генерация кода решена» и «код одноразовый».</li>
+
+      </ul>
+
+      <h2 id="исправления" style="margin:40px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Исправления быстро меняющихся сведений <a href="#исправления" aria-label="Ссылка на раздел «Исправления быстро меняющихся сведений»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <ul style="margin:0 0 18px; padding-left:22px; display:flex; flex-direction:column; gap:10px">
+        <li style="text-wrap:pretty"><strong>A2A:</strong> подтверждён официальный выпуск <code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:1px 5px">1.0.0</code> от 12 марта 2026 года. Более ранняя запись о <code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:1px 5px">1.0.1</code> не подтвердилась и удалена.</li>
+        <li style="text-wrap:pretty"><strong>A2UI:</strong> текущей производственной версией на дату среза указана <code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:1px 5px">0.9.1</code>. Версия 1.0 остаётся кандидатом и не называется стабильной.</li>
+        <li style="text-wrap:pretty"><strong>Статья 50 Регламента ЕС об ИИ:</strong> общий срок начала применения требований прозрачности — 2 августа 2026 года. Для отдельных ранее выпущенных систем, подпадающих под статью 50(2), указан переходный срок до 2 декабря 2026 года.</li>
+      </ul>
+
+      <h2 id="стандарт-доказательности" style="margin:40px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Изменение стандарта доказательности <a href="#стандарт-доказательности" aria-label="Ссылка на раздел «Изменение стандарта доказательности»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 18px; text-wrap:pretty">Google используется как один из технических источников, а не как каркас книги. Каждый существенный тезис получил страницу и статус. Случаи поставщиков отделены от независимых исследований. Практические рекомендации явно обозначены и требуют проверки в среде читателя.</p>
+      <p style="margin:0 0 18px; font-family:'JetBrains Mono',monospace; font-size:13px; color:#7A6B52">Дата этой записи: 24 июля 2026 года.</p>
+    </article>
+  </div>
+
+  </main>
+
+  <footer style="border-top:2px solid #171106; margin-top:24px">
+    <div style="max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap">
+      <a href="./sources.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">← Приложение</span>
+        <span style="font-size:19px; font-weight:700">Источники и стандарт доказательности</span>
+      </a>
+      <a href="./index.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px; align-items:flex-end; text-align:right; border-left:1px solid rgba(23,17,6,0.14)" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">К оглавлению →</span>
+        <span style="font-size:19px; font-weight:700">AI-native компания v2</span>
+      </a>
+    </div>
+  </footer>
+</div>
+
+<script src="./assets/book-v3.js" defer></script>
+</body>
+</html>

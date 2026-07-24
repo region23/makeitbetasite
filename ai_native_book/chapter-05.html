@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Глава 5 — Контекст, память и навыки. AI-native компания v2">
+<title>Глава 5. Контекст, память и навыки — AI-native компания v2</title>
+<link rel="canonical" href="https://makeitbeta.ru/ai_native_book/chapter-05.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..900;1,7..72,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+html { scroll-behavior: smooth; }
+body { margin:0; background:#FBF7EE; color:#171106; font-family:Literata,"Iowan Old Style",Georgia,serif; font-size:17px; line-height:1.65; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+a { color:#9C4A0E; text-decoration-thickness:1px; text-underline-offset:.18em; }
+a:hover { color:#6E3509; text-decoration-thickness:2px; }
+::selection { background:#EADFC4; }
+.skip-link { position:fixed; top:8px; left:8px; z-index:100; padding:8px 12px; background:#171106; color:#FBF7EE; transform:translateY(-180%); transition:transform .12s ease; }
+.skip-link:focus { transform:translateY(0); }
+.hv0:hover { background:#F4EEDD; }
+.chapter-layout { max-width:1280px; margin:0 auto; padding:40px 24px 0; display:flex; gap:48px; align-items:flex-start; flex-wrap:wrap; }
+.chapter-rail { flex:1 1 200px; max-width:240px; position:sticky; top:24px; max-height:calc(100vh - 48px); overflow:auto; }
+.chapter-rail ol { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px; line-height:1.4; border-left:2px solid rgba(23,17,6,.14); }
+.chapter-rail li { padding-left:14px; }
+.chapter-rail a { text-decoration:none; color:#4A4030; }
+article { flex:999 1 480px; max-width:88ch; min-width:0; padding-bottom:64px; }
+article > p { margin:0 0 18px; text-wrap:pretty; }
+article > ul, article > ol { margin:0 0 20px; padding-left:24px; }
+article > ul, article > ol { display:flex; flex-direction:column; gap:6px; }
+article h2 { margin:48px 0 16px; font-size:27px; line-height:1.25; font-weight:800; letter-spacing:-.015em; scroll-margin-top:24px; }
+article h2:first-child { margin-top:0; }
+article h3 { margin:32px 0 10px; font-size:20px; line-height:1.35; font-weight:800; letter-spacing:-.01em; scroll-margin-top:24px; }
+article .heading-link { font-size:15px; font-weight:400; text-decoration:none; color:#C2782E; }
+article code { font-family:"JetBrains Mono",monospace; font-size:.85em; overflow-wrap:anywhere; background:#F1E7CF; padding:.08em .3em; }
+article blockquote, article .chapter-route-note { margin:0 0 18px; border-left:3px solid #9C4A0E; background:#F1E7CF; padding:12px 16px; }
+.table-wrap { overflow-x:auto; border:1px solid rgba(23,17,6,.22); margin:0 0 20px; }
+.table-wrap table { border-collapse:collapse; width:100%; min-width:620px; }
+.table-wrap caption { caption-side:top; text-align:left; font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7A6B52; padding:9px 14px; border-bottom:1px solid rgba(23,17,6,.22); background:#F4EEDD; }
+.table-wrap th { text-align:left; font-family:"JetBrains Mono",monospace; font-size:11px; line-height:1.35; letter-spacing:.06em; text-transform:uppercase; padding:9px 14px; border-bottom:2px solid #171106; vertical-align:bottom; }
+.table-wrap td { padding:9px 14px; border-bottom:1px solid rgba(23,17,6,.14); vertical-align:top; font-size:14.5px; line-height:1.5; }
+.table-wrap tbody tr:last-child td { border-bottom:0; }
+article h3 + .table-wrap { border:2px solid #171106; }
+article .source-ref { font-family:"JetBrains Mono",monospace; font-size:.78em; overflow-wrap:anywhere; }
+.work-card { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1px; border:2px solid #171106; background:rgba(23,17,6,.18); margin-top:0; }
+.work-card > p, .work-card > ul { margin:0; padding:16px 18px; background:#FBF7EE; font-size:15px; line-height:1.55; }
+.work-card > ul { padding-left:38px; }
+.work-card > p strong:first-child { display:block; margin:0 0 6px; font-family:"JetBrains Mono",monospace; font-size:10px; line-height:1.4; letter-spacing:.1em; text-transform:uppercase; color:#9C4A0E; }
+.work-card > ul:has(input[data-reading-check]) { grid-column:1/-1; list-style:none; padding:16px 18px; background:#F4EEDD; }
+.check-item label { display:flex; align-items:flex-start; gap:10px; cursor:pointer; }
+.check-item input { width:18px; height:18px; flex:0 0 auto; margin-top:3px; accent-color:#9C4A0E; }
+@media (max-width:760px) {
+  .chapter-layout { gap:28px; }
+  .chapter-rail { position:static; max-width:none; max-height:none; flex-basis:100%; }
+  article { flex-basis:100%; }
+}
+</style>
+</head>
+<body data-page="ch5">
+<a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+
+<div>
+  <div aria-hidden="true" style="position:fixed; top:0; left:0; right:0; height:3px; background:rgba(23,17,6,0.08); z-index:50">
+    <div data-progress style="height:100%; background:#9C4A0E; width:0%"></div>
+  </div>
+
+  <header style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; max-width:1280px; margin:0 auto; padding:18px 24px; border-bottom:2px solid #171106">
+    <a href="./index.html" style="font-family:'JetBrains Mono',monospace; font-size:12px; text-decoration:none; color:#4A4030">← Оглавление</a>
+    <div style="display:flex; align-items:baseline; gap:10px; margin:0 auto">
+      <span style="font-weight:700; font-size:16px">AI-native компания</span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.08em; background:#171106; color:#FBF7EE; padding:2px 6px">V2</span>
+    </div>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#7A6B52">Глава 5 из 12</span>
+  </header>
+
+  <main id="main-content">
+  <section data-screen-label="Опенер главы 5" style="max-width:1280px; margin:0 auto; padding:56px 24px 40px; border-bottom:1px solid rgba(23,17,6,0.14); display:flex; gap:32px; align-items:baseline; flex-wrap:wrap">
+    <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; font-size:clamp(72px,10vw,128px); font-weight:700; line-height:0.9; color:#C2782E">05</span>
+    <div style="flex:1 1 320px">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:#9C4A0E">Часть II · Операционная модель</p>
+      <h1 style="margin:0 0 14px; font-size:clamp(36px,5vw,56px); line-height:1.05; font-weight:800; letter-spacing:-0.02em; text-wrap:balance">Контекст, память и навыки</h1>
+      <p style="margin:0; font-size:15px; color:#7A6B52; max-width:44em">источники · память · навыки агента</p>
+    </div>
+  </section>
+
+  <div class="chapter-layout">
+    <nav aria-label="В этой главе" class="chapter-rail">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#7A6B52">В этой главе</p>
+      <ol>
+        <li><a href="#постоянный-контекст">Постоянный контекст</a></li>
+        <li><a href="#оперативный-контекст">Оперативный контекст</a></li>
+        <li><a href="#реестр-источников">Реестр источников</a></li>
+        <li><a href="#отбор-контекста">Отбор контекста</a></li>
+        <li><a href="#память-как-управляемая-запись">Память как управляемая запись</a></li>
+        <li><a href="#навык-агента">Навык агента</a></li>
+        <li><a href="#постепенная-загрузка">Постепенная загрузка</a></li>
+        <li><a href="#как-проверять-навык">Как проверять навык</a></li>
+        <li><a href="#внешние-навыки-и-подключения">Внешние навыки и подключения</a></li>
+        <li><a href="#условный-пример-2">Условный пример</a></li>
+        <li><a href="#рабочая-карточка-главы-5">Рабочая карточка главы</a></li>
+      </ol>
+    </nav>
+
+    <article data-source-section="context-memory-skills">
+      <p>Качество ИИ-системы зависит не от объёма текста, который ей передали, а от пригодности данных и правил для конкретного решения. Большой неотобранный контекст увеличивает расходы, скрывает противоречия и усложняет расследование.</p>
+      <p>Постоянный и оперативный контекст следует разделять и версионировать. <a class="source-ref" href="./full.html#audit-G1-D1-p16">[G1-D1-p16]</a>, <code>The New SDLC With Vibe Coding_Day_1.pdf</code>, с. 16.</p>
+      <h2 id="постоянный-контекст">Постоянный контекст <a class="heading-link" href="#постоянный-контекст" aria-label="Ссылка на раздел «Постоянный контекст»">#</a></h2>
+      <p>Постоянный контекст меняется сравнительно редко и применяется ко многим задачам:</p>
+      <ul><li>цели и границы продукта;</li><li>архитектурные решения;</li><li>стандарты разработки;</li><li>правила безопасности;</li><li>определения показателей;</li><li>допустимые источники;</li><li>требования к выпуску;</li><li>инструкция и примеры для повторяемой работы.</li></ul>
+      <p>У постоянного контекста есть владелец, версия, дата действия и порядок изменения. «Постоянный» не означает вечный.</p>
+      <h2 id="оперативный-контекст">Оперативный контекст <a class="heading-link" href="#оперативный-контекст" aria-label="Ссылка на раздел «Оперативный контекст»">#</a></h2>
+      <p>Оперативный контекст относится к текущей задаче:</p>
+      <ul><li>запрос пользователя;</li><li>затронутые записи или файлы;</li><li>свежие показатели;</li><li>состояние процесса;</li><li>результаты вызванных инструментов;</li><li>история действий этой сессии;</li><li>текущие согласования и ограничения времени.</li></ul>
+      <p>После завершения задачи его не следует целиком переносить в постоянную память. Сначала владелец выбирает полезный факт, удаляет лишние данные, проверяет источник и определяет срок хранения.</p>
+      <h2 id="реестр-источников">Реестр источников <a class="heading-link" href="#реестр-источников" aria-label="Ссылка на раздел «Реестр источников»">#</a></h2>
+      <p>Для каждого источника запишите:</p>
+      <div class="table-wrap"><table><caption>Реестр источников: таблица 6</caption><thead><tr><th scope="col">Поле</th><th scope="col">Смысл</th></tr></thead><tbody><tr><td>Название</td><td>Устойчивое имя источника</td></tr><tr><td>Владелец</td><td>Кто отвечает за смысл и доступность</td></tr><tr><td>Происхождение</td><td>Где и как данные появились</td></tr><tr><td>Разрешённое использование</td><td>Для каких решений их можно применять</td></tr><tr><td>Чувствительность</td><td>Какие ограничения действуют</td></tr><tr><td>Свежесть</td><td>Какой возраст допустим</td></tr><tr><td>Версия или время</td><td>Как воспроизвести использованный срез</td></tr><tr><td>Доступ</td><td>Какая служебная роль читает или меняет данные</td></tr><tr><td>Отзыв</td><td>Как отключить источник</td></tr><tr><td>Проверка</td><td>Как обнаружить пропуск, конфликт или устаревание</td></tr></tbody></table></div>
+      <p>Источник без владельца можно использовать только как непроверенную подсказку, если риск это допускает. Он не должен незаметно становиться основанием действия.</p>
+      <h2 id="отбор-контекста">Отбор контекста <a class="heading-link" href="#отбор-контекста" aria-label="Ссылка на раздел «Отбор контекста»">#</a></h2>
+      <p><strong>Рекомендация.</strong> Отбирайте контекст по решению, а не по принципу «всё, что помещается».</p>
+      <p>Для каждого фрагмента задайте четыре вопроса:</p>
+      <ol><li>Какое решение он меняет?</li><li>Кто отвечает за его точность?</li><li>Насколько свежим он должен быть?</li><li>Можно ли показать, что система действительно его использовала?</li></ol>
+      <p>Плотный релевантный контекст обычно полезнее большого неотобранного. Это практический принцип, а его состав и пределы нужно проверять на задачах команды. <a class="source-ref" href="./full.html#audit-G1-D1-p42">[G1-D1-p42]</a>, <code>The New SDLC With Vibe Coding_Day_1.pdf</code>, с. 42.</p>
+      <p>Поиск по внутренним материалам может использовать полнотекстовый индекс, граф связей, структурированный запрос или извлечение фрагментов. Векторная база не является обязательной архитектурой. Выбор зависит от формы данных, свежести, объяснимости и расходов.</p>
+      <h2 id="память-как-управляемая-запись">Память как управляемая запись <a class="heading-link" href="#память-как-управляемая-запись" aria-label="Ссылка на раздел «Память как управляемая запись»">#</a></h2>
+      <p>Полезная память отвечает на один из трёх вопросов:</p>
+      <ul><li>что произошло;</li><li>какое решение было принято и почему;</li><li>что нужно проверить в следующий раз.</li></ul>
+      <p>Запись памяти содержит источник, дату, область действия и срок пересмотра. Вывод модели без подтверждения помечается как предположение.</p>
+      <p>Для критического процесса запретите автоматическое превращение результата в правило. Система может предложить изменение.</p>
+      <p>Владелец проверяет его на наборе случаев, получает согласование и выпускает новую версию. Такой порядок принят и для изменений навыка. <a class="source-ref" href="./full.html#audit-G1-D3-p37">[G1-D3-p37]</a>, <code>Agent Skills_Day_3.pdf</code>, с. 37.</p>
+      <h2 id="навык-агента">Навык агента <a class="heading-link" href="#навык-агента" aria-label="Ссылка на раздел «Навык агента»">#</a></h2>
+      <p>Навык агента — версионируемый набор инструкций, примеров и вспомогательных материалов для повторяемой задачи.</p>
+      <p>Навык является зависимостью. Он не гарантирует качество сам по себе. Результат зависит от модели, оперативного контекста, инструментов, соседних навыков и среды.</p>
+      <p>Минимальная карточка навыка содержит:</p>
+      <ul><li>название и назначение;</li><li>признаки, когда навык применять и когда не применять;</li><li>входы и ожидаемый выход;</li><li>разрешённые инструменты;</li><li>пределы полномочий;</li><li>порядок действий;</li><li>примеры обычных и пограничных случаев;</li><li>проверки результата и хода;</li><li>владельца, версию и журнал изменений;</li><li>совместимые версии среды;</li><li>способ отключения.</li></ul>
+      <p>Официальная спецификация Agent Skills описывает каталог, файл <code>SKILL.md</code>, метаданные и постепенную загрузку материалов. Соответствие формату не доказывает правильность или безопасность поведения. <a class="source-ref" href="./full.html#src-AGENT-SKILLS-spec">[AGENT-SKILLS-spec]</a></p>
+      <h2 id="постепенная-загрузка">Постепенная загрузка <a class="heading-link" href="#постепенная-загрузка" aria-label="Ссылка на раздел «Постепенная загрузка»">#</a></h2>
+      <p>Сначала система видит короткое описание навыка. Полную инструкцию она загружает после выбора. Вспомогательные файлы открываются только при необходимости.</p>
+      <p>Такая постепенная загрузка уменьшает постоянный контекст и делает выбор навыка наблюдаемым. <a class="source-ref" href="./full.html#audit-G1-D3-p10">[G1-D3-p10]</a>, <code>Agent Skills_Day_3.pdf</code>, с. 10.</p>
+      <p>Такой механизм создаёт отдельный объект проверки — маршрутизацию. Нужно узнать:</p>
+      <ul><li>выбрала ли система нужный навык;</li><li>отказалась ли от неподходящего;</li><li>не загрузила ли лишний чувствительный материал;</li><li>уложилась ли в предел контекста;</li><li>сохранилось ли поведение после добавления соседнего навыка.</li></ul>
+      <h2 id="как-проверять-навык">Как проверять навык <a class="heading-link" href="#как-проверять-навык" aria-label="Ссылка на раздел «Как проверять навык»">#</a></h2>
+      <p>Проверка навыка состоит из пяти частей.</p>
+      <ol><li><strong>Маршрутизация.</strong> Правильно ли распознаны условия применения и отказа?</li><li><strong>Результат.</strong> Соответствует ли выход критериям задачи?</li><li><strong>Ход действий.</strong> Использованы ли допустимые инструменты, порядок и права?</li><li><strong>Расход.</strong> Как изменились время, контекст, вызовы и человеческая проверка?</li><li><strong>Регрессии библиотеки.</strong> Не ухудшились ли соседние навыки?</li></ol>
+      <p>Такой набор покрывает ошибки, которые не видны при проверке одного удачного ответа. <a class="source-ref" href="./full.html#audit-G1-D3-p20">[G1-D3-p20]</a>, <code>Agent Skills_Day_3.pdf</code>, с. 20.</p>
+      <p>SkillsBench и SWE-Skills-Bench показывают, что навыки можно оценивать на повторяемых наборах задач. Их результаты не переносятся автоматически в другую среду и не являются производственной сертификацией. <a class="source-ref" href="./full.html#src-SKILLSBENCH-2026">[SKILLSBENCH-2026]</a> <a class="source-ref" href="./full.html#src-SWE-SKILLS-BENCH-2026">[SWE-SKILLS-BENCH-2026]</a></p>
+      <p>Универсального порога «90 процентов» для всех навыков нет. Утверждение об отраслевом стандарте не имеет независимого основания. <a class="source-ref" href="./full.html#audit-G1-D3-p22">[G1-D3-p22]</a>, <code>Agent Skills_Day_3.pdf</code>, с. 22.</p>
+      <h2 id="внешние-навыки-и-подключения">Внешние навыки и подключения <a class="heading-link" href="#внешние-навыки-и-подключения" aria-label="Ссылка на раздел «Внешние навыки и подключения»">#</a></h2>
+      <p>Внешний навык может читать контекст, запускать программу и меняться независимо. Поэтому:</p>
+      <ul><li>закрепите точную версию или проверенный коммит;</li><li>прочитайте инструкции и код;</li><li>перечислите сетевые обращения и данные;</li><li>запускайте в изоляции;</li><li>дайте минимальные права;</li><li>проверьте обновление до выпуска;</li><li>храните возможность быстрого отключения.</li></ul>
+      <p>Поэтому внешний навык проверяют как кодовую зависимость. <a class="source-ref" href="./full.html#audit-G1-D3-p43">[G1-D3-p43]</a>, <code>Agent Skills_Day_3.pdf</code>, с. 43.</p>
+      <h2 id="условный-пример-2">Условный пример <a class="heading-link" href="#условный-пример-2" aria-label="Ссылка на раздел «Условный пример»">#</a></h2>
+      <p>Команда создаёт навык подготовки описания изменения.</p>
+      <p>Постоянный контекст содержит стандарт описания, классы риска и правила доказательств. Оперативный контекст содержит задачу, изменённые файлы, результаты тестов и список зависимостей. Навык готовит черновик, но не утверждает риск.</p>
+      <p>Владелец навыка — инженер по качеству процесса разработки.</p>
+      <p>Проверки включают выбор навыка только для изменения кода, полноту обязательных полей, запрет выдуманных тестов и ссылку на фактический журнал. Обновление навыка проходит на сохранённом наборе запросов на слияние.</p>
+      <h2 id="рабочая-карточка-главы-5">Рабочая карточка главы <a class="heading-link" href="#рабочая-карточка-главы-5" aria-label="Ссылка на раздел «Рабочая карточка главы»">#</a></h2>
+      <div class="work-card">
+      <p><strong>Решение.</strong> Определить минимальный постоянный и оперативный контекст для одного решения, а повторяемую процедуру оформить как проверяемый навык.</p>
+      <p><strong>Минимальный механизм.</strong> Реестр источников, правила отбора и хранения, версионируемый навык и пять видов проверки.</p>
+      <p><strong>Ответственный.</strong> Владелец процесса отвечает за достаточность. Владельцы данных подтверждают происхождение и доступ. Владелец навыка отвечает за версию и проверочный набор.</p>
+      <p><strong>Артефакт.</strong> Реестр контекста и карточка навыка с версией, совместимостью и доказательствами проверки.</p>
+      <p><strong>Критерий готовности.</strong> Для любого значимого результата можно восстановить версии постоянного контекста, оперативные источники и выбранный навык. Обновление можно проверить и откатить.</p>
+      <p><strong>Показатели результата.</strong></p>
+      <ul><li>доля результатов с подтверждёнными источниками;</li><li>точность выбора навыка на согласованном наборе;</li><li>принятие результата без исправления;</li><li>время обновления устаревшего источника;</li><li>повторное использование навыка после отдельной приёмки.</li></ul>
+      <p><strong>Показатели риска.</strong></p>
+      <ul><li>доля источников без владельца;</li><li>число устаревших правил в рабочем контексте;</li><li>обращения к источникам вне разрешённой области;</li><li>необъяснимые изменения маршрутизации;</li><li>регрессии после обновления навыка;</li><li>объём чувствительных данных в журналах и памяти.</li></ul>
+      <p><strong>Типичные ошибки.</strong></p>
+      <ul><li>загружать все документы;</li><li>считать хранилище поиском и памятью одновременно;</li><li>сохранять весь разговор как знание;</li><li>менять правило напрямую по одному результату;</li><li>считать формат навыка доказательством качества;</li><li>обновлять внешний навык без закрепления версии и проверки.</li></ul>
+      <p><strong>Различия маршрутов.</strong> Стартап начинает с короткого реестра и одного общего навыка после подтверждения повторяемости.</p>
+      <p>Зрелая компания назначает владельцев доменов данных, правила свежести и совместимость библиотек навыков. Общая библиотека появляется после работающих локальных навыков.</p>
+      <p><strong>Чек-лист.</strong></p>
+      <ul><li class="check-item"><label><input type="checkbox" data-reading-check="0"> <span>Постоянный и оперативный контекст разделены.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="1"> <span>У каждого значимого источника есть владелец и происхождение.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="2"> <span>Правила свежести и отзыва записаны.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="3"> <span>В память попадают проверенные записи с областью действия.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="4"> <span>Навык имеет условия применения и отказа.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="5"> <span>Проверяются маршрутизация, результат, ход, расход и регрессии.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="6"> <span>Внешние зависимости закреплены и изолированы.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="7"> <span>Результат не меняет критическое правило автоматически.</span></label></li></ul>
+      </div>
+    </article>
+  </div>
+  </main>
+
+  <footer style="border-top:2px solid #171106; margin-top:24px">
+    <div style="max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap">
+      <a href="./chapter-04.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">← Глава 4</span>
+        <span style="font-size:19px; font-weight:700">Восемь систем операционной модели</span>
+      </a>
+      <a href="./chapter-06.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px; align-items:flex-end; text-align:right; border-left:1px solid rgba(23,17,6,0.14)" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">Глава 6 →</span>
+        <span style="font-size:19px; font-weight:700">Жизненный цикл разработки программного обеспечения с ИИ</span>
+      </a>
+    </div>
+  </footer>
+</div>
+
+<script src="./assets/book-v3.js" defer></script>
+</body>
+</html>

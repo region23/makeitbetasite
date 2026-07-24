@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Глава 9 — Экономика и полная стоимость результата. AI-native компания v2">
+<title>Глава 9. Экономика и полная стоимость результата — AI-native компания v2</title>
+<link rel="canonical" href="https://makeitbeta.ru/ai_native_book/chapter-09.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..900;1,7..72,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+.skip-link { position:fixed; top:8px; left:8px; z-index:100; padding:8px 12px; background:#171106; color:#FBF7EE; transform:translateY(-180%); transition:transform .12s ease; }
+.skip-link:focus { transform:translateY(0); }
+
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #FBF7EE; color: #171106; font-family: Literata, "Iowan Old Style", Georgia, serif; font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+a { color: #9C4A0E; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+a:hover { color: #6E3509; text-decoration-thickness: 2px; }
+::selection { background: #EADFC4; }
+
+.hv0:hover { background:#F4EEDD }
+</style>
+</head>
+<body data-page="ch9">
+<a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+
+<div>
+  <div aria-hidden="true" style="position:fixed; top:0; left:0; right:0; height:3px; background:rgba(23,17,6,0.08); z-index:50">
+    <div data-progress style="height:100%; background:#9C4A0E; width:0%"></div>
+  </div>
+
+  <header style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; max-width:1280px; margin:0 auto; padding:18px 24px; border-bottom:2px solid #171106">
+    <a href="./index.html" style="font-family:'JetBrains Mono',monospace; font-size:12px; text-decoration:none; color:#4A4030">← Оглавление</a>
+    <div style="display:flex; align-items:baseline; gap:10px; margin:0 auto">
+      <span style="font-weight:700; font-size:16px">AI-native компания</span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.08em; background:#171106; color:#FBF7EE; padding:2px 6px">V2</span>
+    </div>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#7A6B52">Глава 9 из 12</span>
+  </header>
+
+  <main id="main-content">
+  <section data-screen-label="Опенер главы 9" style="max-width:1280px; margin:0 auto; padding:56px 24px 40px; border-bottom:1px solid rgba(23,17,6,0.14); display:flex; gap:32px; align-items:baseline; flex-wrap:wrap">
+    <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; font-size:clamp(72px,10vw,128px); font-weight:700; line-height:0.9; color:#C2782E">09</span>
+    <div style="flex:1 1 320px">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:#9C4A0E">Часть II · Операционная модель</p>
+      <h1 style="margin:0 0 14px; font-size:clamp(36px,5vw,56px); line-height:1.05; font-weight:800; letter-spacing:-0.02em; text-wrap:balance">Экономика и полная стоимость результата</h1>
+      <p style="margin:0; font-size:15px; color:#7A6B52; max-width:40em">Принятый результат как единица · формула · условный расчёт</p>
+    </div>
+  </section>
+
+  <div style="max-width:1280px; margin:0 auto; padding:40px 24px 0; display:flex; gap:48px; align-items:flex-start; flex-wrap:wrap">
+    <nav aria-label="В этой главе" style="flex:1 1 200px; max-width:240px; position:sticky; top:24px">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#7A6B52">В этой главе</p>
+      <ol style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px; line-height:1.4; border-left:2px solid rgba(23,17,6,0.14)">
+        <li style="padding-left:14px"><a href="#формула" style="text-decoration:none; color:#4A4030">Формула</a></li>
+        <li style="padding-left:14px"><a href="#сначала-исходный-процесс" style="text-decoration:none; color:#4A4030">Сначала исходный процесс</a></li>
+        <li style="padding-left:14px"><a href="#постоянные-и-переменные" style="text-decoration:none; color:#4A4030">Постоянные и переменные расходы</a></li>
+        <li style="padding-left:14px"><a href="#человеческое-время" style="text-decoration:none; color:#4A4030">Считайте человеческое время</a></li>
+        <li style="padding-left:14px"><a href="#качество-со-скоростью" style="text-decoration:none; color:#4A4030">Качество вместе со скоростью</a></li>
+        <li style="padding-left:14px"><a href="#отказ-и-резерв" style="text-decoration:none; color:#4A4030">Отказ и резерв</a></li>
+        <li style="padding-left:14px"><a href="#возможный-ущерб" style="text-decoration:none; color:#4A4030">Возможный ущерб</a></li>
+        <li style="padding-left:14px"><a href="#варианты-механизма" style="text-decoration:none; color:#4A4030">Варианты механизма</a></li>
+        <li style="padding-left:14px"><a href="#условный-пример-расчета" style="text-decoration:none; color:#4A4030">Условный пример расчёта</a></li>
+        <li style="padding-left:14px"><a href="#решение-об-инвестиции" style="text-decoration:none; color:#4A4030">Решение об инвестиции</a></li>
+        <li style="padding-left:14px"><a href="#границы-выводов" style="text-decoration:none; color:#4A4030">Границы выводов</a></li>
+        <li style="padding-left:14px"><a href="#рабочая-карточка" style="text-decoration:none; color:#4A4030">Рабочая карточка главы</a></li>
+      </ol>
+    </nav>
+
+    <article style="flex:999 1 480px; max-width:88ch; min-width:0; padding-bottom:64px">
+      <p style="margin:0 0 18px; text-wrap:pretty">Цена запроса к модели почти никогда не равна цене полезного результата. К ней добавляются подготовка данных, разработка, проверки, человеческое время, инфраструктура, эксплуатация, исправления и ожидаемый ущерб от ошибок.</p>
+      <p style="margin:0 0 26px; text-wrap:pretty">Главная единица экономики — <strong>принятый результат</strong>. Это ответ, изменение, решение или действие, которое прошло критерий процесса и принесло пользу получателю.</p>
+
+      <h2 id="формула" style="margin:0 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Формула <a href="#формула" aria-label="Ссылка на раздел «Формула»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 14px">Для выбранного периода:</p>
+      <div data-screen-label="Формула стоимости" style="border:2px solid #171106; background:#F7F1E2; padding:24px 26px; margin-bottom:18px">
+        <p style="margin:0 0 16px; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; letter-spacing:0.04em; color:#171106">полная стоимость результата =</p>
+        <div style="display:flex; flex-direction:column; gap:7px; padding-left:14px; margin-bottom:14px">
+          <div style="display:flex; align-items:center; gap:12px"><span style="width:14px; height:14px; background:#9C4A0E; flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace; font-size:13.5px; color:#171106">модели и внешние сервисы</span></div>
+          <div style="display:flex; align-items:center; gap:12px"><span style="width:14px; height:14px; background:#B05F1A; flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace; font-size:13.5px; color:#171106">+ вычисления и хранение</span></div>
+          <div style="display:flex; align-items:center; gap:12px"><span style="width:14px; height:14px; background:#C2782E; flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace; font-size:13.5px; color:#171106">+ разработка и сопровождение</span></div>
+          <div style="display:flex; align-items:center; gap:12px"><span style="width:14px; height:14px; background:#8A7A5E; flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace; font-size:13.5px; color:#171106">+ подготовка и обновление данных</span></div>
+          <div style="display:flex; align-items:center; gap:12px"><span style="width:14px; height:14px; background:#171106; flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace; font-size:13.5px; color:#171106">+ человеческая проверка и согласования</span></div>
+          <div style="display:flex; align-items:center; gap:12px"><span style="width:14px; height:14px; background:#5A6B35; flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace; font-size:13.5px; color:#171106">+ исправления и повторная работа</span></div>
+          <div style="display:flex; align-items:center; gap:12px"><span style="width:14px; height:14px; background:#7A8A4A; flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace; font-size:13.5px; color:#171106">+ эксплуатация, наблюдение и безопасность</span></div>
+          <div style="display:flex; align-items:center; gap:12px"><span style="width:14px; height:14px; background:#A83E1F; flex-shrink:0"></span><span style="font-family:'JetBrains Mono',monospace; font-size:13.5px; color:#171106">+ ожидаемая стоимость ошибок</span></div>
+        </div>
+        <div style="border-top:3px solid #171106; padding:12px 0 0 14px; display:flex; align-items:center; gap:12px">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:15px; font-weight:700; color:#9C4A0E">÷</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:13.5px; font-weight:700; color:#171106">число принятых результатов</span>
+        </div>
+      </div>
+      <p style="margin:0 0 18px; text-wrap:pretty">Ожидаемая стоимость ошибок оценивается как частота события, умноженная на последствия, с отдельным учётом редких тяжёлых событий. Это управленческая оценка, а не обещание точного прогноза.</p>
+      <p style="margin:0 0 18px; text-wrap:pretty">Скорость написания кода не отражает полную экономику процесса. <a href="./full.html#audit-G1-D1-p40">[G1-D1-p40]</a>, <code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:2px 6px">The New SDLC With Vibe Coding_Day_1.pdf</code>, с. 40.</p>
+
+      <h2 id="сначала-исходный-процесс" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Сначала исходный процесс <a href="#сначала-исходный-процесс" aria-label="Ссылка на раздел «Сначала исходный процесс»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 12px">До ИИ измерьте тот же результат в текущем процессе:</p>
+      <ul style="margin:0 0 18px; padding-left:22px; display:flex; flex-direction:column; gap:6px">
+        <li>число принятых результатов;</li><li>календарное и человеческое время;</li><li>возвраты и исправления;</li><li>прямые расходы;</li><li>ошибки по тяжести;</li><li>незавершённую работу;</li><li>ограничения объёма.</li>
+      </ul>
+      <p style="margin:0 0 18px; border-left:3px solid #9C4A0E; padding:10px 14px; background:#F1E7CF; text-wrap:pretty">Если новый процесс создаёт больше черновиков, но число принятых результатов не меняется, рост выпуска не доказан.</p>
+
+      <h2 id="постоянные-и-переменные" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Разделите постоянные и переменные расходы <a href="#постоянные-и-переменные" aria-label="Ссылка на раздел «Разделите постоянные и переменные расходы»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <div style="display:flex; gap:14px; flex-wrap:wrap; margin-bottom:16px">
+        <div style="flex:1 1 280px; border:1px solid rgba(23,17,6,0.28); padding:16px 18px">
+          <p style="margin:0 0 10px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#9C4A0E">Постоянные или ступенчатые расходы</p>
+          <ul style="margin:0; padding-left:18px; font-size:15px; line-height:1.55; display:flex; flex-direction:column; gap:5px"><li>проектирование процесса;</li><li>интеграции;</li><li>набор проверок;</li><li>безопасность;</li><li>обучение команды;</li><li>минимальная платформа;</li><li>договоры и юридическая работа.</li></ul>
+        </div>
+        <div style="flex:1 1 280px; border:1px solid rgba(23,17,6,0.28); padding:16px 18px">
+          <p style="margin:0 0 10px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#5A6B35">Переменные расходы</p>
+          <ul style="margin:0; padding-left:18px; font-size:15px; line-height:1.55; display:flex; flex-direction:column; gap:5px"><li>запросы к модели;</li><li>вызовы инструментов;</li><li>вычисления;</li><li>хранение;</li><li>человеческая проверка;</li><li>повторные попытки;</li><li>внешние услуги.</li></ul>
+        </div>
+      </div>
+      <p style="margin:0 0 18px; text-wrap:pretty">При малом объёме постоянные расходы могут сделать полезный механизм невыгодным. При росте объёма переменная проверка может стать главным ограничением.</p>
+
+      <h2 id="человеческое-время" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Считайте человеческое время <a href="#человеческое-время" aria-label="Ссылка на раздел «Считайте человеческое время»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 12px">Человек участвует до, во время и после ответа:</p>
+      <ul style="margin:0 0 18px; padding-left:22px; display:flex; flex-direction:column; gap:6px">
+        <li>формулирует задачу;</li><li>подбирает контекст;</li><li>ждёт;</li><li>проверяет;</li><li>исправляет;</li><li>согласует;</li><li>расследует ошибку;</li><li>поддерживает правила.</li>
+      </ul>
+      <p style="margin:0 0 18px; border-left:3px solid #9C4A0E; padding:10px 14px; background:#F1E7CF; text-wrap:pretty">Если инженер сэкономил десять минут генерации и потратил двадцать минут на проверку, эффект нельзя записать как экономию десяти минут.</p>
+
+      <h2 id="качество-со-скоростью" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Считайте качество вместе со скоростью <a href="#качество-со-скоростью" aria-label="Ссылка на раздел «Считайте качество вместе со скоростью»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 12px">Полезно разложить результат на четыре показателя:</p>
+      <ol style="margin:0 0 16px; padding:0; list-style:none; display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:10px">
+        <li style="border:1px solid rgba(23,17,6,0.28); padding:12px 14px"><span style="display:block; font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:700; color:#C2782E; margin-bottom:4px">1</span><span style="font-size:15px; font-weight:700">время цикла;</span></li>
+        <li style="border:1px solid rgba(23,17,6,0.28); padding:12px 14px"><span style="display:block; font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:700; color:#C2782E; margin-bottom:4px">2</span><span style="font-size:15px; font-weight:700">человеческое время;</span></li>
+        <li style="border:1px solid rgba(23,17,6,0.28); padding:12px 14px"><span style="display:block; font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:700; color:#C2782E; margin-bottom:4px">3</span><span style="font-size:15px; font-weight:700">доля принятых результатов;</span></li>
+        <li style="border:1px solid rgba(23,17,6,0.28); padding:12px 14px"><span style="display:block; font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:700; color:#C2782E; margin-bottom:4px">4</span><span style="font-size:15px; font-weight:700">тяжесть ошибок.</span></li>
+      </ol>
+      <p style="margin:0 0 18px; text-wrap:pretty">Ускорение при росте исправлений может быть полезно, если общий расход снизился и риск приемлем. Оно может быть вредным, если незавершённая работа переместилась к рецензенту.</p>
+
+      <h2 id="отказ-и-резерв" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Считайте отказ и резерв <a href="#отказ-и-резерв" aria-label="Ссылка на раздел «Считайте отказ и резерв»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 12px">В полную стоимость входят:</p>
+      <ul style="margin:0 0 18px; padding-left:22px; display:flex; flex-direction:column; gap:6px">
+        <li>содержание ручного или ограниченного режима;</li><li>переключение при отказе;</li><li>потеря времени во время недоступности;</li><li>восстановление очереди;</li><li>повторная проверка после возврата.</li>
+      </ul>
+      <p style="margin:0 0 18px; text-wrap:pretty">Резерв кажется лишним расходом до первого отказа. Для критического процесса он является частью продукта.</p>
+
+      <h2 id="возможный-ущерб" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Считайте возможный ущерб <a href="#возможный-ущерб" aria-label="Ссылка на раздел «Считайте возможный ущерб»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 12px">Не все ошибки равны. Введите категории, например:</p>
+      <ul style="margin:0 0 18px; padding-left:22px; display:flex; flex-direction:column; gap:6px">
+        <li>косметическая;</li><li>требующая повторной работы;</li><li>влияющая на клиента;</li><li>нарушающая права или договор;</li><li>создающая существенный финансовый или безопасностный ущерб.</li>
+      </ul>
+      <p style="margin:0 0 18px; text-wrap:pretty">Для тяжёлых редких событий среднего значения недостаточно. Покажите максимальный допустимый ущерб одного действия и механизмы, которые его ограничивают.</p>
+
+      <h2 id="варианты-механизма" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Сравнивайте варианты механизма <a href="#варианты-механизма" aria-label="Ссылка на раздел «Сравнивайте варианты механизма»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 14px">Для одного результата сравните:</p>
+      <div style="overflow-x:auto; border:1px solid rgba(23,17,6,0.22)">
+        <table style="border-collapse:collapse; width:100%; min-width:760px">
+          <caption style="caption-side:top; text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#7A6B52; padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.22); background:#F4EEDD">Сравнивайте варианты механизма: таблица 10</caption>
+          <thead><tr>
+            <th scope="col" style="text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; padding:9px 14px; border-bottom:2px solid #171106">Вариант</th>
+            <th scope="col" style="text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; padding:9px 14px; border-bottom:2px solid #171106">Полезность</th>
+            <th scope="col" style="text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; padding:9px 14px; border-bottom:2px solid #171106">Проверка</th>
+            <th scope="col" style="text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; padding:9px 14px; border-bottom:2px solid #171106">Риск</th>
+            <th scope="col" style="text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; padding:9px 14px; border-bottom:2px solid #171106">Расход</th>
+          </tr></thead>
+          <tbody style="font-size:14.5px; line-height:1.5">
+            <tr><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-weight:700; white-space:nowrap">Ручная работа</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Исходный уровень</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Человеческая</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Известный</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Измеренный</td></tr>
+            <tr><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-weight:700; white-space:nowrap">Обычная автоматизация</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Высокая на точных правилах</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Детерминированная</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Обычно уже</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Разработка и сопровождение</td></tr>
+            <tr><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-weight:700; white-space:nowrap">ИИ на A0/A1</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Помощь в открытых задачах</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Человек и правила</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Действие остаётся у человека</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Модель плюс проверка</td></tr>
+            <tr><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-weight:700; white-space:nowrap">ИИ на A2</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Автоматическое обратимое действие</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Усиленные правила и наблюдение</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Ограниченный</td><td style="padding:9px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Среда, права, откат</td></tr>
+            <tr><td style="padding:9px 14px; font-weight:700; white-space:nowrap">ИИ на A3</td><td style="padding:9px 14px; vertical-align:top">Узкий самостоятельный цикл</td><td style="padding:9px 14px; vertical-align:top">Постоянное наблюдение</td><td style="padding:9px 14px; vertical-align:top">Выше требования к доказательствам</td><td style="padding:9px 14px; vertical-align:top">Полный контур эксплуатации</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin:14px 0 18px; text-wrap:pretty">Более высокий A часто увеличивает расходы на контроль. Автоматизация применения не бесплатна.</p>
+
+      <h2 id="условный-пример-расчета" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Условный пример расчёта <a href="#условный-пример-расчета" aria-label="Ссылка на раздел «Условный пример расчёта»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 12px; text-wrap:pretty">Это пример метода, а не факт о типовой компании.</p>
+      <p style="margin:0 0 12px; text-wrap:pretty">За месяц процесс подготовил 1 000 черновиков. Получатели приняли 700. Расходы составили:</p>
+      <ul style="margin:0 0 18px; padding-left:22px; display:flex; flex-direction:column; gap:6px">
+        <li>40 000 рублей на модели и сервисы;</li>
+        <li>60 000 рублей на инфраструктуру и сопровождение;</li>
+        <li>180 000 рублей человеческого времени проверки;</li>
+        <li>35 000 рублей повторной работы;</li>
+        <li>35 000 рублей оценённого ожидаемого ущерба и восстановления.</li>
+      </ul>
+      <div data-screen-label="Структура расходов примера" style="border:2px solid #171106; background:#F7F1E2; padding:20px 22px 18px; margin-bottom:18px">
+        <p style="margin:0 0 14px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#9C4A0E">Структура расходов условного примера · 350 000 ₽</p>
+        <div style="display:flex; height:34px; border:1px solid rgba(23,17,6,0.35)">
+          <span title="модели и сервисы — 40 000 ₽" style="width:11.4%; background:#9C4A0E"></span>
+          <span title="инфраструктура и сопровождение — 60 000 ₽" style="width:17.2%; background:#C2782E"></span>
+          <span title="человеческая проверка — 180 000 ₽" style="width:51.4%; background:#171106"></span>
+          <span title="повторная работа — 35 000 ₽" style="width:10%; background:#5A6B35"></span>
+          <span title="ожидаемый ущерб и восстановление — 35 000 ₽" style="width:10%; background:#A83E1F"></span>
+        </div>
+        <div style="display:flex; gap:14px 20px; flex-wrap:wrap; margin-top:12px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#4A4030">
+          <span style="display:inline-flex; align-items:center; gap:6px"><span style="width:11px; height:11px; background:#9C4A0E"></span>модели 40 000</span>
+          <span style="display:inline-flex; align-items:center; gap:6px"><span style="width:11px; height:11px; background:#C2782E"></span>инфраструктура 60 000</span>
+          <span style="display:inline-flex; align-items:center; gap:6px"><span style="width:11px; height:11px; background:#171106"></span>проверка человеком 180 000</span>
+          <span style="display:inline-flex; align-items:center; gap:6px"><span style="width:11px; height:11px; background:#5A6B35"></span>повторная работа 35 000</span>
+          <span style="display:inline-flex; align-items:center; gap:6px"><span style="width:11px; height:11px; background:#A83E1F"></span>ожидаемый ущерб 35 000</span>
+        </div>
+        <p style="margin:16px 0 0; font-family:'JetBrains Mono',monospace; font-size:13px; color:#171106"><strong>350 000 ₽ ÷ 700 принятых = 500 ₽ за принятый результат</strong></p>
+      </div>
+      <p style="margin:0 0 18px; text-wrap:pretty">Полные расходы: 350 000 рублей. Стоимость принятого результата: 500 рублей.</p>
+      <p style="margin:0 0 18px; border-left:3px solid #9C4A0E; padding:10px 14px; background:#F1E7CF; text-wrap:pretty">Сравнивать её нужно со стоимостью принятого результата исходного процесса, а не с ценой одного запроса. Если исходный результат стоил 480 рублей, пилот пока не доказал экономию. Он может сохранить ценность по скорости или объёму, но это нужно показать отдельно.</p>
+
+      <h2 id="решение-об-инвестиции" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Решение об инвестиции <a href="#решение-об-инвестиции" aria-label="Ссылка на раздел «Решение об инвестиции»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 12px">Раз в установленный период владелец выбирает:</p>
+      <ul style="margin:0 0 18px; padding-left:22px; display:flex; flex-direction:column; gap:6px">
+        <li>расширить объём;</li><li>оставить процесс как есть;</li><li>сузить область;</li><li>заменить механизм более простым;</li><li>пересмотреть цену или качество поставщика;</li><li>остановить.</li>
+      </ul>
+      <p style="margin:0 0 18px; text-wrap:pretty">В решение входят результат, стоимость, риск и стратегическая ценность. Последняя помечается как гипотеза, если не измерена.</p>
+
+      <h2 id="границы-выводов" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Границы выводов о производительности <a href="#границы-выводов" aria-label="Ссылка на раздел «Границы выводов о производительности»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 18px; font-weight:700">Не используйте универсальные проценты без выборки, метода и ограничений.</p>
+      <p style="margin:0 0 18px; text-wrap:pretty">DORA показывает связь эффекта ИИ с организационными возможностями. METR на конкретной выборке опытных разработчиков обнаружил результат, расходившийся с ожиданиями участников.</p>
+      <p style="margin:0 0 18px; text-wrap:pretty">Вместе эти источники поддерживают локальное измерение, но не дают одного процента для вашей команды. <a href="./full.html#src-DORA-2025-report">[DORA-2025-report]</a> <a href="./full.html#src-METR-2025-experienced-developers">[METR-2025-experienced-developers]</a></p>
+      <p style="margin:0 0 18px; text-wrap:pretty">Утверждения Google «от идеи до агента за часы вместо недель» и «ИИ устранил узкое место производства кода» получили статус «Не доказано». <a href="./full.html#audit-G1-D1-p39">[G1-D1-p39]</a> <a href="./full.html#audit-G1-D5-p36">[G1-D5-p36]</a></p>
+
+      <h2 id="рабочая-карточка" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Рабочая карточка главы <a href="#рабочая-карточка" aria-label="Ссылка на раздел «Рабочая карточка главы»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <div style="border:2px solid #171106">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1px; background:rgba(23,17,6,0.18)">
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Решение</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Продолжать, изменить или остановить процесс на основании полной стоимости принятого результата, качества и риска.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Минимальный механизм</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Исходный уровень, единица результата, реестр постоянных и переменных расходов, человеческое время, ошибки по тяжести и периодический обзор.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Ответственный</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Владелец результата подтверждает объём и качество. Финансовый партнёр проверяет метод расходов. Технический владелец предоставляет потребление. Владелец риска оценивает последствия.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Артефакт</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Таблица полной стоимости результата с источниками данных, допущениями, диапазонами и решением.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Критерий готовности</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Другой руководитель может пересчитать показатель, изменить допущение и увидеть, меняется ли решение.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Различия маршрутов</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Стартап считает экономику в простой таблице и защищает ограниченный бюджет первого цикла. Зрелая компания добавляет распределение общих расходов, стоимость контроля, закупки и сценарии объёма. Обоим нужен показатель на принятый результат.</p></div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1px; background:rgba(23,17,6,0.18); border-top:2px solid #171106">
+          <div style="background:#F4EEDD; padding:16px 18px">
+            <p style="margin:0 0 8px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#4A4030">Показатели результата</p>
+            <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.5; display:flex; flex-direction:column; gap:5px"><li>полная стоимость принятого результата;</li><li>время цикла;</li><li>человеческое время;</li><li>доля принятых результатов;</li><li>доступный объём;</li><li>ценность для получателя.</li></ul>
+          </div>
+          <div style="background:#F4EEDD; padding:16px 18px">
+            <p style="margin:0 0 8px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#4A4030">Показатели риска</p>
+            <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.5; display:flex; flex-direction:column; gap:5px"><li>стоимость исправлений;</li><li>ожидаемый и максимальный ущерб;</li><li>волатильность расхода;</li><li>зависимость от одного поставщика;</li><li>доля расходов без связи с результатом;</li><li>стоимость и время резервного режима.</li></ul>
+          </div>
+          <div style="background:#F4EEDD; padding:16px 18px">
+            <p style="margin:0 0 8px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#A83E1F">Типичные ошибки</p>
+            <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.5; display:flex; flex-direction:column; gap:5px"><li>считать только запросы к модели;</li><li>делить расход на все черновики;</li><li>не учитывать проверку и повторную работу;</li><li>приписывать весь эффект ИИ при одновременной смене процесса;</li><li>использовать средний ущерб для редких тяжёлых событий;</li><li>продолжать инвестицию из-за уже потраченных средств.</li></ul>
+          </div>
+        </div>
+        <div style="border-top:2px solid #171106; padding:16px 18px 6px">
+          <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Чек-лист · сохраняется в браузере</p>
+          <ul style="margin:0 0 14px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px">
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="0" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Единица принятого результата определена.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="1" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Исходный процесс измерен тем же способом.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="2" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Постоянные и переменные расходы разделены.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="3" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Человеческая проверка и исправления учтены.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="4" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Ошибки разделены по тяжести.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="5" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Резерв и отказ входят в расчёт.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="6" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Допущения и диапазоны видны.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="7" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Решение и дата следующего обзора записаны.</span>
+                </label>
+              </li>
+
+          </ul>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  </main>
+
+  <footer style="border-top:2px solid #171106; margin-top:24px">
+    <div style="max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap">
+      <a href="./chapter-08.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">← Глава 8</span>
+        <span style="font-size:19px; font-weight:700">Полномочия, безопасность и устойчивость</span>
+      </a>
+      <a href="./chapter-10.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px; align-items:flex-end; text-align:right; border-left:1px solid rgba(23,17,6,0.14)" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">Глава 10 →</span>
+        <span style="font-size:19px; font-weight:700">План стартапа: 30 и 90 дней</span>
+      </a>
+    </div>
+  </footer>
+</div>
+
+<script src="./assets/book-v3.js" defer></script>
+</body>
+</html>

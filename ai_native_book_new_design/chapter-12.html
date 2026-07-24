@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Глава 12 — Практический комплект и следующий шаг. AI-native компания v2">
+<title>Глава 12. Практический комплект и следующий шаг — AI-native компания v2</title>
+<link rel="canonical" href="https://makeitbeta.ru/ai_native_book/chapter-12.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..900;1,7..72,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+.skip-link { position:fixed; top:8px; left:8px; z-index:100; padding:8px 12px; background:#171106; color:#FBF7EE; transform:translateY(-180%); transition:transform .12s ease; }
+.skip-link:focus { transform:translateY(0); }
+
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #FBF7EE; color: #171106; font-family: Literata, "Iowan Old Style", Georgia, serif; font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+a { color: #9C4A0E; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+a:hover { color: #6E3509; text-decoration-thickness: 2px; }
+::selection { background: #EADFC4; }
+
+.hv0:hover { background:#9C4A0E }
+.hv1:hover { background:#F4EEDD }
+</style>
+</head>
+<body data-page="ch12">
+<a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+
+<div>
+  <div aria-hidden="true" style="position:fixed; top:0; left:0; right:0; height:3px; background:rgba(23,17,6,0.08); z-index:50">
+    <div data-progress style="height:100%; background:#9C4A0E; width:0%"></div>
+  </div>
+
+  <header style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; max-width:1280px; margin:0 auto; padding:18px 24px; border-bottom:2px solid #171106">
+    <a href="./index.html" style="font-family:'JetBrains Mono',monospace; font-size:12px; text-decoration:none; color:#4A4030">← Оглавление</a>
+    <div style="display:flex; align-items:baseline; gap:10px; margin:0 auto">
+      <span style="font-weight:700; font-size:16px">AI-native компания</span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.08em; background:#171106; color:#FBF7EE; padding:2px 6px">V2</span>
+    </div>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#7A6B52">Глава 12 из 12</span>
+  </header>
+
+  <main id="main-content">
+  <section data-screen-label="Опенер главы 12" style="max-width:1280px; margin:0 auto; padding:56px 24px 40px; border-bottom:1px solid rgba(23,17,6,0.14); display:flex; gap:32px; align-items:baseline; flex-wrap:wrap">
+    <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; font-size:clamp(72px,10vw,128px); font-weight:700; line-height:0.9; color:#C2782E">12</span>
+    <div style="flex:1 1 320px">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:#9C4A0E">Часть IV · Комплект</p>
+      <h1 style="margin:0 0 14px; font-size:clamp(36px,5vw,56px); line-height:1.05; font-weight:800; letter-spacing:-0.02em; text-wrap:balance">Практический комплект и следующий шаг</h1>
+      <p style="margin:0; font-size:15px; color:#7A6B52; max-width:40em">Тринадцать рабочих шаблонов · глоссарий · порядок первого шага</p>
+    </div>
+  </section>
+
+  <div style="max-width:1280px; margin:0 auto; padding:40px 24px 0; display:flex; gap:48px; align-items:flex-start; flex-wrap:wrap">
+    <nav aria-label="В этой главе" style="flex:1 1 200px; max-width:240px; position:sticky; top:24px">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#7A6B52">В этой главе</p>
+      <ol style="margin:0 0 16px; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px; line-height:1.4; border-left:2px solid rgba(23,17,6,0.14)">
+        <li style="padding-left:14px"><a href="#библиотека" style="text-decoration:none; color:#4A4030">Тринадцать рабочих шаблонов</a></li>
+        <li style="padding-left:14px"><a href="#формы" style="text-decoration:none; color:#4A4030">Сокращённые формы</a></li>
+        <li style="padding-left:14px"><a href="#короткий-глоссарий" style="text-decoration:none; color:#4A4030">Короткий глоссарий</a></li>
+        <li style="padding-left:14px"><a href="#следующий-шаг" style="text-decoration:none; color:#4A4030">Следующий шаг</a></li>
+        <li style="padding-left:14px"><a href="#рабочая-карточка" style="text-decoration:none; color:#4A4030">Рабочая карточка главы</a></li>
+      </ol>
+      <p style="margin:0 0 8px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#7A6B52">Формы</p>
+      <ol style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:5px; font-size:12.5px; line-height:1.35; border-left:2px solid rgba(23,17,6,0.14)">
+
+          <li style="padding-left:14px; display:flex; gap:7px"><span style="font-family:'JetBrains Mono',monospace; color:#C2782E; min-width:2ch">1</span><a href="#1-паспорт-цикла-с-ии" style="text-decoration:none; color:#4A4030">Паспорт цикла с ИИ</a></li>
+
+          <li style="padding-left:14px; display:flex; gap:7px"><span style="font-family:'JetBrains Mono',monospace; color:#C2782E; min-width:2ch">2</span><a href="#2-карточка-сценария-применения" style="text-decoration:none; color:#4A4030">Карточка сценария применения</a></li>
+
+          <li style="padding-left:14px; display:flex; gap:7px"><span style="font-family:'JetBrains Mono',monospace; color:#C2782E; min-width:2ch">3</span><a href="#3-карта-полномочий-человека-и-ии" style="text-decoration:none; color:#4A4030">Карта полномочий человека и ИИ</a></li>
+
+          <li style="padding-left:14px; display:flex; gap:7px"><span style="font-family:'JetBrains Mono',monospace; color:#C2782E; min-width:2ch">4</span><a href="#4-реестр-источников-контекста" style="text-decoration:none; color:#4A4030">Реестр источников контекста</a></li>
+
+          <li style="padding-left:14px; display:flex; gap:7px"><span style="font-family:'JetBrains Mono',monospace; color:#C2782E; min-width:2ch">5</span><a href="#5-навык-агента" style="text-decoration:none; color:#4A4030">Навык агента</a></li>
+
+          <li style="padding-left:14px; display:flex; gap:7px"><span style="font-family:'JetBrains Mono',monospace; color:#C2782E; min-width:2ch">6</span><a href="#6-план-проверок-качества" style="text-decoration:none; color:#4A4030">План проверок качества</a></li>
+
+          <li style="padding-left:14px; display:flex; gap:7px"><span style="font-family:'JetBrains Mono',monospace; color:#C2782E; min-width:2ch">7</span><a href="#7-реестр-рисков" style="text-decoration:none; color:#4A4030">Реестр рисков</a></li>
+
+          <li style="padding-left:14px; display:flex; gap:7px"><span style="font-family:'JetBrains Mono',monospace; color:#C2782E; min-width:2ch">8</span><a href="#8-договор-о-самостоятельности" style="text-decoration:none; color:#4A4030">Договор о самостоятельности</a></li>
+
+          <li style="padding-left:14px; display:flex; gap:7px"><span style="font-family:'JetBrains Mono',monospace; color:#C2782E; min-width:2ch">9</span><a href="#9-описание-изменения-с-ии" style="text-decoration:none; color:#4A4030">Описание изменения с ИИ</a></li>
+
+          <li style="padding-left:14px; display:flex; gap:7px"><span style="font-family:'JetBrains Mono',monospace; color:#C2782E; min-width:2ch">10</span><a href="#10-инцидент-улучшение-проверки" style="text-decoration:none; color:#4A4030">Инцидент → улучшение проверки</a></li>
+
+          <li style="padding-left:14px; display:flex; gap:7px"><span style="font-family:'JetBrains Mono',monospace; color:#C2782E; min-width:2ch">11</span><a href="#11-полная-стоимость-результата" style="text-decoration:none; color:#4A4030">Полная стоимость результата</a></li>
+
+          <li style="padding-left:14px; display:flex; gap:7px"><span style="font-family:'JetBrains Mono',monospace; color:#C2782E; min-width:2ch">12</span><a href="#12-план-стартапа-на-30-и-90-дней" style="text-decoration:none; color:#4A4030">План стартапа на 30 и 90 дней</a></li>
+
+          <li style="padding-left:14px; display:flex; gap:7px"><span style="font-family:'JetBrains Mono',monospace; color:#C2782E; min-width:2ch">13</span><a href="#13-план-зрелой-компании-на-30-90-и-180-дней" style="text-decoration:none; color:#4A4030">План зрелой компании на 30, 90 и 180 дней</a></li>
+
+      </ol>
+    </nav>
+
+    <article style="flex:999 1 480px; max-width:88ch; min-width:0; padding-bottom:64px">
+
+      <section id="библиотека" aria-labelledby="template-library-title">
+        <p style="margin:0 0 10px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#9C4A0E">Библиотека · Markdown-файлы</p>
+        <h2 id="template-library-title" style="margin:0 0 14px; font-size:30px; font-weight:800; letter-spacing:-0.015em">Тринадцать рабочих шаблонов</h2>
+        <p style="margin:0 0 22px; text-wrap:pretty">На странице показаны назначение, обязательные поля и короткий пример каждого шаблона. Полные формы доступны отдельными Markdown-файлами. Кнопка копирования — дополнительное удобство: текст и ссылки работают и без JavaScript.</p>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:14px">
+
+            <article id="template-ai-loop-passport" style="border:1px solid rgba(23,17,6,0.28); background:#FBF7EE; display:flex; flex-direction:column; padding:18px 18px 14px">
+              <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:8px">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:#C2782E; line-height:1">01</span>
+                <h2 style="margin:0; font-size:18px; font-weight:800; line-height:1.25; text-wrap:balance">Паспорт цикла с ИИ</h2>
+              </div>
+              <p style="margin:0 0 8px; font-size:14px; line-height:1.55; text-wrap:pretty"><strong>Назначение.</strong> Перед первым пилотом и при изменении границ, данных, действий или уровня самостоятельности.</p>
+              <p style="margin:0 0 10px; font-size:14px; line-height:1.55; color:#4A4030"><strong>Владелец.</strong> Владелец результата процесса.</p>
+              <details  style="margin-bottom:12px; border-top:1px solid rgba(23,17,6,0.14)">
+                <summary style="cursor:pointer; padding:9px 0 7px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#7A6B52">Обязательные поля и пример</summary>
+                <h3 style="margin:4px 0 6px; font-size:13px; font-weight:700">Обязательные поля</h3>
+                <ul style="margin:0 0 10px; padding-left:18px; font-size:13.5px; line-height:1.5; display:flex; flex-direction:column; gap:4px">
+                  <li>Получатель и принятый результат.</li><li>Сигнал, решение, действие, проверка и обучение.</li><li>Исходные показатели и максимальный ущерб одной ошибки.</li><li>Роли человека, обычной программы и ИИ; исключения.</li><li>Резервный сценарий и дата решения после пилота.</li>
+                </ul>
+                <h3 style="margin:0 0 6px; font-size:13px; font-weight:700">Короткий пример</h3>
+                <p style="margin:0; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty">Владелец поддержки отвечает за принятый ответ клиенту. Сигнал — новое типовое обращение; ИИ на A1 готовит черновик, оператор сверяет источник и отправляет. Претензии и запросы на возврат всегда передаются старшему специалисту. Исходный уровень: 14 минут на принятый ответ; резерв — прежняя ручная очередь.</p>
+              </details>
+              <div style="margin-top:auto; display:flex; gap:8px; flex-wrap:wrap; align-items:center">
+                <a href="./templates/ai-loop-passport.md" download="ai-loop-passport.md" style="font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700; text-decoration:none; background:#171106; color:#FBF7EE; padding:8px 12px" class="hv0">↓ ai-loop-passport.md</a>
+                <button type="button" data-copy-example="Владелец поддержки отвечает за принятый ответ клиенту. Сигнал — новое типовое обращение; ИИ на A1 готовит черновик, оператор сверяет источник и отправляет. Претензии и запросы на возврат всегда передаются старшему специалисту. Исходный уровень: 14 минут на принятый ответ; резерв — прежняя ручная очередь." style="font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:7px 11px; background:transparent; border:1px solid rgba(23,17,6,0.35); color:#4A4030; cursor:pointer">Скопировать пример</button>
+              </div>
+            </article>
+
+            <article id="template-use-case-canvas" style="border:1px solid rgba(23,17,6,0.28); background:#FBF7EE; display:flex; flex-direction:column; padding:18px 18px 14px">
+              <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:8px">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:#C2782E; line-height:1">02</span>
+                <h2 style="margin:0; font-size:18px; font-weight:800; line-height:1.25; text-wrap:balance">Карточка сценария применения</h2>
+              </div>
+              <p style="margin:0 0 8px; font-size:14px; line-height:1.55; text-wrap:pretty"><strong>Назначение.</strong> При выборе, сравнении и пересмотре инвестиций в сценарии с ИИ.</p>
+              <p style="margin:0 0 10px; font-size:14px; line-height:1.55; color:#4A4030"><strong>Владелец.</strong> Предложивший сценарий вместе с владельцем результата.</p>
+              <details  style="margin-bottom:12px; border-top:1px solid rgba(23,17,6,0.14)">
+                <summary style="cursor:pointer; padding:9px 0 7px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#7A6B52">Обязательные поля и пример</summary>
+                <h3 style="margin:4px 0 6px; font-size:13px; font-weight:700">Обязательные поля</h3>
+                <ul style="margin:0 0 10px; padding-left:18px; font-size:13.5px; line-height:1.5; display:flex; flex-direction:column; gap:4px">
+                  <li>Получатель, проблема, принятый результат, частота и объём.</li><li>Исходный показатель и более простой механизм.</li><li>Роль ИИ, данные, ожидаемая польза и полная стоимость.</li><li>Цена ошибки, обратимость, гипотезы и условие остановки.</li>
+                </ul>
+                <h3 style="margin:0 0 6px; font-size:13px; font-weight:700">Короткий пример</h3>
+                <p style="margin:0; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty">Сценарий: классификация входящих заявок для оператора. Правила проверяют обязательные поля, а ИИ предлагает тему и маршрут. Ожидаемая польза — сократить время первичной сортировки с пяти до трёх минут; остановка — критическая ошибка маршрута в контрольной выборке.</p>
+              </details>
+              <div style="margin-top:auto; display:flex; gap:8px; flex-wrap:wrap; align-items:center">
+                <a href="./templates/use-case-canvas.md" download="use-case-canvas.md" style="font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700; text-decoration:none; background:#171106; color:#FBF7EE; padding:8px 12px" class="hv0">↓ use-case-canvas.md</a>
+                <button type="button" data-copy-example="Сценарий: классификация входящих заявок для оператора. Правила проверяют обязательные поля, а ИИ предлагает тему и маршрут. Ожидаемая польза — сократить время первичной сортировки с пяти до трёх минут; остановка — критическая ошибка маршрута в контрольной выборке." style="font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:7px 11px; background:transparent; border:1px solid rgba(23,17,6,0.35); color:#4A4030; cursor:pointer">Скопировать пример</button>
+              </div>
+            </article>
+
+            <article id="template-decision-rights-map" style="border:1px solid rgba(23,17,6,0.28); background:#FBF7EE; display:flex; flex-direction:column; padding:18px 18px 14px">
+              <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:8px">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:#C2782E; line-height:1">03</span>
+                <h2 style="margin:0; font-size:18px; font-weight:800; line-height:1.25; text-wrap:balance">Карта полномочий человека и ИИ</h2>
+              </div>
+              <p style="margin:0 0 8px; font-size:14px; line-height:1.55; text-wrap:pretty"><strong>Назначение.</strong> До доступа к рабочей системе, при смене прав и при повышении уровня A0–A3.</p>
+              <p style="margin:0 0 10px; font-size:14px; line-height:1.55; color:#4A4030"><strong>Владелец.</strong> Владелец результата; владелец системы подтверждает фактические технические права.</p>
+              <details  style="margin-bottom:12px; border-top:1px solid rgba(23,17,6,0.14)">
+                <summary style="cursor:pointer; padding:9px 0 7px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#7A6B52">Обязательные поля и пример</summary>
+                <h3 style="margin:4px 0 6px; font-size:13px; font-weight:700">Обязательные поля</h3>
+                <ul style="margin:0 0 10px; padding-left:18px; font-size:13.5px; line-height:1.5; display:flex; flex-direction:column; gap:4px">
+                  <li>Точное действие и его инициатор.</li><li>Владелец результата, исполнитель, согласующий и проверяющий.</li><li>Уровень A0–A3 и техническое право.</li><li>Условие остановки, цена ошибки и резервный сценарий.</li>
+                </ul>
+                <h3 style="margin:0 0 6px; font-size:13px; font-weight:700">Короткий пример</h3>
+                <p style="margin:0; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty">ИИ на A2 создаёт запрос на слияние только в ветке задачи. Инициатор — разработчик, владелец результата — владелец компонента, проверяющий — автор изменения. Слияние запрещено технически; после трёх сбоев проверок система переходит на A1, а запрос создаёт разработчик вручную.</p>
+              </details>
+              <div style="margin-top:auto; display:flex; gap:8px; flex-wrap:wrap; align-items:center">
+                <a href="./templates/decision-rights-map.md" download="decision-rights-map.md" style="font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700; text-decoration:none; background:#171106; color:#FBF7EE; padding:8px 12px" class="hv0">↓ decision-rights-map.md</a>
+                <button type="button" data-copy-example="ИИ на A2 создаёт запрос на слияние только в ветке задачи. Инициатор — разработчик, владелец результата — владелец компонента, проверяющий — автор изменения. Слияние запрещено технически; после трёх сбоев проверок система переходит на A1, а запрос создаёт разработчик вручную." style="font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:7px 11px; background:transparent; border:1px solid rgba(23,17,6,0.35); color:#4A4030; cursor:pointer">Скопировать пример</button>
+              </div>
+            </article>
+
+            <article id="template-context-register" style="border:1px solid rgba(23,17,6,0.28); background:#FBF7EE; display:flex; flex-direction:column; padding:18px 18px 14px">
+              <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:8px">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:#C2782E; line-height:1">04</span>
+                <h2 style="margin:0; font-size:18px; font-weight:800; line-height:1.25; text-wrap:balance">Реестр источников контекста</h2>
+              </div>
+              <p style="margin:0 0 8px; font-size:14px; line-height:1.55; text-wrap:pretty"><strong>Назначение.</strong> До передачи внутренних данных в процесс, при подключении нового источника и при смене его условий.</p>
+              <p style="margin:0 0 10px; font-size:14px; line-height:1.55; color:#4A4030"><strong>Владелец.</strong> Владелец данных отвечает за смысл и доступность; владелец процесса подтверждает пригодность.</p>
+              <details  style="margin-bottom:12px; border-top:1px solid rgba(23,17,6,0.14)">
+                <summary style="cursor:pointer; padding:9px 0 7px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#7A6B52">Обязательные поля и пример</summary>
+                <h3 style="margin:4px 0 6px; font-size:13px; font-weight:700">Обязательные поля</h3>
+                <ul style="margin:0 0 10px; padding-left:18px; font-size:13.5px; line-height:1.5; display:flex; flex-direction:column; gap:4px">
+                  <li>Название, происхождение и владелец источника.</li><li>Разрешённое использование, чувствительность, свежесть и версия.</li><li>Права доступа, способ отзыва и проверка конфликта или устаревания.</li><li>Резервный источник или действие при недоступности.</li>
+                </ul>
+                <h3 style="margin:0 0 6px; font-size:13px; font-weight:700">Короткий пример</h3>
+                <p style="margin:0; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty">Каталог продукта принадлежит коммерческому директору и обновляется ежедневно. Его разрешено читать служебной роли только для подготовки предложения; при возрасте данных больше суток система не формирует цену и передаёт задачу оператору. Отзыв выполняется удалением роли доступа.</p>
+              </details>
+              <div style="margin-top:auto; display:flex; gap:8px; flex-wrap:wrap; align-items:center">
+                <a href="./templates/context-register.md" download="context-register.md" style="font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700; text-decoration:none; background:#171106; color:#FBF7EE; padding:8px 12px" class="hv0">↓ context-register.md</a>
+                <button type="button" data-copy-example="Каталог продукта принадлежит коммерческому директору и обновляется ежедневно. Его разрешено читать служебной роли только для подготовки предложения; при возрасте данных больше суток система не формирует цену и передаёт задачу оператору. Отзыв выполняется удалением роли доступа." style="font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:7px 11px; background:transparent; border:1px solid rgba(23,17,6,0.35); color:#4A4030; cursor:pointer">Скопировать пример</button>
+              </div>
+            </article>
+
+            <article id="template-agent-skill" style="border:1px solid rgba(23,17,6,0.28); background:#FBF7EE; display:flex; flex-direction:column; padding:18px 18px 14px">
+              <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:8px">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:#C2782E; line-height:1">05</span>
+                <h2 style="margin:0; font-size:18px; font-weight:800; line-height:1.25; text-wrap:balance">Навык агента</h2>
+              </div>
+              <p style="margin:0 0 8px; font-size:14px; line-height:1.55; text-wrap:pretty"><strong>Назначение.</strong> Когда повторяемая процедура должна давать воспроизводимый результат у нескольких участников или запусков.</p>
+              <p style="margin:0 0 10px; font-size:14px; line-height:1.55; color:#4A4030"><strong>Владелец.</strong> Владелец навыка.</p>
+              <details  style="margin-bottom:12px; border-top:1px solid rgba(23,17,6,0.14)">
+                <summary style="cursor:pointer; padding:9px 0 7px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#7A6B52">Обязательные поля и пример</summary>
+                <h3 style="margin:4px 0 6px; font-size:13px; font-weight:700">Обязательные поля</h3>
+                <ul style="margin:0 0 10px; padding-left:18px; font-size:13.5px; line-height:1.5; display:flex; flex-direction:column; gap:4px">
+                  <li>Назначение, условия применения и отказа.</li><li>Вход, выход, ограничения и предел полномочий.</li><li>Разрешённые инструменты и порядок действий.</li><li>Обычный и пограничный примеры.</li><li>Проверки результата, хода действий, расхода и регрессий.</li><li>Версия, совместимость, отключение и журнал изменений.</li>
+                </ul>
+                <h3 style="margin:0 0 6px; font-size:13px; font-weight:700">Короткий пример</h3>
+                <p style="margin:0; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty">Навык «Описание изменения» принимает задачу, список изменённых файлов и фактические результаты проверок; выпускает черновик описания запроса на слияние. Он не утверждает риск и не выдумывает проверки. Разрешены только чтение журнала версии и результатов тестов; при отсутствии журнала навык останавливается и сообщает автору.</p>
+              </details>
+              <div style="margin-top:auto; display:flex; gap:8px; flex-wrap:wrap; align-items:center">
+                <a href="./templates/agent-skill.md" download="agent-skill.md" style="font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700; text-decoration:none; background:#171106; color:#FBF7EE; padding:8px 12px" class="hv0">↓ agent-skill.md</a>
+                <button type="button" data-copy-example="Навык «Описание изменения» принимает задачу, список изменённых файлов и фактические результаты проверок; выпускает черновик описания запроса на слияние. Он не утверждает риск и не выдумывает проверки. Разрешены только чтение журнала версии и результатов тестов; при отсутствии журнала навык останавливается и сообщает автору." style="font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:7px 11px; background:transparent; border:1px solid rgba(23,17,6,0.35); color:#4A4030; cursor:pointer">Скопировать пример</button>
+              </div>
+            </article>
+
+            <article id="template-eval-plan" style="border:1px solid rgba(23,17,6,0.28); background:#FBF7EE; display:flex; flex-direction:column; padding:18px 18px 14px">
+              <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:8px">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:#C2782E; line-height:1">06</span>
+                <h2 style="margin:0; font-size:18px; font-weight:800; line-height:1.25; text-wrap:balance">План проверок качества</h2>
+              </div>
+              <p style="margin:0 0 8px; font-size:14px; line-height:1.55; text-wrap:pretty"><strong>Назначение.</strong> До пилота, выпуска, изменения существенной части системы и повышения полномочий.</p>
+              <p style="margin:0 0 10px; font-size:14px; line-height:1.55; color:#4A4030"><strong>Владелец.</strong> Владелец качества вместе с владельцем результата; независимый рецензент подтверждает существенный риск.</p>
+              <details  style="margin-bottom:12px; border-top:1px solid rgba(23,17,6,0.14)">
+                <summary style="cursor:pointer; padding:9px 0 7px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#7A6B52">Обязательные поля и пример</summary>
+                <h3 style="margin:4px 0 6px; font-size:13px; font-weight:700">Обязательные поля</h3>
+                <ul style="margin:0 0 10px; padding-left:18px; font-size:13.5px; line-height:1.5; display:flex; flex-direction:column; gap:4px">
+                  <li>Решение, которое меняет проверка, и состав проверяемой системы.</li><li>Обычные, пограничные, редкие и вредоносные случаи по сегментам.</li><li>Отдельные проверки результата и хода действий.</li><li>Детерминированные правила, человеческая выборка и калибровка второй модели при её использовании.</li><li>Показатели, пороги предупреждения и остановки, резерв и решение по прогону.</li>
+                </ul>
+                <h3 style="margin:0 0 6px; font-size:13px; font-weight:700">Короткий пример</h3>
+                <p style="margin:0; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty">Проверка решает, можно ли оставить подготовку типовых ответов на A1. В контрольной выборке ни один критический факт не должен быть ошибочным, а каждая фактическая фраза должна ссылаться на допустимый источник. Отдельно журнал проверяется на отсутствие чтения чужих клиентских данных; при нарушении система переходит в ручную очередь.</p>
+              </details>
+              <div style="margin-top:auto; display:flex; gap:8px; flex-wrap:wrap; align-items:center">
+                <a href="./templates/eval-plan.md" download="eval-plan.md" style="font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700; text-decoration:none; background:#171106; color:#FBF7EE; padding:8px 12px" class="hv0">↓ eval-plan.md</a>
+                <button type="button" data-copy-example="Проверка решает, можно ли оставить подготовку типовых ответов на A1. В контрольной выборке ни один критический факт не должен быть ошибочным, а каждая фактическая фраза должна ссылаться на допустимый источник. Отдельно журнал проверяется на отсутствие чтения чужих клиентских данных; при нарушении система переходит в ручную очередь." style="font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:7px 11px; background:transparent; border:1px solid rgba(23,17,6,0.35); color:#4A4030; cursor:pointer">Скопировать пример</button>
+              </div>
+            </article>
+
+            <article id="template-risk-register" style="border:1px solid rgba(23,17,6,0.28); background:#FBF7EE; display:flex; flex-direction:column; padding:18px 18px 14px">
+              <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:8px">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:#C2782E; line-height:1">07</span>
+                <h2 style="margin:0; font-size:18px; font-weight:800; line-height:1.25; text-wrap:balance">Реестр рисков</h2>
+              </div>
+              <p style="margin:0 0 8px; font-size:14px; line-height:1.55; text-wrap:pretty"><strong>Назначение.</strong> С первого производственного использования, при существенном изменении и после серьёзного инцидента.</p>
+              <p style="margin:0 0 10px; font-size:14px; line-height:1.55; color:#4A4030"><strong>Владелец.</strong> Владелец результата; владельцы мер подтверждают выполнение предотвращения, обнаружения и реакции.</p>
+              <details  style="margin-bottom:12px; border-top:1px solid rgba(23,17,6,0.14)">
+                <summary style="cursor:pointer; padding:9px 0 7px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#7A6B52">Обязательные поля и пример</summary>
+                <h3 style="margin:4px 0 6px; font-size:13px; font-weight:700">Обязательные поля</h3>
+                <ul style="margin:0 0 10px; padding-left:18px; font-size:13.5px; line-height:1.5; display:flex; flex-direction:column; gap:4px">
+                  <li>Риск, причина, последствие и затронутые лица.</li><li>Вероятность или неопределённость, тяжесть и остаточный риск.</li><li>Предотвращение, обнаружение, реакция, владелец и дата пересмотра.</li><li>Цена ошибки и резервный сценарий для существенного риска.</li>
+                </ul>
+                <h3 style="margin:0 0 6px; font-size:13px; font-weight:700">Короткий пример</h3>
+                <p style="margin:0; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty">Устаревшая цена может привести к неверному предложению клиенту. Предотвращение — не использовать источник старше суток; обнаружение — сверка цены перед отправкой; реакция — заблокировать отправку и вернуть заявку оператору. Владелец меры — коммерческий директор.</p>
+              </details>
+              <div style="margin-top:auto; display:flex; gap:8px; flex-wrap:wrap; align-items:center">
+                <a href="./templates/risk-register.md" download="risk-register.md" style="font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700; text-decoration:none; background:#171106; color:#FBF7EE; padding:8px 12px" class="hv0">↓ risk-register.md</a>
+                <button type="button" data-copy-example="Устаревшая цена может привести к неверному предложению клиенту. Предотвращение — не использовать источник старше суток; обнаружение — сверка цены перед отправкой; реакция — заблокировать отправку и вернуть заявку оператору. Владелец меры — коммерческий директор." style="font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:7px 11px; background:transparent; border:1px solid rgba(23,17,6,0.35); color:#4A4030; cursor:pointer">Скопировать пример</button>
+              </div>
+            </article>
+
+            <article id="template-autonomy-contract" style="border:1px solid rgba(23,17,6,0.28); background:#FBF7EE; display:flex; flex-direction:column; padding:18px 18px 14px">
+              <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:8px">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:#C2782E; line-height:1">08</span>
+                <h2 style="margin:0; font-size:18px; font-weight:800; line-height:1.25; text-wrap:balance">Договор о самостоятельности</h2>
+              </div>
+              <p style="margin:0 0 8px; font-size:14px; line-height:1.55; text-wrap:pretty"><strong>Назначение.</strong> Перед разрешением A2 или A3, а также после инцидента, смены модели или ухудшения показателя.</p>
+              <p style="margin:0 0 10px; font-size:14px; line-height:1.55; color:#4A4030"><strong>Владелец.</strong> Владелец результата; владельцы безопасности и системы подтверждают ограничения и технические права.</p>
+              <details  style="margin-bottom:12px; border-top:1px solid rgba(23,17,6,0.14)">
+                <summary style="cursor:pointer; padding:9px 0 7px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#7A6B52">Обязательные поля и пример</summary>
+                <h3 style="margin:4px 0 6px; font-size:13px; font-weight:700">Обязательные поля</h3>
+                <ul style="margin:0 0 10px; padding-left:18px; font-size:13.5px; line-height:1.5; display:flex; flex-direction:column; gap:4px">
+                  <li>Уровень A0–A3 и точные разрешённые действия в разрешённых системах.</li><li>Владелец, служебная учётная запись, максимальный ущерб и обратимость.</li><li>Права, лимиты времени, расходов, числа действий и объёма данных.</li><li>Обязательные проверки, согласования, журнал и доказательства стабильной работы.</li><li>Условия остановки или понижения, резерв и дата пересмотра.</li>
+                </ul>
+                <h3 style="margin:0 0 6px; font-size:13px; font-weight:700">Короткий пример</h3>
+                <p style="margin:0; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty">На A2 системе разрешено создать один запрос на слияние в ветке задачи за 20 минут; слияние и изменение защищённой ветки запрещены. Любая попытка такого изменения понижает действие до A1, отключает служебную роль и передаёт работу разработчику. Откат — закрыть запрос и восстановить ветку из сохранённой точки.</p>
+              </details>
+              <div style="margin-top:auto; display:flex; gap:8px; flex-wrap:wrap; align-items:center">
+                <a href="./templates/autonomy-contract.md" download="autonomy-contract.md" style="font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700; text-decoration:none; background:#171106; color:#FBF7EE; padding:8px 12px" class="hv0">↓ autonomy-contract.md</a>
+                <button type="button" data-copy-example="На A2 системе разрешено создать один запрос на слияние в ветке задачи за 20 минут; слияние и изменение защищённой ветки запрещены. Любая попытка такого изменения понижает действие до A1, отключает служебную роль и передаёт работу разработчику. Откат — закрыть запрос и восстановить ветку из сохранённой точки." style="font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:7px 11px; background:transparent; border:1px solid rgba(23,17,6,0.35); color:#4A4030; cursor:pointer">Скопировать пример</button>
+              </div>
+            </article>
+
+            <article id="template-ai-pr" style="border:1px solid rgba(23,17,6,0.28); background:#FBF7EE; display:flex; flex-direction:column; padding:18px 18px 14px">
+              <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:8px">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:#C2782E; line-height:1">09</span>
+                <h2 style="margin:0; font-size:18px; font-weight:800; line-height:1.25; text-wrap:balance">Описание изменения с ИИ</h2>
+              </div>
+              <p style="margin:0 0 8px; font-size:14px; line-height:1.55; text-wrap:pretty"><strong>Назначение.</strong> Для изменения, подготовленного или существенно изменённого ИИ, перед независимой рецензией и выпуском.</p>
+              <p style="margin:0 0 10px; font-size:14px; line-height:1.55; color:#4A4030"><strong>Владелец.</strong> Автор изменения; владелец компонента отвечает за решение о выпуске.</p>
+              <details  style="margin-bottom:12px; border-top:1px solid rgba(23,17,6,0.14)">
+                <summary style="cursor:pointer; padding:9px 0 7px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#7A6B52">Обязательные поля и пример</summary>
+                <h3 style="margin:4px 0 6px; font-size:13px; font-weight:700">Обязательные поля</h3>
+                <ul style="margin:0 0 10px; padding-left:18px; font-size:13.5px; line-height:1.5; display:flex; flex-direction:column; gap:4px">
+                  <li>Цель, спецификация, объём изменения и то, что намеренно не изменено.</li><li>Результат для пользователя, затронутые данные и права, новые зависимости.</li><li>Доказательства проверок и проверка отрисованного результата при наличии интерфейса.</li><li>Риск, возможные точки поломки, откат и наблюдение после выпуска.</li><li>Что подготовил ИИ и что независимо проверил человек.</li>
+                </ul>
+                <h3 style="margin:0 0 6px; font-size:13px; font-weight:700">Короткий пример</h3>
+                <p style="margin:0; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty">Изменение добавляет проверку свежести каталога перед подготовкой предложения. Автор приложил результат теста устаревшего источника и проверил экран с сообщением оператору. Риск — ошибочная блокировка типовой заявки; откат — отключить правило через конфигурацию; после выпуска наблюдается доля заблокированных заявок.</p>
+              </details>
+              <div style="margin-top:auto; display:flex; gap:8px; flex-wrap:wrap; align-items:center">
+                <a href="./templates/ai-pr.md" download="ai-pr.md" style="font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700; text-decoration:none; background:#171106; color:#FBF7EE; padding:8px 12px" class="hv0">↓ ai-pr.md</a>
+                <button type="button" data-copy-example="Изменение добавляет проверку свежести каталога перед подготовкой предложения. Автор приложил результат теста устаревшего источника и проверил экран с сообщением оператору. Риск — ошибочная блокировка типовой заявки; откат — отключить правило через конфигурацию; после выпуска наблюдается доля заблокированных заявок." style="font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:7px 11px; background:transparent; border:1px solid rgba(23,17,6,0.35); color:#4A4030; cursor:pointer">Скопировать пример</button>
+              </div>
+            </article>
+
+            <article id="template-incident-to-check" style="border:1px solid rgba(23,17,6,0.28); background:#FBF7EE; display:flex; flex-direction:column; padding:18px 18px 14px">
+              <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:8px">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:#C2782E; line-height:1">10</span>
+                <h2 style="margin:0; font-size:18px; font-weight:800; line-height:1.25; text-wrap:balance">Инцидент → улучшение проверки</h2>
+              </div>
+              <p style="margin:0 0 8px; font-size:14px; line-height:1.55; text-wrap:pretty"><strong>Назначение.</strong> После серьёзного или повторяющегося сбоя, а также после обнаружения обхода прав или ограничений.</p>
+              <p style="margin:0 0 10px; font-size:14px; line-height:1.55; color:#4A4030"><strong>Владелец.</strong> Владелец инцидента; изменение постоянной проверки, прав, контекста или процесса принимает владелец соответствующего актива.</p>
+              <details  style="margin-bottom:12px; border-top:1px solid rgba(23,17,6,0.14)">
+                <summary style="cursor:pointer; padding:9px 0 7px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#7A6B52">Обязательные поля и пример</summary>
+                <h3 style="margin:4px 0 6px; font-size:13px; font-weight:700">Обязательные поля</h3>
+                <ul style="margin:0 0 10px; padding-left:18px; font-size:13.5px; line-height:1.5; display:flex; flex-direction:column; gap:4px">
+                  <li>Наблюдаемый ущерб, время обнаружения и ограничения.</li><li>Версии системы, воспроизведение и последовательность внешних событий.</li><li>Причина, содействующие условия и причина пропуска проверкой.</li><li>Исправление, новая постоянная проверка, изменение актива, владелец и срок.</li><li>Подтверждение после исправления и резервный сценарий на время работ.</li>
+                </ul>
+                <h3 style="margin:0 0 6px; font-size:13px; font-weight:700">Короткий пример</h3>
+                <p style="margin:0; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty">Система использовала каталог, не отмеченный как устаревший, и подготовила неверную цену. Воспроизведение использует сохранённый срез источника. Добавлены правило свежести, сигнал и контрольный случай; до выпуска исправления предложения готовит оператор. Владелец источника подтвердил ежедневное обновление.</p>
+              </details>
+              <div style="margin-top:auto; display:flex; gap:8px; flex-wrap:wrap; align-items:center">
+                <a href="./templates/incident-to-check.md" download="incident-to-check.md" style="font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700; text-decoration:none; background:#171106; color:#FBF7EE; padding:8px 12px" class="hv0">↓ incident-to-check.md</a>
+                <button type="button" data-copy-example="Система использовала каталог, не отмеченный как устаревший, и подготовила неверную цену. Воспроизведение использует сохранённый срез источника. Добавлены правило свежести, сигнал и контрольный случай; до выпуска исправления предложения готовит оператор. Владелец источника подтвердил ежедневное обновление." style="font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:7px 11px; background:transparent; border:1px solid rgba(23,17,6,0.35); color:#4A4030; cursor:pointer">Скопировать пример</button>
+              </div>
+            </article>
+
+            <article id="template-cost-to-outcome" style="border:1px solid rgba(23,17,6,0.28); background:#FBF7EE; display:flex; flex-direction:column; padding:18px 18px 14px">
+              <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:8px">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:#C2782E; line-height:1">11</span>
+                <h2 style="margin:0; font-size:18px; font-weight:800; line-height:1.25; text-wrap:balance">Полная стоимость результата</h2>
+              </div>
+              <p style="margin:0 0 8px; font-size:14px; line-height:1.55; text-wrap:pretty"><strong>Назначение.</strong> До пилота, при решении о продолжении, при смене объёма, поставщика или архитектуры процесса.</p>
+              <p style="margin:0 0 10px; font-size:14px; line-height:1.55; color:#4A4030"><strong>Владелец.</strong> Финансовый партнёр и владелец результата.</p>
+              <details  style="margin-bottom:12px; border-top:1px solid rgba(23,17,6,0.14)">
+                <summary style="cursor:pointer; padding:9px 0 7px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#7A6B52">Обязательные поля и пример</summary>
+                <h3 style="margin:4px 0 6px; font-size:13px; font-weight:700">Обязательные поля</h3>
+                <ul style="margin:0 0 10px; padding-left:18px; font-size:13.5px; line-height:1.5; display:flex; flex-direction:column; gap:4px">
+                  <li>Принятый результат, количество и исходный процесс для сравнения.</li><li>Модели, инфраструктура, инструменты, разработка, данные и сопровождение.</li><li>Повторы, человеческая проверка, исправления, наблюдение, безопасность и резерв.</li><li>Ожидаемая стоимость ошибки, допущения, неопределённость и решение.</li>
+                </ul>
+                <h3 style="margin:0 0 6px; font-size:13px; font-weight:700">Короткий пример</h3>
+                <p style="margin:0; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty">Условный пример: За месяц принято 700 ответов. Модели и сервисы стоили 40 000 рублей, инфраструктура и сопровождение — 60 000, проверка человеком — 180 000, повторы и исправления — 70 000. При общем расходе 350 000 рублей стоимость одного принятого ответа — 500 рублей; возможный ущерб от редкой критической ошибки считается отдельно.</p>
+              </details>
+              <div style="margin-top:auto; display:flex; gap:8px; flex-wrap:wrap; align-items:center">
+                <a href="./templates/cost-to-outcome.md" download="cost-to-outcome.md" style="font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700; text-decoration:none; background:#171106; color:#FBF7EE; padding:8px 12px" class="hv0">↓ cost-to-outcome.md</a>
+                <button type="button" data-copy-example="Условный пример: За месяц принято 700 ответов. Модели и сервисы стоили 40 000 рублей, инфраструктура и сопровождение — 60 000, проверка человеком — 180 000, повторы и исправления — 70 000. При общем расходе 350 000 рублей стоимость одного принятого ответа — 500 рублей; возможный ущерб от редкой критической ошибки считается отдельно." style="font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:7px 11px; background:transparent; border:1px solid rgba(23,17,6,0.35); color:#4A4030; cursor:pointer">Скопировать пример</button>
+              </div>
+            </article>
+
+            <article id="template-startup-90-days" style="border:1px solid rgba(23,17,6,0.28); background:#FBF7EE; display:flex; flex-direction:column; padding:18px 18px 14px">
+              <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:8px">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:#C2782E; line-height:1">12</span>
+                <h2 style="margin:0; font-size:18px; font-weight:800; line-height:1.25; text-wrap:balance">План стартапа на 30 и 90 дней</h2>
+              </div>
+              <p style="margin:0 0 8px; font-size:14px; line-height:1.55; text-wrap:pretty"><strong>Назначение.</strong> После выбора первого цикла, чтобы зафиксировать его пилот, ограниченную эксплуатацию и решение о втором сценарии.</p>
+              <p style="margin:0 0 10px; font-size:14px; line-height:1.55; color:#4A4030"><strong>Владелец.</strong> Основатель отвечает за инвестицию и остановку; владелец процесса ведёт действия и принятый результат.</p>
+              <details  style="margin-bottom:12px; border-top:1px solid rgba(23,17,6,0.14)">
+                <summary style="cursor:pointer; padding:9px 0 7px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#7A6B52">Обязательные поля и пример</summary>
+                <h3 style="margin:4px 0 6px; font-size:13px; font-weight:700">Обязательные поля</h3>
+                <ul style="margin:0 0 10px; padding-left:18px; font-size:13.5px; line-height:1.5; display:flex; flex-direction:column; gap:4px">
+                  <li>Цель, исходный профиль и границы первого цикла.</li><li>Действия на 30 и 90 дней с владельцем, артефактом и критерием завершения.</li><li>Исходные показатели, уровень A0 или A1, проверки, права и резерв.</li><li>Условия остановки, решение дня 30 и решение дня 90.</li>
+                </ul>
+                <h3 style="margin:0 0 6px; font-size:13px; font-weight:700">Короткий пример</h3>
+                <p style="margin:0; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty">К дню 10 владелец поддержки измеряет время и возвраты по ответам, к дню 20 эксперт собирает обычные и редкие случаи, к дню 30 основатель решает продолжить A1 или остановить пилот. К дню 60 команда испытывает ручную очередь как резерв, а к дню 90 выбирает второй сценарий только при подтверждённой повторяющейся потребности.</p>
+              </details>
+              <div style="margin-top:auto; display:flex; gap:8px; flex-wrap:wrap; align-items:center">
+                <a href="./templates/startup-90-days.md" download="startup-90-days.md" style="font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700; text-decoration:none; background:#171106; color:#FBF7EE; padding:8px 12px" class="hv0">↓ startup-90-days.md</a>
+                <button type="button" data-copy-example="К дню 10 владелец поддержки измеряет время и возвраты по ответам, к дню 20 эксперт собирает обычные и редкие случаи, к дню 30 основатель решает продолжить A1 или остановить пилот. К дню 60 команда испытывает ручную очередь как резерв, а к дню 90 выбирает второй сценарий только при подтверждённой повторяющейся потребности." style="font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:7px 11px; background:transparent; border:1px solid rgba(23,17,6,0.35); color:#4A4030; cursor:pointer">Скопировать пример</button>
+              </div>
+            </article>
+
+            <article id="template-mature-company-180-days" style="border:1px solid rgba(23,17,6,0.28); background:#FBF7EE; display:flex; flex-direction:column; padding:18px 18px 14px">
+              <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:8px">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:#C2782E; line-height:1">13</span>
+                <h2 style="margin:0; font-size:18px; font-weight:800; line-height:1.25; text-wrap:balance">План зрелой компании на 30, 90 и 180 дней</h2>
+              </div>
+              <p style="margin:0 0 8px; font-size:14px; line-height:1.55; text-wrap:pretty"><strong>Назначение.</strong> Когда нужно превратить разрозненные пилоты и существующие механизмы в один управляемый сквозной поток.</p>
+              <p style="margin:0 0 10px; font-size:14px; line-height:1.55; color:#4A4030"><strong>Владелец.</strong> Исполнительный куратор задаёт полномочия; владелец потока отвечает за результат; руководящий комитет принимает портфельные решения.</p>
+              <details  style="margin-bottom:12px; border-top:1px solid rgba(23,17,6,0.14)">
+                <summary style="cursor:pointer; padding:9px 0 7px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#7A6B52">Обязательные поля и пример</summary>
+                <h3 style="margin:4px 0 6px; font-size:13px; font-weight:700">Обязательные поля</h3>
+                <ul style="margin:0 0 10px; padding-left:18px; font-size:13.5px; line-height:1.5; display:flex; flex-direction:column; gap:4px">
+                  <li>Цель, границы потока, исходный профиль и владелец.</li><li>Действия на 30, 90 и 180 дней с владельцем, артефактом и критерием завершения.</li><li>Инвентаризация сценариев, данных, прав, расходов и применимых требований.</li><li>Проверки, служебные права, договор самостоятельности, резерв и портфельное решение.</li><li>Условия остановки и события внепланового пересмотра.</li>
+                </ul>
+                <h3 style="margin:0 0 6px; font-size:13px; font-weight:700">Короткий пример</h3>
+                <p style="margin:0; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty">К дню 30 руководитель программы выявляет личные производственные права и назначает владельца одного клиентского потока. К дню 90 поток проходит ограниченный выпуск с отдельной учётной записью и испытанным резервом. К дню 180 второй поток повторно принимает библиотеку проверок, а комитет решает, нужен ли общий сервис.</p>
+              </details>
+              <div style="margin-top:auto; display:flex; gap:8px; flex-wrap:wrap; align-items:center">
+                <a href="./templates/mature-company-180-days.md" download="mature-company-180-days.md" style="font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700; text-decoration:none; background:#171106; color:#FBF7EE; padding:8px 12px" class="hv0">↓ mature-company-180-days.md</a>
+                <button type="button" data-copy-example="К дню 30 руководитель программы выявляет личные производственные права и назначает владельца одного клиентского потока. К дню 90 поток проходит ограниченный выпуск с отдельной учётной записью и испытанным резервом. К дню 180 второй поток повторно принимает библиотеку проверок, а комитет решает, нужен ли общий сервис." style="font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:7px 11px; background:transparent; border:1px solid rgba(23,17,6,0.35); color:#4A4030; cursor:pointer">Скопировать пример</button>
+              </div>
+            </article>
+
+        </div>
+      </section>
+
+      <p style="margin:32px 0 18px; text-wrap:pretty">Шаблон нужен, когда он помогает принять решение и сохранить доказательство. Заполненная форма без владельца и последующего действия создаёт архив, а не управление.</p>
+      <p id="формы" style="margin:0 0 18px; text-wrap:pretty">Ниже приведён минимальный комплект. Его можно расширять под отрасль, но обязательные поля лучше не удалять без записанного основания.</p>
+
+
+        <section id="1-паспорт-цикла-с-ии">
+          <h2 style="margin:48px 0 14px; font-size:24px; font-weight:800; letter-spacing:-0.01em; text-wrap:balance">1. Паспорт цикла с ИИ <a href="#1-паспорт-цикла-с-ии" aria-label="Ссылка на раздел" style="font-size:15px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Когда нужен:</strong> перед первым пилотом и при изменении границ.</p>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Кто отвечает:</strong> владелец результата.</p>
+          <p style="margin:0 0 12px; font-size:15px"><strong>Сокращённый пример формы.</strong> Полная форма со всеми обязательными полями — <a href="./templates/ai-loop-passport.md">в Markdown</a>.</p>
+          <div style="border:1px solid rgba(23,17,6,0.28); border-left:3px solid #C2782E; background:#F4EEDD; padding:14px 18px; overflow-x:auto">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.7; white-space:pre; color:#171106"># Паспорт цикла: [название]
+Получатель и принятый результат:
+Сигнал:
+Решение:
+Действие:
+Проверка результата:
+Проверка хода:
+Обучение и порядок изменения правил:
+Владелец:
+Роль человека:
+Роль обычной программы:
+Роль ИИ:
+Исключения:
+Исходные показатели:
+Максимальный ущерб:
+Резерв:
+Дата решения после пилота:</div>
+          </div>
+          <p style="margin:14px 0 6px; font-size:15px; text-wrap:pretty"><strong>Короткий пример:</strong> система готовит ответ на A1; оператор проверяет источник и отправляет; редкие претензии всегда уходят старшему специалисту; резерв — прежняя очередь.</p>
+          <p style="margin:0; font-size:15px; text-wrap:pretty"><strong>Критерий готовности:</strong> каждый шаг цикла имеет исполнителя, проверку и границу.</p>
+        </section>
+
+        <section id="2-карточка-сценария-применения">
+          <h2 style="margin:48px 0 14px; font-size:24px; font-weight:800; letter-spacing:-0.01em; text-wrap:balance">2. Карточка сценария применения <a href="#2-карточка-сценария-применения" aria-label="Ссылка на раздел" style="font-size:15px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Когда нужна:</strong> при выборе и сравнении инвестиций.</p>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Кто отвечает:</strong> предложивший сценарий вместе с владельцем результата.</p>
+          <p style="margin:0 0 12px; font-size:15px"><strong>Сокращённый пример формы.</strong> Полная форма со всеми обязательными полями — <a href="./templates/use-case-canvas.md">в Markdown</a>.</p>
+          <div style="border:1px solid rgba(23,17,6,0.28); border-left:3px solid #C2782E; background:#F4EEDD; padding:14px 18px; overflow-x:auto">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.7; white-space:pre; color:#171106"># Сценарий: [название]
+Получатель:
+Проблема:
+Принятый результат:
+Частота и объём:
+Исходный уровень:
+Более простой механизм:
+Предлагаемая роль ИИ:
+Цена ошибки и обратимость:
+Нужные данные:
+Ожидаемая польза:
+Полная стоимость:
+Гипотезы:
+Условие остановки:
+Решение и дата:</div>
+          </div>
+          <p style="margin:14px 0 6px; font-size:15px; text-wrap:pretty"><strong>Короткий пример:</strong> частая классификация входящих заявок; обычные правила покрывают заполненность, ИИ предлагает тему; запись маршрута остаётся за оператором до проверки.</p>
+          <p style="margin:0; font-size:15px; text-wrap:pretty"><strong>Критерий готовности:</strong> сценарий можно сравнить с другим по одинаковым полям, а гипотезы не выданы за факты.</p>
+        </section>
+
+        <section id="3-карта-полномочий-человека-и-ии">
+          <h2 style="margin:48px 0 14px; font-size:24px; font-weight:800; letter-spacing:-0.01em; text-wrap:balance">3. Карта полномочий человека и ИИ <a href="#3-карта-полномочий-человека-и-ии" aria-label="Ссылка на раздел" style="font-size:15px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Когда нужна:</strong> до доступа к рабочей системе и при повышении A.</p>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Кто отвечает:</strong> владелец результата; владелец системы подтверждает фактические права.</p>
+          <p style="margin:0 0 12px; font-size:15px"><strong>Сокращённый пример формы.</strong> Полная форма с ценой ошибки, условием остановки и резервом — <a href="./templates/decision-rights-map.md">в Markdown</a>.</p>
+          <div style="border:1px solid rgba(23,17,6,0.28); border-left:3px solid #C2782E; background:#F4EEDD; padding:14px 18px; overflow-x:auto">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.7; white-space:pre; color:#171106"># Полномочия: [процесс]
+| Действие | Инициатор | Владелец результата | Исполнитель | A0–A3 | Согласующий | Проверяющий | Техническое право | Остановка |
+|---|---|---|---|---:|---|---|---|---|
+| | | | | | | | | |</div>
+          </div>
+          <p style="margin:14px 0 6px; font-size:15px; text-wrap:pretty"><strong>Короткий пример:</strong> создать запрос на слияние | разработчик | владелец компонента | ИИ-система | A2 | не требуется | разработчик | только ветка задачи | три сбоя проверки.</p>
+          <p style="margin:0; font-size:15px; text-wrap:pretty"><strong>Критерий готовности:</strong> организационная ответственность и техническое исполнение различимы; уровень назначен действию.</p>
+        </section>
+
+        <section id="4-реестр-источников-контекста">
+          <h2 style="margin:48px 0 14px; font-size:24px; font-weight:800; letter-spacing:-0.01em; text-wrap:balance">4. Реестр источников контекста <a href="#4-реестр-источников-контекста" aria-label="Ссылка на раздел" style="font-size:15px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Когда нужен:</strong> до передачи внутренних данных и при смене источника.</p>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Кто отвечает:</strong> владелец данных; владелец процесса подтверждает пригодность.</p>
+          <p style="margin:0 0 12px; font-size:15px"><strong>Сокращённый пример формы.</strong> Полная форма с резервным сценарием на случай недоступности источника — <a href="./templates/context-register.md">в Markdown</a>.</p>
+          <div style="border:1px solid rgba(23,17,6,0.28); border-left:3px solid #C2782E; background:#F4EEDD; padding:14px 18px; overflow-x:auto">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.7; white-space:pre; color:#171106"># Реестр контекста: [процесс]
+| Источник | Владелец | Происхождение | Разрешённое использование | Чувствительность | Свежесть | Версия/время | Доступ | Отзыв | Проверка |
+|---|---|---|---|---|---|---|---|---|---|
+| | | | | | | | | | |</div>
+          </div>
+          <p style="margin:14px 0 6px; font-size:15px; text-wrap:pretty"><strong>Короткий пример:</strong> каталог продукта; владелец — коммерческий директор; обновление ежедневно; только подготовка предложения; чтение служебной ролью; отключение через группу доступа.</p>
+          <p style="margin:0; font-size:15px; text-wrap:pretty"><strong>Критерий готовности:</strong> для каждого значимого вывода можно найти источник, версию и право использования.</p>
+        </section>
+
+        <section id="5-навык-агента">
+          <h2 style="margin:48px 0 14px; font-size:24px; font-weight:800; letter-spacing:-0.01em; text-wrap:balance">5. Навык агента <a href="#5-навык-агента" aria-label="Ссылка на раздел" style="font-size:15px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Когда нужен:</strong> когда одна процедура повторилась и должна работать у нескольких участников.</p>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Кто отвечает:</strong> владелец навыка.</p>
+          <p style="margin:0 0 12px; font-size:15px"><strong>Сокращённый пример формы.</strong> Полная форма со всеми обязательными полями — <a href="./templates/agent-skill.md">в Markdown</a>.</p>
+          <div style="border:1px solid rgba(23,17,6,0.28); border-left:3px solid #C2782E; background:#F4EEDD; padding:14px 18px; overflow-x:auto">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.7; white-space:pre; color:#171106"># Навык: [название]
+Версия:
+Владелец:
+Назначение:
+Применять, когда:
+Не применять, когда:
+Вход:
+Выход:
+Разрешённые инструменты:
+Предел полномочий:
+Порядок действий:
+Обычный пример:
+Пограничный пример:
+Проверки результата:
+Проверки хода:
+Совместимость:
+Порядок отключения:
+Журнал изменений:</div>
+          </div>
+          <p style="margin:14px 0 6px; font-size:15px; text-wrap:pretty"><strong>Короткий пример:</strong> навык готовит описание изменения, но не утверждает риск; использует только журнал версии и результаты тестов; выдуманная проверка считается критической ошибкой.</p>
+          <p style="margin:0; font-size:15px; text-wrap:pretty"><strong>Критерий готовности:</strong> маршрутизация, результат, ход, расход и регрессии проверены на закреплённой версии среды.</p>
+        </section>
+
+        <section id="6-план-проверок-качества">
+          <h2 style="margin:48px 0 14px; font-size:24px; font-weight:800; letter-spacing:-0.01em; text-wrap:balance">6. План проверок качества <a href="#6-план-проверок-качества" aria-label="Ссылка на раздел" style="font-size:15px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Когда нужен:</strong> до пилота, выпуска и повышения полномочий.</p>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Кто отвечает:</strong> владелец качества вместе с владельцем результата.</p>
+          <p style="margin:0 0 12px; font-size:15px"><strong>Сокращённый пример формы.</strong> Полная форма со всеми обязательными полями — <a href="./templates/eval-plan.md">в Markdown</a>.</p>
+          <div style="border:1px solid rgba(23,17,6,0.28); border-left:3px solid #C2782E; background:#F4EEDD; padding:14px 18px; overflow-x:auto">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.7; white-space:pre; color:#171106"># План проверок: [система и версия]
+Решение, которое принимает проверка:
+Состав системы:
+Сегменты:
+Обычные случаи:
+Пограничные случаи:
+Редкие случаи:
+Вредоносные случаи:
+Детерминированные правила:
+Человеческая выборка:
+Проверка другой моделью и калибровка:
+Проверка хода:
+Показатели:
+Порог предупреждения:
+Порог остановки:
+Резерв:
+Результат прогона:
+Решение:</div>
+          </div>
+          <p style="margin:14px 0 6px; font-size:15px; text-wrap:pretty"><strong>Короткий пример:</strong> разрешить A1 для типовых обращений, если ни один критический факт не ошибочен в контрольной выборке и каждая фактическая фраза имеет допустимый источник.</p>
+          <p style="margin:0; font-size:15px; text-wrap:pretty"><strong>Критерий готовности:</strong> набор воспроизводим, пороги заданы заранее, решение следует из результата.</p>
+        </section>
+
+        <section id="7-реестр-рисков">
+          <h2 style="margin:48px 0 14px; font-size:24px; font-weight:800; letter-spacing:-0.01em; text-wrap:balance">7. Реестр рисков <a href="#7-реестр-рисков" aria-label="Ссылка на раздел" style="font-size:15px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Когда нужен:</strong> с первого производственного использования и при существенном изменении.</p>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Кто отвечает:</strong> владелец результата; владельцы мер подтверждают выполнение.</p>
+          <p style="margin:0 0 12px; font-size:15px"><strong>Сокращённый пример формы.</strong> Полная форма с ценой ошибки, реакцией и резервом — <a href="./templates/risk-register.md">в Markdown</a>.</p>
+          <div style="border:1px solid rgba(23,17,6,0.28); border-left:3px solid #C2782E; background:#F4EEDD; padding:14px 18px; overflow-x:auto">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.7; white-space:pre; color:#171106"># Реестр рисков: [процесс]
+| Риск | Причина | Последствие | Затронутые лица | Вероятность/неопределённость | Тяжесть | Предотвращение | Обнаружение | Реакция | Владелец | Остаточный риск | Пересмотр |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| | | | | | | | | | | | |</div>
+          </div>
+          <p style="margin:14px 0 6px; font-size:15px; text-wrap:pretty"><strong>Короткий пример:</strong> устаревшая цена приводит к неверному предложению; предотвращение — источник не старше суток; обнаружение — сверка расчёта; реакция — блокировка отправки.</p>
+          <p style="margin:0; font-size:15px; text-wrap:pretty"><strong>Критерий готовности:</strong> каждый существенный риск имеет предотвращение, обнаружение, реакцию и владельца.</p>
+        </section>
+
+        <section id="8-договор-о-самостоятельности">
+          <h2 style="margin:48px 0 14px; font-size:24px; font-weight:800; letter-spacing:-0.01em; text-wrap:balance">8. Договор о самостоятельности <a href="#8-договор-о-самостоятельности" aria-label="Ссылка на раздел" style="font-size:15px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Когда нужен:</strong> перед A2 и A3, а также после инцидента или смены модели.</p>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Кто отвечает:</strong> владелец результата; владельцы безопасности и системы подтверждают ограничения.</p>
+          <p style="margin:0 0 12px; font-size:15px"><strong>Сокращённый пример формы.</strong> Полная форма с областью данных, техническими правами, лимитами и резервным режимом — <a href="./templates/autonomy-contract.md">в Markdown</a>.</p>
+          <div style="border:1px solid rgba(23,17,6,0.28); border-left:3px solid #C2782E; background:#F4EEDD; padding:14px 18px; overflow-x:auto">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.7; white-space:pre; color:#171106"># Договор о самостоятельности: [действие]
+Уровень A:
+Разрешённые действия:
+Разрешённые системы:
+Владелец результата:
+Служебная учётная запись:
+Максимальный ущерб одного действия:
+Обратимость и срок отката:
+Обязательные проверки:
+Предел расходов:
+Предел времени:
+Предел числа действий:
+Обязательные согласования:
+События журнала:
+Условия остановки/понижения:
+Ручной или ограниченный режим:
+Доказательства стабильной работы:
+Дата и события пересмотра:</div>
+          </div>
+          <p style="margin:14px 0 6px; font-size:15px; text-wrap:pretty"><strong>Короткий пример:</strong> A2 разрешает создать запрос на слияние только в ветке задачи; запрещает слияние; предел — один запрос и 20 минут; остановка — любая попытка изменить защищённую ветку.</p>
+          <p style="margin:0; font-size:15px; text-wrap:pretty"><strong>Критерий готовности:</strong> технические права соответствуют тексту, а остановка и откат испытаны.</p>
+        </section>
+
+        <section id="9-описание-изменения-с-ии">
+          <h2 style="margin:48px 0 14px; font-size:24px; font-weight:800; letter-spacing:-0.01em; text-wrap:balance">9. Описание изменения с ИИ <a href="#9-описание-изменения-с-ии" aria-label="Ссылка на раздел" style="font-size:15px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Когда нужно:</strong> для изменения, подготовленного или существенно изменённого ИИ.</p>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Кто отвечает:</strong> автор изменения.</p>
+          <p style="margin:0 0 12px; font-size:15px"><strong>Сокращённый пример формы.</strong> Полная форма со всеми обязательными полями — <a href="./templates/ai-pr.md">в Markdown</a>.</p>
+          <div style="border:1px solid rgba(23,17,6,0.28); border-left:3px solid #C2782E; background:#F4EEDD; padding:14px 18px; overflow-x:auto">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.7; white-space:pre; color:#171106"># Изменение: [краткая цель]
+Спецификация:
+Результат для пользователя:
+Что изменено:
+Что намеренно не изменено:
+Затронутые данные и права:
+Новые зависимости:
+Выполненные проверки и ссылки:
+Проверка отрисованного результата:
+Риск и точки возможной поломки:
+Известные ограничения:
+Откат:
+Наблюдение после выпуска:
+Что подготовил ИИ:
+Что независимо проверил человек:</div>
+          </div>
+          <p style="margin:14px 0 6px; font-size:15px; text-wrap:pretty"><strong>Короткий пример:</strong> ИИ подготовил сводку и код; автор сверил список файлов, результаты тестов и риск; выпуск ограничен десятью процентами внутреннего трафика.</p>
+          <p style="margin:0; font-size:15px; text-wrap:pretty"><strong>Критерий готовности:</strong> каждое заявленное доказательство существует, риск и откат понятны независимому рецензенту.</p>
+        </section>
+
+        <section id="10-инцидент-улучшение-проверки">
+          <h2 style="margin:48px 0 14px; font-size:24px; font-weight:800; letter-spacing:-0.01em; text-wrap:balance">10. Инцидент → улучшение проверки <a href="#10-инцидент-улучшение-проверки" aria-label="Ссылка на раздел" style="font-size:15px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Когда нужен:</strong> после серьёзного или повторяющегося сбоя.</p>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Кто отвечает:</strong> владелец инцидента; постоянное улучшение принимает владелец соответствующего актива.</p>
+          <p style="margin:0 0 12px; font-size:15px"><strong>Сокращённый пример формы.</strong> Полная форма со всеми обязательными полями — <a href="./templates/incident-to-check.md">в Markdown</a>.</p>
+          <div style="border:1px solid rgba(23,17,6,0.28); border-left:3px solid #C2782E; background:#F4EEDD; padding:14px 18px; overflow-x:auto">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.7; white-space:pre; color:#171106"># Разбор инцидента: [идентификатор]
+Наблюдаемый ущерб:
+Время обнаружения и ограничения:
+Версии системы:
+Воспроизведение:
+Последовательность внешних событий:
+Причина:
+Содействующие условия:
+Почему проверки не остановили:
+Исправление:
+Новая постоянная проверка:
+Изменение прав/контекста/процесса:
+Владелец:
+Срок:
+Подтверждение:</div>
+          </div>
+          <p style="margin:14px 0 6px; font-size:15px; text-wrap:pretty"><strong>Короткий пример:</strong> устаревший источник не был отмечен; добавлены правило свежести, сигнал и контрольный случай; владелец источника подтвердил обновление.</p>
+          <p style="margin:0; font-size:15px; text-wrap:pretty"><strong>Критерий готовности:</strong> сбой воспроизводится до исправления и не воспроизводится после; выбранный механизм закрывает причину.</p>
+        </section>
+
+        <section id="11-полная-стоимость-результата">
+          <h2 style="margin:48px 0 14px; font-size:24px; font-weight:800; letter-spacing:-0.01em; text-wrap:balance">11. Полная стоимость результата <a href="#11-полная-стоимость-результата" aria-label="Ссылка на раздел" style="font-size:15px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Когда нужна:</strong> до пилота, при решении о продолжении и при существенном изменении объёма или поставщика.</p>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Кто отвечает:</strong> финансовый партнёр и владелец результата.</p>
+          <p style="margin:0 0 12px; font-size:15px"><strong>Сокращённый пример формы.</strong> Полная форма со всеми обязательными полями — <a href="./templates/cost-to-outcome.md">в Markdown</a>.</p>
+          <div style="border:1px solid rgba(23,17,6,0.28); border-left:3px solid #C2782E; background:#F4EEDD; padding:14px 18px; overflow-x:auto">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.7; white-space:pre; color:#171106"># Полная стоимость: [процесс, период]
+Принятый результат:
+Количество принятых результатов:
+Исходный процесс:
+
+Модели и внешние сервисы:
+Вычисления и хранение:
+Разработка и сопровождение:
+Данные:
+Человеческая проверка:
+Исправления:
+Эксплуатация и безопасность:
+Ожидаемая стоимость ошибок:
+Резерв:
+
+Итого:
+Стоимость принятого результата:
+Диапазон неопределённости:
+Неучтённые факторы:
+Решение:
+Дата пересмотра:</div>
+          </div>
+          <p style="margin:14px 0 6px; font-size:15px; text-wrap:pretty"><strong>Короткий пример:</strong> 350 000 рублей расходов и 700 принятых результатов дают 500 рублей на результат; это условный пример из главы 9, а не отраслевой ориентир.</p>
+          <p style="margin:0; font-size:15px; text-wrap:pretty"><strong>Критерий готовности:</strong> показатель пересчитывается из указанных данных, допущения видны, сравнение использует ту же единицу.</p>
+        </section>
+
+        <section id="12-план-стартапа-на-30-и-90-дней">
+          <h2 style="margin:48px 0 14px; font-size:24px; font-weight:800; letter-spacing:-0.01em; text-wrap:balance">12. План стартапа на 30 и 90 дней <a href="#12-план-стартапа-на-30-и-90-дней" aria-label="Ссылка на раздел" style="font-size:15px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Когда нужен:</strong> после выбора первого цикла, чтобы зафиксировать пилот, ограниченную эксплуатацию и решение о втором сценарии.</p>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Кто отвечает:</strong> основатель отвечает за инвестицию и остановку; владелец процесса — за действия команды и принятый результат.</p>
+          <p style="margin:0 0 12px; font-size:15px"><strong>Сокращённый пример формы.</strong> Полная форма с этапами, резервом и решениями дня 30 и дня 90 — <a href="./templates/startup-90-days.md">в Markdown</a>.</p>
+          <div style="border:1px solid rgba(23,17,6,0.28); border-left:3px solid #C2782E; background:#F4EEDD; padding:14px 18px; overflow-x:auto">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.7; white-space:pre; color:#171106"># План стартапа: [процесс]
+Основатель:
+Владелец процесса:
+Цель и границы:
+Исходный профиль и показатели:
+
+| Горизонт | Действие | Владелец | Артефакт | Критерий завершения |
+|---|---|---|---|---|
+| Дни 1–30 | | | | |
+| Дни 31–90 | | | | |
+
+Условия остановки:
+Резервный сценарий:
+Решение дня 30:
+Решение дня 90:</div>
+          </div>
+          <p style="margin:14px 0 6px; font-size:15px; text-wrap:pretty"><strong>Короткий пример:</strong> к дню 30 команда измеряет и ограничивает первый цикл; к дню 90 решает, переносить ли подтверждённый механизм во второй сценарий.</p>
+          <p style="margin:0; font-size:15px; text-wrap:pretty"><strong>Критерий готовности:</strong> каждый срок заканчивается проверяемым артефактом и решением; цикл либо работает с известными стоимостью и риском, либо закрыт с сохранёнными знаниями.</p>
+        </section>
+
+        <section id="13-план-зрелой-компании-на-30-90-и-180-дней">
+          <h2 style="margin:48px 0 14px; font-size:24px; font-weight:800; letter-spacing:-0.01em; text-wrap:balance">13. План зрелой компании на 30, 90 и 180 дней <a href="#13-план-зрелой-компании-на-30-90-и-180-дней" aria-label="Ссылка на раздел" style="font-size:15px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Когда нужен:</strong> когда разрозненные пилоты и действующие механизмы нужно собрать в один управляемый сквозной поток.</p>
+          <p style="margin:0 0 6px; font-size:15px"><strong>Кто отвечает:</strong> исполнительный куратор задаёт полномочия; владелец потока отвечает за результат; руководящий комитет принимает портфельные решения.</p>
+          <p style="margin:0 0 12px; font-size:15px"><strong>Сокращённый пример формы.</strong> Полная форма с этапами, повторной приёмкой, резервом и тремя решениями — <a href="./templates/mature-company-180-days.md">в Markdown</a>.</p>
+          <div style="border:1px solid rgba(23,17,6,0.28); border-left:3px solid #C2782E; background:#F4EEDD; padding:14px 18px; overflow-x:auto">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.7; white-space:pre; color:#171106"># План зрелой компании: [поток]
+Исполнительный куратор:
+Владелец потока:
+Цель и границы:
+Исходный профиль и показатели:
+
+| Горизонт | Действие | Владелец | Артефакт | Критерий завершения |
+|---|---|---|---|---|
+| Дни 1–30 | | | | |
+| Дни 31–90 | | | | |
+| Дни 91–180 | | | | |
+
+Условия остановки:
+Резервный сценарий:
+Решение дня 30:
+Решение дня 90:
+Решение дня 180:</div>
+          </div>
+          <p style="margin:14px 0 6px; font-size:15px; text-wrap:pretty"><strong>Короткий пример:</strong> к дню 30 компания выбирает поток и ограничивает права; к дню 90 проводит ограниченный выпуск; к дню 180 проверяет общий компонент во втором потоке и решает, масштабировать ли его.</p>
+          <p style="margin:0; font-size:15px; text-wrap:pretty"><strong>Критерий готовности:</strong> каждый горизонт завершается наблюдаемым решением; переносимый компонент отдельно принят вторым потребителем.</p>
+        </section>
+
+
+      <h2 id="короткий-глоссарий" style="margin:56px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Короткий глоссарий <a href="#короткий-глоссарий" aria-label="Ссылка на раздел «Короткий глоссарий»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <dl style="margin:0 0 18px; display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:1px; background:rgba(23,17,6,0.18); border:1px solid rgba(23,17,6,0.28)">
+        <div style="background:#FBF7EE; padding:12px 14px"><dt style="font-weight:800; margin-bottom:4px">AI-native компания</dt><dd style="margin:0; font-size:14px; line-height:1.5; color:#4A4030">авторский термин для организации, где ИИ встроен в управляемый цикл операционной модели.</dd></div>
+        <div style="background:#FBF7EE; padding:12px 14px"><dt style="font-weight:800; margin-bottom:4px">Агент</dt><dd style="margin:0; font-size:14px; line-height:1.5; color:#4A4030">модель вместе со средой, состоянием, инструментами, обратной связью и ограничениями.</dd></div>
+        <div style="background:#FBF7EE; padding:12px 14px"><dt style="font-weight:800; margin-bottom:4px">Принятый результат</dt><dd style="margin:0; font-size:14px; line-height:1.5; color:#4A4030">выход процесса, который прошёл согласованный критерий и принят получателем.</dd></div>
+        <div style="background:#FBF7EE; padding:12px 14px"><dt style="font-weight:800; margin-bottom:4px">Постоянный контекст</dt><dd style="margin:0; font-size:14px; line-height:1.5; color:#4A4030">общие правила, архитектура, стандарты и ограничения.</dd></div>
+        <div style="background:#FBF7EE; padding:12px 14px"><dt style="font-weight:800; margin-bottom:4px">Оперативный контекст</dt><dd style="margin:0; font-size:14px; line-height:1.5; color:#4A4030">данные и история текущей задачи.</dd></div>
+        <div style="background:#FBF7EE; padding:12px 14px"><dt style="font-weight:800; margin-bottom:4px">Навык агента</dt><dd style="margin:0; font-size:14px; line-height:1.5; color:#4A4030">версионируемый набор инструкций, примеров и материалов для повторяемой задачи.</dd></div>
+        <div style="background:#FBF7EE; padding:12px 14px"><dt style="font-weight:800; margin-bottom:4px">Среда исполнения</dt><dd style="margin:0; font-size:14px; line-height:1.5; color:#4A4030">состав моделей, инструкций, навыков, инструментов, порядка выполнения и изоляции.</dd></div>
+        <div style="background:#FBF7EE; padding:12px 14px"><dt style="font-weight:800; margin-bottom:4px">Контур управления</dt><dd style="margin:0; font-size:14px; line-height:1.5; color:#4A4030">учётные записи, права, согласования, политики, секреты и журнал действий.</dd></div>
+        <div style="background:#FBF7EE; padding:12px 14px"><dt style="font-weight:800; margin-bottom:4px">Проверка хода действий</dt><dd style="margin:0; font-size:14px; line-height:1.5; color:#4A4030">проверка использованных источников, инструментов, прав, шагов и согласований.</dd></div>
+        <div style="background:#FBF7EE; padding:12px 14px"><dt style="font-weight:800; margin-bottom:4px">Полная стоимость результата</dt><dd style="margin:0; font-size:14px; line-height:1.5; color:#4A4030">все расходы и ожидаемый ущерб, разделённые на число принятых результатов.</dd></div>
+        <div style="background:#FBF7EE; padding:12px 14px"><dt style="font-weight:800; margin-bottom:4px">Резервный сценарий</dt><dd style="margin:0; font-size:14px; line-height:1.5; color:#4A4030">заранее испытанный способ продолжить или безопасно остановить процесс при отказе.</dd></div>
+      </dl>
+
+      <h2 id="следующий-шаг" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Следующий шаг <a href="#следующий-шаг" aria-label="Ссылка на раздел «Следующий шаг»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 14px; font-size:19px; font-weight:700">Не заполняйте весь комплект сразу.</p>
+      <ol style="margin:0 0 18px; padding-left:24px; display:flex; flex-direction:column; gap:8px">
+        <li>Назовите один процесс.</li>
+        <li>Заполните карточку сценария и паспорт цикла.</li>
+        <li>Измерьте исходный уровень.</li>
+        <li>Проведите карту зрелости.</li>
+        <li>Закройте один блокирующий разрыв.</li>
+        <li>Составьте план проверок.</li>
+        <li>Запустите ограниченную серию на A0 или A1.</li>
+        <li>Через заранее заданный срок примите решение.</li>
+      </ol>
+      <p style="margin:0 0 18px; border-left:3px solid #9C4A0E; padding:10px 14px; background:#F1E7CF; text-wrap:pretty">Если вы не можете назвать владельца, принятый результат или условие остановки, не переходите к выбору модели.</p>
+
+      <h2 id="рабочая-карточка" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Рабочая карточка главы <a href="#рабочая-карточка" aria-label="Ссылка на раздел «Рабочая карточка главы»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <div style="border:2px solid #171106">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1px; background:rgba(23,17,6,0.18)">
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Решение</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Выбрать минимальный набор форм для ближайшего решения и отказаться от документов без владельца.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Минимальный механизм</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Карточка сценария, паспорт цикла, карта зрелости, план проверок и календарный план. Остальные формы добавляются по правам, риску и масштабу.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Ответственный</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Владелец процесса ведёт комплект. Каждый профильный владелец подтверждает свой раздел.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Артефакт</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Связанный набор версионируемых форм с единым названием процесса и ссылками друг на друга.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Критерий готовности</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">По комплекту можно восстановить решение, исполнителя, доказательство, риск и следующий момент проверки.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Различия маршрутов</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Стартап хранит короткие формы рядом с рабочим процессом. Зрелая компания связывает их с системами управления документами и контролем доступа. Одинаковая структура облегчает сравнение, но объём доказательств соответствует риску.</p></div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1px; background:rgba(23,17,6,0.18); border-top:2px solid #171106">
+          <div style="background:#F4EEDD; padding:16px 18px">
+            <p style="margin:0 0 8px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#4A4030">Показатели результата</p>
+            <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.5; display:flex; flex-direction:column; gap:5px"><li>время от идеи до решения;</li><li>доля форм, использованных в реальном обзоре;</li><li>доля решений со ссылкой на доказательство;</li><li>время обновления после события;</li><li>повторное использование без потери смысла.</li></ul>
+          </div>
+          <div style="background:#F4EEDD; padding:16px 18px">
+            <p style="margin:0 0 8px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#4A4030">Показатели риска</p>
+            <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.5; display:flex; flex-direction:column; gap:5px"><li>формы без владельца;</li><li>противоречащие версии;</li><li>пустые обязательные поля;</li><li>секреты и лишние персональные данные;</li><li>планы без критериев завершения;</li><li>права без договора.</li></ul>
+          </div>
+          <div style="background:#F4EEDD; padding:16px 18px">
+            <p style="margin:0 0 8px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#A83E1F">Типичные ошибки</p>
+            <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.5; display:flex; flex-direction:column; gap:5px"><li>заполнять все формы ради полноты;</li><li>копировать пример как факт;</li><li>хранить доказательство только в переписке;</li><li>допускать разные названия одного процесса;</li><li>не обновлять связанные артефакты после смены границы;</li><li>считать подпись доказательством работающего механизма.</li></ul>
+          </div>
+        </div>
+        <div style="border-top:2px solid #171106; padding:16px 18px 6px">
+          <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Чек-лист · сохраняется в браузере</p>
+          <ul style="margin:0 0 14px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px">
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="0" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Выбран ближайший управленческий вопрос.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="1" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Для него взят минимальный набор форм.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="2" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Во всех формах одинаково названы процесс и владелец.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="3" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Примеры заменены фактическими данными команды.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="4" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Доказательства доступны по ссылкам.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="5" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Чувствительные данные не копируются без необходимости.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="6" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Следующее решение и дата указаны.</span>
+                </label>
+              </li>
+
+          </ul>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  </main>
+
+  <footer style="border-top:2px solid #171106; margin-top:24px">
+    <div style="max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap">
+      <a href="./chapter-11.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px" class="hv1">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">← Глава 11</span>
+        <span style="font-size:19px; font-weight:700">План зрелой компании: 30, 90 и 180 дней</span>
+      </a>
+      <a href="./sources.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px; align-items:flex-end; text-align:right; border-left:1px solid rgba(23,17,6,0.14)" class="hv1">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">Приложение →</span>
+        <span style="font-size:19px; font-weight:700">Источники и стандарт доказательности</span>
+      </a>
+    </div>
+  </footer>
+</div>
+
+<script src="./assets/book-v3.js" defer></script>
+</body>
+</html>

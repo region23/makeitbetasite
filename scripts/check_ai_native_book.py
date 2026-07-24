@@ -38,6 +38,52 @@ EXPECTED_TEMPLATES = {
 FORBIDDEN = ("mc.yandex.ru", "ym(", "webvisor", "clickmap")
 NETWORK_APIS = ("fetch(", "xmlhttprequest", "sendbeacon", "websocket(")
 REMOTE_URL = re.compile(r"(?:https?:)?//", re.IGNORECASE)
+NETWORK_REFERENCE = re.compile(
+    r"(?:https?:)?//(?:"
+    r"localhost"
+    r"|\d{1,3}(?:\.\d{1,3}){3}"
+    r"|\[[0-9a-f:.]+\]"
+    r"|(?:[a-z0-9-]+\.)+[a-z0-9-]+"
+    r")(?::\d+)?",
+    re.IGNORECASE,
+)
+EMBEDDED_RESOURCE_ATTRIBUTES = {
+    "audio": ("src",),
+    "embed": ("src",),
+    "iframe": ("src",),
+    "img": ("src", "srcset"),
+    "input": ("src",),
+    "object": ("data",),
+    "source": ("src", "srcset"),
+    "track": ("src",),
+    "video": ("src", "poster"),
+}
+GOOGLE_FONT_HOSTS = {"fonts.googleapis.com", "fonts.gstatic.com"}
+MULTIPAGE_PAGES = {
+    "index.html": "hub",
+    **{f"chapter-{number:02}.html": f"ch{number}" for number in range(1, 13)},
+    "sources.html": "sources",
+    "version.html": "version",
+}
+LEGACY_HASH_ROUTES = {
+    "#ch1": "./chapter-01.html",
+    "#ch2": "./chapter-02.html",
+    "#ch3": "./chapter-04.html",
+    "#ch4": "./chapter-10.html",
+    "#ch5": "./chapter-11.html",
+    "#ch6": "./chapter-06.html",
+    "#ch7": "./chapter-07.html",
+    "#ch8": "./chapter-09.html",
+    "#ch9": "./chapter-08.html",
+    "#ch10": "./full.html#ch10",
+    "#ch11": "./full.html#ch11",
+    "#ch12": "./chapter-12.html",
+    "#sources": "./sources.html",
+    "#version": "./version.html",
+    "#changelog": "./version.html#что-изменилось",
+    "#first-managed-loop": "./chapter-03.html",
+    "#context-memory-skills": "./chapter-05.html",
+}
 
 
 class _HtmlSummary(HTMLParser):
@@ -49,6 +95,9 @@ class _HtmlSummary(HTMLParser):
         self.link_elements: list[dict[str, str]] = []
         self.metas: list[dict[str, str]] = []
         self.scripts: list[dict[str, str]] = []
+        self.resource_elements: list[tuple[str, dict[str, str]]] = []
+        self.style_attributes: list[str] = []
+        self.style_parts: list[str] = []
         self.main_ids: set[str] = set()
         self.h1_inside_main = 0
         self.summary_inside_details = 0
@@ -56,6 +105,7 @@ class _HtmlSummary(HTMLParser):
         self.template_registry: list[str] = []
         self.route_controls: list[tuple[str, dict[str, str]]] = []
         self.text_parts: list[str] = []
+        self.body_attributes: dict[str, str] = {}
         self._open_tags: list[str] = []
 
     def handle_starttag(
@@ -66,6 +116,12 @@ class _HtmlSummary(HTMLParser):
         self.tags[tag] = self.tags.get(tag, 0) + 1
         if attributes.get("id"):
             self.ids[attributes["id"]] += 1
+        if tag == "body":
+            self.body_attributes = attributes
+        if attributes.get("style"):
+            self.style_attributes.append(attributes["style"])
+        if tag in EMBEDDED_RESOURCE_ATTRIBUTES:
+            self.resource_elements.append((tag, attributes))
         if tag == "main" and attributes.get("id"):
             self.main_ids.add(attributes["id"])
         elif tag == "h1" and "main" in self._open_tags:
@@ -107,10 +163,14 @@ class _HtmlSummary(HTMLParser):
             self._open_tags.append(tag)
 
     def handle_data(self, data: str) -> None:
-        if not any(tag in {"script", "style"} for tag in self._open_tags):
-            stripped = data.strip()
-            if stripped:
-                self.text_parts.append(stripped)
+        if "style" in self._open_tags:
+            self.style_parts.append(data)
+            return
+        if "script" in self._open_tags:
+            return
+        stripped = data.strip()
+        if stripped:
+            self.text_parts.append(stripped)
 
     def handle_endtag(self, tag: str) -> None:
         tag = tag.lower()
@@ -124,6 +184,16 @@ def _has_canonical(summary: _HtmlSummary) -> bool:
         "canonical" in link.get("rel", "").lower().split()
         and bool(link.get("href", "").strip())
         for link in summary.link_elements
+    )
+
+
+def _has_skip_link(summary: _HtmlSummary) -> bool:
+    return any(
+        "skip-link" in anchor.get("class", "").split()
+        and anchor.get("href", "").startswith("#")
+        and urlsplit(anchor.get("href", "")).fragment in summary.main_ids
+        for anchor in summary.anchors
+        if "href" in anchor
     )
 
 
@@ -186,14 +256,7 @@ def validate_html_text(html: str, *, archive: bool = False) -> list[str]:
         errors.extend(_external_dependency_errors(summary))
         return errors
 
-    has_skip_link = any(
-        "skip-link" in anchor.get("class", "").split()
-        and anchor.get("href", "").startswith("#")
-        and urlsplit(anchor.get("href", "")).fragment in summary.main_ids
-        for anchor in summary.anchors
-        if "href" in anchor
-    )
-    if not has_skip_link:
+    if not _has_skip_link(summary):
         errors.append("Отсутствует skip-link к основному содержимому")
     if summary.tags.get("main", 0) != 1:
         errors.append("Страница должна содержать ровно один элемент main")
@@ -328,6 +391,248 @@ def _asset_errors(root: Path, html_path: Path, html: str) -> list[str]:
     return errors
 
 
+def _multipage_page_errors(html: str, *, expected_page: str) -> list[str]:
+    """Проверяет базовую структуру одной страницы новой многостраничной версии."""
+    summary = _HtmlSummary()
+    summary.feed(html)
+    errors = _forbidden_errors(html)
+    errors.extend(
+        f"Идентификатор #{element_id} повторяется на странице"
+        for element_id, count in sorted(summary.ids.items())
+        if count > 1
+    )
+
+    if summary.body_attributes.get("data-page") != expected_page:
+        errors.append(
+            f'body должен содержать data-page="{expected_page}"'
+        )
+    if not _has_skip_link(summary):
+        errors.append("Отсутствует skip-link к основному содержимому")
+    if summary.tags.get("main", 0) != 1:
+        errors.append("Страница должна содержать ровно один элемент main")
+    if summary.tags.get("h1", 0) != 1:
+        errors.append("Страница должна содержать ровно один заголовок h1")
+    elif summary.h1_inside_main != 1:
+        errors.append("Единственный h1 должен находиться внутри main")
+    if summary.headings and summary.headings[0] != 1:
+        errors.append("Первым заголовком документа должен быть h1")
+    for previous, current in zip(summary.headings, summary.headings[1:]):
+        if current > previous + 1:
+            errors.append(
+                f"Уровень заголовка перескакивает с h{previous} на h{current}"
+            )
+    if not _has_canonical(summary):
+        errors.append("Отсутствует ссылка canonical")
+
+    local_scripts = {
+        urlsplit(script.get("src", "")).path
+        for script in summary.scripts
+        if script.get("src") and _is_local_reference(script["src"])
+    }
+    if "./assets/book-v3.js" not in local_scripts:
+        errors.append("Страница должна подключать ./assets/book-v3.js")
+    if not summary.tags.get("style"):
+        errors.append("В многостраничной версии отсутствуют инлайн-стили")
+    return errors
+
+
+def _multipage_asset_errors(
+    root: Path,
+    html_path: Path,
+    html: str,
+) -> list[str]:
+    """Проверяет разрешённые шрифты и локальные скрипты новой версии."""
+    summary = _HtmlSummary()
+    summary.feed(html)
+    errors: list[str] = []
+    local_assets: set[tuple[str, Path, str]] = set()
+
+    for link in summary.link_elements:
+        rel = set(link.get("rel", "").lower().split())
+        reference = link.get("href", "")
+        if not reference:
+            continue
+        if _is_local_reference(reference):
+            if "stylesheet" in rel:
+                reference_path = urlsplit(reference).path
+                asset_path = (
+                    root / reference_path.lstrip("/")
+                    if reference_path.startswith("/")
+                    else html_path.parent / reference_path
+                )
+                local_assets.add(("CSS", asset_path, reference))
+            continue
+
+        parsed = urlsplit(reference)
+        if "stylesheet" in rel:
+            if parsed.scheme == "https" and parsed.netloc == "fonts.googleapis.com":
+                continue
+            errors.append(f"Неразрешённый внешний CSS: {reference}")
+            continue
+        if rel.intersection({"preconnect", "dns-prefetch"}):
+            if parsed.scheme == "https" and parsed.netloc in GOOGLE_FONT_HOSTS:
+                continue
+            errors.append(f"Неразрешённая внешняя сетевая подсказка: {reference}")
+            continue
+        if rel == {"canonical"}:
+            continue
+        errors.append(f"Неразрешённый внешний ресурс link: {reference}")
+
+    for tag, attributes in summary.resource_elements:
+        for attribute in EMBEDDED_RESOURCE_ATTRIBUTES[tag]:
+            reference = attributes.get(attribute, "").strip()
+            if not reference:
+                continue
+            if attribute == "srcset":
+                is_external = bool(NETWORK_REFERENCE.search(reference))
+            else:
+                is_external = not _is_local_reference(reference)
+            if is_external:
+                errors.append(
+                    "Внешний встроенный ресурс запрещён: "
+                    f"<{tag} {attribute}=\"{reference}\">"
+                )
+
+    for script in summary.scripts:
+        reference = script.get("src", "")
+        if not reference:
+            continue
+        if not _is_local_reference(reference):
+            errors.append(f"Внешний JavaScript запрещён: {reference}")
+            continue
+        reference_path = urlsplit(reference).path
+        asset_path = (
+            root / reference_path.lstrip("/")
+            if reference_path.startswith("/")
+            else html_path.parent / reference_path
+        )
+        local_assets.add(("JavaScript", asset_path, reference))
+
+    for kind, asset_path, reference in sorted(local_assets):
+        if not asset_path.is_file():
+            errors.append(f"Не найден локальный {kind}: {reference}")
+            continue
+        asset_text = asset_path.read_text(encoding="utf-8")
+        for error in _forbidden_errors(asset_text):
+            errors.append(f"{reference}: {error}")
+        if NETWORK_REFERENCE.search(asset_text):
+            errors.append(f"{reference}: найдена внешняя сетевая ссылка")
+        if kind == "JavaScript":
+            lowered = asset_text.lower().replace(" ", "")
+            for api in NETWORK_APIS:
+                if api in lowered:
+                    errors.append(
+                        f"{reference}: запрещён сетевой API {api.rstrip('(')}"
+                    )
+
+    inline_scripts = re.findall(
+        r"<script\b(?![^>]*\bsrc=)[^>]*>(.*?)</script>",
+        html,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    for script in inline_scripts:
+        lowered = script.lower().replace(" ", "")
+        for api in NETWORK_APIS:
+            if api in lowered:
+                errors.append(f"Инлайн-скрипт использует сетевой API {api.rstrip('(')}")
+
+    inline_css = [*summary.style_parts, *summary.style_attributes]
+    if any(NETWORK_REFERENCE.search(css) for css in inline_css):
+        errors.append("Инлайн-CSS содержит внешнюю сетевую ссылку")
+    return errors
+
+
+def _multipage_errors(root: Path, *, phase: str) -> list[str]:
+    book = root / "ai_native_book"
+    errors: list[str] = []
+    documents: dict[str, str] = {}
+
+    for filename, expected_page in MULTIPAGE_PAGES.items():
+        path = book / filename
+        try:
+            html = path.read_text(encoding="utf-8")
+        except FileNotFoundError:
+            errors.append(f"Не найден файл {path.relative_to(root)}")
+            continue
+        documents[filename] = html
+        errors.extend(
+            f"{path.relative_to(root)}: {error}"
+            for error in _multipage_page_errors(
+                html,
+                expected_page=expected_page,
+            )
+        )
+        if phase == "all":
+            errors.extend(
+                f"{path.relative_to(root)}: {error}"
+                for error in _multipage_asset_errors(root, path, html)
+            )
+
+    full_path = book / "full.html"
+    full_errors, full_html = _validate_file(full_path, archive=False)
+    errors.extend(
+        f"{full_path.relative_to(root)}: {error}" for error in full_errors
+    )
+    if phase == "all" and full_html is not None:
+        errors.extend(
+            f"{full_path.relative_to(root)}: {error}"
+            for error in _asset_errors(root, full_path, full_html)
+        )
+
+    chapter_twelve = documents.get("chapter-12.html")
+    if chapter_twelve is not None:
+        summary = _HtmlSummary()
+        summary.feed(chapter_twelve)
+        linked_templates = [
+            PurePosixPath(urlsplit(anchor.get("href", "")).path).name
+            for anchor in summary.anchors
+            if anchor.get("href")
+            and PurePosixPath(urlsplit(anchor["href"]).path).name
+            in EXPECTED_TEMPLATES
+        ]
+        first_occurrences = tuple(dict.fromkeys(linked_templates))
+        if first_occurrences != EXPECTED_TEMPLATE_SEQUENCE:
+            errors.append(
+                "ai_native_book/chapter-12.html: реестр 13 шаблонов должен "
+                "соответствовать каноническому порядку Markdown-файлов"
+            )
+
+    for template in EXPECTED_TEMPLATE_SEQUENCE:
+        path = book / "templates" / template
+        if not path.is_file():
+            errors.append(f"Не найден шаблон {path.relative_to(root)}")
+
+    index = documents.get("index.html")
+    if index is not None:
+        routes = dict(
+            re.findall(
+                r"""["'](#[^"']+)["']\s*:\s*["']([^"']+)["']""",
+                index,
+            )
+        )
+        for legacy_hash, target in LEGACY_HASH_ROUTES.items():
+            if routes.get(legacy_hash) != target:
+                errors.append(
+                    "ai_native_book/index.html: неверный редирект "
+                    f"{legacy_hash} → {routes.get(legacy_hash)!r}, ожидается {target}"
+                )
+
+        summary = _HtmlSummary()
+        summary.feed(index)
+        linked_paths = {
+            urlsplit(anchor.get("href", "")).path
+            for anchor in summary.anchors
+            if anchor.get("href")
+        }
+        for number in range(1, 13):
+            expected = f"./chapter-{number:02}.html"
+            if expected not in linked_paths:
+                errors.append(
+                    f"ai_native_book/index.html: отсутствует ссылка {expected}"
+                )
+    return errors
+
+
 def _validate_file(path: Path, *, archive: bool) -> tuple[list[str], str | None]:
     try:
         html = path.read_text(encoding="utf-8")
@@ -383,18 +688,36 @@ def run_checks(root: Path, *, phase: str) -> list[str]:
     archive_path = book / "v1" / "index.html"
     errors: list[str] = []
 
-    main_errors, main_html = _validate_file(main_path, archive=False)
-    errors.extend(f"{main_path.relative_to(root)}: {error}" for error in main_errors)
+    try:
+        main_html = main_path.read_text(encoding="utf-8")
+    except FileNotFoundError:
+        main_html = None
+        errors.append(f"Не найден файл {main_path.relative_to(root)}")
+
+    is_multipage = bool(
+        main_html
+        and re.search(
+            r'<body\b[^>]*\bdata-page=["\']hub["\']',
+            main_html,
+            flags=re.IGNORECASE,
+        )
+    )
+    if is_multipage:
+        errors.extend(_multipage_errors(root, phase=phase))
+    elif main_html is not None:
+        main_errors = validate_html_text(main_html, archive=False)
+        errors.extend(
+            f"{main_path.relative_to(root)}: {error}" for error in main_errors
+        )
+        if phase == "all":
+            errors.extend(
+                f"{main_path.relative_to(root)}: {error}"
+                for error in _asset_errors(root, main_path, main_html)
+            )
 
     archive_errors, _ = _validate_file(archive_path, archive=True)
     errors.extend(f"{archive_path.relative_to(root)}: {error}" for error in archive_errors)
     errors.extend(_source_document_errors(root))
-
-    if phase == "all" and main_html is not None:
-        errors.extend(
-            f"{main_path.relative_to(root)}: {error}"
-            for error in _asset_errors(root, main_path, main_html)
-        )
     return errors
 
 

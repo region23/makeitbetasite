@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Глава 3 — Первый управляемый цикл. AI-native компания v2">
+<title>Глава 3. Первый управляемый цикл — AI-native компания v2</title>
+<link rel="canonical" href="https://makeitbeta.ru/ai_native_book/chapter-03.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..900;1,7..72,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+html { scroll-behavior: smooth; }
+body { margin:0; background:#FBF7EE; color:#171106; font-family:Literata,"Iowan Old Style",Georgia,serif; font-size:17px; line-height:1.65; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+a { color:#9C4A0E; text-decoration-thickness:1px; text-underline-offset:.18em; }
+a:hover { color:#6E3509; text-decoration-thickness:2px; }
+::selection { background:#EADFC4; }
+.skip-link { position:fixed; top:8px; left:8px; z-index:100; padding:8px 12px; background:#171106; color:#FBF7EE; transform:translateY(-180%); transition:transform .12s ease; }
+.skip-link:focus { transform:translateY(0); }
+.hv0:hover { background:#F4EEDD; }
+.chapter-layout { max-width:1280px; margin:0 auto; padding:40px 24px 0; display:flex; gap:48px; align-items:flex-start; flex-wrap:wrap; }
+.chapter-rail { flex:1 1 200px; max-width:240px; position:sticky; top:24px; max-height:calc(100vh - 48px); overflow:auto; }
+.chapter-rail ol { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px; line-height:1.4; border-left:2px solid rgba(23,17,6,.14); }
+.chapter-rail li { padding-left:14px; }
+.chapter-rail a { text-decoration:none; color:#4A4030; }
+article { flex:999 1 480px; max-width:88ch; min-width:0; padding-bottom:64px; }
+article > p { margin:0 0 18px; text-wrap:pretty; }
+article > ul, article > ol { margin:0 0 20px; padding-left:24px; }
+article > ul, article > ol { display:flex; flex-direction:column; gap:6px; }
+article h2 { margin:48px 0 16px; font-size:27px; line-height:1.25; font-weight:800; letter-spacing:-.015em; scroll-margin-top:24px; }
+article h2:first-child { margin-top:0; }
+article h3 { margin:32px 0 10px; font-size:20px; line-height:1.35; font-weight:800; letter-spacing:-.01em; scroll-margin-top:24px; }
+article .heading-link { font-size:15px; font-weight:400; text-decoration:none; color:#C2782E; }
+article code { font-family:"JetBrains Mono",monospace; font-size:.85em; overflow-wrap:anywhere; background:#F1E7CF; padding:.08em .3em; }
+article blockquote, article .chapter-route-note { margin:0 0 18px; border-left:3px solid #9C4A0E; background:#F1E7CF; padding:12px 16px; }
+.table-wrap { overflow-x:auto; border:1px solid rgba(23,17,6,.22); margin:0 0 20px; }
+.table-wrap table { border-collapse:collapse; width:100%; min-width:620px; }
+.table-wrap caption { caption-side:top; text-align:left; font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7A6B52; padding:9px 14px; border-bottom:1px solid rgba(23,17,6,.22); background:#F4EEDD; }
+.table-wrap th { text-align:left; font-family:"JetBrains Mono",monospace; font-size:11px; line-height:1.35; letter-spacing:.06em; text-transform:uppercase; padding:9px 14px; border-bottom:2px solid #171106; vertical-align:bottom; }
+.table-wrap td { padding:9px 14px; border-bottom:1px solid rgba(23,17,6,.14); vertical-align:top; font-size:14.5px; line-height:1.5; }
+.table-wrap tbody tr:last-child td { border-bottom:0; }
+article h3 + .table-wrap { border:2px solid #171106; }
+article .source-ref { font-family:"JetBrains Mono",monospace; font-size:.78em; overflow-wrap:anywhere; }
+.work-card { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1px; border:2px solid #171106; background:rgba(23,17,6,.18); margin-top:0; }
+.work-card > p, .work-card > ul { margin:0; padding:16px 18px; background:#FBF7EE; font-size:15px; line-height:1.55; }
+.work-card > ul { padding-left:38px; }
+.work-card > p strong:first-child { display:block; margin:0 0 6px; font-family:"JetBrains Mono",monospace; font-size:10px; line-height:1.4; letter-spacing:.1em; text-transform:uppercase; color:#9C4A0E; }
+.work-card > ul:has(input[data-reading-check]) { grid-column:1/-1; list-style:none; padding:16px 18px; background:#F4EEDD; }
+.check-item label { display:flex; align-items:flex-start; gap:10px; cursor:pointer; }
+.check-item input { width:18px; height:18px; flex:0 0 auto; margin-top:3px; accent-color:#9C4A0E; }
+@media (max-width:760px) {
+  .chapter-layout { gap:28px; }
+  .chapter-rail { position:static; max-width:none; max-height:none; flex-basis:100%; }
+  article { flex-basis:100%; }
+}
+</style>
+</head>
+<body data-page="ch3">
+<a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+
+<div>
+  <div aria-hidden="true" style="position:fixed; top:0; left:0; right:0; height:3px; background:rgba(23,17,6,0.08); z-index:50">
+    <div data-progress style="height:100%; background:#9C4A0E; width:0%"></div>
+  </div>
+
+  <header style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; max-width:1280px; margin:0 auto; padding:18px 24px; border-bottom:2px solid #171106">
+    <a href="./index.html" style="font-family:'JetBrains Mono',monospace; font-size:12px; text-decoration:none; color:#4A4030">← Оглавление</a>
+    <div style="display:flex; align-items:baseline; gap:10px; margin:0 auto">
+      <span style="font-weight:700; font-size:16px">AI-native компания</span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.08em; background:#171106; color:#FBF7EE; padding:2px 6px">V2</span>
+    </div>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#7A6B52">Глава 3 из 12</span>
+  </header>
+
+  <main id="main-content">
+  <section data-screen-label="Опенер главы 3" style="max-width:1280px; margin:0 auto; padding:56px 24px 40px; border-bottom:1px solid rgba(23,17,6,0.14); display:flex; gap:32px; align-items:baseline; flex-wrap:wrap">
+    <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; font-size:clamp(72px,10vw,128px); font-weight:700; line-height:0.9; color:#C2782E">03</span>
+    <div style="flex:1 1 320px">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:#9C4A0E">Часть I · Основы</p>
+      <h1 style="margin:0 0 14px; font-size:clamp(36px,5vw,56px); line-height:1.05; font-weight:800; letter-spacing:-0.02em; text-wrap:balance">Первый управляемый цикл</h1>
+      <p style="margin:0; font-size:15px; color:#7A6B52; max-width:44em">результат · паспорт цикла · ограниченный пилот</p>
+    </div>
+  </section>
+
+  <div class="chapter-layout">
+    <nav aria-label="В этой главе" class="chapter-rail">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#7A6B52">В этой главе</p>
+      <ol>
+        <li><a href="#начните-с-результата">Начните с результата</a></li>
+        <li><a href="#паспорт-цикла">Паспорт цикла</a></li>
+        <li><a href="#зафиксируйте-исходный-уровень">Зафиксируйте исходный уровень</a></li>
+        <li><a href="#разложите-цикл-по-ролям">Разложите цикл по ролям</a></li>
+        <li><a href="#выберите-самостоятельность-для-каждого-действия">Выберите самостоятельность для каждого действия</a></li>
+        <li><a href="#спроектируйте-проверку-до-пилота">Спроектируйте проверку до пилота</a></li>
+        <li><a href="#проведите-ограниченный-пилот">Проведите ограниченный пилот</a></li>
+        <li><a href="#завершите-пилот-решением">Завершите пилот решением</a></li>
+        <li><a href="#условный-заполненный-пример">Условный заполненный пример</a></li>
+        <li><a href="#рабочая-карточка-главы-3">Рабочая карточка главы</a></li>
+      </ol>
+    </nav>
+
+    <article data-source-section="first-managed-loop">
+      <p>Первый цикл должен доказать не способность модели впечатлять, а способность процесса давать принятый результат при известных расходах и риске.</p>
+      <h2 id="начните-с-результата">Начните с результата <a class="heading-link" href="#начните-с-результата" aria-label="Ссылка на раздел «Начните с результата»">#</a></h2>
+      <p>Подходящий первый процесс отвечает шести условиям.</p>
+      <ul><li>Он повторяется достаточно часто, чтобы собрать серию наблюдений.</li><li>У результата есть конкретный получатель.</li><li>Качество можно проверить до необратимого действия или вскоре после него.</li><li>Доступны исходные показатели без ИИ.</li><li>Ошибка обратима либо её возможный ущерб ограничен.</li><li>Один владелец может изменить процесс от входа до результата.</li></ul>
+      <p>Не начинайте с самого заметного процесса, если его нельзя ограничить. Подготовка черновика претензии лучше автоматической отправки. Поиск возможной причины сбоя лучше самостоятельного изменения рабочей инфраструктуры.</p>
+      <h2 id="паспорт-цикла">Паспорт цикла <a class="heading-link" href="#паспорт-цикла" aria-label="Ссылка на раздел «Паспорт цикла»">#</a></h2>
+      <p>До технической работы владелец заполняет паспорт.</p>
+      <div class="table-wrap"><table><caption>Паспорт цикла: таблица 3</caption><thead><tr><th scope="col">Поле</th><th scope="col">Вопрос</th></tr></thead><tbody><tr><td>Результат</td><td>Что должен получить клиент или внутренний получатель?</td></tr><tr><td>Сигнал</td><td>Какое событие запускает работу?</td></tr><tr><td>Решение</td><td>Какой выбор влияет на результат?</td></tr><tr><td>Действие</td><td>Что меняется в системе или мире?</td></tr><tr><td>Проверка</td><td>Как узнать, что результат принят и границы соблюдены?</td></tr><tr><td>Обучение</td><td>Какие данные попадут в следующий пересмотр?</td></tr><tr><td>Владелец</td><td>Кто отвечает за итог и меняет границы?</td></tr><tr><td>Исключения</td><td>Какие случаи всегда переходят человеку?</td></tr><tr><td>Цена ошибки</td><td>Каков максимальный ущерб одного неверного действия?</td></tr><tr><td>Резерв</td><td>Как процесс продолжится без ИИ или при ухудшении качества?</td></tr></tbody></table></div>
+      <p>Паспорт остаётся коротким. Подробные правила, наборы проверок и реестр данных хранятся отдельными версионируемыми артефактами.</p>
+      <h2 id="зафиксируйте-исходный-уровень">Зафиксируйте исходный уровень <a class="heading-link" href="#зафиксируйте-исходный-уровень" aria-label="Ссылка на раздел «Зафиксируйте исходный уровень»">#</a></h2>
+      <p>Сравнение с ощущением почти всегда бесполезно. До пилота измерьте хотя бы один полный рабочий период или репрезентативную выборку.</p>
+      <p>Минимальный набор:</p>
+      <ul><li>время от сигнала до принятого результата;</li><li>человеческое время на один результат;</li><li>доля результатов, принятых без возврата;</li><li>число и тяжесть ошибок;</li><li>денежные и инфраструктурные расходы;</li><li>объём незавершённой работы.</li></ul>
+      <p>Исследование METR показало, что опытные разработчики в исследованной выборке с инструментами начала 2025 года работали медленнее, хотя ожидали ускорения.</p>
+      <p>Это не универсальный вывод о разработке. Это сильное напоминание измерять фактический эффект в своём классе задач. <a class="source-ref" href="./full.html#src-METR-2025-experienced-developers">[METR-2025-experienced-developers]</a></p>
+      <p>DORA связывает результат применения ИИ с качеством инженерных и организационных возможностей.</p>
+      <p>Наблюдаемая связь не доказывает одинаковый причинный эффект для каждой компании, но поддерживает решение измерять весь процесс, а не скорость генерации. <a class="source-ref" href="./full.html#src-DORA-2025-report">[DORA-2025-report]</a> <a class="source-ref" href="./full.html#src-DORA-2025-capabilities-model">[DORA-2025-capabilities-model]</a></p>
+      <h2 id="разложите-цикл-по-ролям">Разложите цикл по ролям <a class="heading-link" href="#разложите-цикл-по-ролям" aria-label="Ссылка на раздел «Разложите цикл по ролям»">#</a></h2>
+      <p>Для каждого шага выберите один из четырёх исполнителей:</p>
+      <ol><li>человек;</li><li>обычная программа;</li><li>ИИ без права действия;</li><li>ИИ с ограниченным правом действия.</li></ol>
+      <p>Пример для обработки заявки:</p>
+      <div class="table-wrap"><table><caption>Разложите цикл по ролям: таблица 4</caption><thead><tr><th scope="col">Шаг</th><th scope="col">Исполнитель</th><th scope="col">Обоснование</th></tr></thead><tbody><tr><td>Получить форму</td><td>Обычная программа</td><td>Формат и передача детерминированы.</td></tr><tr><td>Определить тему</td><td>ИИ</td><td>Вход свободный, ошибка обратима.</td></tr><tr><td>Проверить обязательные поля</td><td>Обычная программа</td><td>Правило можно выразить точно.</td></tr><tr><td>Предложить маршрут</td><td>ИИ</td><td>Нужно сопоставить содержание и правила.</td></tr><tr><td>Утвердить редкое исключение</td><td>Человек</td><td>Цена ошибки выше пользы автоматического решения.</td></tr><tr><td>Записать маршрут</td><td>Обычная программа или ИИ на A2</td><td>Допустимо после проверки прав и отката.</td></tr></tbody></table></div>
+      <p>Такое разложение обычно уменьшает область ИИ. Это полезный результат: меньше прав, контекста и вариантов поведения проще проверять.</p>
+      <h2 id="выберите-самостоятельность-для-каждого-действия">Выберите самостоятельность для каждого действия <a class="heading-link" href="#выберите-самостоятельность-для-каждого-действия" aria-label="Ссылка на раздел «Выберите самостоятельность для каждого действия»">#</a></h2>
+      <p>Не назначайте один уровень всему агенту.</p>
+      <p>Для первого цикла A0 означает анализ без права действия, а A1 — подготовку изменения, которое отдельно применяет человек. A2 допускает только ограниченное обратимое действие. A3 относится к узкому циклу с защищёнными переходами.</p>
+      <p>Канонические определения и полный набор условий находятся в главе 8. Для первого пилота исходно выбирайте A0 или A1. Переход к A2 или A3 требует отдельного договора о самостоятельности и доказательств именно для этого действия.</p>
+      <h2 id="спроектируйте-проверку-до-пилота">Спроектируйте проверку до пилота <a class="heading-link" href="#спроектируйте-проверку-до-пилота" aria-label="Ссылка на раздел «Спроектируйте проверку до пилота»">#</a></h2>
+      <p>Проверка должна отвечать на два вопроса.</p>
+      <ol><li>Получился ли допустимый результат?</li><li>Был ли путь к нему допустимым?</li></ol>
+      <p>Удачный ответ может скрывать обращение к запрещённому источнику, пропущенное согласование или лишнюю запись данных. Поэтому отдельно проверяйте итог и допустимость пути. <a class="source-ref" href="./full.html#audit-G1-D1-p22">[G1-D1-p22]</a>, <code>The New SDLC With Vibe Coding_Day_1.pdf</code>, с. 22.</p>
+      <p>В план входят:</p>
+      <ul><li>эталонные обычные случаи;</li><li>пограничные и редкие случаи;</li><li>намеренно вредоносные или вводящие в заблуждение входы;</li><li>детерминированные запреты;</li><li>выборочная независимая проверка человеком;</li><li>пороги остановки;</li><li>проверка отката и резервного режима.</li></ul>
+      <p>Тесты, созданные той же системой, полезны, но не служат единственным доказательством для существенного риска. <a class="source-ref" href="./full.html#audit-G1-D5-p29">[G1-D5-p29]</a>, <code>Day_5_v3.pdf</code>, с. 29.</p>
+      <h2 id="проведите-ограниченный-пилот">Проведите ограниченный пилот <a class="heading-link" href="#проведите-ограниченный-пилот" aria-label="Ссылка на раздел «Проведите ограниченный пилот»">#</a></h2>
+      <p>Пилот начинается на исторических данных или в режиме наблюдения. Затем ИИ помогает реальным пользователям без права необратимого действия. Только после серии проверок команда может расширить область.</p>
+      <p>У пилота заранее определены:</p>
+      <ul><li>число или период наблюдений;</li><li>допустимые сегменты;</li><li>запрещённые действия;</li><li>дневной предел расходов;</li><li>ответственный наблюдатель;</li><li>порог ручного вмешательства;</li><li>дата решения о продолжении.</li></ul>
+      <p>Один красивый прогон не считается серией. Для вероятностной системы нужна повторяемая проверка, включая редкие сценарии. <a class="source-ref" href="./full.html#audit-G1-D3-p27">[G1-D3-p27]</a>, <code>Agent Skills_Day_3.pdf</code>, с. 27.</p>
+      <h2 id="завершите-пилот-решением">Завершите пилот решением <a class="heading-link" href="#завершите-пилот-решением" aria-label="Ссылка на раздел «Завершите пилот решением»">#</a></h2>
+      <p>Возможны четыре честных исхода.</p>
+      <p><strong>Продолжить.</strong> Польза подтверждена, риск укладывается в границы, расходы приемлемы.</p>
+      <p><strong>Изменить.</strong> Механизм полезен, но нужен другой контекст, более узкие права или более простой процесс.</p>
+      <p><strong>Оставить на текущем уровне.</strong> A0 или A1 дают большую часть пользы без риска самостоятельного действия.</p>
+      <p><strong>Остановить.</strong> Эффект не подтверждён, проверка слишком дорога или ущерб нельзя ограничить.</p>
+      <p>Остановка сохраняет знания: исходные показатели, набор случаев, причины отказа и условия возможного возврата.</p>
+      <h2 id="условный-заполненный-пример">Условный заполненный пример <a class="heading-link" href="#условный-заполненный-пример" aria-label="Ссылка на раздел «Условный заполненный пример»">#</a></h2>
+      <p><strong>Процесс:</strong> подготовка ответа на типовой вопрос клиента.</p>
+      <p><strong>Результат:</strong> оператор отправил точный ответ, соответствующий действующим правилам.</p>
+      <p><strong>Сигнал:</strong> новое обращение в очереди поддержки.</p>
+      <p><strong>Решение:</strong> определить тему, найти действующую статью и выбрать допустимый ответ.</p>
+      <p><strong>Действие ИИ:</strong> сформировать черновик и ссылки на источники. Уровень A1.</p>
+      <p><strong>Проверка:</strong> оператор подтверждает факты и тон; автоматическая проверка требует ссылку на действующую статью и запрещает раскрытие данных другого клиента.</p>
+      <p><strong>Обучение:</strong> исправления оператора записываются как категории причин. Они не меняют инструкцию автоматически. Раз в неделю владелец решает, какой повторяющийся случай добавить в проверочный набор.</p>
+      <p><strong>Резерв:</strong> оператор отвечает по прежнему процессу.</p>
+      <p><strong>Решение после пилота:</strong> сохранить A1, потому что отправка редких и чувствительных ответов требует человеческого решения. Зрелость процесса можно повышать через качество контекста и проверок без перехода на A2.</p>
+      <h2 id="рабочая-карточка-главы-3">Рабочая карточка главы <a class="heading-link" href="#рабочая-карточка-главы-3" aria-label="Ссылка на раздел «Рабочая карточка главы»">#</a></h2>
+      <div class="work-card">
+      <p><strong>Решение.</strong> Запустить, изменить или остановить один ограниченный цикл на основании исходных и пилотных данных.</p>
+      <p><strong>Минимальный механизм.</strong> Паспорт цикла, исходный уровень, разложение ролей, набор проверок, ограниченный пилот и итоговый разбор.</p>
+      <p><strong>Ответственный.</strong> Владелец результата. Технический руководитель отвечает за среду, специалист по риску подтверждает ограничения, но они не заменяют владельца.</p>
+      <p><strong>Артефакт.</strong> Паспорт первого цикла с приложенными исходными показателями, договором о самостоятельности и решением после пилота.</p>
+      <p><strong>Критерий готовности.</strong> Команда может воспроизвести серию, сравнить её с исходным процессом, показать каждое действие и выполнить резервный сценарий.</p>
+      <p><strong>Показатели результата.</strong></p>
+      <ul><li>изменение времени цикла;</li><li>изменение человеческого времени;</li><li>доля принятых результатов;</li><li>объём завершённой работы;</li><li>полная стоимость принятого результата.</li></ul>
+      <p><strong>Показатели риска.</strong></p>
+      <ul><li>ошибки по тяжести;</li><li>нарушения маршрута или прав;</li><li>доля ручных вмешательств;</li><li>время до обнаружения;</li><li>срабатывания остановки;</li><li>максимальный ущерб одного действия.</li></ul>
+      <p><strong>Типичные ошибки.</strong></p>
+      <ul><li>выбирать редкий или непроверяемый процесс;</li><li>сравнивать пилот с воспоминаниями;</li><li>давать системе один общий уровень прав;</li><li>менять критерии после просмотра результатов;</li><li>считать ручное вмешательство провалом;</li><li>продолжать пилот без даты решения.</li></ul>
+      <p><strong>Различия маршрутов.</strong> Стартап ограничивает первый цикл одной командой и использует существующие инструменты.</p>
+      <p>Зрелая компания берёт один отрезок сквозного потока, но заранее показывает связи с соседними функциями и системами. Ни одна из них не строит общую платформу ради первого пилота.</p>
+      <p><strong>Чек-лист.</strong></p>
+      <ul><li class="check-item"><label><input type="checkbox" data-reading-check="0"> <span>Первый результат и получатель названы.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="1"> <span>Исходный уровень измерен до пилота.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="2"> <span>Каждый шаг назначен человеку, программе или ИИ.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="3"> <span>A0–A3 назначены конкретным действиям.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="4"> <span>Проверяются результат и ход действий.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="5"> <span>Есть редкие и вредоносные случаи.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="6"> <span>Пределы расходов и ущерба записаны.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="7"> <span>Откат и резервный режим испытаны.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="8"> <span>Дата решения и четыре возможных исхода согласованы.</span></label></li></ul>
+      </div>
+    </article>
+  </div>
+  </main>
+
+  <footer style="border-top:2px solid #171106; margin-top:24px">
+    <div style="max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap">
+      <a href="./chapter-02.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">← Глава 2</span>
+        <span style="font-size:19px; font-weight:700">Карта зрелости</span>
+      </a>
+      <a href="./chapter-04.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px; align-items:flex-end; text-align:right; border-left:1px solid rgba(23,17,6,0.14)" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">Глава 4 →</span>
+        <span style="font-size:19px; font-weight:700">Восемь систем операционной модели</span>
+      </a>
+    </div>
+  </footer>
+</div>
+
+<script src="./assets/book-v3.js" defer></script>
+</body>
+</html>

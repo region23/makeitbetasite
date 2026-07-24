@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Глава 1 — Определение и границы. AI-native компания v2">
+<title>Глава 1. Определение и границы — AI-native компания v2</title>
+<link rel="canonical" href="https://makeitbeta.ru/ai_native_book/chapter-01.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..900;1,7..72,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+.skip-link { position:fixed; top:8px; left:8px; z-index:100; padding:8px 12px; background:#171106; color:#FBF7EE; transform:translateY(-180%); transition:transform .12s ease; }
+.skip-link:focus { transform:translateY(0); }
+
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #FBF7EE; color: #171106; font-family: Literata, "Iowan Old Style", Georgia, serif; font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+a { color: #9C4A0E; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+a:hover { color: #6E3509; text-decoration-thickness: 2px; }
+::selection { background: #EADFC4; }
+
+.hv0:hover { background:#F4EEDD }
+</style>
+</head>
+<body data-page="ch1">
+<a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+
+<div>
+  <div aria-hidden="true" style="position:fixed; top:0; left:0; right:0; height:3px; background:rgba(23,17,6,0.08); z-index:50">
+    <div data-progress style="height:100%; background:#9C4A0E; width:0%"></div>
+  </div>
+
+  <header style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; max-width:1280px; margin:0 auto; padding:18px 24px; border-bottom:2px solid #171106">
+    <a href="./index.html" style="font-family:'JetBrains Mono',monospace; font-size:12px; text-decoration:none; color:#4A4030">← Оглавление</a>
+    <div style="display:flex; align-items:baseline; gap:10px; margin:0 auto">
+      <span style="font-weight:700; font-size:16px">AI-native компания</span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.08em; background:#171106; color:#FBF7EE; padding:2px 6px">V2</span>
+    </div>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#7A6B52">Глава 1 из 12</span>
+  </header>
+
+  <main id="main-content">
+  <section data-screen-label="Опенер главы 1" style="max-width:1280px; margin:0 auto; padding:56px 24px 40px; border-bottom:1px solid rgba(23,17,6,0.14); display:flex; gap:32px; align-items:baseline; flex-wrap:wrap">
+    <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; font-size:clamp(72px,10vw,128px); font-weight:700; line-height:0.9; color:#C2782E">01</span>
+    <div style="flex:1 1 320px">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:#9C4A0E">Часть I · Основы</p>
+      <h1 style="margin:0 0 14px; font-size:clamp(36px,5vw,56px); line-height:1.05; font-weight:800; letter-spacing:-0.02em; text-wrap:balance">Определение и границы</h1>
+      <p style="margin:0; font-size:15px; color:#7A6B52; max-width:40em">Рабочее определение · шесть принципов · когда ИИ не нужен</p>
+    </div>
+  </section>
+
+  <div style="max-width:1280px; margin:0 auto; padding:40px 24px 0; display:flex; gap:48px; align-items:flex-start; flex-wrap:wrap">
+    <nav aria-label="В этой главе" style="flex:1 1 200px; max-width:240px; position:sticky; top:24px">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#7A6B52">В этой главе</p>
+      <ol style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px; line-height:1.4; border-left:2px solid rgba(23,17,6,0.14)">
+        <li style="padding-left:14px"><a href="#рабочее-определение" style="text-decoration:none; color:#4A4030">Рабочее определение</a></li>
+        <li style="padding-left:14px"><a href="#что-определение-исключает" style="text-decoration:none; color:#4A4030">Что определение исключает</a></li>
+        <li style="padding-left:14px"><a href="#шесть-принципов" style="text-decoration:none; color:#4A4030">Шесть принципов</a></li>
+        <li style="padding-left:14px"><a href="#когда-ии-не-нужен" style="text-decoration:none; color:#4A4030">Когда ИИ не нужен</a></li>
+        <li style="padding-left:14px"><a href="#два-коротких-примера" style="text-decoration:none; color:#4A4030">Два коротких примера</a></li>
+        <li style="padding-left:14px"><a href="#рабочая-карточка" style="text-decoration:none; color:#4A4030">Рабочая карточка главы</a></li>
+      </ol>
+    </nav>
+
+    <article style="flex:999 1 480px; max-width:88ch; min-width:0; padding-bottom:64px">
+
+      <h2 id="рабочее-определение" style="margin:0 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Рабочее определение <a href="#рабочее-определение" aria-label="Ссылка на раздел «Рабочее определение»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 14px; text-wrap:pretty"><strong>Авторское определение.</strong> AI-native компания — это организация, в которой ИИ встроен в операционную модель, а не добавлен как набор отдельных инструментов. Работа строится как управляемый цикл:</p>
+      <blockquote data-screen-label="Управляемый цикл" style="margin:0 0 18px; border:2px solid #171106; background:#F7F1E2; padding:18px 22px">
+        <p style="margin:0; display:flex; gap:8px 14px; flex-wrap:wrap; align-items:center; font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:700">
+          <span style="background:#171106; color:#FBF7EE; padding:5px 10px">сигнал</span><span style="color:#C2782E">→</span>
+          <span style="background:#171106; color:#FBF7EE; padding:5px 10px">решение</span><span style="color:#C2782E">→</span>
+          <span style="background:#171106; color:#FBF7EE; padding:5px 10px">действие</span><span style="color:#C2782E">→</span>
+          <span style="background:#171106; color:#FBF7EE; padding:5px 10px">проверка</span><span style="color:#C2782E">→</span>
+          <span style="background:#171106; color:#FBF7EE; padding:5px 10px">обучение</span>
+        </p>
+      </blockquote>
+      <p style="margin:0 0 18px; text-wrap:pretty">Люди задают цели, определяют границы и отвечают за решения. ИИ анализирует и выполняет только те действия, на которые получил явные полномочия. Самостоятельность выбирают по риску и расширяют после повторяемых проверок.</p>
+      <p style="margin:0 0 18px; text-wrap:pretty">Это определение не является термином из закона или стандарта. ISO/IEC 42001 описывает систему управления ИИ, NIST — управление риском, OECD — ответственность и прослеживаемость.</p>
+      <p style="margin:0 0 18px; text-wrap:pretty">Ни один из этих источников не устанавливает нормативное определение AI-native компании. <a href="./full.html#src-ISO-IEC-42001-2023">[ISO-IEC-42001-2023]</a> <a href="./full.html#src-NIST-AI-RMF-1-0">[NIST-AI-RMF-1-0]</a> <a href="./full.html#src-OECD-AI-accountability">[OECD-AI-accountability]</a></p>
+      <p style="margin:0 0 12px; font-weight:700">В определении важны пять частей.</p>
+      <ol style="margin:0 0 18px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px">
+        <li style="display:flex; gap:14px; border:1px solid rgba(23,17,6,0.28); padding:14px 16px"><span style="font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:700; color:#C2782E">1</span><span style="font-size:15.5px; line-height:1.55; text-wrap:pretty"><strong>Организация</strong>, а не модель. Результат зависит от процесса, данных, инструментов, прав, проверок и людей.</span></li>
+        <li style="display:flex; gap:14px; border:1px solid rgba(23,17,6,0.28); padding:14px 16px"><span style="font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:700; color:#C2782E">2</span><span style="font-size:15.5px; line-height:1.55; text-wrap:pretty"><strong>Операционная модель</strong>, а не число лицензий. ИИ включён в повторяемый способ создавать ценность.</span></li>
+        <li style="display:flex; gap:14px; border:1px solid rgba(23,17,6,0.28); padding:14px 16px"><span style="font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:700; color:#C2782E">3</span><span style="font-size:15.5px; line-height:1.55; text-wrap:pretty"><strong>Управляемый цикл</strong>, а не отдельный ответ. У цикла есть вход, решение, действие и наблюдаемый исход.</span></li>
+        <li style="display:flex; gap:14px; border:1px solid rgba(23,17,6,0.28); padding:14px 16px"><span style="font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:700; color:#C2782E">4</span><span style="font-size:15.5px; line-height:1.55; text-wrap:pretty"><strong>Явные полномочия</strong>, а не обещание послушания. Права задаются вне текста инструкции там, где ошибка может причинить существенный вред.</span></li>
+        <li style="display:flex; gap:14px; border:1px solid rgba(23,17,6,0.28); padding:14px 16px"><span style="font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:700; color:#C2782E">5</span><span style="font-size:15.5px; line-height:1.55; text-wrap:pretty"><strong>Обучение через контроль изменений</strong>, а не самопроизвольное изменение правил. Результаты и инциденты пополняют доказательства. Новое правило проходит проверку и получает версию.</span></li>
+      </ol>
+
+      <h2 id="что-определение-исключает" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Что определение исключает <a href="#что-определение-исключает" aria-label="Ссылка на раздел «Что определение исключает»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 18px; text-wrap:pretty">Компания не становится AI-native только потому, что сотрудники пользуются помощником для текста или кода. Такой опыт может быть полезен, но он ещё не образует управляемый производственный процесс.</p>
+      <p style="margin:0 0 18px; text-wrap:pretty">Число агентов тоже ничего не доказывает. Один ограниченный механизм с хорошими проверками часто надёжнее сети участников, чьи ошибки и права трудно проследить.</p>
+      <p style="margin:0 0 18px; text-wrap:pretty">Зависимость от ИИ не является признаком зрелости. Если отключение модели останавливает компанию без резервного сценария, это может указывать на хрупкость.</p>
+      <p style="margin:0 0 18px; border-left:3px solid #A83E1F; padding:10px 14px; background:rgb(168 62 31 / 7%); text-wrap:pretty">В первой версии руководства такая зависимость использовалась как сильный признак AI-native компании. В v2 этот тезис отвергнут. <a href="./full.html#audit-V1-ch12">[V1-ch12]</a></p>
+      <p style="margin:0 0 18px; text-wrap:pretty">Максимальная самостоятельность не является целью. Зрелый процесс способен сознательно оставаться на уровне, где ИИ советует человеку. Причиной могут быть цена ошибки, требования отрасли или редкость задачи.</p>
+      <p style="margin:0 0 18px; text-wrap:pretty">Наконец, AI-native не означает, что обычные программы потеряли смысл. Правило, запрос к базе данных или проверенный рабочий сценарий лучше вероятностной системы, если они решают задачу дешевле и надёжнее.</p>
+
+      <h2 id="шесть-принципов" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Шесть принципов, на которых держится модель <a href="#шесть-принципов" aria-label="Ссылка на раздел «Шесть принципов, на которых держится модель»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+
+      <h3 id="1-результат-важнее-внедрения" style="margin:32px 0 10px; font-size:20px; font-weight:800; letter-spacing:-0.01em"><span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#C2782E; margin-right:8px">1</span>Результат важнее внедрения <a href="#1-результат-важнее-внедрения" aria-label="Ссылка на раздел" style="font-size:14px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h3>
+      <p style="margin:0 0 18px; text-wrap:pretty">Команда измеряет время до результата, качество, объём полезной работы, расходы и ущерб от ошибок. Число запросов к модели можно использовать для расчёта затрат, но не как доказательство пользы.</p>
+
+      <h3 id="2-механизм-минимально-достаточен" style="margin:32px 0 10px; font-size:20px; font-weight:800; letter-spacing:-0.01em"><span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#C2782E; margin-right:8px">2</span>Механизм должен быть минимально достаточным <a href="#2-механизм-минимально-достаточен" aria-label="Ссылка на раздел" style="font-size:14px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h3>
+      <p style="margin:0 0 12px">Порядок выбора прост:</p>
+      <ol style="margin:0 0 14px; padding-left:24px; display:flex; flex-direction:column; gap:6px">
+        <li>Убрать ненужный шаг процесса.</li>
+        <li>Проверить обычное правило или автоматизацию.</li>
+        <li>Использовать ИИ как советника.</li>
+        <li>Разрешить подготовку изменения для человека.</li>
+        <li>Разрешить ограниченное действие только после оценки риска.</li>
+      </ol>
+      <p style="margin:0 0 18px; border-left:3px solid #9C4A0E; padding:10px 14px; background:#F1E7CF; text-wrap:pretty"><strong>Рекомендация.</strong> Если два механизма дают сопоставимый результат, выбирайте тот, у которого проще доказать правильность и остановить ошибку.</p>
+
+      <h3 id="3-ответственность-у-людей" style="margin:32px 0 10px; font-size:20px; font-weight:800; letter-spacing:-0.01em"><span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#C2782E; margin-right:8px">3</span>Ответственность остаётся у людей и организации <a href="#3-ответственность-у-людей" aria-label="Ссылка на раздел" style="font-size:14px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h3>
+      <p style="margin:0 0 18px; text-wrap:pretty">Для результата назначают роль и конкретного человека. Организация отвечает за выданные права, условия применения и последствия. Система может быть исполнителем действия, но не несёт юридическую или управленческую ответственность.</p>
+
+      <h3 id="4-самостоятельность-за-доказательствами" style="margin:32px 0 10px; font-size:20px; font-weight:800; letter-spacing:-0.01em"><span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#C2782E; margin-right:8px">4</span>Самостоятельность следует за доказательствами <a href="#4-самостоятельность-за-доказательствами" aria-label="Ссылка на раздел" style="font-size:14px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h3>
+      <p style="margin:0 0 18px; text-wrap:pretty">Перед расширением прав команда проверяет известные, пограничные и редкие сценарии. Она учитывает обратимость, наблюдаемость, время обнаружения и максимальный ущерб от одного действия.</p>
+
+      <h3 id="5-контекст-и-правила-активы" style="margin:32px 0 10px; font-size:20px; font-weight:800; letter-spacing:-0.01em"><span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#C2782E; margin-right:8px">5</span>Контекст и правила являются производственными активами <a href="#5-контекст-и-правила-активы" aria-label="Ссылка на раздел" style="font-size:14px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h3>
+      <p style="margin:0 0 18px; text-wrap:pretty">Источники данных, инструкции, навыки, подключения, правила и проверки имеют владельца, версию, права доступа и историю изменений. Личная удачная инструкция становится общим активом только после очистки от секретов и воспроизводимой проверки.</p>
+
+      <h3 id="6-обучение-не-отменяет-контроль" style="margin:32px 0 10px; font-size:20px; font-weight:800; letter-spacing:-0.01em"><span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#C2782E; margin-right:8px">6</span>Обучение не отменяет контроль изменений <a href="#6-обучение-не-отменяет-контроль" aria-label="Ссылка на раздел" style="font-size:14px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h3>
+      <p style="margin:0 0 18px; text-wrap:pretty">Результат цикла записывается и становится входом следующего решения. Система не переписывает критические правила сама. Для опасного процесса действуют ручной режим, режим с ограниченными возможностями или безопасная остановка.</p>
+
+      <h2 id="когда-ии-не-нужен" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Когда ИИ не нужен <a href="#когда-ии-не-нужен" aria-label="Ссылка на раздел «Когда ИИ не нужен»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 12px">Отказ от ИИ является нормальным решением в пяти случаях.</p>
+      <ul style="margin:0 0 18px; padding-left:22px; display:flex; flex-direction:column; gap:6px">
+        <li>Результат нельзя проверить до того, как ошибка причинит вред.</li>
+        <li>Обычное правило покрывает задачу с меньшими расходами.</li>
+        <li>Данных недостаточно, их происхождение неизвестно или использовать их нельзя.</li>
+        <li>Процесс встречается настолько редко, что содержание системы дороже ручной работы.</li>
+        <li>Цена и необратимость ошибки выше ожидаемой пользы от ускорения.</li>
+      </ul>
+      <p style="margin:0 0 18px; text-wrap:pretty">Иногда проблема находится раньше: у процесса нет владельца, согласованного результата или исходных показателей. Добавление модели только ускорит неразбериху.</p>
+
+      <h2 id="два-коротких-примера" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Два коротких примера <a href="#два-коротких-примера" aria-label="Ссылка на раздел «Два коротких примера»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <div style="display:flex; gap:14px; flex-wrap:wrap; margin-bottom:18px">
+        <div style="flex:1 1 300px; border:1px solid rgba(23,17,6,0.28); padding:16px 18px">
+          <p style="margin:0 0 8px; text-wrap:pretty"><strong>Пример: обработка входящих обращений.</strong> ИИ классифицирует тему и предлагает ответ. Оператор проверяет текст и отправляет его.</p>
+          <p style="margin:0; font-size:15px; color:#4A4030; text-wrap:pretty">Это уровень A1 для отправки: система готовит действие, но не применяет его. Процесс может быть зрелым, даже если организация никогда не разрешит автоматическую отправку жалоб и юридически значимых сообщений.</p>
+        </div>
+        <div style="flex:1 1 300px; border:1px solid rgba(23,17,6,0.28); padding:16px 18px">
+          <p style="margin:0 0 8px; text-wrap:pretty"><strong>Пример: обновление внутренней справки.</strong> ИИ находит устаревшую ссылку, готовит исправление и запускает проверки в изолированной среде.</p>
+          <p style="margin:0; font-size:15px; color:#4A4030; text-wrap:pretty">Если изменение обратимо, область узкая, а тесты надёжны, создание запроса на слияние может выполняться самостоятельно. Выпуск в рабочую среду остаётся отдельным решением.</p>
+        </div>
+      </div>
+
+      <h2 id="рабочая-карточка" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Рабочая карточка главы <a href="#рабочая-карточка" aria-label="Ссылка на раздел «Рабочая карточка главы»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <div style="border:2px solid #171106">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1px; background:rgba(23,17,6,0.18)">
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Решение</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Выбрать один процесс, для которого организация готова доказывать результат и управлять последствиями.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Минимальный механизм</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Описать цикл из пяти шагов и сначала проверить более простую автоматизацию.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Ответственный</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Владелец результата процесса. В стартапе это обычно основатель или руководитель функции. В зрелой компании — владелец потока создания ценности с полномочиями менять процесс.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Артефакт</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Одностраничное описание результата, границ процесса, роли ИИ и причин выбора механизма.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Критерий готовности</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Незнакомый с инициативой руководитель может назвать ожидаемый результат, владельца, допустимые действия и условие остановки, прочитав одну страницу.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Различия маршрутов</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Стартап берёт один частый и измеримый процесс. Зрелая компания выбирает один сквозной поток и обозначает затронутые функции, системы и владельцев. Обоим маршрутам нужен один ответственный за итог.</p></div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1px; background:rgba(23,17,6,0.18); border-top:2px solid #171106">
+          <div style="background:#F4EEDD; padding:16px 18px">
+            <p style="margin:0 0 8px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#4A4030">Показатели результата</p>
+            <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.5; display:flex; flex-direction:column; gap:5px"><li>время от входного сигнала до принятого результата;</li><li>доля результатов, принятых без исправления;</li><li>объём завершённой полезной работы;</li><li>удовлетворённость получателя результата;</li><li>полная стоимость одного принятого результата.</li></ul>
+          </div>
+          <div style="background:#F4EEDD; padding:16px 18px">
+            <p style="margin:0 0 8px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#4A4030">Показатели риска</p>
+            <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.5; display:flex; flex-direction:column; gap:5px"><li>доля ошибочных действий;</li><li>число нарушений границ прав;</li><li>максимальный фактический и возможный ущерб;</li><li>время обнаружения и остановки;</li><li>доля случаев, переведённых в резервный режим.</li></ul>
+          </div>
+          <div style="background:#F4EEDD; padding:16px 18px">
+            <p style="margin:0 0 8px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#A83E1F">Типичные ошибки</p>
+            <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.5; display:flex; flex-direction:column; gap:5px"><li>выбирать модель до результата;</li><li>считать активность сотрудников эффектом;</li><li>присваивать системе ответственность;</li><li>ставить целью A3;</li><li>скрывать отсутствие исходных показателей красивой демонстрацией.</li></ul>
+          </div>
+        </div>
+        <div style="border-top:2px solid #171106; padding:16px 18px 6px">
+          <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Чек-лист · сохраняется в браузере</p>
+          <ul style="margin:0 0 14px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px">
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="0" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Результат назван словами клиента или получателя.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="1" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Есть один ответственный владелец и конкретный человек.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="2" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Граница процесса и исключения записаны.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="3" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Проверена возможность обойтись без ИИ.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="4" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Действия ИИ отделены от решений человека.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="5" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Названы исходные показатели и цена ошибки.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="6" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Есть условие отказа или безопасной остановки.</span>
+                </label>
+              </li>
+
+          </ul>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  </main>
+
+  <footer style="border-top:2px solid #171106; margin-top:24px">
+    <div style="max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap">
+      <a href="./index.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">← Оглавление</span>
+        <span style="font-size:19px; font-weight:700">AI-native компания v2</span>
+      </a>
+      <a href="./chapter-02.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px; align-items:flex-end; text-align:right; border-left:1px solid rgba(23,17,6,0.14)" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">Глава 2 →</span>
+        <span style="font-size:19px; font-weight:700">Карта зрелости</span>
+      </a>
+    </div>
+  </footer>
+</div>
+
+<script src="./assets/book-v3.js" defer></script>
+</body>
+</html>

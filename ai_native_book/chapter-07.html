@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Глава 7 — Проверки качества и наблюдение. AI-native компания v2">
+<title>Глава 7. Проверки качества и наблюдение — AI-native компания v2</title>
+<link rel="canonical" href="https://makeitbeta.ru/ai_native_book/chapter-07.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..900;1,7..72,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+html { scroll-behavior: smooth; }
+body { margin:0; background:#FBF7EE; color:#171106; font-family:Literata,"Iowan Old Style",Georgia,serif; font-size:17px; line-height:1.65; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+a { color:#9C4A0E; text-decoration-thickness:1px; text-underline-offset:.18em; }
+a:hover { color:#6E3509; text-decoration-thickness:2px; }
+::selection { background:#EADFC4; }
+.skip-link { position:fixed; top:8px; left:8px; z-index:100; padding:8px 12px; background:#171106; color:#FBF7EE; transform:translateY(-180%); transition:transform .12s ease; }
+.skip-link:focus { transform:translateY(0); }
+.hv0:hover { background:#F4EEDD; }
+.chapter-layout { max-width:1280px; margin:0 auto; padding:40px 24px 0; display:flex; gap:48px; align-items:flex-start; flex-wrap:wrap; }
+.chapter-rail { flex:1 1 200px; max-width:240px; position:sticky; top:24px; max-height:calc(100vh - 48px); overflow:auto; }
+.chapter-rail ol { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px; line-height:1.4; border-left:2px solid rgba(23,17,6,.14); }
+.chapter-rail li { padding-left:14px; }
+.chapter-rail a { text-decoration:none; color:#4A4030; }
+article { flex:999 1 480px; max-width:88ch; min-width:0; padding-bottom:64px; }
+article > p { margin:0 0 18px; text-wrap:pretty; }
+article > ul, article > ol { margin:0 0 20px; padding-left:24px; }
+article > ul, article > ol { display:flex; flex-direction:column; gap:6px; }
+article h2 { margin:48px 0 16px; font-size:27px; line-height:1.25; font-weight:800; letter-spacing:-.015em; scroll-margin-top:24px; }
+article h2:first-child { margin-top:0; }
+article h3 { margin:32px 0 10px; font-size:20px; line-height:1.35; font-weight:800; letter-spacing:-.01em; scroll-margin-top:24px; }
+article .heading-link { font-size:15px; font-weight:400; text-decoration:none; color:#C2782E; }
+article code { font-family:"JetBrains Mono",monospace; font-size:.85em; overflow-wrap:anywhere; background:#F1E7CF; padding:.08em .3em; }
+article blockquote, article .chapter-route-note { margin:0 0 18px; border-left:3px solid #9C4A0E; background:#F1E7CF; padding:12px 16px; }
+.table-wrap { overflow-x:auto; border:1px solid rgba(23,17,6,.22); margin:0 0 20px; }
+.table-wrap table { border-collapse:collapse; width:100%; min-width:620px; }
+.table-wrap caption { caption-side:top; text-align:left; font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7A6B52; padding:9px 14px; border-bottom:1px solid rgba(23,17,6,.22); background:#F4EEDD; }
+.table-wrap th { text-align:left; font-family:"JetBrains Mono",monospace; font-size:11px; line-height:1.35; letter-spacing:.06em; text-transform:uppercase; padding:9px 14px; border-bottom:2px solid #171106; vertical-align:bottom; }
+.table-wrap td { padding:9px 14px; border-bottom:1px solid rgba(23,17,6,.14); vertical-align:top; font-size:14.5px; line-height:1.5; }
+.table-wrap tbody tr:last-child td { border-bottom:0; }
+article h3 + .table-wrap { border:2px solid #171106; }
+article .source-ref { font-family:"JetBrains Mono",monospace; font-size:.78em; overflow-wrap:anywhere; }
+.work-card { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1px; border:2px solid #171106; background:rgba(23,17,6,.18); margin-top:0; }
+.work-card > p, .work-card > ul { margin:0; padding:16px 18px; background:#FBF7EE; font-size:15px; line-height:1.55; }
+.work-card > ul { padding-left:38px; }
+.work-card > p strong:first-child { display:block; margin:0 0 6px; font-family:"JetBrains Mono",monospace; font-size:10px; line-height:1.4; letter-spacing:.1em; text-transform:uppercase; color:#9C4A0E; }
+.work-card > ul:has(input[data-reading-check]) { grid-column:1/-1; list-style:none; padding:16px 18px; background:#F4EEDD; }
+.check-item label { display:flex; align-items:flex-start; gap:10px; cursor:pointer; }
+.check-item input { width:18px; height:18px; flex:0 0 auto; margin-top:3px; accent-color:#9C4A0E; }
+@media (max-width:760px) {
+  .chapter-layout { gap:28px; }
+  .chapter-rail { position:static; max-width:none; max-height:none; flex-basis:100%; }
+  article { flex-basis:100%; }
+}
+</style>
+</head>
+<body data-page="ch7">
+<a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+
+<div>
+  <div aria-hidden="true" style="position:fixed; top:0; left:0; right:0; height:3px; background:rgba(23,17,6,0.08); z-index:50">
+    <div data-progress style="height:100%; background:#9C4A0E; width:0%"></div>
+  </div>
+
+  <header style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; max-width:1280px; margin:0 auto; padding:18px 24px; border-bottom:2px solid #171106">
+    <a href="./index.html" style="font-family:'JetBrains Mono',monospace; font-size:12px; text-decoration:none; color:#4A4030">← Оглавление</a>
+    <div style="display:flex; align-items:baseline; gap:10px; margin:0 auto">
+      <span style="font-weight:700; font-size:16px">AI-native компания</span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.08em; background:#171106; color:#FBF7EE; padding:2px 6px">V2</span>
+    </div>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#7A6B52">Глава 7 из 12</span>
+  </header>
+
+  <main id="main-content">
+  <section data-screen-label="Опенер главы 7" style="max-width:1280px; margin:0 auto; padding:56px 24px 40px; border-bottom:1px solid rgba(23,17,6,0.14); display:flex; gap:32px; align-items:baseline; flex-wrap:wrap">
+    <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; font-size:clamp(72px,10vw,128px); font-weight:700; line-height:0.9; color:#C2782E">07</span>
+    <div style="flex:1 1 320px">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:#9C4A0E">Часть II · Операционная модель</p>
+      <h1 style="margin:0 0 14px; font-size:clamp(36px,5vw,56px); line-height:1.05; font-weight:800; letter-spacing:-0.02em; text-wrap:balance">Проверки качества и наблюдение</h1>
+      <p style="margin:0; font-size:15px; color:#7A6B52; max-width:44em">проверка результата · проверка пути · наблюдение</p>
+    </div>
+  </section>
+
+  <div class="chapter-layout">
+    <nav aria-label="В этой главе" class="chapter-rail">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#7A6B52">В этой главе</p>
+      <ol>
+        <li><a href="#начните-с-решения">Начните с решения</a></li>
+        <li><a href="#проверяйте-составную-систему">Проверяйте составную систему</a></li>
+        <li><a href="#семь-видов-проверок">Семь видов проверок</a></li>
+        <li><a href="#проверка-результата">Проверка результата</a></li>
+        <li><a href="#проверка-хода-действий">Проверка хода действий</a></li>
+        <li><a href="#показатели-надежности">Показатели надёжности</a></li>
+        <li><a href="#сегменты-важнее-среднего">Сегменты важнее среднего</a></li>
+        <li><a href="#как-обнаруживать-ухудшение">Как обнаруживать ухудшение</a></li>
+        <li><a href="#разбор-ошибки">Разбор ошибки</a></li>
+        <li><a href="#рабочая-карточка-главы-7">Рабочая карточка главы</a></li>
+      </ol>
+    </nav>
+
+    <article data-source-section="ch7">
+      <p>Проверка качества отвечает на заранее поставленный вопрос. Наблюдение показывает, что происходит в работе. Вместе они дают основание продолжить, ограничить или остановить процесс.</p>
+      <p>Вероятностную систему нельзя принять по одному удачному примеру. Но и бесконечный набор искусственных задач не заменяет производственный результат. Нужны три связанные области:</p>
+      <ol><li>проверка до выпуска;</li><li>наблюдение в эксплуатации;</li><li>обновление постоянных проверок по результатам и инцидентам.</li></ol>
+      <h2 id="начните-с-решения">Начните с решения <a class="heading-link" href="#начните-с-решения" aria-label="Ссылка на раздел «Начните с решения»">#</a></h2>
+      <p>Перед созданием теста запишите, какое решение он изменит.</p>
+      <p>Плохая формулировка: «оценить качество ответов».</p>
+      <p>Рабочая формулировка: «решить, можно ли разрешить системе готовить ответы для сегмента X на A1 при доле критических фактических ошибок ниже согласованного порога и обязательной ссылке на источник».</p>
+      <p>Порог выбирается по цене ошибки, исходному уровню и возможностям проверки. Универсального процента для всех процессов нет.</p>
+      <h2 id="проверяйте-составную-систему">Проверяйте составную систему <a class="heading-link" href="#проверяйте-составную-систему" aria-label="Ссылка на раздел «Проверяйте составную систему»">#</a></h2>
+      <p>Результат создаёт не модель в изоляции. Его создают:</p>
+      <ul><li>модель и её настройки;</li><li>постоянный и оперативный контекст;</li><li>инструкция;</li><li>навыки;</li><li>инструменты;</li><li>порядок выполнения;</li><li>права;</li><li>проверки и обработка ошибок.</li></ul>
+      <p>Проверка хода действий исследует составную систему «агент плюс навык», а не навык в отрыве от среды. <a class="source-ref" href="./full.html#audit-G1-D3-p24">[G1-D3-p24]</a>, <code>Agent Skills_Day_3.pdf</code>, с. 24.</p>
+      <p>Поэтому запись результата без версий зависимостей мало пригодна для сравнения. Смена одного компонента может изменить поведение всей системы.</p>
+      <h2 id="семь-видов-проверок">Семь видов проверок <a class="heading-link" href="#семь-видов-проверок" aria-label="Ссылка на раздел «Семь видов проверок»">#</a></h2>
+      <h3 id="1-детерминированные-проверки">1. Детерминированные проверки <a class="heading-link" href="#1-детерминированные-проверки" aria-label="Ссылка на раздел «1. Детерминированные проверки»">#</a></h3>
+      <p>Они проверяют точные свойства:</p>
+      <ul><li>формат и схема;</li><li>обязательные поля;</li><li>арифметика;</li><li>допустимый диапазон;</li><li>отсутствие запрещённого действия;</li><li>права доступа;</li><li>сборка и тесты кода.</li></ul>
+      <p>Если правило можно выразить точно, его не следует поручать вероятностному судье.</p>
+      <h3 id="2-эталонные-примеры">2. Эталонные примеры <a class="heading-link" href="#2-эталонные-примеры" aria-label="Ссылка на раздел «2. Эталонные примеры»">#</a></h3>
+      <p>Набор содержит обычные, пограничные, редкие и вредоносные случаи. Для каждого записано допустимое множество результатов и причина.</p>
+      <p>Набор разделяют на разработочную и контрольную части. Иначе команда подгонит инструкцию под известные ответы и переоценит устойчивость.</p>
+      <h3 id="3-проверка-человеком">3. Проверка человеком <a class="heading-link" href="#3-проверка-человеком" aria-label="Ссылка на раздел «3. Проверка человеком»">#</a></h3>
+      <p>Эксперт оценивает смысл, последствия и случаи, которые трудно выразить правилом. Рецензенты получают одинаковую шкалу и примеры. Расхождения разбираются, а не усредняются молча.</p>
+      <p>Человеческая оценка тоже ошибается. Для существенного решения проверяют согласованность экспертов и сохраняют обоснование.</p>
+      <h3 id="4-проверка-другой-моделью">4. Проверка другой моделью <a class="heading-link" href="#4-проверка-другой-моделью" aria-label="Ссылка на раздел «4. Проверка другой моделью»">#</a></h3>
+      <p>Модель может помочь обработать большой поток, когда детерминированного правила недостаточно. Сначала её решения калибруют по человеческой выборке. Затем отслеживают расхождения и смещение.</p>
+      <p>Такую оценку калибруют по человеческим решениям и применяют там, где правил недостаточно. <a class="source-ref" href="./full.html#audit-G1-D4-p33">[G1-D4-p33]</a>, <code>Vibe Coding Agent Security and Evaluation_Day_4.pdf</code>, с. 33.</p>
+      <h3 id="5-проверка-хода-действий">5. Проверка хода действий <a class="heading-link" href="#5-проверка-хода-действий" aria-label="Ссылка на раздел «5. Проверка хода действий»">#</a></h3>
+      <p>Она исследует:</p>
+      <ul><li>выбранный навык;</li><li>порядок шагов;</li><li>вызванные инструменты;</li><li>прочитанные источники;</li><li>использованные права;</li><li>согласования;</li><li>повторы и обходные пути;</li><li>условия остановки.</li></ul>
+      <p>Хороший финальный результат не оправдывает запрещённый путь. И наоборот, не каждый иной порядок является ошибкой. План задаёт обязательные и запрещённые переходы, а остальное оценивает по результату и расходу.</p>
+      <h3 id="6-испытания-безопасности">6. Испытания безопасности <a class="heading-link" href="#6-испытания-безопасности" aria-label="Ссылка на раздел «6. Испытания безопасности»">#</a></h3>
+      <p>Они включают внедрение вредоносных инструкций, утечку данных, обход полномочий, подмену инструмента, загрязнение памяти, вредоносную зависимость и неконтролируемое повторение действий.</p>
+      <p>OWASP перечисляет такие классы риска для агентных приложений. Перечень помогает искать угрозы, но не доказывает достаточность выбранных мер. <a class="source-ref" href="./full.html#src-OWASP-AGENTIC-TOP10-2026">[OWASP-AGENTIC-TOP10-2026]</a></p>
+      <p>Статический анализ, анализ зависимостей и испытания поведения покрывают разные ошибки. Их следует сочетать. <a class="source-ref" href="./full.html#audit-G1-D4-p32">[G1-D4-p32]</a></p>
+      <h3 id="7-проверка-в-эксплуатации">7. Проверка в эксплуатации <a class="heading-link" href="#7-проверка-в-эксплуатации" aria-label="Ссылка на раздел «7. Проверка в эксплуатации»">#</a></h3>
+      <p>Реальные входы отличаются от набора. Команда сравнивает сегменты, наблюдает ухудшение, выборочно проверяет результаты и собирает причины ручного вмешательства.</p>
+      <p>Производственное наблюдение не оправдывает выпуск без предварительных проверок. Оно отвечает за неизвестные случаи, а не заменяет известные.</p>
+      <h2 id="проверка-результата">Проверка результата <a class="heading-link" href="#проверка-результата" aria-label="Ссылка на раздел «Проверка результата»">#</a></h2>
+      <p>Критерии результата зависят от процесса, но обычно охватывают:</p>
+      <ul><li>фактическую правильность;</li><li>полноту;</li><li>соответствие правилам;</li><li>полезность получателю;</li><li>своевременность;</li><li>отсутствие запрещённых данных;</li><li>возможность проверить источник;</li><li>корректное действие в системе.</li></ul>
+      <p>Для творческой задачи допустимо несколько решений. Тогда шкала описывает свойства результата, а не единственный текст.</p>
+      <h2 id="проверка-хода-действий">Проверка хода действий <a class="heading-link" href="#проверка-хода-действий" aria-label="Ссылка на раздел «Проверка хода действий»">#</a></h2>
+      <p>Наблюдаемость должна фиксировать внешне доступные события. Не обещайте чтение скрытых рассуждений модели.</p>
+      <p>Минимальная запись:</p>
+      <ul><li>идентификатор запуска;</li><li>время и инициатор;</li><li>версия среды;</li><li>версия инструкции и навыков;</li><li>ссылки или идентификаторы источников;</li><li>вызовы инструментов и их итоговые состояния;</li><li>выданные и использованные права;</li><li>согласования;</li><li>срабатывания ограничений;</li><li>итог и категория ошибки;</li><li>связь с последующим действием.</li></ul>
+      <p>Для проверки хода задачи нужны наблюдаемые события и состояния, но не заявление о полном доступе к «мыслям» системы. <a class="source-ref" href="./full.html#audit-G1-D4-p35">[G1-D4-p35]</a></p>
+      <h2 id="показатели-надежности">Показатели надёжности <a class="heading-link" href="#показатели-надежности" aria-label="Ссылка на раздел «Показатели надёжности»">#</a></h2>
+      <p>Один показатель не описывает процесс. Используйте небольшой набор, связанный с решением.</p>
+      <div class="table-wrap"><table><caption>Показатели надёжности: таблица 8</caption><thead><tr><th scope="col">Область</th><th scope="col">Возможный показатель</th></tr></thead><tbody><tr><td>Результат</td><td>Доля принятых результатов по сегментам</td></tr><tr><td>Тяжёлые ошибки</td><td>Число критических ошибок на единицу полезной работы</td></tr><tr><td>Маршрут</td><td>Доля запусков с запрещённым или пропущенным шагом</td></tr><tr><td>Вмешательство</td><td>Доля задач, которые человек исправил или остановил</td></tr><tr><td>Сходимость</td><td>Доля задач, завершённых в пределах времени и числа действий</td></tr><tr><td>Расход</td><td>Стоимость и человеческое время на принятый результат</td></tr><tr><td>Восстановление</td><td>Время обнаружения, ограничения и возврата</td></tr><tr><td>Неопределённость</td><td>Доля случаев, где система корректно отказалась или запросила помощь</td></tr></tbody></table></div>
+      <p>Сходимость всей сессии полезна, но она не скрывает опасный промежуточный шаг. <a class="source-ref" href="./full.html#audit-G1-D4-p37">[G1-D4-p37]</a></p>
+      <h2 id="сегменты-важнее-среднего">Сегменты важнее среднего <a class="heading-link" href="#сегменты-важнее-среднего" aria-label="Ссылка на раздел «Сегменты важнее среднего»">#</a></h2>
+      <p>Средняя доля успешных ответов может скрывать провал на редком, но опасном сегменте. Разбивайте результаты как минимум по:</p>
+      <ul><li>типу задачи;</li><li>языку или рынку, если это влияет;</li><li>источнику данных;</li><li>уровню риска;</li><li>версии модели и навыка;</li><li>обычному и редкому случаю;</li><li>автоматическому и ручному пути.</li></ul>
+      <p>Минимальный объём выборки определяется ожидаемой частотой ошибки и решением, которое нужно принять. Если критическое событие редко, отсутствие ошибки в маленькой серии почти ничего не доказывает.</p>
+      <h2 id="как-обнаруживать-ухудшение">Как обнаруживать ухудшение <a class="heading-link" href="#как-обнаруживать-ухудшение" aria-label="Ссылка на раздел «Как обнаруживать ухудшение»">#</a></h2>
+      <p>Ухудшение может появиться после смены модели, данных, инструкции, инструмента или состава входов.</p>
+      <p>Используйте три сигнала:</p>
+      <ol><li>повторный прогон постоянного набора;</li><li>производственные показатели по сегментам;</li><li>выборочная человеческая проверка свежих случаев.</li></ol>
+      <p>Порог предупреждения даёт время разобраться. Порог остановки переводит процесс на A1, A0 или резервный режим. Значения и ответственные согласуются до инцидента.</p>
+      <h2 id="разбор-ошибки">Разбор ошибки <a class="heading-link" href="#разбор-ошибки" aria-label="Ссылка на раздел «Разбор ошибки»">#</a></h2>
+      <p>Не записывайте «модель ошиблась» как корневую причину. Проверьте:</p>
+      <ul><li>был ли результат определён;</li><li>был ли источник верным и свежим;</li><li>выбрала ли система правильный навык;</li><li>были ли инструменты доступны;</li><li>позволяли ли права безопасно выполнить шаг;</li><li>работала ли проверка;</li><li>увидел ли оператор сигнал;</li><li>была ли возможность остановить.</li></ul>
+      <p>Гипотеза о том, что большинство сбоев агентов вызвано конфигурацией среды, в материалах Google не подтверждена репрезентативной выборкой. <a class="source-ref" href="./full.html#audit-G1-D1-p31">[G1-D1-p31]</a>, <code>The New SDLC With Vibe Coding_Day_1.pdf</code>, с. 31. Поэтому расследование не должно заранее выбирать виновника.</p>
+      <h2 id="рабочая-карточка-главы-7">Рабочая карточка главы <a class="heading-link" href="#рабочая-карточка-главы-7" aria-label="Ссылка на раздел «Рабочая карточка главы»">#</a></h2>
+      <div class="work-card">
+      <p><strong>Решение.</strong> Определить достаточное доказательство для запуска, сохранения или расширения конкретного действия.</p>
+      <p><strong>Минимальный механизм.</strong> Набор случаев, детерминированные запреты, независимая проверка, журнал внешних событий, производственные показатели и пороги остановки.</p>
+      <p><strong>Ответственный.</strong> Владелец результата принимает критерии. Владелец качества ведёт набор и метод. Технический владелец отвечает за события и сигналы. Независимый рецензент подтверждает существенный риск.</p>
+      <p><strong>Артефакт.</strong> План проверок качества с версиями набора, шкалой, сегментами, порогами, журналом прогонов и решением.</p>
+      <p><strong>Критерий готовности.</strong> Новый участник может воспроизвести проверку, получить тот же расчёт и понять, какое решение следует из каждого порога.</p>
+      <p><strong>Показатели результата.</strong></p>
+      <ul><li>принятие результата по сегментам;</li><li>время и объём завершённой работы;</li><li>доля корректных отказов;</li><li>согласованность независимых рецензентов;</li><li>скорость превращения инцидента в постоянную проверку.</li></ul>
+      <p><strong>Показатели риска.</strong></p>
+      <ul><li>критические ошибки;</li><li>запрещённые пути;</li><li>незафиксированные версии;</li><li>пропуски событий в журнале;</li><li>ухудшение после изменения;</li><li>расхождение модельной и человеческой оценки;</li><li>ложные зелёные сигналы.</li></ul>
+      <p><strong>Типичные ошибки.</strong></p>
+      <ul><li>строить набор только из удобных случаев;</li><li>использовать один средний процент;</li><li>принимать суд другой модели без калибровки;</li><li>считать финальный ответ достаточным;</li><li>хранить чувствительный вход целиком без необходимости;</li><li>менять порог после результата;</li><li>расследовать с заранее выбранной причиной.</li></ul>
+      <p><strong>Различия маршрутов.</strong> Стартап начинает с небольшого вручную проверенного набора и простого журнала. Зрелая компания добавляет независимые выборки, сегменты риска, хранение доказательств и общие правила событий. Обоим маршрутам нужны пороги остановки до выпуска.</p>
+      <p><strong>Чек-лист.</strong></p>
+      <ul><li class="check-item"><label><input type="checkbox" data-reading-check="0"> <span>Каждая проверка связана с решением.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="1"> <span>Состав системы и версии зафиксированы.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="2"> <span>Есть обычные, редкие и вредоносные случаи.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="3"> <span>Детерминированные правила проверяются программой.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="4"> <span>Существенные выводы независимо проверяются.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="5"> <span>Ход действий виден через внешние события.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="6"> <span>Показатели разбиты по опасным сегментам.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="7"> <span>Предупреждение, остановка и резерв назначены заранее.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="8"> <span>Инциденты пополняют подходящие постоянные проверки.</span></label></li></ul>
+      </div>
+    </article>
+  </div>
+  </main>
+
+  <footer style="border-top:2px solid #171106; margin-top:24px">
+    <div style="max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap">
+      <a href="./chapter-06.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">← Глава 6</span>
+        <span style="font-size:19px; font-weight:700">Жизненный цикл разработки программного обеспечения с ИИ</span>
+      </a>
+      <a href="./chapter-08.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px; align-items:flex-end; text-align:right; border-left:1px solid rgba(23,17,6,0.14)" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">Глава 8 →</span>
+        <span style="font-size:19px; font-weight:700">Полномочия, безопасность и устойчивость</span>
+      </a>
+    </div>
+  </footer>
+</div>
+
+<script src="./assets/book-v3.js" defer></script>
+</body>
+</html>

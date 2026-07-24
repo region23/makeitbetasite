@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Глава 4 — Восемь систем операционной модели. AI-native компания v2">
+<title>Глава 4. Восемь систем операционной модели — AI-native компания v2</title>
+<link rel="canonical" href="https://makeitbeta.ru/ai_native_book/chapter-04.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..900;1,7..72,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+html { scroll-behavior: smooth; }
+body { margin:0; background:#FBF7EE; color:#171106; font-family:Literata,"Iowan Old Style",Georgia,serif; font-size:17px; line-height:1.65; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+a { color:#9C4A0E; text-decoration-thickness:1px; text-underline-offset:.18em; }
+a:hover { color:#6E3509; text-decoration-thickness:2px; }
+::selection { background:#EADFC4; }
+.skip-link { position:fixed; top:8px; left:8px; z-index:100; padding:8px 12px; background:#171106; color:#FBF7EE; transform:translateY(-180%); transition:transform .12s ease; }
+.skip-link:focus { transform:translateY(0); }
+.hv0:hover { background:#F4EEDD; }
+.chapter-layout { max-width:1280px; margin:0 auto; padding:40px 24px 0; display:flex; gap:48px; align-items:flex-start; flex-wrap:wrap; }
+.chapter-rail { flex:1 1 200px; max-width:240px; position:sticky; top:24px; max-height:calc(100vh - 48px); overflow:auto; }
+.chapter-rail ol { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px; line-height:1.4; border-left:2px solid rgba(23,17,6,.14); }
+.chapter-rail li { padding-left:14px; }
+.chapter-rail a { text-decoration:none; color:#4A4030; }
+article { flex:999 1 480px; max-width:88ch; min-width:0; padding-bottom:64px; }
+article > p { margin:0 0 18px; text-wrap:pretty; }
+article > ul, article > ol { margin:0 0 20px; padding-left:24px; }
+article > ul, article > ol { display:flex; flex-direction:column; gap:6px; }
+article h2 { margin:48px 0 16px; font-size:27px; line-height:1.25; font-weight:800; letter-spacing:-.015em; scroll-margin-top:24px; }
+article h2:first-child { margin-top:0; }
+article h3 { margin:32px 0 10px; font-size:20px; line-height:1.35; font-weight:800; letter-spacing:-.01em; scroll-margin-top:24px; }
+article .heading-link { font-size:15px; font-weight:400; text-decoration:none; color:#C2782E; }
+article code { font-family:"JetBrains Mono",monospace; font-size:.85em; overflow-wrap:anywhere; background:#F1E7CF; padding:.08em .3em; }
+article blockquote, article .chapter-route-note { margin:0 0 18px; border-left:3px solid #9C4A0E; background:#F1E7CF; padding:12px 16px; }
+.table-wrap { overflow-x:auto; border:1px solid rgba(23,17,6,.22); margin:0 0 20px; }
+.table-wrap table { border-collapse:collapse; width:100%; min-width:620px; }
+.table-wrap caption { caption-side:top; text-align:left; font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7A6B52; padding:9px 14px; border-bottom:1px solid rgba(23,17,6,.22); background:#F4EEDD; }
+.table-wrap th { text-align:left; font-family:"JetBrains Mono",monospace; font-size:11px; line-height:1.35; letter-spacing:.06em; text-transform:uppercase; padding:9px 14px; border-bottom:2px solid #171106; vertical-align:bottom; }
+.table-wrap td { padding:9px 14px; border-bottom:1px solid rgba(23,17,6,.14); vertical-align:top; font-size:14.5px; line-height:1.5; }
+.table-wrap tbody tr:last-child td { border-bottom:0; }
+article h3 + .table-wrap { border:2px solid #171106; }
+article .source-ref { font-family:"JetBrains Mono",monospace; font-size:.78em; overflow-wrap:anywhere; }
+.work-card { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1px; border:2px solid #171106; background:rgba(23,17,6,.18); margin-top:0; }
+.work-card > p, .work-card > ul { margin:0; padding:16px 18px; background:#FBF7EE; font-size:15px; line-height:1.55; }
+.work-card > ul { padding-left:38px; }
+.work-card > p strong:first-child { display:block; margin:0 0 6px; font-family:"JetBrains Mono",monospace; font-size:10px; line-height:1.4; letter-spacing:.1em; text-transform:uppercase; color:#9C4A0E; }
+.work-card > ul:has(input[data-reading-check]) { grid-column:1/-1; list-style:none; padding:16px 18px; background:#F4EEDD; }
+.check-item label { display:flex; align-items:flex-start; gap:10px; cursor:pointer; }
+.check-item input { width:18px; height:18px; flex:0 0 auto; margin-top:3px; accent-color:#9C4A0E; }
+@media (max-width:760px) {
+  .chapter-layout { gap:28px; }
+  .chapter-rail { position:static; max-width:none; max-height:none; flex-basis:100%; }
+  article { flex-basis:100%; }
+}
+</style>
+</head>
+<body data-page="ch4">
+<a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+
+<div>
+  <div aria-hidden="true" style="position:fixed; top:0; left:0; right:0; height:3px; background:rgba(23,17,6,0.08); z-index:50">
+    <div data-progress style="height:100%; background:#9C4A0E; width:0%"></div>
+  </div>
+
+  <header style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; max-width:1280px; margin:0 auto; padding:18px 24px; border-bottom:2px solid #171106">
+    <a href="./index.html" style="font-family:'JetBrains Mono',monospace; font-size:12px; text-decoration:none; color:#4A4030">← Оглавление</a>
+    <div style="display:flex; align-items:baseline; gap:10px; margin:0 auto">
+      <span style="font-weight:700; font-size:16px">AI-native компания</span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.08em; background:#171106; color:#FBF7EE; padding:2px 6px">V2</span>
+    </div>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#7A6B52">Глава 4 из 12</span>
+  </header>
+
+  <main id="main-content">
+  <section data-screen-label="Опенер главы 4" style="max-width:1280px; margin:0 auto; padding:56px 24px 40px; border-bottom:1px solid rgba(23,17,6,0.14); display:flex; gap:32px; align-items:baseline; flex-wrap:wrap">
+    <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; font-size:clamp(72px,10vw,128px); font-weight:700; line-height:0.9; color:#C2782E">04</span>
+    <div style="flex:1 1 320px">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:#9C4A0E">Часть II · Операционная модель</p>
+      <h1 style="margin:0 0 14px; font-size:clamp(36px,5vw,56px); line-height:1.05; font-weight:800; letter-spacing:-0.02em; text-wrap:balance">Восемь систем операционной модели</h1>
+      <p style="margin:0; font-size:15px; color:#7A6B52; max-width:44em">решение · владелец · доказательство</p>
+    </div>
+  </section>
+
+  <div class="chapter-layout">
+    <nav aria-label="В этой главе" class="chapter-rail">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#7A6B52">В этой главе</p>
+      <ol>
+        <li><a href="#1-ценность-и-портфель">1. Ценность и портфель</a></li>
+        <li><a href="#ch11">2. Люди и полномочия</a></li>
+        <li><a href="#3-контекст-и-память">3. Контекст и память</a></li>
+        <li><a href="#4-среда-исполнения">4. Среда исполнения</a></li>
+        <li><a href="#5-контур-управления">5. Контур управления</a></li>
+        <li><a href="#6-проверка-и-наблюдаемость">6. Проверка и наблюдаемость</a></li>
+        <li><a href="#7-поставка-и-эксплуатация">7. Поставка и эксплуатация</a></li>
+        <li><a href="#8-управление-и-экономика">8. Управление и экономика</a></li>
+        <li><a href="#как-системы-образуют-один-цикл">Как системы образуют один цикл</a></li>
+        <li><a href="#минимальная-конфигурация-первого-цикла">Минимальная конфигурация первого цикла</a></li>
+        <li><a href="#рабочая-карточка-главы-4">Рабочая карточка главы</a></li>
+      </ol>
+    </nav>
+
+    <article data-source-section="ch3">
+      <p>Операционная система компании (Company OS) — это восемь связанных управленческих систем. Они описывают, как организация выбирает ценность, даёт полномочия, исполняет работу, проверяет результат и учится.</p>
+      <p>Это не восемь технических слоёв. Безопасность, наблюдение и управление проходят через всю модель. Одна система может быть реализована несколькими продуктами, а один продукт может обслуживать несколько систем.</p>
+      <p>Первая версия руководства предлагала шесть слоёв. Аудит показал, что такая схема смешивала технические компоненты и управленческие обязанности. V2 заменяет её восемью системами, у каждой из которых есть решение, владелец и доказательство. <a class="source-ref" href="./full.html#audit-V1-ch3">[V1-ch3]</a></p>
+      <h2 id="1-ценность-и-портфель">1. Ценность и портфель <a class="heading-link" href="#1-ценность-и-портфель" aria-label="Ссылка на раздел «1. Ценность и портфель»">#</a></h2>
+      <p>Эта система отвечает на вопрос: какие результаты достойны инвестиций?</p>
+      <p>В её состав входят результаты для клиента, потоки создания ценности, исходные показатели, портфель сценариев и правила прекращения работ. Владелец портфеля сравнивает не эффектные демонстрации, а подтверждённую пользу, полную стоимость и риск.</p>
+      <p>Минимальный артефакт — карточка сценария. В ней есть получатель, результат, частота, исходный уровень, цена ошибки и ближайшее решение. Карточка без исходных показателей остаётся идеей.</p>
+      <p><strong>Проверка системы:</strong> можно ли объяснить, почему этот процесс выбран раньше другого и какое наблюдение заставит остановить инвестиции?</p>
+      <h2 id="ch11">2. Люди и полномочия <a class="heading-link" href="#ch11" aria-label="Ссылка на раздел «2. Люди и полномочия»">#</a></h2>
+      <p>Эта система отвечает на вопрос: кто принимает решение, кто исполняет и кто отвечает за итог?</p>
+      <p>Для каждого значимого действия команда обозначает:</p>
+      <ul><li>владельца результата;</li><li>инициатора;</li><li>исполнителя;</li><li>согласующего;</li><li>проверяющего;</li><li>роль, которая может остановить процесс.</li></ul>
+      <p>ИИ может быть исполнителем. Владельцем результата остаётся человек, а юридическую ответственность несёт организация. В высокорисковом процессе выдачу прав, выполнение действия и проверку по возможности разделяют.</p>
+      <p>Материалы OECD связывают ответственность и прослеживаемость со всем жизненным циклом ИИ. NIST отдельно рассматривает учётные записи и полномочия программных агентов.</p>
+      <p>Это поддерживает разделение ролей, но конкретная схема остаётся решением организации. <a class="source-ref" href="./full.html#src-OECD-AI-accountability">[OECD-AI-accountability]</a> <a class="source-ref" href="./full.html#src-NIST-2026-agent-id">[NIST-2026-agent-id]</a></p>
+      <p>Минимальный артефакт — карта полномочий человека и ИИ.</p>
+      <p><strong>Проверка системы:</strong> можно ли по одному действию назвать человека, выдавшего право, служебную учётную запись исполнителя и человека, ответственного за результат?</p>
+      <h2 id="3-контекст-и-память">3. Контекст и память <a class="heading-link" href="#3-контекст-и-память" aria-label="Ссылка на раздел «3. Контекст и память»">#</a></h2>
+      <p>Эта система отвечает на вопрос: на каких данных, правилах и прошлых результатах основано решение?</p>
+      <p>Контекст включает источники, инструкции, действующие правила, историю текущей задачи и результаты инструментов. Для каждого источника записывают владельца, происхождение, разрешённое использование, свежесть и способ отзыва.</p>
+      <p>Память хранит только то, что понадобится следующему решению. Необработанная история разговоров редко является хорошей памятью: она содержит устаревшие правила, личные данные и случайные предположения.</p>
+      <p>Минимальный артефакт — реестр источников контекста.</p>
+      <p><strong>Проверка системы:</strong> можно ли для значимого вывода показать использованный источник, его версию и право доступа?</p>
+      <h2 id="4-среда-исполнения">4. Среда исполнения <a class="heading-link" href="#4-среда-исполнения" aria-label="Ссылка на раздел «4. Среда исполнения»">#</a></h2>
+      <p>Среда исполнения (execution harness) соединяет модель с инструкциями, навыками, инструментами, состоянием, порядком шагов, изоляцией и наблюдением.</p>
+      <p>Агентом в производственном смысле является вся эта составная система. Свойство модели нельзя переносить на систему без испытания. <a class="source-ref" href="./full.html#audit-G1-D1-p27">[G1-D1-p27]</a>, <code>The New SDLC With Vibe Coding_Day_1.pdf</code>, с. 27.</p>
+      <p>Минимальная среда содержит:</p>
+      <ul><li>закреплённую модель или правило выбора модели;</li><li>версию основной инструкции;</li><li>список разрешённых навыков;</li><li>ограниченный набор инструментов;</li><li>изолированное место выполнения;</li><li>пределы времени, числа действий и расходов;</li><li>обработку ошибок;</li><li>запись существенных событий.</li></ul>
+      <p>Рост числа инструментов может ухудшить выбор действия. Из этого не следует, что нужен второй агент. Сначала сузьте инструменты и контекст. <a class="source-ref" href="./full.html#audit-G1-D2-p18">[G1-D2-p18]</a>, <code>Agent Tools &amp; Interoperability_Day_2.pdf</code>, с. 18.</p>
+      <p>Минимальный артефакт — версия состава среды с зависимостями.</p>
+      <p><strong>Проверка системы:</strong> может ли другой участник воспроизвести тот же состав без личной сессии разработчика?</p>
+      <h2 id="5-контур-управления">5. Контур управления <a class="heading-link" href="#5-контур-управления" aria-label="Ссылка на раздел «5. Контур управления»">#</a></h2>
+      <p>Контур управления (control plane) задаёт служебные учётные записи, права, согласования, политики, секреты, пределы расходов и журнал действий.</p>
+      <p>Критический запрет реализуют программным правилом или механизмом прав, если это возможно. Текст «никогда не делай» внутри инструкции не является достаточным барьером для необратимого действия.</p>
+      <p>Детерминированное ограничение следует закреплять программой. <a class="source-ref" href="./full.html#audit-G1-D3-p42">[G1-D3-p42]</a>, <code>Agent Skills_Day_3.pdf</code>, с. 42; <a class="source-ref" href="./full.html#audit-G1-D5-p27">[G1-D5-p27]</a>, <code>Day_5_v3.pdf</code>, с. 27.</p>
+      <p>Подключение по стандартному протоколу не создаёт доверия автоматически. Публичный сервер протокола контекста модели нужно проверить как кодовую зависимость и границу доверия до доступа к файлам или учётным данным. <a class="source-ref" href="./full.html#audit-G1-D2-p15">[G1-D2-p15]</a> <a class="source-ref" href="./full.html#audit-G1-D2-p16">[G1-D2-p16]</a></p>
+      <p>Минимальный артефакт — договор о самостоятельности с матрицей прав.</p>
+      <p><strong>Проверка системы:</strong> может ли система физически выполнить запрещённое действие, даже если инструкция просит этого не делать?</p>
+      <h2 id="6-проверка-и-наблюдаемость">6. Проверка и наблюдаемость <a class="heading-link" href="#6-проверка-и-наблюдаемость" aria-label="Ссылка на раздел «6. Проверка и наблюдаемость»">#</a></h2>
+      <p>Эта система отвечает на вопросы: допустим ли результат, допустим ли путь и не ухудшается ли поведение?</p>
+      <p>Она объединяет обычные тесты, наборы оценочных проверок, проверку хода действий, трассировку вызовов инструментов, производственные показатели и разбор отклонений.</p>
+      <p>Журнал не обязан и не должен обещать доступ к скрытым рассуждениям модели. Достаточно записывать намерение, версии компонентов, входы в допустимом объёме, вызовы инструментов, согласования, состояния и результат.</p>
+      <p>Для расследования фиксируйте путь от намерения к вызовам инструментов и результату. <a class="source-ref" href="./full.html#audit-G1-D4-p24">[G1-D4-p24]</a>, <code>Vibe Coding Agent Security and Evaluation_Day_4.pdf</code>, с. 24.</p>
+      <p>Минимальный артефакт — план проверок качества и схема наблюдения.</p>
+      <p><strong>Проверка системы:</strong> можно ли воспроизвести существенный сбой и понять, какое действие, право или источник к нему привели?</p>
+      <h2 id="7-поставка-и-эксплуатация">7. Поставка и эксплуатация <a class="heading-link" href="#7-поставка-и-эксплуатация" aria-label="Ссылка на раздел «7. Поставка и эксплуатация»">#</a></h2>
+      <p>Эта система отвечает на вопрос: как изменение безопасно проходит от намерения до рабочей среды и как организация восстанавливается после сбоя?</p>
+      <p>Она включает небольшие изменения, изолированную разработку, рецензирование, условия выпуска по риску, наблюдение после выпуска, откат, дежурство и разбор инцидентов.</p>
+      <p>ИИ может подготовить описание запроса на слияние. Автор изменения проверяет точность сводки, доказательств и риска. Успешные тесты не дают универсального разрешения на автоматический выпуск.</p>
+      <p>Минимальный артефакт — маршрут выпуска с условиями для классов риска.</p>
+      <p><strong>Проверка системы:</strong> кто и по какому сигналу остановит выпуск, откатит изменение и сообщит владельцу результата?</p>
+      <h2 id="8-управление-и-экономика">8. Управление и экономика <a class="heading-link" href="#8-управление-и-экономика" aria-label="Ссылка на раздел «8. Управление и экономика»">#</a></h2>
+      <p>Эта система отвечает на вопрос: остаётся ли процесс приемлемым по пользе, расходам, риску и требованиям?</p>
+      <p>В неё входят реестр рисков, применимые требования, полная стоимость результата, бюджеты, решения о переносе механизмов и организационное обучение.</p>
+      <p>ISO/IEC 42001 задаёт требования к системе управления ИИ, ответственности, целям, контролю и улучшению. NIST AI RMF предлагает функции управления, описания контекста, измерения и работы с риском.</p>
+      <p>Эти источники не предписывают архитектуру из восьми систем, но поддерживают управляемый жизненный цикл. <a class="source-ref" href="./full.html#src-ISO-IEC-42001-2023">[ISO-IEC-42001-2023]</a> <a class="source-ref" href="./full.html#src-NIST-AI-RMF-1-0">[NIST-AI-RMF-1-0]</a></p>
+      <p>Минимальный артефакт — совместный обзор результата, полной стоимости и риска.</p>
+      <p><strong>Проверка системы:</strong> может ли руководитель показать, какую пользу купили расходы и какой остаточный риск принят?</p>
+      <h2 id="как-системы-образуют-один-цикл">Как системы образуют один цикл <a class="heading-link" href="#как-системы-образуют-один-цикл" aria-label="Ссылка на раздел «Как системы образуют один цикл»">#</a></h2>
+      <p>Представьте процесс подготовки предложения клиенту.</p>
+      <p>Ценность и портфель задают ожидаемое сокращение времени и уровень качества. Люди и полномочия оставляют цену и юридические условия за человеком. Контекст предоставляет актуальный каталог и правила.</p>
+      <p>Среда исполнения формирует черновик и вызывает расчёт. Контур управления запрещает менять скидку выше порога. Проверки сверяют расчёт и источники.</p>
+      <p>Поставка выпускает новую версию инструкции. Управление и экономика решают, окупается ли механизм.</p>
+      <p>Если убрать любую систему, проблема проявится в другом месте. Без контекста ответ устареет. Без полномочий система применит лишнюю скидку. Без экономики команда будет ускорять черновик, не зная стоимости его проверки.</p>
+      <h2 id="минимальная-конфигурация-первого-цикла">Минимальная конфигурация первого цикла <a class="heading-link" href="#минимальная-конфигурация-первого-цикла" aria-label="Ссылка на раздел «Минимальная конфигурация первого цикла»">#</a></h2>
+      <p>Первому процессу не нужны восемь платформ. Ему нужны восемь ответов.</p>
+      <div class="table-wrap"><table><caption>Минимальная конфигурация первого цикла: таблица 5</caption><thead><tr><th scope="col">Система</th><th scope="col">Минимум для пилота</th></tr></thead><tbody><tr><td>Ценность</td><td>Один результат и исходный уровень</td></tr><tr><td>Люди</td><td>Один владелец и карта решений</td></tr><tr><td>Контекст</td><td>Несколько разрешённых источников с владельцами</td></tr><tr><td>Исполнение</td><td>Закреплённый состав модели, инструкции и инструментов</td></tr><tr><td>Управление</td><td>Ограниченная учётная запись и явные запреты</td></tr><tr><td>Проверка</td><td>Набор случаев, пороги и журнал</td></tr><tr><td>Поставка</td><td>Версия, откат и ответственный за выпуск</td></tr><tr><td>Экономика</td><td>Расход на принятый результат и предел потерь</td></tr></tbody></table></div>
+      <p>Общий компонент появляется после повторения. Если три процесса одинаково решают выдачу краткоживущих прав, имеет смысл общий сервис. Если сходство существует только на слайде, локальные решения пока безопаснее и дешевле.</p>
+      <h2 id="рабочая-карточка-главы-4">Рабочая карточка главы <a class="heading-link" href="#рабочая-карточка-главы-4" aria-label="Ссылка на раздел «Рабочая карточка главы»">#</a></h2>
+      <div class="work-card">
+      <p><strong>Решение.</strong> Определить минимальную конфигурацию восьми систем для выбранного процесса и назвать два опаснейших разрыва.</p>
+      <p><strong>Минимальный механизм.</strong> По одному владельцу, артефакту и проверке на каждую систему. Общие компоненты добавляются после подтверждённого повторения.</p>
+      <p><strong>Ответственный.</strong> Владелец потока отвечает за целое. Владельцы данных, технологий, безопасности, эксплуатации и финансов отвечают за свои механизмы и доказательства.</p>
+      <p><strong>Артефакт.</strong> Карта восьми систем с текущим состоянием, ссылками, разрывами и зависимостями.</p>
+      <p><strong>Критерий готовности.</strong> Для каждого шага цикла видно, какая система задаёт результат, право, данные, исполнение, проверку, выпуск и экономическое решение.</p>
+      <p><strong>Показатели результата.</strong></p>
+      <ul><li>доля цикла, покрытая воспроизводимыми механизмами;</li><li>время от решения об изменении до проверенного выпуска;</li><li>число повторно использованных компонентов с повторной приёмкой;</li><li>результат и полная стоимость процесса.</li></ul>
+      <p><strong>Показатели риска.</strong></p>
+      <ul><li>число систем без владельца;</li><li>число личных учётных записей в производственном пути;</li><li>доля правил без версии;</li><li>число общих компонентов без подтверждённого потребителя;</li><li>время восстановления после отказа зависимости.</li></ul>
+      <p><strong>Типичные ошибки.</strong></p>
+      <ul><li>покупать восемь продуктов вместо ответа на восемь вопросов;</li><li>превращать системы в жёсткие слои;</li><li>централизовать до повторяемой потребности;</li><li>назначать техническую команду владельцем бизнес-результата;</li><li>считать стандартный протокол доказательством доверия.</li></ul>
+      <p><strong>Различия маршрутов.</strong> Стартап собирает минимальные механизмы вокруг одного цикла и избегает платформенной команды.</p>
+      <p>Зрелая компания наносит восемь систем на один сквозной поток, выявляет дублирование и согласует общие правила. Она не обязана немедленно заменять локальные компоненты.</p>
+      <p><strong>Чек-лист.</strong></p>
+      <ul><li class="check-item"><label><input type="checkbox" data-reading-check="0"> <span>Все восемь систем нанесены на один процесс.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="1"> <span>Для каждой системы есть владелец и артефакт.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="2"> <span>Безопасность и наблюдение проходят через весь путь.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="3"> <span>Личные сессии не используются для производственных действий.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="4"> <span>Критические запреты закреплены вне инструкции к модели.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="5"> <span>Общие компоненты обоснованы повторившейся потребностью.</span></label></li><li class="check-item"><label><input type="checkbox" data-reading-check="6"> <span>Два опаснейших разрыва получили владельцев и срок.</span></label></li></ul>
+      </div>
+    </article>
+  </div>
+  </main>
+
+  <footer style="border-top:2px solid #171106; margin-top:24px">
+    <div style="max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap">
+      <a href="./chapter-03.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">← Глава 3</span>
+        <span style="font-size:19px; font-weight:700">Первый управляемый цикл</span>
+      </a>
+      <a href="./chapter-05.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px; align-items:flex-end; text-align:right; border-left:1px solid rgba(23,17,6,0.14)" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">Глава 5 →</span>
+        <span style="font-size:19px; font-weight:700">Контекст, память и навыки</span>
+      </a>
+    </div>
+  </footer>
+</div>
+
+<script src="./assets/book-v3.js" defer></script>
+</body>
+</html>

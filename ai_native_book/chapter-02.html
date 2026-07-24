@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Глава 2 — Карта зрелости. AI-native компания v2">
+<title>Глава 2. Карта зрелости — AI-native компания v2</title>
+<link rel="canonical" href="https://makeitbeta.ru/ai_native_book/chapter-02.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..900;1,7..72,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+.skip-link { position:fixed; top:8px; left:8px; z-index:100; padding:8px 12px; background:#171106; color:#FBF7EE; transform:translateY(-180%); transition:transform .12s ease; }
+.skip-link:focus { transform:translateY(0); }
+
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #FBF7EE; color: #171106; font-family: Literata, "Iowan Old Style", Georgia, serif; font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+a { color: #9C4A0E; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+a:hover { color: #6E3509; text-decoration-thickness: 2px; }
+::selection { background: #EADFC4; }
+
+.hv0:hover { background:#F4EEDD }
+</style>
+</head>
+<body data-page="ch2">
+<a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+
+<div>
+  <div aria-hidden="true" style="position:fixed; top:0; left:0; right:0; height:3px; background:rgba(23,17,6,0.08); z-index:50">
+    <div data-progress style="height:100%; background:#9C4A0E; width:0%"></div>
+  </div>
+
+  <header style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; max-width:1280px; margin:0 auto; padding:18px 24px; border-bottom:2px solid #171106">
+    <a href="./index.html" style="font-family:'JetBrains Mono',monospace; font-size:12px; text-decoration:none; color:#4A4030">← Оглавление</a>
+    <div style="display:flex; align-items:baseline; gap:10px; margin:0 auto">
+      <span style="font-weight:700; font-size:16px">AI-native компания</span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.08em; background:#171106; color:#FBF7EE; padding:2px 6px">V2</span>
+    </div>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#7A6B52">Глава 2 из 12</span>
+  </header>
+
+  <main id="main-content">
+  <section data-screen-label="Опенер главы 2" style="max-width:1280px; margin:0 auto; padding:56px 24px 40px; border-bottom:1px solid rgba(23,17,6,0.14); display:flex; gap:32px; align-items:baseline; flex-wrap:wrap">
+    <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace; font-size:clamp(72px,10vw,128px); font-weight:700; line-height:0.9; color:#C2782E">02</span>
+    <div style="flex:1 1 320px">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:#9C4A0E">Часть I · Основы</p>
+      <h1 style="margin:0 0 14px; font-size:clamp(36px,5vw,56px); line-height:1.05; font-weight:800; letter-spacing:-0.02em">Карта зрелости</h1>
+      <p style="margin:0; font-size:15px; color:#7A6B52; max-width:40em">Восемь измерений · пять уровней · профиль без среднего балла</p>
+    </div>
+  </section>
+
+  <div style="max-width:1280px; margin:0 auto; padding:40px 24px 0; display:flex; gap:48px; align-items:flex-start; flex-wrap:wrap">
+    <nav aria-label="В этой главе" style="flex:1 1 200px; max-width:240px; position:sticky; top:24px">
+      <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#7A6B52">В этой главе</p>
+      <ol style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px; line-height:1.4; border-left:2px solid rgba(23,17,6,0.14)">
+        <li style="padding-left:14px"><a href="#заполнить-карту" style="text-decoration:none; color:#4A4030">Заполнить карту зрелости</a></li>
+        <li style="padding-left:14px"><a href="#пять-уровней" style="text-decoration:none; color:#4A4030">Пять уровней</a></li>
+        <li style="padding-left:14px"><a href="#что-считать-доказательством" style="text-decoration:none; color:#4A4030">Что считать доказательством</a></li>
+        <li style="padding-left:14px"><a href="#правила-выставления-оценки" style="text-decoration:none; color:#4A4030">Правила выставления оценки</a></li>
+        <li style="padding-left:14px"><a href="#блокирующие-разрывы" style="text-decoration:none; color:#4A4030">Блокирующие разрывы</a></li>
+        <li style="padding-left:14px"><a href="#две-оси" style="text-decoration:none; color:#4A4030">Зрелость и самостоятельность</a></li>
+        <li style="padding-left:14px"><a href="#оценка-за-90-минут" style="text-decoration:none; color:#4A4030">Оценка за девяносто минут</a></li>
+        <li style="padding-left:14px"><a href="#условный-пример" style="text-decoration:none; color:#4A4030">Условный пример</a></li>
+        <li style="padding-left:14px"><a href="#рабочая-карточка" style="text-decoration:none; color:#4A4030">Рабочая карточка главы</a></li>
+      </ol>
+    </nav>
+
+    <article style="flex:999 1 480px; max-width:88ch; min-width:0; padding-bottom:64px">
+
+      <section id="заполнить-карту" aria-labelledby="scorecard-title" style="border:2px solid #171106; background:#F7F1E2; padding:28px 28px 0; margin-bottom:48px">
+        <p style="margin:0 0 10px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#9C4A0E">Интерактив · сохраняется в браузере</p>
+        <h2 id="scorecard-title" style="margin:0 0 16px; font-size:30px; font-weight:800; letter-spacing:-0.015em">Заполнить карту зрелости</h2>
+        <p style="margin:0 0 14px; text-wrap:pretty">Оценивайте один конкретный процесс. Балл засчитывается только при наличии артефакта, журнала, показателя или истории решений.</p>
+        <p style="margin:0 0 14px; border-left:3px solid #9C4A0E; padding:10px 14px; background:#F1E7CF; text-wrap:pretty"><strong>Зрелость не требует более высокой самостоятельности.</strong> Процесс уровня 4 может осознанно оставаться на A0 или A1.</p>
+        <p style="margin:0 0 10px; text-wrap:pretty"><strong>Когда процесс считается управляемым.</strong> Все восемь измерений должны получить не меньше 3. Решение задаёт минимальный балл профиля; среднее значение не используется и не может скрыть слабое измерение.</p>
+        <div>
+
+            <div style="border-top:1px solid rgba(23,17,6,0.18); padding:18px 0">
+              <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px">
+                <span style="font-size:18px; font-weight:700">Ценность и портфель</span>
+                <span data-score-label="value" style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9C4A0E; font-weight:700">не оценено</span>
+              </div>
+
+                <p style="margin:0 0 12px; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty"><strong>Требуемое доказательство.</strong> Паспорт сценария, исходные показатели и критерий приёмки; для уровней 3–4 — история результата и пересмотра портфеля.</p>
+
+              <div style="display:flex; gap:6px; flex-wrap:wrap">
+
+                  <button type="button" data-score-btn="value" data-level="0" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">0</strong> Эпизодический</button>
+
+                  <button type="button" data-score-btn="value" data-level="1" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">1</strong> С поддержкой ИИ</button>
+
+                  <button type="button" data-score-btn="value" data-level="2" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">2</strong> Повторяемый</button>
+
+                  <button type="button" data-score-btn="value" data-level="3" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">3</strong> Управляемый</button>
+
+                  <button type="button" data-score-btn="value" data-level="4" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">4</strong> Адаптивный</button>
+
+              </div>
+            </div>
+
+            <div style="border-top:1px solid rgba(23,17,6,0.18); padding:18px 0">
+              <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px">
+                <span style="font-size:18px; font-weight:700">Люди и полномочия</span>
+                <span data-score-label="people" style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9C4A0E; font-weight:700">не оценено</span>
+              </div>
+
+                <p style="margin:0 0 12px; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty"><strong>Требуемое доказательство.</strong> Названный владелец и карта решений; для уровней 3–4 — действующие права, журнал согласований и история пересмотра.</p>
+
+              <div style="display:flex; gap:6px; flex-wrap:wrap">
+
+                  <button type="button" data-score-btn="people" data-level="0" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">0</strong> Эпизодический</button>
+
+                  <button type="button" data-score-btn="people" data-level="1" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">1</strong> С поддержкой ИИ</button>
+
+                  <button type="button" data-score-btn="people" data-level="2" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">2</strong> Повторяемый</button>
+
+                  <button type="button" data-score-btn="people" data-level="3" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">3</strong> Управляемый</button>
+
+                  <button type="button" data-score-btn="people" data-level="4" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">4</strong> Адаптивный</button>
+
+              </div>
+            </div>
+
+            <div style="border-top:1px solid rgba(23,17,6,0.18); padding:18px 0">
+              <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px">
+                <span style="font-size:18px; font-weight:700">Контекст и память</span>
+                <span data-score-label="context" style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9C4A0E; font-weight:700">не оценено</span>
+              </div>
+
+                <p style="margin:0 0 12px; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty"><strong>Требуемое доказательство.</strong> Реестр источников, владельцы и правила свежести; для уровней 3–4 — проверка происхождения, доступа и изменений после ошибок.</p>
+
+              <div style="display:flex; gap:6px; flex-wrap:wrap">
+
+                  <button type="button" data-score-btn="context" data-level="0" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">0</strong> Эпизодический</button>
+
+                  <button type="button" data-score-btn="context" data-level="1" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">1</strong> С поддержкой ИИ</button>
+
+                  <button type="button" data-score-btn="context" data-level="2" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">2</strong> Повторяемый</button>
+
+                  <button type="button" data-score-btn="context" data-level="3" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">3</strong> Управляемый</button>
+
+                  <button type="button" data-score-btn="context" data-level="4" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">4</strong> Адаптивный</button>
+
+              </div>
+            </div>
+
+            <div style="border-top:1px solid rgba(23,17,6,0.18); padding:18px 0">
+              <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px">
+                <span style="font-size:18px; font-weight:700">Среда исполнения</span>
+                <span data-score-label="execution" style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9C4A0E; font-weight:700">не оценено</span>
+              </div>
+
+                <p style="margin:0 0 12px; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty"><strong>Требуемое доказательство.</strong> Закреплённые модель, инструкции, навыки и инструменты; для уровней 3–4 — воспроизводимая изоляция и повторная приёмка компонентов.</p>
+
+              <div style="display:flex; gap:6px; flex-wrap:wrap">
+
+                  <button type="button" data-score-btn="execution" data-level="0" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">0</strong> Эпизодический</button>
+
+                  <button type="button" data-score-btn="execution" data-level="1" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">1</strong> С поддержкой ИИ</button>
+
+                  <button type="button" data-score-btn="execution" data-level="2" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">2</strong> Повторяемый</button>
+
+                  <button type="button" data-score-btn="execution" data-level="3" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">3</strong> Управляемый</button>
+
+                  <button type="button" data-score-btn="execution" data-level="4" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">4</strong> Адаптивный</button>
+
+              </div>
+            </div>
+
+            <div style="border-top:1px solid rgba(23,17,6,0.18); padding:18px 0">
+              <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px">
+                <span style="font-size:18px; font-weight:700">Контур управления</span>
+                <span data-score-label="control" style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9C4A0E; font-weight:700">не оценено</span>
+              </div>
+
+                <p style="margin:0 0 12px; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty"><strong>Требуемое доказательство.</strong> Перечень учётных записей, секретов и запретов; для уровней 3–4 — минимальные права, журнал и версионируемые политики.</p>
+
+              <div style="display:flex; gap:6px; flex-wrap:wrap">
+
+                  <button type="button" data-score-btn="control" data-level="0" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">0</strong> Эпизодический</button>
+
+                  <button type="button" data-score-btn="control" data-level="1" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">1</strong> С поддержкой ИИ</button>
+
+                  <button type="button" data-score-btn="control" data-level="2" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">2</strong> Повторяемый</button>
+
+                  <button type="button" data-score-btn="control" data-level="3" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">3</strong> Управляемый</button>
+
+                  <button type="button" data-score-btn="control" data-level="4" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">4</strong> Адаптивный</button>
+
+              </div>
+            </div>
+
+            <div style="border-top:1px solid rgba(23,17,6,0.18); padding:18px 0">
+              <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px">
+                <span style="font-size:18px; font-weight:700">Проверка и наблюдаемость</span>
+                <span data-score-label="quality" style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9C4A0E; font-weight:700">не оценено</span>
+              </div>
+
+                <p style="margin:0 0 12px; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty"><strong>Требуемое доказательство.</strong> Набор примеров и пороги приёмки; для уровней 3–4 — проверка результата и хода действий, сигналы ухудшения и история инцидентов.</p>
+
+              <div style="display:flex; gap:6px; flex-wrap:wrap">
+
+                  <button type="button" data-score-btn="quality" data-level="0" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">0</strong> Эпизодический</button>
+
+                  <button type="button" data-score-btn="quality" data-level="1" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">1</strong> С поддержкой ИИ</button>
+
+                  <button type="button" data-score-btn="quality" data-level="2" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">2</strong> Повторяемый</button>
+
+                  <button type="button" data-score-btn="quality" data-level="3" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">3</strong> Управляемый</button>
+
+                  <button type="button" data-score-btn="quality" data-level="4" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">4</strong> Адаптивный</button>
+
+              </div>
+            </div>
+
+            <div style="border-top:1px solid rgba(23,17,6,0.18); padding:18px 0">
+              <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px">
+                <span style="font-size:18px; font-weight:700">Поставка и эксплуатация</span>
+                <span data-score-label="delivery" style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9C4A0E; font-weight:700">не оценено</span>
+              </div>
+
+                <p style="margin:0 0 12px; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty"><strong>Требуемое доказательство.</strong> Маршрут выпуска, откат и владелец дежурства; для уровней 3–4 — выпуск по риску, испытанный откат и данные восстановления.</p>
+
+              <div style="display:flex; gap:6px; flex-wrap:wrap">
+
+                  <button type="button" data-score-btn="delivery" data-level="0" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">0</strong> Эпизодический</button>
+
+                  <button type="button" data-score-btn="delivery" data-level="1" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">1</strong> С поддержкой ИИ</button>
+
+                  <button type="button" data-score-btn="delivery" data-level="2" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">2</strong> Повторяемый</button>
+
+                  <button type="button" data-score-btn="delivery" data-level="3" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">3</strong> Управляемый</button>
+
+                  <button type="button" data-score-btn="delivery" data-level="4" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">4</strong> Адаптивный</button>
+
+              </div>
+            </div>
+
+            <div style="border-top:1px solid rgba(23,17,6,0.18); padding:18px 0">
+              <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px">
+                <span style="font-size:18px; font-weight:700">Управление и экономика</span>
+                <span data-score-label="economics" style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9C4A0E; font-weight:700">не оценено</span>
+              </div>
+
+                <p style="margin:0 0 12px; font-size:13.5px; line-height:1.55; color:#4A4030; text-wrap:pretty"><strong>Требуемое доказательство.</strong> Реестр рисков и расчёт полной стоимости; для уровней 3–4 — регулярные решения по пользе, расходу, риску и инвестициям.</p>
+
+              <div style="display:flex; gap:6px; flex-wrap:wrap">
+
+                  <button type="button" data-score-btn="economics" data-level="0" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">0</strong> Эпизодический</button>
+
+                  <button type="button" data-score-btn="economics" data-level="1" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">1</strong> С поддержкой ИИ</button>
+
+                  <button type="button" data-score-btn="economics" data-level="2" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">2</strong> Повторяемый</button>
+
+                  <button type="button" data-score-btn="economics" data-level="3" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">3</strong> Управляемый</button>
+
+                  <button type="button" data-score-btn="economics" data-level="4" style="font-family: 'JetBrains Mono',monospace; font-size: 11px; line-height: 1.3; padding: 8px 10px; border: 1px solid rgba(23,17,6,0.35); background: transparent; color: #4A4030; cursor: pointer; flex: 1 1 auto; min-width: 92px; text-align: left"><strong style="font-size:13px">4</strong> Адаптивный</button>
+
+              </div>
+            </div>
+
+        </div>
+
+        <div data-screen-label="Профиль зрелости" style="background:#171106; color:#FBF7EE; margin:8px -28px 0; padding:26px 28px 24px">
+          <p style="margin:0 0 16px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#C2782E">Профиль процесса</p>
+          <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:18px">
+
+              <div style="display:grid; grid-template-columns:minmax(120px,200px) 1fr 2ch; gap:12px; align-items:center">
+                <span style="font-size:13px; line-height:1.3; color:#D8CDB4">Ценность и портфель</span>
+                <span style="position:relative; display:block; height:12px; background:rgba(251,247,238,0.14)">
+                  <span data-bar="value" style="position:absolute; inset:0 auto 0 0; width:0%; background:#8A7A5E"></span>
+                  <span aria-hidden="true" style="position:absolute; top:-3px; bottom:-3px; left:75%; width:2px; background:rgba(251,247,238,0.5)"></span>
+                </span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:#C2782E; text-align:right" data-score-num="value">·</span>
+              </div>
+
+              <div style="display:grid; grid-template-columns:minmax(120px,200px) 1fr 2ch; gap:12px; align-items:center">
+                <span style="font-size:13px; line-height:1.3; color:#D8CDB4">Люди и полномочия</span>
+                <span style="position:relative; display:block; height:12px; background:rgba(251,247,238,0.14)">
+                  <span data-bar="people" style="position:absolute; inset:0 auto 0 0; width:0%; background:#8A7A5E"></span>
+                  <span aria-hidden="true" style="position:absolute; top:-3px; bottom:-3px; left:75%; width:2px; background:rgba(251,247,238,0.5)"></span>
+                </span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:#C2782E; text-align:right" data-score-num="people">·</span>
+              </div>
+
+              <div style="display:grid; grid-template-columns:minmax(120px,200px) 1fr 2ch; gap:12px; align-items:center">
+                <span style="font-size:13px; line-height:1.3; color:#D8CDB4">Контекст и память</span>
+                <span style="position:relative; display:block; height:12px; background:rgba(251,247,238,0.14)">
+                  <span data-bar="context" style="position:absolute; inset:0 auto 0 0; width:0%; background:#8A7A5E"></span>
+                  <span aria-hidden="true" style="position:absolute; top:-3px; bottom:-3px; left:75%; width:2px; background:rgba(251,247,238,0.5)"></span>
+                </span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:#C2782E; text-align:right" data-score-num="context">·</span>
+              </div>
+
+              <div style="display:grid; grid-template-columns:minmax(120px,200px) 1fr 2ch; gap:12px; align-items:center">
+                <span style="font-size:13px; line-height:1.3; color:#D8CDB4">Среда исполнения</span>
+                <span style="position:relative; display:block; height:12px; background:rgba(251,247,238,0.14)">
+                  <span data-bar="execution" style="position:absolute; inset:0 auto 0 0; width:0%; background:#8A7A5E"></span>
+                  <span aria-hidden="true" style="position:absolute; top:-3px; bottom:-3px; left:75%; width:2px; background:rgba(251,247,238,0.5)"></span>
+                </span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:#C2782E; text-align:right" data-score-num="execution">·</span>
+              </div>
+
+              <div style="display:grid; grid-template-columns:minmax(120px,200px) 1fr 2ch; gap:12px; align-items:center">
+                <span style="font-size:13px; line-height:1.3; color:#D8CDB4">Контур управления</span>
+                <span style="position:relative; display:block; height:12px; background:rgba(251,247,238,0.14)">
+                  <span data-bar="control" style="position:absolute; inset:0 auto 0 0; width:0%; background:#8A7A5E"></span>
+                  <span aria-hidden="true" style="position:absolute; top:-3px; bottom:-3px; left:75%; width:2px; background:rgba(251,247,238,0.5)"></span>
+                </span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:#C2782E; text-align:right" data-score-num="control">·</span>
+              </div>
+
+              <div style="display:grid; grid-template-columns:minmax(120px,200px) 1fr 2ch; gap:12px; align-items:center">
+                <span style="font-size:13px; line-height:1.3; color:#D8CDB4">Проверка и наблюдаемость</span>
+                <span style="position:relative; display:block; height:12px; background:rgba(251,247,238,0.14)">
+                  <span data-bar="quality" style="position:absolute; inset:0 auto 0 0; width:0%; background:#8A7A5E"></span>
+                  <span aria-hidden="true" style="position:absolute; top:-3px; bottom:-3px; left:75%; width:2px; background:rgba(251,247,238,0.5)"></span>
+                </span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:#C2782E; text-align:right" data-score-num="quality">·</span>
+              </div>
+
+              <div style="display:grid; grid-template-columns:minmax(120px,200px) 1fr 2ch; gap:12px; align-items:center">
+                <span style="font-size:13px; line-height:1.3; color:#D8CDB4">Поставка и эксплуатация</span>
+                <span style="position:relative; display:block; height:12px; background:rgba(251,247,238,0.14)">
+                  <span data-bar="delivery" style="position:absolute; inset:0 auto 0 0; width:0%; background:#8A7A5E"></span>
+                  <span aria-hidden="true" style="position:absolute; top:-3px; bottom:-3px; left:75%; width:2px; background:rgba(251,247,238,0.5)"></span>
+                </span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:#C2782E; text-align:right" data-score-num="delivery">·</span>
+              </div>
+
+              <div style="display:grid; grid-template-columns:minmax(120px,200px) 1fr 2ch; gap:12px; align-items:center">
+                <span style="font-size:13px; line-height:1.3; color:#D8CDB4">Управление и экономика</span>
+                <span style="position:relative; display:block; height:12px; background:rgba(251,247,238,0.14)">
+                  <span data-bar="economics" style="position:absolute; inset:0 auto 0 0; width:0%; background:#8A7A5E"></span>
+                  <span aria-hidden="true" style="position:absolute; top:-3px; bottom:-3px; left:75%; width:2px; background:rgba(251,247,238,0.5)"></span>
+                </span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:#C2782E; text-align:right" data-score-num="economics">·</span>
+              </div>
+
+          </div>
+          <p aria-live="polite" data-verdict style="margin:0 0 18px; font-size:15px; line-height:1.55; color:#FBF7EE; text-wrap:pretty">Выберите уровень по всем восьми измерениям. Итогом будет профиль без среднего балла.</p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap">
+            <button type="button" id="scorecard-export" style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; padding:10px 16px; background:#C2782E; color:#171106; border:1px solid #C2782E; cursor:pointer">Скачать профиль в Markdown</button>
+            <button type="button" id="scorecard-clear" style="font-family:'JetBrains Mono',monospace; font-size:12px; padding:10px 16px; background:transparent; color:#D8CDB4; border:1px solid rgba(251,247,238,0.4); cursor:pointer">Очистить сохранённые ответы</button>
+          </div>
+          <p style="margin:18px 0 0; font-size:12.5px; line-height:1.55; color:#A99B7F; text-wrap:pretty">Без JavaScript форму можно заполнить и распечатать вручную. При включённом JavaScript страница сохраняет только уровни и отметки «да/нет» в этом браузере — до нажатия «Очистить сохранённые ответы» или удаления данных сайта. Эти данные доступны другим скриптам домена makeitbeta.ru: локальное хранилище не защищено. Не вводите конфиденциальные данные.</p>
+        </div>
+      </section>
+
+      <p style="margin:0 0 18px; text-wrap:pretty">Карта зрелости оценивает конкретный процесс или поток создания ценности. Она не выставляет компании общий ранг и не превращает разные проблемы в одно удобное число.</p>
+      <p style="margin:0 0 12px; text-wrap:pretty">Процесс оценивается по восьми измерениям. Они совпадают с восемью системами операционной модели:</p>
+      <ol style="margin:0 0 18px; padding-left:24px; display:flex; flex-direction:column; gap:4px">
+        <li>ценность и портфель;</li><li>люди и полномочия;</li><li>контекст и память;</li><li>среда исполнения;</li><li>контур управления;</li><li>проверка и наблюдаемость;</li><li>поставка и эксплуатация;</li><li>управление и экономика.</li>
+      </ol>
+      <p style="margin:0 0 18px; text-wrap:pretty">Главный результат оценки — профиль из восьми баллов. Например: <code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:2px 6px">3 / 2 / 2 / 1 / 1 / 2 / 2 / 1</code>. Такой профиль показывает разрыв. Среднее значение <code style="font-family:'JetBrains Mono',monospace; font-size:0.85em; background:#F1E7CF; padding:2px 6px">1,75</code> скрыло бы его и создало бы ложное чувство порядка.</p>
+
+      <h2 id="пять-уровней" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Пять уровней <a href="#пять-уровней" aria-label="Ссылка на раздел «Пять уровней»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <div style="overflow-x:auto; border:1px solid rgba(23,17,6,0.22)">
+        <table style="border-collapse:collapse; width:100%; min-width:560px">
+          <caption style="caption-side:top; text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#7A6B52; padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.22); background:#F4EEDD">Пять уровней: таблица 1</caption>
+          <thead><tr>
+            <th scope="col" style="text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; padding:10px 14px; border-bottom:2px solid #171106; white-space:nowrap">Уровень</th>
+            <th scope="col" style="text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; padding:10px 14px; border-bottom:2px solid #171106">Название</th>
+            <th scope="col" style="text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; padding:10px 14px; border-bottom:2px solid #171106">Наблюдаемый признак</th>
+          </tr></thead>
+          <tbody style="font-size:15px; line-height:1.5">
+            <tr><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-family:'JetBrains Mono',monospace; font-weight:700; color:#9C4A0E">0</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-weight:700; white-space:nowrap">Эпизодический</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Есть отдельные опыты, личные инструкции и ожидания без подтверждения.</td></tr>
+            <tr><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-family:'JetBrains Mono',monospace; font-weight:700; color:#9C4A0E">1</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-weight:700; white-space:nowrap">С поддержкой ИИ</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">ИИ помогает людям, но порядок остаётся ручным и зависит от отдельных сотрудников.</td></tr>
+            <tr><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-family:'JetBrains Mono',monospace; font-weight:700; color:#9C4A0E">2</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-weight:700; white-space:nowrap">Повторяемый</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Есть общий порядок, исходные показатели, критерии приёмки, артефакты и ограниченный пилот.</td></tr>
+            <tr><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-family:'JetBrains Mono',monospace; font-weight:700; color:#9C4A0E">3</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-weight:700; white-space:nowrap">Управляемый</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Процесс работает в эксплуатации; назначены владельцы, действуют права, проверки, наблюдение и резервный сценарий.</td></tr>
+            <tr><td style="padding:10px 14px; font-family:'JetBrains Mono',monospace; font-weight:700; color:#9C4A0E">4</td><td style="padding:10px 14px; font-weight:700; white-space:nowrap">Адаптивный</td><td style="padding:10px 14px; vertical-align:top">Инциденты и результаты систематически улучшают процесс; проверенные механизмы переносятся между командами.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin:18px 0; text-wrap:pretty">Уровень 4 означает способность безопасно учиться. Он не означает работу без людей и не требует A3.</p>
+
+      <h2 id="что-считать-доказательством" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Что считать доказательством <a href="#что-считать-доказательством" aria-label="Ссылка на раздел «Что считать доказательством»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 18px; text-wrap:pretty">Балл засчитывается по артефакту, журналу, показателю или истории решений. Фраза «мы обычно так делаем» не является доказательством.</p>
+      <div style="overflow-x:auto; border:1px solid rgba(23,17,6,0.22)">
+        <table style="border-collapse:collapse; width:100%; min-width:880px">
+          <caption style="caption-side:top; text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#7A6B52; padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.22); background:#F4EEDD">Что считать доказательством: таблица 2</caption>
+          <thead><tr>
+            <th scope="col" style="text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; padding:10px 14px; border-bottom:2px solid #171106">Измерение</th>
+            <th scope="col" style="text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; padding:10px 14px; border-bottom:2px solid #171106">Уровень 2: минимальное доказательство повторяемости</th>
+            <th scope="col" style="text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; padding:10px 14px; border-bottom:2px solid #171106">Уровень 3: минимальное доказательство управления</th>
+            <th scope="col" style="text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; padding:10px 14px; border-bottom:2px solid #171106">Уровень 4: минимальное доказательство адаптации</th>
+          </tr></thead>
+          <tbody style="font-size:14.5px; line-height:1.5">
+            <tr><th scope="row" style="text-align:left; padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-weight:700; vertical-align:top">Ценность и портфель</th><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Паспорт сценария, исходные показатели, критерий приёмки</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">История результата в эксплуатации и решение о продолжении</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">История пересмотра портфеля по результату и риску</td></tr>
+            <tr><th scope="row" style="text-align:left; padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-weight:700; vertical-align:top">Люди и полномочия</th><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Назван владелец, составлена карта решений</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Права действуют, согласования и исключения журналируются</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Права пересматриваются по данным и инцидентам</td></tr>
+            <tr><th scope="row" style="text-align:left; padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-weight:700; vertical-align:top">Контекст и память</th><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Реестр источников, владельцы, правила свежести</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Происхождение и доступ проверяются в каждом запуске</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Ошибки контекста превращаются в версии и проверки</td></tr>
+            <tr><th scope="row" style="text-align:left; padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-weight:700; vertical-align:top">Среда исполнения</th><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Закреплены модель, инструкции, навыки и инструменты</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Есть воспроизводимая изолированная среда и пределы ресурсов</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Проверенные компоненты переносятся с повторной приёмкой</td></tr>
+            <tr><th scope="row" style="text-align:left; padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-weight:700; vertical-align:top">Контур управления</th><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Перечислены учётные записи, секреты и запреты</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Действуют минимальные права, согласования и журнал</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Политики меняются через разбор фактов и контроль версий</td></tr>
+            <tr><th scope="row" style="text-align:left; padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-weight:700; vertical-align:top">Проверка и наблюдаемость</th><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Есть набор примеров и пороги приёмки</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Проверяются результат и ход действий; видны ухудшения</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Инциденты и редкие случаи пополняют постоянные проверки</td></tr>
+            <tr><th scope="row" style="text-align:left; padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); font-weight:700; vertical-align:top">Поставка и эксплуатация</th><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Описан выпуск, откат и владелец дежурства</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Условия выпуска зависят от риска; откат проверен</td><td style="padding:10px 14px; border-bottom:1px solid rgba(23,17,6,0.14); vertical-align:top">Повторяемые улучшения сокращают время восстановления</td></tr>
+            <tr><th scope="row" style="text-align:left; padding:10px 14px; font-weight:700; vertical-align:top">Управление и экономика</th><td style="padding:10px 14px; vertical-align:top">Есть реестр рисков и расчёт полной стоимости</td><td style="padding:10px 14px; vertical-align:top">Владельцы регулярно сопоставляют пользу, расход и риск</td><td style="padding:10px 14px; vertical-align:top">Инвестиции перераспределяются по накопленным доказательствам</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin:18px 0; text-wrap:pretty">Эта таблица задаёт минимальные признаки, а не обязательную сертификацию. Регулируемому процессу могут понадобиться дополнительные доказательства.</p>
+
+      <h2 id="правила-выставления-оценки" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Правила выставления оценки <a href="#правила-выставления-оценки" aria-label="Ссылка на раздел «Правила выставления оценки»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:18px">
+        <p style="margin:0; padding-left:16px; border-left:2px solid #C2782E; text-wrap:pretty"><strong>Правило 1. Не перепрыгивать через отсутствие основы.</strong> Нельзя поставить уровень 3 за хорошие журналы, если у результата нет владельца или критерия приёмки.</p>
+        <p style="margin:0; padding-left:16px; border-left:2px solid #C2782E; text-wrap:pretty"><strong>Правило 2. Оценивать фактический процесс.</strong> Демонстрационная среда и планы на квартал не повышают оценку производственного процесса.</p>
+        <p style="margin:0; padding-left:16px; border-left:2px solid #C2782E; text-wrap:pretty"><strong>Правило 3. Не смешивать процессы.</strong> Хорошая проверка кода не компенсирует слабые права в поддержке клиентов.</p>
+        <p style="margin:0; padding-left:16px; border-left:2px solid #C2782E; text-wrap:pretty"><strong>Правило 4. Хранить ссылку на доказательство.</strong> Рядом с каждым баллом записывают адрес артефакта, владельца и дату проверки.</p>
+        <p style="margin:0; padding-left:16px; border-left:2px solid #C2782E; text-wrap:pretty"><strong>Правило 5. Пересматривать по событию.</strong> Существенная смена модели, данных, поставщика, архитектуры или прав запускает внеплановую оценку. Серьёзный инцидент делает то же самое.</p>
+      </div>
+      <p style="margin:0 0 18px; text-wrap:pretty">Для работающего производственного процесса квартальный пересмотр является разумной начальной частотой. Это авторская рекомендация, а не норматив.</p>
+
+      <h2 id="блокирующие-разрывы" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Блокирующие разрывы <a href="#блокирующие-разрывы" aria-label="Ссылка на раздел «Блокирующие разрывы»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 14px; text-wrap:pretty">Некоторые разрывы нельзя сгладить сильными соседними измерениями.</p>
+      <ul style="margin:0 0 18px; padding-left:22px; display:flex; flex-direction:column; gap:6px">
+        <li>Нет владельца результата.</li>
+        <li>ИИ действует через личную учётную запись сотрудника.</li>
+        <li>Не определён максимальный ущерб от одного действия.</li>
+        <li>Нельзя восстановить путь от сигнала к действию.</li>
+        <li>Нет резервного сценария для критического процесса.</li>
+        <li>Расход нельзя связать с принятым результатом.</li>
+        <li>Для данных неизвестны происхождение или право использования.</li>
+      </ul>
+      <p style="margin:0 0 18px; text-wrap:pretty">Если обнаружен такой разрыв, команда сначала ограничивает права или возвращает действие человеку. Затем она исправляет основу.</p>
+
+      <h2 id="две-оси" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Зрелость и самостоятельность — две разные оси <a href="#две-оси" aria-label="Ссылка на раздел «Зрелость и самостоятельность — две разные оси»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 18px; text-wrap:pretty">Уровни A0–A3 описывают полномочия конкретного действия: от совета без действия на A0 до ограниченного цикла на A3. Канонические определения и обязательные условия каждого уровня приведены в главе 8.</p>
+      <p style="margin:0 0 18px; text-wrap:pretty">Карта зрелости отвечает на вопрос: «Насколько процесс измерим и управляем?» Шкала A0–A3 отвечает на другой вопрос: «Какое действие система вправе выполнить сама?»</p>
+      <p style="margin:0 0 18px; text-wrap:pretty">Связь между ними не монотонна. Процесс уровня 4 может оставаться на A0. Процесс уровня 2 не должен переходить на A2 только ради опыта. Доказанная зрелость создаёт условия для обоснованного решения, но не выдаёт право автоматически.</p>
+
+      <h2 id="оценка-за-90-минут" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Как провести оценку за девяносто минут <a href="#оценка-за-90-минут" aria-label="Ссылка на раздел «Как провести оценку за девяносто минут»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <ol style="margin:0 0 18px; padding-left:24px; display:flex; flex-direction:column; gap:8px">
+        <li>Владелец называет границы одного процесса и один результат.</li>
+        <li>Представители работы, технологий, безопасности и финансов собирают ссылки на доказательства.</li>
+        <li>Каждый сначала выставляет восемь оценок независимо.</li>
+        <li>Группа обсуждает только расхождения и отсутствие доказательств.</li>
+        <li>Для каждого балла записывают основание, а для каждого разрыва — владельца исправления.</li>
+        <li>Назначают дату следующего пересмотра и события для внеплановой оценки.</li>
+      </ol>
+      <p style="margin:0 0 18px; text-wrap:pretty">Сессия не должна превращаться в спор о формулировках. Если доказательства нет, оценка остаётся ниже. Обещанный документ появится в следующем цикле и тогда изменит профиль.</p>
+
+      <h2 id="условный-пример" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Условный пример <a href="#условный-пример" aria-label="Ссылка на раздел «Условный пример»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <p style="margin:0 0 18px; text-wrap:pretty">Команда оценивает подготовку еженедельного прогноза поставок.</p>
+      <p style="margin:0 0 18px; text-wrap:pretty">Ценность и портфель получают 3: прогноз используется, точность и задержка измеряются. Люди и полномочия получают 2: владелец есть, но исключения утверждают в переписке.</p>
+      <p style="margin:0 0 18px; text-wrap:pretty">Контекст получает 1: часть данных копируют вручную, происхождение полей не записано. Проверка получает 2: есть выборка, но нет наблюдения за ухудшением.</p>
+      <p style="margin:0 0 18px; text-wrap:pretty">Команда не объявляет весь процесс уровнем 2. Она сохраняет профиль и сначала исправляет происхождение данных и согласования. Самостоятельная отправка прогноза не повышается: до исправления контекста действие остаётся A1.</p>
+
+      <h2 id="рабочая-карточка" style="margin:48px 0 16px; font-size:27px; font-weight:800; letter-spacing:-0.015em">Рабочая карточка главы <a href="#рабочая-карточка" aria-label="Ссылка на раздел «Рабочая карточка главы»" style="font-size:16px; font-weight:400; text-decoration:none; color:#C2782E">#</a></h2>
+      <div style="border:2px solid #171106">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1px; background:rgba(23,17,6,0.18)">
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Решение</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Выбрать измерение с опасным или ограничивающим разрывом и определить следующий наблюдаемый уровень.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Минимальный механизм</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Восемь оценок 0–4 со ссылками на доказательства. Без сводного рейтинга.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Ответственный</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Владелец процесса ведёт оценку. Владельцы безопасности, данных, разработки и финансов подтверждают относящиеся к ним доказательства.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Артефакт</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Карта зрелости с профилем, ссылками, блокирующими разрывами, владельцами действий и датой пересмотра.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Критерий готовности</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">У каждого балла есть проверяемое основание. У каждого блокирующего разрыва есть одно действие, владелец и срок.</p></div>
+          <div style="background:#FBF7EE; padding:16px 18px"><p style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Различия маршрутов</p><p style="margin:0; font-size:15px; line-height:1.55; text-wrap:pretty">Стартап оценивает первый цикл небольшой группой и хранит простые ссылки на документы. Зрелая компания оценивает сквозной поток с участием всех функций и отдельно фиксирует регулируемые участки. Форма одна; объём доказательств разный.</p></div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1px; background:rgba(23,17,6,0.18); border-top:2px solid #171106">
+          <div style="background:#F4EEDD; padding:16px 18px">
+            <p style="margin:0 0 8px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#4A4030">Показатели результата</p>
+            <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.5; display:flex; flex-direction:column; gap:5px"><li>число закрытых разрывов с доказательством;</li><li>изменение каждого измерения относительно прошлой оценки;</li><li>время от выявления разрыва до исправления;</li><li>доля перенесённых механизмов, прошедших повторную приёмку.</li></ul>
+          </div>
+          <div style="background:#F4EEDD; padding:16px 18px">
+            <p style="margin:0 0 8px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#4A4030">Показатели риска</p>
+            <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.5; display:flex; flex-direction:column; gap:5px"><li>число оценок без ссылки на доказательство;</li><li>разница между самооценками функций;</li><li>число блокирующих разрывов;</li><li>доля прав, не соответствующих фактическому уровню управления;</li><li>время после существенного изменения без переоценки.</li></ul>
+          </div>
+          <div style="background:#F4EEDD; padding:16px 18px">
+            <p style="margin:0 0 8px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#A83E1F">Типичные ошибки</p>
+            <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.5; display:flex; flex-direction:column; gap:5px"><li>оценивать компанию целиком;</li><li>усреднять восемь измерений;</li><li>выдавать план за действующий механизм;</li><li>повышать автономию вслед за баллом зрелости;</li><li>использовать карту для премирования и тем самым поощрять завышение.</li></ul>
+          </div>
+        </div>
+        <div style="border-top:2px solid #171106; padding:16px 18px 6px">
+          <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9C4A0E">Чек-лист · сохраняется в браузере</p>
+          <ul style="margin:0 0 14px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px">
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="0" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Границы одного процесса записаны.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="1" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Оценены все восемь измерений.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="2" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >У каждого балла есть ссылка и дата.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="3" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Среднее не используется как статус.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="4" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Блокирующие разрывы показаны отдельно.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="5" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Зрелость не смешана с A0–A3.</span>
+                </label>
+              </li>
+
+              <li>
+                <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:15px; line-height:1.5">
+                  <input type="checkbox" data-reading-check="6" style="width:18px; height:18px; margin-top:2px; accent-color:#9C4A0E">
+                  <span >Назначены плановый и событийный пересмотры.</span>
+                </label>
+              </li>
+
+          </ul>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  </main>
+
+  <footer style="border-top:2px solid #171106; margin-top:24px">
+    <div style="max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap">
+      <a href="./chapter-01.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">← Глава 1</span>
+        <span style="font-size:19px; font-weight:700">Определение и границы</span>
+      </a>
+      <a href="./chapter-03.html" style="flex:1 1 280px; text-decoration:none; color:#171106; padding:24px; display:flex; flex-direction:column; gap:6px; align-items:flex-end; text-align:right; border-left:1px solid rgba(23,17,6,0.14)" class="hv0">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#7A6B52">Глава 3 →</span>
+        <span style="font-size:19px; font-weight:700">Первый управляемый цикл</span>
+      </a>
+    </div>
+  </footer>
+</div>
+
+<script src="./assets/book-v3.js" defer></script>
+</body>
+</html>
