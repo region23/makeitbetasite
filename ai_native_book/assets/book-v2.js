@@ -1,5 +1,6 @@
 const STORAGE_PREFIX = "ai-native-book:v2:";
 const STORAGE_KEY = `${STORAGE_PREFIX}scorecard`;
+const READING_CHECK_COUNT = 99;
 
 const DIMENSIONS = [
   { id: "value", name: "Ценность и портфель" },
@@ -24,22 +25,88 @@ export function computeProfile(values) {
     throw new RangeError("Каждый уровень должен быть целым числом от 0 до 4.");
   }
 
+  const profileValues = values.slice();
   return {
-    values,
-    minimum: Math.min(...values),
-    managed: values.every((value) => value >= 3),
+    values: profileValues,
+    minimum: Math.min(...profileValues),
+    managed: profileValues.every((value) => value >= 3),
   };
 }
 
 export function serializeState(state) {
-  const levels = Array.isArray(state?.levels)
-    ? state.levels.filter(isLevel)
-    : [];
-  const checks = Array.isArray(state?.checks)
-    ? state.checks.filter((value) => typeof value === "boolean")
-    : [];
+  const levels =
+    Array.isArray(state?.levels) && state.levels.every(isLevel)
+      ? state.levels.slice()
+      : [];
+  const checks =
+    Array.isArray(state?.checks) &&
+    state.checks.every((value) => typeof value === "boolean")
+      ? state.checks.slice()
+      : [];
 
   return { levels, checks };
+}
+
+export function encodeState(state) {
+  const levels = state?.levels;
+  const checks = state?.checks;
+  if (
+    !Array.isArray(levels) ||
+    levels.length !== DIMENSIONS.length ||
+    !levels.every((value) => value === null || isLevel(value))
+  ) {
+    throw new TypeError(
+      "Для сохранения нужны восемь целых уровней 0–4 или незаполненных позиций.",
+    );
+  }
+  if (
+    !Array.isArray(checks) ||
+    checks.length !== READING_CHECK_COUNT ||
+    !checks.every((value) => typeof value === "boolean")
+  ) {
+    throw new TypeError(
+      `Для сохранения нужны ровно ${READING_CHECK_COUNT} булевых отметок чтения.`,
+    );
+  }
+
+  const mask = levels.map(isLevel);
+  return serializeState({
+    levels: levels.filter(isLevel),
+    checks: [...mask, ...checks],
+  });
+}
+
+export function decodeState(storedState) {
+  if (
+    !Array.isArray(storedState?.levels) ||
+    !Array.isArray(storedState?.checks)
+  ) {
+    return null;
+  }
+
+  const state = serializeState(storedState);
+  if (
+    state.levels.length !== storedState.levels.length ||
+    state.checks.length !== storedState.checks.length ||
+    state.levels.length > DIMENSIONS.length ||
+    state.checks.length !== DIMENSIONS.length + READING_CHECK_COUNT
+  ) {
+    return null;
+  }
+
+  const mask = state.checks.slice(0, DIMENSIONS.length);
+  const selectedCount = mask.filter(Boolean).length;
+  if (selectedCount !== state.levels.length) {
+    return null;
+  }
+
+  let levelIndex = 0;
+  return {
+    levels: mask.map((selected) =>
+      selected ? state.levels[levelIndex++] : null,
+    ),
+    checks: state.checks.slice(DIMENSIONS.length),
+  };
 }
 
 export function scorecardToMarkdown(values) {
@@ -91,14 +158,7 @@ function readStoredState(storage) {
     if (raw === null) {
       return null;
     }
-    const parsed = JSON.parse(raw);
-    const state = serializeState(parsed);
-    if (state.levels.length !== DIMENSIONS.length) {
-      state.levels = [];
-    } else {
-      computeProfile(state.levels);
-    }
-    return state;
+    return decodeState(JSON.parse(raw));
   } catch {
     return null;
   }
@@ -118,9 +178,7 @@ function writeStoredState(storage, state) {
 }
 
 function collectScoreLevels(form) {
-  const levels = [];
-
-  for (const dimension of DIMENSIONS) {
+  return DIMENSIONS.map((dimension) => {
     const fieldset = form.querySelector(
       `[data-score-dimension="${dimension.id}"]`,
     );
@@ -131,13 +189,8 @@ function collectScoreLevels(form) {
       return null;
     }
     const value = Number(selected.value);
-    if (!isLevel(value)) {
-      return null;
-    }
-    levels.push(value);
-  }
-
-  return levels;
+    return isLevel(value) ? value : null;
+  });
 }
 
 function collectChecks(checkboxes) {
@@ -145,16 +198,8 @@ function collectChecks(checkboxes) {
 }
 
 function renderScorecardResult(output, levels) {
-  if (!levels) {
-    const selectedCount = DIMENSIONS.reduce((count, dimension) => {
-      const fieldset = output.form?.querySelector(
-        `[data-score-dimension="${dimension.id}"]`,
-      );
-      return (
-        count +
-        Number(Boolean(fieldset?.querySelector('input[type="radio"]:checked')))
-      );
-    }, 0);
+  if (!levels.every(isLevel)) {
+    const selectedCount = levels.filter(isLevel).length;
     output.removeAttribute("data-managed");
     output.textContent =
       selectedCount === 0
@@ -186,6 +231,9 @@ function restoreState(form, checkboxes, state) {
 
   if (state.levels.length === DIMENSIONS.length) {
     DIMENSIONS.forEach((dimension, index) => {
+      if (!isLevel(state.levels[index])) {
+        return;
+      }
       const fieldset = form.querySelector(
         `[data-score-dimension="${dimension.id}"]`,
       );
@@ -257,11 +305,19 @@ function initScorecard(doc) {
   const storage = localStorageFor(doc.defaultView);
   restoreState(form, checkboxes, readStoredState(storage));
 
-  const save = () =>
-    writeStoredState(storage, {
-      levels: collectScoreLevels(form) ?? [],
-      checks: collectChecks(checkboxes),
-    });
+  const save = () => {
+    try {
+      return writeStoredState(
+        storage,
+        encodeState({
+          levels: collectScoreLevels(form),
+          checks: collectChecks(checkboxes),
+        }),
+      );
+    } catch {
+      return false;
+    }
+  };
   const update = ({ persist = true } = {}) => {
     const levels = collectScoreLevels(form);
     renderScorecardResult(output, levels);
@@ -281,8 +337,8 @@ function initScorecard(doc) {
 
   doc.querySelector("#scorecard-export")?.addEventListener("click", () => {
     const levels = collectScoreLevels(form);
-    if (!levels) {
-      renderScorecardResult(output, null);
+    if (!levels.every(isLevel)) {
+      renderScorecardResult(output, levels);
       output.textContent += " Скачивание доступно после заполнения профиля.";
       return;
     }

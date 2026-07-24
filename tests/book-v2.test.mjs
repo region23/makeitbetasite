@@ -3,9 +3,13 @@ import assert from "node:assert/strict";
 
 import {
   computeProfile,
+  decodeState,
+  encodeState,
   serializeState,
   scorecardToMarkdown,
 } from "../ai_native_book/assets/book-v2.js";
+
+const READING_CHECK_COUNT = 99;
 
 test("profile keeps all eight dimensions and never hides the minimum", () => {
   const values = [3, 3, 2, 3, 4, 3, 3, 3];
@@ -24,6 +28,15 @@ test("profile is managed only when every dimension is at least three", () => {
     managed: true,
   });
   assert.equal(computeProfile([4, 4, 4, 4, 4, 4, 4, 2]).managed, false);
+});
+
+test("profile returns a copy of values instead of aliasing the input", () => {
+  const values = [0, 1, 2, 3, 4, 2, 1, 0];
+  const profile = computeProfile(values);
+
+  assert.notEqual(profile.values, values);
+  values[0] = 4;
+  assert.equal(profile.values[0], 0);
 });
 
 test("profile requires exactly eight integer levels from zero to four", () => {
@@ -48,20 +61,109 @@ test("state contains only integer levels and boolean checks", () => {
   );
 });
 
-test("state drops strings, free text, invalid levels, and extra fields", () => {
-  const source = {
-    levels: [0, "1", 2.5, 3, 9, 4],
-    checks: [true, "false", false, 1],
-    processName: "Секретный процесс",
-    notes: "Свободный текст",
-  };
-
-  assert.deepEqual(serializeState(source), {
-    levels: [0, 3, 4],
-    checks: [true, false],
-  });
+test("state rejects an entire mixed array and drops extra fields", () => {
+  assert.deepEqual(
+    serializeState({
+      levels: [0, "1", 2],
+      checks: [true, false],
+      processName: "Секретный процесс",
+      notes: "Свободный текст",
+    }),
+    {
+      levels: [],
+      checks: [true, false],
+    },
+  );
+  assert.deepEqual(
+    serializeState({
+      levels: [0, 1, 2],
+      checks: [true, "false", false],
+    }),
+    {
+      levels: [0, 1, 2],
+      checks: [],
+    },
+  );
   assert.deepEqual(serializeState({}), { levels: [], checks: [] });
   assert.deepEqual(serializeState(null), { levels: [], checks: [] });
+});
+
+test("partial scorecard roundtrips without nulls or strings in storage", () => {
+  const partialLevels = [3, null, 2, null, 4, null, null, 1];
+  const readingChecks = Array.from(
+    { length: READING_CHECK_COUNT },
+    (_, index) => index % 3 === 0,
+  );
+
+  const encoded = encodeState({
+    levels: partialLevels,
+    checks: readingChecks,
+  });
+
+  assert.deepEqual(encoded.levels, [3, 2, 4, 1]);
+  assert.deepEqual(encoded.checks.slice(0, 8), [
+    true,
+    false,
+    true,
+    false,
+    true,
+    false,
+    false,
+    true,
+  ]);
+  assert.deepEqual(encoded.checks.slice(8), readingChecks);
+  assert.equal(encoded.checks.length, 8 + READING_CHECK_COUNT);
+  assert.doesNotMatch(JSON.stringify(encoded), /null|"3"|"2"|"4"|"1"/);
+  assert.deepEqual(decodeState(encoded), {
+    levels: partialLevels,
+    checks: readingChecks,
+  });
+});
+
+test("decode rejects corrupt positional state instead of shifting levels", () => {
+  const readingChecks = Array(READING_CHECK_COUNT).fill(false);
+  const valid = {
+    levels: [3, 2],
+    checks: [
+      true,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      ...readingChecks,
+    ],
+  };
+
+  assert.deepEqual(decodeState(valid), {
+    levels: [3, null, null, 2, null, null, null, null],
+    checks: readingChecks,
+  });
+
+  for (const corrupt of [
+    { ...valid, levels: [3, "2"] },
+    { ...valid, checks: valid.checks.slice(0, -1) },
+    { ...valid, checks: [...valid.checks, false] },
+    { ...valid, checks: [1, ...valid.checks.slice(1)] },
+    {
+      ...valid,
+      checks: [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        ...readingChecks,
+      ],
+    },
+  ]) {
+    assert.equal(decodeState(corrupt), null);
+  }
 });
 
 test("state returns fresh arrays instead of exposing input arrays", () => {
