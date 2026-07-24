@@ -214,9 +214,9 @@
 
 ### AGENT-SKILLS-spec
 - Организация: Agent Skills Project
-- Материал: Agent Skills Specification
-- URL: https://agentskills.io/specification
-- Опубликовано: постоянно обновляемая спецификация
+- Материал: Agent Skills Specification; проверенный коммит `38a2ff82958afee88dadf4831509e6f7e9d8ef4e`
+- URL: https://github.com/agentskills/agentskills/blob/38a2ff82958afee88dadf4831509e6f7e9d8ef4e/docs/specification.mdx; живая навигация: https://agentskills.io/specification
+- Опубликовано: 2026-07-10
 - Проверено: 2026-07-24
 - Тип: официальная техническая спецификация
 - Подтверждает: структуру каталога навыка, `SKILL.md`, метаданные и постепенную загрузку материалов
