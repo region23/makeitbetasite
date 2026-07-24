@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import re
+from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path, PurePosixPath
 from urllib.parse import urlsplit
@@ -40,10 +41,15 @@ class _HtmlSummary(HTMLParser):
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
         self.tags: dict[str, int] = {}
-        self.ids: set[str] = set()
-        self.links: list[dict[str, str]] = []
+        self.ids: Counter[str] = Counter()
+        self.anchors: list[dict[str, str]] = []
+        self.link_elements: list[dict[str, str]] = []
         self.metas: list[dict[str, str]] = []
         self.scripts: list[dict[str, str]] = []
+        self.main_ids: set[str] = set()
+        self.h1_inside_main = 0
+        self.summary_inside_details = 0
+        self._open_tags: list[str] = []
 
     def handle_starttag(
         self, tag: str, attrs: list[tuple[str, str | None]]
@@ -52,19 +58,51 @@ class _HtmlSummary(HTMLParser):
         tag = tag.lower()
         self.tags[tag] = self.tags.get(tag, 0) + 1
         if attributes.get("id"):
-            self.ids.add(attributes["id"])
+            self.ids[attributes["id"]] += 1
+        if tag == "main" and attributes.get("id"):
+            self.main_ids.add(attributes["id"])
+        elif tag == "h1" and "main" in self._open_tags:
+            self.h1_inside_main += 1
+        elif tag == "summary" and "details" in self._open_tags:
+            self.summary_inside_details += 1
         if tag == "a":
-            self.links.append(attributes)
+            self.anchors.append(attributes)
         elif tag == "link":
-            self.links.append(attributes)
+            self.link_elements.append(attributes)
         elif tag == "meta":
             self.metas.append(attributes)
         elif tag == "script":
             self.scripts.append(attributes)
+        if tag not in {
+            "area",
+            "base",
+            "br",
+            "col",
+            "embed",
+            "hr",
+            "img",
+            "input",
+            "link",
+            "meta",
+            "param",
+            "source",
+            "track",
+            "wbr",
+        }:
+            self._open_tags.append(tag)
+
+    def handle_endtag(self, tag: str) -> None:
+        tag = tag.lower()
+        if tag in self._open_tags:
+            matching_index = len(self._open_tags) - 1 - self._open_tags[::-1].index(tag)
+            del self._open_tags[matching_index:]
 
 
 def _has_canonical(summary: _HtmlSummary) -> bool:
-    return any("canonical" in link.get("rel", "").lower().split() for link in summary.links)
+    return any(
+        "canonical" in link.get("rel", "").lower().split()
+        for link in summary.link_elements
+    )
 
 
 def _forbidden_errors(text: str) -> list[str]:
@@ -81,6 +119,11 @@ def validate_html_text(html: str, *, archive: bool = False) -> list[str]:
     summary = _HtmlSummary()
     summary.feed(html)
     errors = _forbidden_errors(html)
+    errors.extend(
+        f"Идентификатор #{element_id} повторяется на странице"
+        for element_id, count in sorted(summary.ids.items())
+        if count > 1
+    )
 
     if archive:
         robots = {
@@ -95,10 +138,11 @@ def validate_html_text(html: str, *, archive: bool = False) -> list[str]:
         return errors
 
     has_skip_link = any(
-        "skip-link" in link.get("class", "").split()
-        and link.get("href", "").startswith("#")
-        for link in summary.links
-        if "href" in link
+        "skip-link" in anchor.get("class", "").split()
+        and anchor.get("href", "").startswith("#")
+        and urlsplit(anchor.get("href", "")).fragment in summary.main_ids
+        for anchor in summary.anchors
+        if "href" in anchor
     )
     if not has_skip_link:
         errors.append("Отсутствует skip-link к основному содержимому")
@@ -106,8 +150,10 @@ def validate_html_text(html: str, *, archive: bool = False) -> list[str]:
         errors.append("Страница должна содержать ровно один элемент main")
     if summary.tags.get("h1", 0) != 1:
         errors.append("Страница должна содержать ровно один заголовок h1")
-    if not summary.tags.get("details") or not summary.tags.get("summary"):
-        errors.append("Оглавление должно использовать details/summary")
+    elif summary.h1_inside_main != 1:
+        errors.append("Единственный h1 должен находиться внутри main")
+    if not summary.tags.get("details") or not summary.summary_inside_details:
+        errors.append("Элемент summary должен находиться внутри details")
     if not _has_canonical(summary):
         errors.append("Отсутствует ссылка canonical")
 
@@ -116,9 +162,9 @@ def validate_html_text(html: str, *, archive: bool = False) -> list[str]:
             errors.append(f"Отсутствует обязательный якорь #{section_id}")
 
     linked_templates = {
-        PurePosixPath(urlsplit(link.get("href", "")).path).name
-        for link in summary.links
-        if link.get("href")
+        PurePosixPath(urlsplit(anchor.get("href", "")).path).name
+        for anchor in summary.anchors
+        if anchor.get("href")
     }
     for template in sorted(EXPECTED_TEMPLATES - linked_templates):
         errors.append(f"Отсутствует ссылка на шаблон {template}")
@@ -131,12 +177,12 @@ def _is_local_reference(reference: str) -> bool:
     return not parsed.scheme and not parsed.netloc and not reference.startswith("//")
 
 
-def _asset_errors(html_path: Path, html: str) -> list[str]:
+def _asset_errors(root: Path, html_path: Path, html: str) -> list[str]:
     summary = _HtmlSummary()
     summary.feed(html)
     stylesheets = [
         link.get("href", "")
-        for link in summary.links
+        for link in summary.link_elements
         if "stylesheet" in link.get("rel", "").lower().split()
     ]
     scripts = [script.get("src", "") for script in summary.scripts if script.get("src")]
@@ -152,7 +198,12 @@ def _asset_errors(html_path: Path, html: str) -> list[str]:
             if not _is_local_reference(reference):
                 errors.append(f"{kind} должен быть локальным: {reference}")
                 continue
-            asset_path = html_path.parent / urlsplit(reference).path
+            reference_path = urlsplit(reference).path
+            asset_path = (
+                root / reference_path.lstrip("/")
+                if reference_path.startswith("/")
+                else html_path.parent / reference_path
+            )
             if not asset_path.is_file():
                 errors.append(f"Не найден локальный {kind}: {reference}")
                 continue
@@ -194,7 +245,7 @@ def run_checks(root: Path, *, phase: str) -> list[str]:
     if phase == "all" and main_html is not None:
         errors.extend(
             f"{main_path.relative_to(root)}: {error}"
-            for error in _asset_errors(main_path, main_html)
+            for error in _asset_errors(root, main_path, main_html)
         )
     return errors
 
