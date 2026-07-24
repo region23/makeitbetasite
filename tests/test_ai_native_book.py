@@ -194,6 +194,18 @@ class LayoutStylesheetTests(unittest.TestCase):
         )
         self.assertIn("grid-template-columns: 1fr;", css)
 
+    def test_wide_screen_typography_scales_from_1600px(self) -> None:
+        css = (ROOT / "ai_native_book" / "assets" / "book-v2.css").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("@media (min-width: 100rem)", css)
+        wide_screen_rules = css.split("@media (min-width: 100rem)", 1)[1]
+
+        self.assertIn("font-size: 1.6875rem;", wide_screen_rules)
+        self.assertIn("--measure: 78ch;", wide_screen_rules)
+        self.assertIn("--shell: 110rem;", wide_screen_rules)
+        self.assertIn("--rail: 14rem;", wide_screen_rules)
+
 
 if __name__ == "__main__":
     unittest.main()

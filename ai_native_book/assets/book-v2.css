@@ -1256,6 +1256,18 @@ mark,
   }
 }
 
+@media (min-width: 100rem) {
+  :root {
+    --measure: 78ch;
+    --shell: 110rem;
+    --rail: 14rem;
+  }
+
+  body {
+    font-size: 1.6875rem;
+  }
+}
+
 @media (max-width: 24rem) {
   .site-header {
     padding-inline: var(--s4);
