@@ -101,6 +101,7 @@ class _HtmlSummary(HTMLParser):
 def _has_canonical(summary: _HtmlSummary) -> bool:
     return any(
         "canonical" in link.get("rel", "").lower().split()
+        and bool(link.get("href", "").strip())
         for link in summary.link_elements
     )
 

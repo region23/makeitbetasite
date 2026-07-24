@@ -151,6 +151,16 @@ class ValidateHtmlTextTests(unittest.TestCase):
 
         self.assertTrue(any("canonical" in error for error in errors))
 
+    def test_canonical_must_have_nonempty_href(self) -> None:
+        html = valid_html().replace(
+            '<link rel="canonical" href="https://example.test/ai-native-book/">',
+            '<link rel="canonical" href="">',
+        )
+
+        errors = validate_html_text(html, archive=False)
+
+        self.assertTrue(any("canonical" in error for error in errors))
+
     def test_rejects_duplicate_ids(self) -> None:
         html = valid_html().replace(
             '<section id="ch1"></section>',
