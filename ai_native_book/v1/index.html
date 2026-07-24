@@ -1,0 +1,3560 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>AI-native компании · Практический гайд · Павел Павленко</title>
+        <meta
+            name="description"
+            content="Длинный практический гайд о том, как строить AI-native компании в стартапе и в зрелой организации. Архитектура, evals, governance, FinOps и российский контекст."
+        />
+        <meta name="robots" content="noindex,follow" />
+        <link rel="canonical" href="https://makeitbeta.ru/ai_native_book/" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Source+Serif+4:opsz,wght@8..60,300..700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+
+        <style>
+            /* ============================================
+   DESIGN TOKENS
+   ============================================ */
+            :root {
+                /* Светлая тёплая палитра — кремовая бумага, тёмные чернила */
+                --ink: #fdfaf3;
+                --ink-2: #f5eedc;
+                --ink-3: #ede4cd;
+                --paper: #1a1612;
+                --paper-2: #3a3128;
+                --paper-3: #6b5d4a;
+                --rule: rgba(26, 22, 18, 0.12);
+                --rule-strong: rgba(26, 22, 18, 0.24);
+
+                /* Акценты */
+                --amber: #b8742a; /* основной акцент, тёплый янтарь */
+                --amber-deep: #8a4f15;
+                --rust: #a83e1f; /* для критических врезок */
+                --moss: #5a6b35; /* для RU-врезок */
+                --moss-dim: rgba(90, 107, 53, 0.1);
+                --amber-dim: rgba(184, 116, 42, 0.1);
+                --rust-dim: rgba(168, 62, 31, 0.08);
+
+                /* Шрифты */
+                --display: "Fraunces", Georgia, serif;
+                --body: "Source Serif 4", Georgia, serif;
+                --mono: "JetBrains Mono", ui-monospace, monospace;
+
+                /* Размеры — шире и крупнее */
+                --measure: 90ch;
+                --gap: clamp(1rem, 2vw, 1.5rem);
+            }
+
+            /* ============================================
+   RESET & BASE
+   ============================================ */
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                margin: 0;
+                background: var(--ink);
+                color: var(--paper);
+                font-family: var(--body);
+                font-size: 20px;
+                line-height: 1.7;
+                font-feature-settings: "ss01", "kern";
+                -webkit-font-smoothing: antialiased;
+                text-rendering: optimizeLegibility;
+            }
+
+            .archive-notice {
+                position: relative;
+                z-index: 201;
+                padding: 0.8rem 2rem;
+                background: var(--amber-deep);
+                color: var(--ink);
+                font-family: var(--mono);
+                font-size: 0.82rem;
+                line-height: 1.5;
+                text-align: center;
+            }
+            .archive-notice a {
+                color: inherit;
+                font-weight: 600;
+            }
+            .archive-notice a:hover {
+                color: var(--ink-2);
+            }
+
+            /* Тонкая зернистость на фоне для editorial-ощущения */
+            body::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                z-index: 1000;
+                opacity: 0.18;
+                mix-blend-mode: multiply;
+                background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.45  0 0 0 0 0.35  0 0 0 0 0.25  0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+            }
+
+            a {
+                color: var(--amber);
+                text-decoration-thickness: 1px;
+                text-underline-offset: 3px;
+            }
+            a:hover {
+                color: var(--paper);
+            }
+
+            /* ============================================
+   PROGRESS BAR
+   ============================================ */
+            .progress {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 2px;
+                width: 0%;
+                background: var(--amber);
+                z-index: 200;
+                transition: width 0.05s linear;
+            }
+
+            /* ============================================
+   COVER
+   ============================================ */
+            .cover {
+                min-height: 100vh;
+                padding: 4rem 2rem 3rem;
+                display: grid;
+                grid-template-rows: auto 1fr auto;
+                gap: 3rem;
+                position: relative;
+                border-bottom: 1px solid var(--rule);
+            }
+
+            .cover-meta {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                font-family: var(--mono);
+                font-size: 0.78rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: var(--paper-3);
+            }
+            .cover-meta span {
+                display: inline-block;
+            }
+
+            .cover-title {
+                align-self: center;
+                max-width: 1200px;
+                margin: 0 auto;
+                width: 100%;
+            }
+            .cover-title .eyebrow {
+                font-family: var(--mono);
+                font-size: 0.85rem;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--amber);
+                margin-bottom: 1.5rem;
+                display: block;
+            }
+            .cover-title h1 {
+                font-family: var(--display);
+                font-weight: 300;
+                font-size: clamp(3rem, 9vw, 8rem);
+                line-height: 0.92;
+                letter-spacing: -0.035em;
+                margin: 0;
+                font-variation-settings:
+                    "opsz" 144,
+                    "SOFT" 30,
+                    "WONK" 1;
+            }
+            .cover-title h1 em {
+                font-style: italic;
+                font-weight: 400;
+                color: var(--amber);
+                font-variation-settings:
+                    "opsz" 144,
+                    "SOFT" 100,
+                    "WONK" 1;
+            }
+            .cover-title .lede {
+                font-family: var(--display);
+                font-weight: 300;
+                font-style: italic;
+                font-size: clamp(1.25rem, 2.5vw, 1.7rem);
+                line-height: 1.4;
+                max-width: 30ch;
+                margin-top: 2.5rem;
+                color: var(--paper-2);
+            }
+
+            .cover-foot {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                align-items: end;
+                gap: 2rem;
+                padding-top: 2rem;
+                border-top: 1px solid var(--rule);
+                font-family: var(--mono);
+                font-size: 0.82rem;
+                color: var(--paper-3);
+            }
+            .cover-foot .author strong {
+                color: var(--paper);
+                display: block;
+                font-size: 0.95rem;
+                margin-bottom: 0.3rem;
+            }
+            .cover-foot .scroll-hint {
+                text-align: right;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+            }
+            .cover-foot .scroll-hint::before {
+                content: "↓";
+                display: inline-block;
+                margin-right: 0.5em;
+                animation: bob 2s ease-in-out infinite;
+            }
+            @keyframes bob {
+                0%,
+                100% {
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(4px);
+                }
+            }
+
+            /* ============================================
+   LAYOUT — TOC + ARTICLE
+   ============================================ */
+            .shell {
+                display: grid;
+                grid-template-columns: minmax(240px, 300px) 1fr;
+                gap: 5rem;
+                max-width: 1700px;
+                margin: 0 auto;
+                padding: 4rem 3rem;
+            }
+
+            .toc {
+                position: sticky;
+                top: 2rem;
+                align-self: start;
+                font-family: var(--mono);
+                font-size: 0.78rem;
+                max-height: calc(100vh - 4rem);
+                overflow-y: auto;
+                padding-right: 1rem;
+                scrollbar-width: thin;
+                scrollbar-color: var(--rule-strong) transparent;
+            }
+            .toc-title {
+                font-family: var(--mono);
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--paper-3);
+                font-size: 0.7rem;
+                margin-bottom: 1.5rem;
+            }
+            .toc ol {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                counter-reset: chap;
+            }
+            .toc li {
+                counter-increment: chap;
+                margin-bottom: 0.85rem;
+                position: relative;
+                padding-left: 2.5rem;
+            }
+            .toc li::before {
+                content: counter(chap, decimal-leading-zero);
+                position: absolute;
+                left: 0;
+                top: 0;
+                color: var(--paper-3);
+                letter-spacing: 0.05em;
+            }
+            .toc a {
+                color: var(--paper-2);
+                text-decoration: none;
+                display: block;
+                line-height: 1.4;
+                transition:
+                    color 0.2s,
+                    transform 0.2s;
+                border-left: 2px solid transparent;
+                padding-left: 0.6rem;
+                margin-left: -0.6rem;
+            }
+            .toc a:hover,
+            .toc a.active {
+                color: var(--amber);
+                border-left-color: var(--amber);
+            }
+
+            article {
+                max-width: var(--measure);
+            }
+
+            /* ============================================
+   CHAPTER & SECTION HEADERS
+   ============================================ */
+            .chapter {
+                padding: 5rem 0 3rem;
+                scroll-margin-top: 2rem;
+            }
+            .chapter:not(:first-child) {
+                border-top: 1px solid var(--rule);
+            }
+            .chapter-num {
+                font-family: var(--mono);
+                font-size: 0.78rem;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--amber);
+                display: block;
+                margin-bottom: 1.5rem;
+            }
+            .chapter-num::before {
+                content: "";
+                display: inline-block;
+                width: 2.5rem;
+                height: 1px;
+                background: var(--amber);
+                vertical-align: middle;
+                margin-right: 1rem;
+            }
+            .chapter > h2 {
+                font-family: var(--display);
+                font-weight: 300;
+                font-size: clamp(2.2rem, 5vw, 4rem);
+                line-height: 1.05;
+                letter-spacing: -0.025em;
+                margin: 0 0 1.5rem;
+                font-variation-settings:
+                    "opsz" 144,
+                    "SOFT" 50;
+            }
+            .chapter > h2 em {
+                font-style: italic;
+                color: var(--amber);
+            }
+            .chapter-lede {
+                font-family: var(--display);
+                font-style: italic;
+                font-weight: 300;
+                font-size: 1.35rem;
+                line-height: 1.5;
+                color: var(--paper-2);
+                max-width: 50ch;
+                margin: 0 0 3rem;
+                padding-left: 1.5rem;
+                border-left: 1px solid var(--amber);
+            }
+
+            h3 {
+                font-family: var(--display);
+                font-weight: 400;
+                font-size: 1.65rem;
+                line-height: 1.2;
+                letter-spacing: -0.015em;
+                margin: 3rem 0 1rem;
+                font-variation-settings:
+                    "opsz" 60,
+                    "SOFT" 30;
+            }
+            h4 {
+                font-family: var(--display);
+                font-weight: 500;
+                font-size: 1.2rem;
+                line-height: 1.3;
+                margin: 2rem 0 0.75rem;
+                color: var(--paper);
+                font-variation-settings: "opsz" 24;
+            }
+
+            /* ============================================
+   BODY CONTENT
+   ============================================ */
+            article p {
+                margin: 0 0 1.25rem;
+            }
+            article p + p {
+                text-indent: 0;
+            }
+
+            article ul,
+            article ol {
+                margin: 0 0 1.5rem;
+                padding-left: 1.5rem;
+            }
+            article li {
+                margin-bottom: 0.4rem;
+            }
+            article ul li::marker {
+                color: var(--amber);
+            }
+
+            article strong {
+                color: var(--paper);
+                font-weight: 600;
+            }
+            article em {
+                font-style: italic;
+                color: var(--paper-2);
+            }
+
+            article code {
+                font-family: var(--mono);
+                font-size: 0.85em;
+                background: var(--ink-2);
+                padding: 0.1em 0.4em;
+                border-radius: 3px;
+                color: var(--paper-2);
+                border: 1px solid var(--rule);
+            }
+
+            article hr {
+                border: 0;
+                height: 1px;
+                background: var(--rule);
+                margin: 3rem 0;
+            }
+
+            /* Pull-quote / эпиграф */
+            .pull {
+                font-family: var(--display);
+                font-style: italic;
+                font-weight: 300;
+                font-size: 1.6rem;
+                line-height: 1.35;
+                color: var(--amber);
+                margin: 2.5rem 0;
+                padding: 0 0 0 2rem;
+                border-left: 2px solid var(--amber);
+                font-variation-settings:
+                    "opsz" 60,
+                    "SOFT" 100;
+            }
+
+            /* Сравнение «плохо / хорошо» */
+            .versus {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1.5rem;
+                margin: 2rem 0;
+            }
+            .versus > div {
+                padding: 1.25rem 1.5rem;
+                border: 1px solid var(--rule-strong);
+                background: var(--ink-2);
+                font-size: 0.92rem;
+                line-height: 1.5;
+            }
+            .versus .bad {
+                border-color: rgba(200, 73, 44, 0.4);
+            }
+            .versus .good {
+                border-color: rgba(232, 160, 74, 0.4);
+            }
+            .versus .label {
+                font-family: var(--mono);
+                font-size: 0.7rem;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                display: block;
+                margin-bottom: 0.5rem;
+            }
+            .versus .bad .label {
+                color: var(--rust);
+            }
+            .versus .good .label {
+                color: var(--amber);
+            }
+            @media (max-width: 720px) {
+                .versus {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            /* ============================================
+   ВРЕЗКИ
+   ============================================ */
+            .callout {
+                margin: 2.5rem 0;
+                padding: 1.5rem 1.75rem;
+                border: 1px solid var(--rule-strong);
+                position: relative;
+                background: var(--ink-2);
+                font-size: 0.95rem;
+                line-height: 1.55;
+            }
+            .callout-label {
+                position: absolute;
+                top: -0.6rem;
+                left: 1rem;
+                background: var(--ink);
+                padding: 0 0.6rem;
+                font-family: var(--mono);
+                font-size: 0.7rem;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+            }
+
+            .callout h4 {
+                margin-top: 0;
+                margin-bottom: 0.6rem;
+                font-size: 1.05rem;
+                color: var(--paper);
+            }
+            .callout p:last-child,
+            .callout ul:last-child,
+            .callout ol:last-child {
+                margin-bottom: 0;
+            }
+            .callout ul,
+            .callout ol {
+                padding-left: 1.25rem;
+            }
+            .callout li {
+                margin-bottom: 0.3rem;
+            }
+
+            /* RU-врезка */
+            .ru {
+                background: var(--moss-dim);
+                border-color: var(--moss);
+            }
+            .ru .callout-label {
+                color: var(--moss);
+            }
+
+            /* Anti-pattern */
+            .anti {
+                background: var(--rust-dim);
+                border-color: rgba(200, 73, 44, 0.4);
+            }
+            .anti .callout-label {
+                color: var(--rust);
+            }
+
+            /* Note / digression */
+            .note {
+                background: var(--amber-dim);
+                border-color: rgba(232, 160, 74, 0.3);
+            }
+            .note .callout-label {
+                color: var(--amber);
+            }
+
+            /* ============================================
+   ТЕРМИНЫ С ПОПОВЕРАМИ
+   ============================================ */
+            .term {
+                border-bottom: 1px dashed var(--amber);
+                cursor: help;
+                position: relative;
+                color: var(--paper);
+                font-style: normal;
+            }
+            .term:hover {
+                background: var(--amber-dim);
+            }
+            .term::after {
+                content: attr(data-def);
+                position: absolute;
+                bottom: calc(100% + 8px);
+                left: 50%;
+                transform: translateX(-50%) translateY(4px);
+                width: max-content;
+                max-width: 360px;
+                background: var(--paper);
+                color: var(--ink);
+                font-family: var(--body);
+                font-style: normal;
+                font-size: 0.9rem;
+                font-weight: 400;
+                line-height: 1.5;
+                padding: 0.85rem 1.05rem;
+                border-radius: 4px;
+                box-shadow:
+                    0 12px 32px rgba(0, 0, 0, 0.18),
+                    0 0 0 1px var(--amber);
+                opacity: 0;
+                pointer-events: none;
+                transition:
+                    opacity 0.18s,
+                    transform 0.18s;
+                z-index: 50;
+                white-space: normal;
+                text-align: left;
+            }
+            .term::before {
+                content: "";
+                position: absolute;
+                bottom: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                border: 6px solid transparent;
+                border-top-color: var(--paper);
+                opacity: 0;
+                transition: opacity 0.18s;
+                z-index: 51;
+            }
+            .term:hover::after,
+            .term:focus::after,
+            .term.is-open::after {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+                pointer-events: auto;
+            }
+            .term:hover::before,
+            .term:focus::before,
+            .term.is-open::before {
+                opacity: 1;
+            }
+            @media (max-width: 720px) {
+                .term::after {
+                    max-width: min(280px, calc(100vw - 40px));
+                    font-size: 0.82rem;
+                    /* На мобиле прижимаем поповер к левому краю термина */
+                    left: 0;
+                    transform: translateX(0) translateY(4px);
+                }
+                .term:hover::after,
+                .term:focus::after,
+                .term.is-open::after {
+                    transform: translateX(0) translateY(0);
+                }
+                .term::before {
+                    left: 1rem;
+                    transform: translateX(0);
+                }
+            }
+
+            /* ============================================
+   ТАБЛИЦЫ И ШАГИ
+   ============================================ */
+            .steps {
+                counter-reset: step;
+                list-style: none;
+                padding: 0;
+                margin: 2rem 0;
+            }
+            .steps > li {
+                counter-increment: step;
+                position: relative;
+                padding: 1.1rem 0 1.1rem 4rem;
+                border-bottom: 1px solid var(--rule);
+                min-height: 3rem;
+            }
+            .steps > li::before {
+                content: counter(step, decimal-leading-zero);
+                position: absolute;
+                left: 0;
+                top: 1.35rem;
+                font-family: var(--mono);
+                font-size: 0.85rem;
+                color: var(--amber);
+                letter-spacing: 0.05em;
+                font-weight: 500;
+            }
+            .steps > li:last-child {
+                border-bottom: 0;
+            }
+            .steps > li > strong:first-child {
+                font-family: var(--display);
+                font-weight: 500;
+                font-size: 1.15rem;
+                display: inline;
+                margin-right: 0.4rem;
+            }
+
+            /* Day-plan blocks */
+            .dayplan {
+                margin: 2rem 0;
+                border: 1px solid var(--rule-strong);
+                background: var(--ink-2);
+            }
+            .dayplan-header {
+                padding: 1rem 1.5rem;
+                border-bottom: 1px solid var(--rule);
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                background: var(--ink-3);
+            }
+            .dayplan-header .label {
+                font-family: var(--mono);
+                font-size: 0.75rem;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                color: var(--amber);
+            }
+            .dayplan-header .title {
+                font-family: var(--display);
+                font-style: italic;
+                font-size: 1.05rem;
+                color: var(--paper);
+            }
+            .dayplan-body {
+                padding: 1.25rem 1.5rem;
+            }
+            .dayplan-body > *:last-child {
+                margin-bottom: 0;
+            }
+
+            /* ============================================
+   FOOTNOTES & SOURCES
+   ============================================ */
+            .sources {
+                margin-top: 4rem;
+                padding-top: 2rem;
+                border-top: 1px solid var(--rule);
+                font-size: 0.85rem;
+                color: var(--paper-3);
+            }
+            .sources h3 {
+                font-family: var(--mono);
+                font-size: 0.78rem;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--paper-2);
+                margin-bottom: 1.5rem;
+            }
+            .sources ol {
+                padding-left: 1.5rem;
+            }
+            .sources li {
+                margin-bottom: 0.6rem;
+                line-height: 1.45;
+            }
+            .sources a {
+                word-break: break-word;
+            }
+
+            /* ============================================
+   FOOTER / COLOPHON
+   ============================================ */
+            .colophon {
+                border-top: 1px solid var(--rule);
+                padding: 4rem 2rem;
+                text-align: center;
+                font-family: var(--mono);
+                font-size: 0.78rem;
+                color: var(--paper-3);
+                letter-spacing: 0.05em;
+                line-height: 1.7;
+            }
+            .colophon a {
+                color: var(--paper-2);
+            }
+            .colophon .ornament {
+                display: block;
+                font-size: 1.5rem;
+                color: var(--amber);
+                margin-bottom: 1.5rem;
+                letter-spacing: 0.5em;
+            }
+
+            /* ============================================
+   RESPONSIVE
+   ============================================ */
+            @media (max-width: 1100px) {
+                .shell {
+                    grid-template-columns: 1fr;
+                    gap: 0;
+                    padding: 2rem 1.5rem;
+                }
+                .toc {
+                    position: relative;
+                    top: auto;
+                    max-height: none;
+                    overflow-y: visible;
+                    margin-bottom: 3rem;
+                    padding: 1.5rem;
+                    border: 1px solid var(--rule-strong);
+                    background: var(--ink-2);
+                }
+                .toc-toggle {
+                    cursor: pointer;
+                    user-select: none;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .toc.collapsed ol {
+                    display: none;
+                }
+                .toc-toggle::after {
+                    content: "+";
+                    font-size: 1.2rem;
+                    color: var(--amber);
+                }
+                .toc:not(.collapsed) .toc-toggle::after {
+                    content: "−";
+                }
+                article {
+                    max-width: 100%;
+                }
+            }
+
+            @media (max-width: 600px) {
+                body {
+                    font-size: 17px;
+                }
+                .cover {
+                    padding: 2.5rem 1.25rem 2rem;
+                }
+                .chapter {
+                    padding: 3rem 0 2rem;
+                }
+            }
+
+            /* ============================================
+   PRINT
+   ============================================ */
+            @media print {
+                body {
+                    background: white;
+                    color: black;
+                }
+                .toc,
+                .progress,
+                .colophon,
+                .cover-foot .scroll-hint {
+                    display: none;
+                }
+                body::before {
+                    display: none;
+                }
+                .term {
+                    border: 0;
+                }
+                .term::after {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <aside class="archive-notice" aria-label="Архивная версия">
+            Это первая версия руководства. <a href="/ai_native_book/">Открыть актуальную версию</a>.
+        </aside>
+        <div class="progress" id="progress"></div>
+
+        <!-- ОБЛОЖКА -->
+        <header class="cover">
+            <div class="cover-meta">
+                <span>Практический гайд</span>
+                <span>v1.0 · 2026</span>
+            </div>
+            <div class="cover-title">
+                <span class="eyebrow"
+                    >Архитектура · стратегия · исполнение</span
+                >
+                <h1>AI-native<br />компании<em>.</em></h1>
+                <p class="lede">
+                    Практическое руководство по созданию и трансформации
+                </p>
+            </div>
+            <div class="cover-foot">
+                <div class="author">
+                    <strong>Павел Павленко</strong>
+                    Эксперт по внедрению Generative AI в enterprise<br />
+                    Telegram-канал «<a href="https://t.me/pavlenkodev"
+                        >Павленко про Dev &amp; AI</a
+                    >»<br />
+                    AI-first pocket company:
+                    <a href="https://makeitbeta.ru">makeitbeta.ru</a>
+                </div>
+                <div class="scroll-hint">Читать</div>
+            </div>
+        </header>
+
+        <!-- SHELL: TOC + ARTICLE -->
+        <div class="shell">
+            <!-- TABLE OF CONTENTS -->
+            <nav class="toc collapsed" id="toc" aria-label="Содержание">
+                <div class="toc-title toc-toggle" id="tocToggle">
+                    Содержание
+                </div>
+                <ol>
+                    <li><a href="#ch1">Что такое AI-native на практике</a></li>
+                    <li><a href="#ch2">Пять признаков</a></li>
+                    <li><a href="#ch3">Архитектура: шесть слоёв</a></li>
+                    <li><a href="#ch4">Стартап: первые 90 дней</a></li>
+                    <li><a href="#ch5">Зрелая компания: 180 дней</a></li>
+                    <li><a href="#ch6">Software factory</a></li>
+                    <li><a href="#ch7">Evals как дисциплина</a></li>
+                    <li><a href="#ch8">FinOps и токены</a></li>
+                    <li><a href="#ch9">Governance и безопасность</a></li>
+                    <li><a href="#ch10">Когда AI-native не работает</a></li>
+                    <li><a href="#ch11">Культура и анти-паттерны</a></li>
+                    <li><a href="#ch12">Что должно получиться</a></li>
+                    <li><a href="#sources">Источники</a></li>
+                </ol>
+            </nav>
+
+            <article id="article">
+                <!-- ГЛАВЫ ВСТАВЛЯЮТСЯ СЮДА -->
+                <!-- ============================================
+     ГЛАВА 1 — ЧТО ТАКОЕ AI-NATIVE НА ПРАКТИКЕ
+     ============================================ -->
+                <section class="chapter" id="ch1">
+                    <span class="chapter-num">Глава 01</span>
+                    <h2>Что такое AI-native компания <em>на практике</em></h2>
+                    <p class="chapter-lede">
+                        AI-native — это не количество AI-инструментов. Это
+                        качество обратной связи и скорость, с которой компания
+                        учится на собственных действиях.
+                    </p>
+
+                    <p>
+                        AI-native компания — это компания, где AI встроен в
+                        операционную модель, а не приделан к ней сбоку. Не
+                        «команды пользуются ChatGPT» и не «у нас есть отдел AI».
+                        Через AI идут принятие решений, написание и проверка
+                        кода, поддержка, найм, документация, разбор инцидентов,
+                        перераспределение ресурсов.
+                    </p>
+
+                    <p>
+                        Главное практическое отличие — в том, как устроен
+                        рабочий цикл. Обычная компания живёт по линейной
+                        цепочке: решение → исполнение → отчёт → митинг →
+                        интерпретация менеджером → следующее решение. AI-native
+                        — иначе: цель → артефакты → агентный анализ → действие →
+                        измерение результата → обновление процесса. Разница не
+                        косметическая: во втором случае компания учится быстрее,
+                        потому что обратная связь не теряется по людям, а
+                        копится в системе.
+                    </p>
+
+                    <p>
+                        Технически за этим стоит превращение компании в
+                        <span
+                            class="term"
+                            data-def="Queryable — состояние компании, при котором её данные и процессы доступны агентам через стандартизированные интерфейсы: код, тикеты, звонки, метрики, решения можно «спросить» программно с учётом прав доступа."
+                            >queryable</span
+                        >-систему: данные и процессы доступны агентам через
+                        стандартизированные интерфейсы. У любого важного
+                        артефакта — клиентского звонка, архитектурного решения,
+                        инцидента, фичи — есть машинно-читаемое представление,
+                        владелец и трассируемость до источника.
+                    </p>
+
+                    <p>
+                        Второй сдвиг — построение организации вокруг. Closed
+                        loop — это не «агент что-то посоветовал». Это замкнутый
+                        контур: захват сигнала из реальности → интерпретация →
+                        действие → измерение результата → обновление правил. Без
+                        замыкания контура агенты остаются генератором
+                        рекомендаций, а не источником улучшений.
+                    </p>
+
+                    <div class="pull">
+                        «Если AI исчезнет завтра, и компания просто потеряет
+                        инструмент — она не AI-native. Если исчезнет, и
+                        операционная модель начнёт ломаться, потому что вокруг
+                        intelligence layer уже построены процессы, контекст и
+                        принятие решений — вот тогда компания действительно
+                        AI-native».
+                    </div>
+
+                    <div class="callout ru">
+                        <span class="callout-label">Российский контекст</span>
+                        <h4>Почему queryable — это сложно именно у нас</h4>
+                        <p>
+                            Типичный стек в российской компании: Yandex 360,
+                            Astra Linux, отечественные таск-трекеры (Yandex
+                            Tracker, EvaTeam, Kaiten), мессенджеры (Express,
+                            Pachca, VK Teams), хранилища на МойОфис или Р7. API
+                            и SDK у большинства этих систем менее зрелые, чем у
+                            Notion или Linear, нативной MCP-интеграции на момент
+                            написания этого гайда нет почти ни у кого.
+                        </p>
+                        <p>
+                            Это не повод отказываться от queryable-подхода — это
+                            повод заложить на context layer больше времени, чем
+                            рекомендуют англоязычные источники. На практике
+                            30–40% времени первых месяцев уходит не на модели, а
+                            на коннекторы, парсеры и нормализацию данных из
+                            систем, которые изначально не проектировались как
+                            открытые.
+                        </p>
+                    </div>
+
+                    <p>
+                        Третье практическое отличие — кто за что отвечает. В
+                        привычной модели менеджер отвечает за процесс и за то,
+                        чтобы информация ходила между людьми. В AI-native модели
+                        менеджер отвечает за <em>результат</em>, а движение
+                        информации автоматизировано. Это не правка должностной
+                        инструкции — это смена того, что вообще считается
+                        работой менеджера.
+                    </p>
+                </section>
+
+                <!-- ============================================
+     ГЛАВА 2 — ПЯТЬ ПРИЗНАКОВ
+     ============================================ -->
+                <section class="chapter" id="ch2">
+                    <span class="chapter-num">Глава 02</span>
+                    <h2>
+                        Пять признаков <em>настоящей</em> AI-native компании
+                    </h2>
+                    <p class="chapter-lede">
+                        Не маркетинговый чек-лист, а пять структурных свойств,
+                        которые либо есть в компании, либо нет.
+                    </p>
+
+                    <h3>1. Компания queryable</h3>
+                    <p>
+                        У компании есть машинно-читаемый слой контекста: код,
+                        задачи, PR, инциденты, продажи, саппорт, звонки с
+                        клиентами, продуктовая аналитика, решения,
+                        <span
+                            class="term"
+                            data-def="ADR (Architecture Decision Record) — короткий документ, фиксирующий архитектурное решение, его контекст, рассмотренные альтернативы и последствия. Делает архитектурные решения трассируемыми и обучаемыми."
+                            >ADR</span
+                        >, roadmap, OKR, документация, найм, фидбек сотрудников.
+                        Не «всё лежит в Notion», а данные доступны агентам по
+                        правам, у каждого артефакта есть владелец, у важных
+                        решений — трассируемость, и можно задать вопрос «почему
+                        мы делаем эту фичу» и получить цепочку от customer call
+                        до тикета, PR, релиза и метрики adoption.
+                    </p>
+                    <p>
+                        Тут полезен
+                        <span
+                            class="term"
+                            data-def="MCP (Model Context Protocol) — открытый протокол от Anthropic, стандартизирующий подключение AI-приложений к внешним данным, инструментам и workflow. Превращает интеграцию каждой системы из самодельного коннектора в стандартный плагин."
+                            >MCP</span
+                        >
+                        и подобные протоколы: они стандартизируют подключение AI
+                        к внешним данным и инструментам, но требуют строгого
+                        контроля доступа.
+                    </p>
+
+                    <h3>2. У каждого важного процесса есть closed loop</h3>
+                    <p>
+                        Closed loop в разработке выглядит так: агент читает
+                        саппорт, customer calls, аналитику, GitLab, Jira;
+                        предлагает приоритеты спринта;
+                        <span
+                            class="term"
+                            data-def="DRI (Directly Responsible Individual) — практика, пришедшая из Apple: у каждого outcome ровно один человек, отвечающий за результат. Не «команда обсудила» — а «N сделает, и спросят с N»."
+                            >DRI</span
+                        >
+                        утверждает; агенты помогают писать код и тесты; CI и
+                        evals проверяют; после релиза агент сравнивает
+                        фактический результат с ожидаемыми customer outcomes;
+                        следующее планирование учитывает фактический эффект.
+                    </p>
+                    <p>
+                        Без замыкания петля превращается в хаос рекомендаций,
+                        который никто не разгребает.
+                    </p>
+
+                    <h3>3. Спеки, тесты и evals важнее кода</h3>
+                    <p>
+                        В старом мире главный артефакт инженера — код. В
+                        AI-native мире — точное описание желаемого поведения:
+                        spec, acceptance criteria, test harness, eval set,
+                        сценарии, инварианты, примеры плохого и хорошего
+                        результата, ограничения, rollback conditions.
+                    </p>
+                    <p>
+                        Код становится производным артефактом. StrongDM
+                        описывает «software factory», где люди задают намерение,
+                        сценарии и ограничения, а агенты пишут код, проверяют
+                        поведение и итеративно улучшают результат. Пример пока
+                        радикальный, но направление понятно: ценность смещается
+                        от ручного написания кода к проектированию проверки
+                        результата.
+                    </p>
+
+                    <h3>4. Люди отвечают за результат, агенты — за действия</h3>
+                    <p>
+                        В AI-native компании человек не исчезает — меняется его
+                        роль.
+                    </p>
+                    <div class="versus">
+                        <div class="bad">
+                            <span class="label">Плохая модель</span>«AI заменит
+                            людей».
+                        </div>
+                        <div class="good">
+                            <span class="label">Хорошая модель</span>«Люди
+                            уходят выше по стеку абстракции».
+                        </div>
+                    </div>
+                    <p>
+                        Инженер меньше пишет boilerplate и больше формулирует
+                        поведение системы. PM меньше собирает статусы и больше
+                        принимает продуктовые решения. Менеджер меньше
+                        маршрутизирует информацию и больше отвечает за outcome.
+                        Саппорт меньше отвечает на одни и те же вопросы и больше
+                        улучшает knowledge base и продукт.
+                    </p>
+                    <p>
+                        Anthropic в гайде по агентам пишет: начинать стоит с
+                        простых, измеримых workflow, усложнять систему — только
+                        когда это реально улучшает outcome. Агенты полезны там,
+                        где есть инструменты, обратная связь из среды, ясные
+                        критерии успеха и контрольные точки для человека.
+                    </p>
+
+                    <h3>
+                        5. В экономике появляется не только headcount, но и
+                        token budget
+                    </h3>
+                    <p>
+                        В старой компании масштабирование часто означает «нанять
+                        больше людей». В AI-native компании вопрос звучит иначе:
+                        можно ли купить больше интеллектуальной пропускной
+                        способности через модели, инструменты, evals и
+                        автоматизацию?
+                    </p>
+                    <p>
+                        Тут важен баланс — и тут же находится один из самых
+                        обсуждаемых выводов 2025 года.
+                        <strong
+                            >DORA State of AI-assisted Software Development
+                            2025</strong
+                        >
+                        зафиксировал положительную связь AI-внедрения с
+                        throughput и продуктовой эффективностью. Это разворот по
+                        сравнению с 2024 годом, когда отчёт фиксировал
+                        негативное влияние на стабильность delivery. Главный
+                        вывод нового отчёта:
+                        <em
+                            >AI не чинит команду — он усиливает то, что уже
+                            есть</em
+                        >. Сильные команды становятся ещё лучше, слабые — хуже.
+                        Платформенная инженерия, понятный workflow, фокус на
+                        пользователе — это не «дополнения» к AI, а условия, без
+                        которых AI ухудшает картину.
+                    </p>
+
+                    <div class="callout note">
+                        <span class="callout-label"
+                            >Маппинг признаков на слои</span
+                        >
+                        <p>
+                            Признак 1 (queryable) обеспечивается слоем 1
+                            (Context). Признак 2 (closed loop) — слоями 2+5
+                            (Agent/Tool + Workflow). Признак 3 (specs/evals) —
+                            слоем 4 (Evals). Признак 4 (роли) — слоями 5+6
+                            (Workflow + Governance). Признак 5 (экономика) —
+                            слоем 3 (AI Gateway).
+                        </p>
+                    </div>
+                </section>
+
+                <!-- ============================================
+     ГЛАВА 3 — АРХИТЕКТУРА
+     ============================================ -->
+                <section class="chapter" id="ch3">
+                    <span class="chapter-num">Глава 03</span>
+                    <h2>Архитектура: <em>шесть слоёв</em></h2>
+                    <p class="chapter-lede">
+                        Независимо от размера компании, AI-native стек удобно
+                        проектировать как шесть слоёв. Governance — сквозной,
+                        остальные пять выстраиваются один на другом.
+                    </p>
+
+                    <h3>Слой 1. Context layer</h3>
+                    <p>
+                        Память компании. Сюда попадают документы, код, таски,
+                        PR, customer calls, саппорт, CRM, продуктовая аналитика,
+                        инциденты, постмортемы, решения, финансовые данные,
+                        политики, найм, внутренние коммуникации.
+                    </p>
+                    <p>
+                        Главное — не просто свалить всё в data lake. Сам по себе
+                        data lake не делает компанию queryable. Нужны права
+                        доступа, индексация, семантический поиск, нормализация
+                        сущностей, связи между артефактами и понятные API для
+                        агентов. На практике это
+                        <span
+                            class="term"
+                            data-def="RAG (Retrieval-Augmented Generation) — паттерн, при котором модель не «знает ответ», а извлекает релевантные фрагменты из собственных данных компании и отвечает на их основе. Стандартный способ дать LLM доступ к корпоративному контексту."
+                            >RAG</span
+                        >, vector store, метаданные, политики свежести и
+                        владения.
+                    </p>
+
+                    <h3>Слой 2. Agent / Tool layer</h3>
+                    <p>
+                        Слой, через который агенты могут <em>действовать</em>:
+                        создать тикет, собрать PR, запустить тесты, сделать
+                        summary звонка, найти похожий инцидент, сгенерировать
+                        release notes, проверить контракт API, подготовить ответ
+                        саппорта, составить draft решения, запустить
+                        эксперимент, отправить алерт.
+                    </p>
+                    <p>
+                        Критическое требование: агентам нельзя давать
+                        «человеческие» безлимитные права. У каждого агента —
+                        identity, scope, audit log, owner и policy. Тема большая
+                        — отдельно разбираем в главе про governance.
+                    </p>
+
+                    <h3>Слой 3. AI Gateway</h3>
+                    <p>
+                        Единая точка управления моделями. Отвечает за выбор
+                        модели под задачу, routing между моделями, лимиты,
+                        стоимость, логирование, redaction PII, кэширование,
+                        fallback, observability, оценку качества, контроль
+                        latency, контроль vendor lock-in.
+                    </p>
+                    <p>
+                        Без AI gateway компания быстро превращается в зоопарк:
+                        разные команды покупают разные инструменты, данные текут
+                        наружу, стоимость непонятна, качество не сравнивается.
+                    </p>
+
+                    <div class="callout ru">
+                        <span class="callout-label">Российский контекст</span>
+                        <h4>
+                            AI Gateway, когда API западных моделей не достать
+                        </h4>
+                        <p>
+                            В РФ на момент 2026 года прямой коммерческий доступ
+                            к API ведущих западных моделей (Anthropic, OpenAI,
+                            Google) формально недоступен. Реальные опции:
+                        </p>
+                        <ul>
+                            <li>
+                                Локальные модели через Ollama / vLLM / TGI на
+                                собственных GPU (Qwen, Llama,
+                                GigaChat-совместимые форматы)
+                            </li>
+                            <li>
+                                Российские провайдеры — YandexGPT, GigaChat, MTS
+                                AI, T-Bank — через их API
+                            </li>
+                            <li>
+                                OpenRouter и подобные агрегаторы — формально
+                                работают, но создают регуляторные риски при
+                                работе с персональными данными
+                            </li>
+                            <li>
+                                Локальные стеки на mac mini / Mac Studio /
+                                GPU-серверах для R&D
+                            </li>
+                        </ul>
+                        <p>
+                            Рабочий паттерн: gateway маршрутизирует low-risk
+                            задачи на лучшую доступную модель, а данные с PII
+                            или коммерческой тайной — только в on-prem контур.
+                            Для этого нужна data classification на входе в
+                            gateway, а не на выходе из приложения.
+                        </p>
+                    </div>
+
+                    <h3>Слой 4. Evals layer</h3>
+                    <p>
+                        Самый недооценённый слой. Для AI-native компании evals —
+                        аналог CI/CD для AI-процессов.
+                    </p>
+                    <p>
+                        Минимальный комплект:
+                        <span
+                            class="term"
+                            data-def="Golden dataset — эталонный набор примеров с известными правильными ответами, на котором меряют качество модели или агента. Обычно собирается вручную экспертами и расширяется со временем."
+                            >golden datasets</span
+                        >; регрессионные наборы; human review samples;
+                        <span
+                            class="term"
+                            data-def="LLM-as-judge — паттерн, при котором одна LLM оценивает выходы другой по заданным критериям. Дёшево и масштабируемо, но требует контроля: судья может ошибаться системно, поэтому его выводы калибруются по human review."
+                            >LLM-as-judge</span
+                        >
+                        там, где допустимо; security red-team cases; customer
+                        outcome checks; offline evals перед релизом; online
+                        monitoring после релиза;
+                        <span
+                            class="term"
+                            data-def="Drift detection — отслеживание того, что распределение входных данных или поведение модели меняется со временем. Без drift detection eval, прошедший вчера, может быть нерелевантен сегодня."
+                            >drift detection</span
+                        >; ручной override.
+                    </p>
+                    <p>
+                        Без evals агенты превращаются в генератор уверенной
+                        случайности. Это самостоятельная дисциплина — отдельная
+                        глава ниже.
+                    </p>
+
+                    <h3>Слой 5. Workflow layer</h3>
+                    <p>
+                        AI должен жить там, где работает человек: IDE,
+                        Slack/Teams/Express, Jira/Tracker/Linear, GitHub/GitLab,
+                        CRM, support console, BI, CI/CD, incident management,
+                        docs.
+                    </p>
+                    <p>
+                        Чем дальше AI от реального workflow, тем ниже adoption.
+                        Универсальный «корпоративный чат-бот для всего» почти
+                        всегда становится игрушкой.
+                    </p>
+
+                    <h3>Слой 6. Governance layer (сквозной)</h3>
+                    <p>
+                        Governance — это не комитет, который запрещает. Это
+                        система, которая позволяет безопасно ускоряться. Сюда
+                        входят AI inventory, классификация use cases по риску,
+                        data classification, model/vendor registry, approval
+                        policies, security reviews, audit logs, incident
+                        response, training, юридические ограничения, регулярный
+                        пересмотр evals.
+                    </p>
+                    <p>
+                        Governance проходит через все остальные слои: на context
+                        layer — это data classification и RBAC; на agent layer —
+                        agent identity и scoped permissions; на gateway —
+                        лимиты, redaction, audit; на evals — security cases; на
+                        workflow — approval checkpoints. Поэтому правильнее
+                        представлять архитектуру не как стопку из шести слоёв, а
+                        как пять слоёв и сквозной governance, который проходит
+                        через все.
+                    </p>
+
+                    <p>
+                        <strong>NIST AI RMF</strong> задаёт рамку управления
+                        рисками AI-систем;
+                        <strong>ISO/IEC 42001</strong> описывает требования к AI
+                        management system — то есть к управлению AI как
+                        постоянной организационной способности, а не разовому
+                        проекту. Для компаний, работающих в ЕС, это не
+                        абстракция: <strong>EU AI Act</strong> вступил в силу 1
+                        августа 2024 года; запрет ряда практик и AI literacy
+                        обязательны с 2 февраля 2025 года; обязательства для
+                        GPAI-провайдеров и режим штрафов — с 2 августа 2025
+                        года; правила для high-risk standalone-систем — с 2
+                        августа 2026 года; для high-risk систем, встроенных в
+                        регулируемые продукты, — с 2 августа 2027 года.
+                        Еврокомиссия в 2025 году обсуждает Digital Package on
+                        Simplification, который может сдвинуть high-risk сроки —
+                        то есть регуляторная картина ещё не зафиксирована
+                        окончательно.
+                    </p>
+
+                    <div class="callout ru">
+                        <span class="callout-label">Российский контекст</span>
+                        <h4>Регуляторика для AI в РФ</h4>
+                        <p>
+                            В России на момент 2026 года аналога AI Act нет.
+                            Основные применимые рамки:
+                        </p>
+                        <ul>
+                            <li>
+                                <strong>152-ФЗ</strong> «О персональных данных»
+                                — главный ограничитель: PII нельзя свободно
+                                отправлять в зарубежные модели, требуется
+                                согласие субъекта, локализация хранения. Для AI
+                                gateway это означает обязательный PII redaction
+                                на входе.
+                            </li>
+                            <li>
+                                <strong>Кодекс этики в сфере ИИ</strong> (2021)
+                                — рекомендательный, но крупные игроки на него
+                                ссылаются; технических обязательств не
+                                накладывает.
+                            </li>
+                            <li>
+                                <strong>Эксперимент с регулированием AI</strong>
+                                в отдельных регионах и индустриях — Москва,
+                                отдельные банковские и медицинские сценарии —
+                                формирует прецеденты.
+                            </li>
+                            <li>
+                                <strong>Отраслевые регуляторы</strong> — Банк
+                                России, Минцифры, Роскомнадзор — выпускают свои
+                                методические указания по AI в финансах,
+                                госсекторе и обработке данных.
+                            </li>
+                        </ul>
+                        <p>
+                            Практический вывод: governance в РФ строится скорее
+                            вокруг 152-ФЗ и отраслевых требований, чем вокруг
+                            общеевропейского риск-классификатора. Архитектурно
+                            это ничего не меняет: те же data classification,
+                            audit, approval policies — просто маппятся на другой
+                            нормативный слой.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- ============================================
+     ГЛАВА 4 — СТАРТАП
+     ============================================ -->
+                <section class="chapter" id="ch4">
+                    <span class="chapter-num">Глава 04</span>
+                    <h2>Стартап: <em>первые 90 дней</em></h2>
+                    <p class="chapter-lede">
+                        Главное преимущество стартапа — отсутствие
+                        legacy-процессов и привычек. Главная ошибка — копировать
+                        старую компанию с подключённым ChatGPT.
+                    </p>
+
+                    <h3>Принцип первого дня: company OS до первых наймов</h3>
+                    <p>
+                        До первых наймов стоит завести минимальную операционку:
+                        единый workspace для документов, систему задач,
+                        репозиторий, CI/CD, инструмент записи customer calls,
+                        центральный канал коммуникации, AI gateway или хотя бы
+                        стандартизированный доступ к моделям, базовые правила
+                        data/security, спеку «как мы работаем с AI», репозиторий
+                        промптов, спеков и evals, шаблоны product spec, tech
+                        spec, decision record и postmortem.
+                    </p>
+
+                    <div class="pull">
+                        «Любой важный разговор должен оставлять артефакт. Не
+                        ради бюрократии — а потому что агент не может учиться из
+                        устной культуры».
+                    </div>
+
+                    <p>
+                        Это идеальная картина. В реальности фаундеры редко
+                        успевают всё построить до первого найма — runway не
+                        ждёт, customer development идёт параллельно. Поэтому
+                        правильнее так:
+                        <em
+                            >каждый первый найм либо помогает строить OS, либо
+                            принимает её как условие работы</em
+                        >. Не «сначала всё, потом люди», а «не нанимаем тех, кто
+                        не понимает, зачем нужны артефакты».
+                    </p>
+
+                    <h3>Найм: AI-усиленные строители вместо исполнителей</h3>
+                    <p>
+                        В AI-native стартапе не нужны люди, которые ждут чёткой
+                        задачи и потом делают кусок работы. Нужны те, кто умеет
+                        разобраться в проблеме, сформулировать spec, дать
+                        агентам контекст, построить проверку результата, быстро
+                        собрать прототип, оценить качество и починить систему, а
+                        не только конкретный баг.
+                    </p>
+                    <p>
+                        Это касается не только инженеров. AI-native sales,
+                        support, ops, design, marketing — все приходят не с
+                        «идеей», а с работающим черновиком, прототипом, анализом
+                        или автоматизацией.
+                    </p>
+
+                    <h3>Не создавайте отделы слишком рано</h3>
+                    <p>
+                        Для раннего стартапа лучше мыслить ролями, а не
+                        отделами:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Founder / AI-founder</strong> — лично
+                            показывает, как компания пользуется AI
+                        </li>
+                        <li>
+                            <strong>DRI</strong> — directly responsible
+                            individual за конкретный outcome
+                        </li>
+                        <li>
+                            <strong>IC-builder</strong> — строит руками,
+                            агентами и инструментами
+                        </li>
+                        <li>
+                            <strong>Domain expert</strong> — знает клиента и
+                            реальность домена
+                        </li>
+                        <li>
+                            <strong>Platform-minded engineer</strong> —
+                            превращает повторяющуюся работу в систему
+                        </li>
+                    </ul>
+                    <p>
+                        Смысл не в титулах. Смысл в том, что ответственность за
+                        outcome, а не за процесс.
+                    </p>
+
+                    <h3>Customer discovery loop</h3>
+                    <p>
+                        Самый первый closed loop стартапа — не про код, а про
+                        клиента. Каждый customer call записывается; агент делает
+                        summary, вытаскивает pains, objections, jobs-to-be-done;
+                        сравнивает новый звонок с предыдущими; раз в неделю
+                        собирает карту повторяющихся болей; фаундер вручную
+                        проверяет выводы; roadmap обновляется на основе реальных
+                        сигналов; следующие вопросы клиентам генерируются из
+                        gaps.
+                    </p>
+                    <p>
+                        Но: AI помогает увидеть паттерны, а почувствовать боль
+                        клиента — это работа фаундера, её делегировать нельзя.
+                    </p>
+
+                    <h3>Product development loop</h3>
+                    <p>
+                        Каждая фича идёт по цепочке: customer signal → problem
+                        statement → success metric → spec → acceptance criteria
+                        → test/eval harness → agent implementation → human
+                        review of behavior → release → post-release measurement
+                        → learning update.
+                    </p>
+                    <div class="versus">
+                        <div class="bad">
+                            <span class="label">Плохой процесс</span>
+                            «Сделай мне dashboard».
+                        </div>
+                        <div class="good">
+                            <span class="label">Хороший процесс</span>
+                            «Compliance manager не понимает, какие vendor risks
+                            требуют реакции сегодня. Надо, чтобы за 30 секунд он
+                            увидел топ-5 рисков, причину, confidence,
+                            recommended action и audit trail. Успех: 70%
+                            beta-users заходят в dashboard минимум 3 раза в
+                            неделю, среднее время triage падает с 40 до 15
+                            минут. Вот 12 сценариев, где dashboard должен дать
+                            правильный результат».
+                        </div>
+                    </div>
+                    <p>
+                        Во втором случае агенту есть что строить и что
+                        проверять.
+                    </p>
+
+                    <h3>Стартаповая метрика AI-native зрелости</h3>
+                    <p>
+                        Не меряйте «сколько кода написал AI» — это vanity
+                        metric. Лучше меряйте: время от customer signal до
+                        production change; число гипотез в неделю; долю задач,
+                        которые закрываются без ручного coordination; долю specs
+                        с acceptance criteria и evals; стоимость токенов на
+                        shipped outcome; долю задач, где агент дошёл до working
+                        PR; долю agent PRs без серьёзной переделки; число
+                        escaped defects; скорость онбординга нового человека;
+                        время ответа на customer issue; время от инцидента до
+                        постмортема и фикса.
+                    </p>
+
+                    <h3>90-дневный план</h3>
+
+                    <div class="dayplan">
+                        <div class="dayplan-header">
+                            <span class="label">Дни 1–7</span>
+                            <span class="title">Company OS и правила игры</span>
+                        </div>
+                        <div class="dayplan-body">
+                            <p>
+                                Создайте company OS: docs, tasks, repo, CI, AI
+                                tools, meeting capture, customer call capture,
+                                decision log. Напишите один документ — «Как мы
+                                работаем AI-native». В нём должны быть правила:
+                            </p>
+                            <ul>
+                                <li>Все важные решения фиксируются</li>
+                                <li>Каждая фича начинается со спеки</li>
+                                <li>Каждая фича имеет success metric</li>
+                                <li>Каждый агентный workflow имеет owner</li>
+                                <li>
+                                    AI output не считается правдой без проверки
+                                </li>
+                                <li>
+                                    Код без тестов / evals не считается готовым
+                                </li>
+                                <li>
+                                    Customer context важнее внутреннего мнения
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="dayplan">
+                        <div class="dayplan-header">
+                            <span class="label">Дни 8–30</span>
+                            <span class="title">Customer discovery loop</span>
+                        </div>
+                        <div class="dayplan-body">
+                            <p>
+                                Соберите 20–40 customer conversations. Постройте
+                                pain map. Создайте agent-assisted research
+                                workflow. Сделайте первый MVP через spec-driven
+                                process. Настройте baseline evals. Заведите
+                                weekly learning review.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="dayplan">
+                        <div class="dayplan-header">
+                            <span class="label">Дни 31–60</span>
+                            <span class="title">Agent PRs</span>
+                        </div>
+                        <div class="dayplan-body">
+                            <p>
+                                Переведите разработку на agent PRs. Каждая
+                                задача должна иметь problem, expected behavior,
+                                constraints, test cases, definition of done,
+                                rollback plan. Сделайте агентов для создания
+                                тестов, анализа PR, release notes, bug
+                                reproduction, поиска похожих issues, обновления
+                                docs.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="dayplan">
+                        <div class="dayplan-header">
+                            <span class="label">Дни 61–90</span>
+                            <span class="title"
+                                >Первые настоящие closed loops</span
+                            >
+                        </div>
+                        <div class="dayplan-body">
+                            <p>
+                                support → product backlog; usage analytics →
+                                roadmap; sales objections → positioning;
+                                incidents → reliability improvements; PR defects
+                                → spec quality improvements.
+                            </p>
+                            <p>
+                                После 90 дней у вас должна быть не «команда с
+                                AI-инструментами», а маленькая компания, которая
+                                учится быстрее конкурентов.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="callout ru">
+                        <span class="callout-label">Российский контекст</span>
+                        <h4>Особенности AI-native стартапа в РФ</h4>
+                        <p>На что закладываться в плане сверх обычного:</p>
+                        <ul>
+                            <li>
+                                <strong>Стек коммуникаций</strong>: Telegram для
+                                внешних клиентов и нетворка,
+                                Slack/Mattermost/Express для внутренних. Запись
+                                звонков — Google Meet (если работает), Yandex
+                                Telemost, Zoom (с ограничениями), Pachca; для
+                                транскрипции — Whisper локально или Yandex
+                                SpeechKit.
+                            </li>
+                            <li>
+                                <strong>Платежи и юрлица</strong>: для подписок
+                                на западные SaaS — карты иностранных юрисдикций,
+                                что добавляет операционных сложностей. Это не
+                                помеха, но влияет на выбор стека.
+                            </li>
+                            <li>
+                                <strong>Найм</strong>: пул AI-усиленных
+                                строителей в РФ есть, но он узкий. Формат
+                                «маленькая команда, делающая объём работы
+                                нескольких функций» здесь работает особенно
+                                хорошо — потому что найти 30 специалистов
+                                сложнее, чем 5 хороших.
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- ============================================
+     ГЛАВА 5 — ЗРЕЛАЯ КОМПАНИЯ
+     ============================================ -->
+                <section class="chapter" id="ch5">
+                    <span class="chapter-num">Глава 05</span>
+                    <h2>Зрелая компания: <em>180 дней</em></h2>
+                    <p class="chapter-lede">
+                        У зрелой компании уже есть продукт, клиенты, legacy-код,
+                        инциденты, релизные процессы, менеджеры, политики,
+                        security constraints и люди, которые справедливо боятся
+                        хаоса. Big bang тут не работает.
+                    </p>
+
+                    <h3>Главный принцип: dual operating model</h3>
+                    <p>
+                        Для зрелой компании правильный подход — двигаться
+                        параллельно по двум линиям. С одной стороны, постепенно
+                        делать текущую компанию queryable и AI-assisted. С
+                        другой — собрать несколько
+                        <span
+                            class="term"
+                            data-def="Lighthouse team — команда-маяк, на которой обкатываются новые подходы и которая показывает остальной организации, как должна выглядеть новая модель работы. Не «лаборатория инноваций», а реальный продуктовый юнит с измеримыми результатами."
+                            >lighthouse</span
+                        >-pods, которые строят новые контуры с нуля и
+                        показывают, как должна выглядеть новая модель работы.
+                    </p>
+                    <ul>
+                        <li>Core business продолжает безопасно работать</li>
+                        <li>Lighthouse teams доказывают новые подходы</li>
+                        <li>AI Platform Team строит общую инфраструктуру</li>
+                        <li>
+                            Governance защищает компанию от утечек и безумия
+                        </li>
+                        <li>Leadership меняет систему стимулов</li>
+                    </ul>
+                    <p>
+                        McKinsey в State of AI 2025 пишет: AI уже широко
+                        используется, но большинство организаций пока не
+                        масштабировали его до enterprise-level value. Высокие
+                        результаты чаще связаны не с отдельными инструментами, а
+                        с redesign workflows, лидерским ownership и внедрением
+                        AI сразу в несколько функций.
+                    </p>
+
+                    <h3>Этап 1. Диагностика: где компания теряет скорость</h3>
+                    <p>
+                        Начните не с выбора модели, а с
+                        <span
+                            class="term"
+                            data-def="Value stream mapping — практика из lean: визуализация полного потока создания ценности от запроса до доставки клиенту с измерением времени и потерь на каждом шаге. Применительно к AI-native: показывает, где именно агенты могут устранить ожидания и потерю контекста."
+                            >value stream mapping</span
+                        >. Для зрелой software-компании смотрим потоки: идея →
+                        roadmap; roadmap → spec; spec → implementation;
+                        implementation → review; review → release; release →
+                        adoption; support issue → bug fix; incident → root cause
+                        → prevention; new engineer → productive engineer;
+                        customer feedback → product decision.
+                    </p>
+                    <p>
+                        В каждом потоке найдите: где ждём людей; где теряется
+                        информация; где много ручной координации; где плохие
+                        specs; где слабые тесты; где менеджеры собирают статусы;
+                        где саппорт повторяет одно и то же; где клиентский
+                        сигнал не доходит до product/engineering. AI-native
+                        трансформация начинается именно там.
+                    </p>
+
+                    <h3>Этап 2. Сделать компанию queryable</h3>
+                    <p>
+                        Подключите к единому context layer GitHub/GitLab,
+                        Jira/Linear/Yandex Tracker, Confluence/Notion/Yandex
+                        360/МойОфис, Telegram/Slack/Express/Mattermost, CI/CD,
+                        observability, incident management, support system, CRM,
+                        product analytics, feature flags, customer calls,
+                        architecture docs, security policies.
+                    </p>
+                    <p>
+                        Подключение должно быть не «скормить всё LLM», а с
+                        <span
+                            class="term"
+                            data-def="RBAC / ABAC — Role-Based / Attribute-Based Access Control: модели прав доступа, где доступ определяется ролью пользователя или атрибутами субъекта/объекта/контекста. Для AI это означает: агент видит данные через те же RBAC/ABAC-фильтры, что и пользователь, от имени которого действует."
+                            >RBAC/ABAC</span
+                        >, классификацией данных, обработкой PII, tenant
+                        boundaries, аудитом, retention policy, source
+                        attribution, контролем свежести, владельцем у каждого
+                        источника, механизмом удаления и исправления данных.
+                    </p>
+
+                    <h3>
+                        Этап 3. Сначала ускорить разработку, но не сломать
+                        engineering fundamentals
+                    </h3>
+                    <p>
+                        Естественный первый контур — SDLC. Опасность в том, что
+                        AI ускоряет написание кода, а bottleneck переезжает в
+                        review, тесты, архитектуру и прод. Поэтому первые use
+                        cases выбираются с пониманием этого риска: codebase Q&A
+                        для онбординга, test generation, PR summary, PR risk
+                        analysis, security review draft, bug reproduction from
+                        support ticket, legacy code explanation, migration
+                        assistant, release notes, incident summary,
+                        documentation update, contract test generation, flaky
+                        test triage.
+                    </p>
+
+                    <h3>Этап 4. AI Opportunity Map</h3>
+                    <p>
+                        Не запускайте 100 пилотов. Составьте карту из 20–50 use
+                        cases, выберите 5–7 lighthouse. Оцените каждый use case
+                        по: размеру business impact, частоте процесса, стоимости
+                        текущего ручного труда, качеству доступного контекста,
+                        проверяемости результата, риску ошибки, регуляторному
+                        риску, сложности интеграции, готовности команды, наличию
+                        owner, возможности измерить KPI за 4–8 недель.
+                    </p>
+
+                    <div class="versus">
+                        <div class="good">
+                            <span class="label">Хорошие первые use cases</span>
+                            <ul style="margin: 0">
+                                <li>Много повторяющейся работы</li>
+                                <li>Хороший контекст</li>
+                                <li>Результат проверяем</li>
+                                <li>Ошибка не катастрофична</li>
+                                <li>Человек может approve</li>
+                                <li>Быстрый feedback loop</li>
+                            </ul>
+                        </div>
+                        <div class="bad">
+                            <span class="label">Плохие первые use cases</span>
+                            <ul style="margin: 0">
+                                <li>Стратегические решения без ground truth</li>
+                                <li>Сложная архитектура без тестов</li>
+                                <li>High-risk compliance без governance</li>
+                                <li>Автономные действия в prod</li>
+                                <li>Агенты с широкими правами</li>
+                                <li>
+                                    «Универсальный корпоративный ассистент для
+                                    всего»
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>Этап 5. AI Platform Team</h3>
+                    <p>
+                        Не «центр инноваций», который делает демо, а команда,
+                        которая строит инфраструктуру, чтобы остальные могли
+                        безопасно ускоряться.
+                    </p>
+                    <h4>Состав</h4>
+                    <p>
+                        AI platform lead; staff/principal engineer; LLMOps / AI
+                        infrastructure engineer; data engineer; security
+                        engineer; developer experience engineer; evals engineer;
+                        product manager for internal platform; representative
+                        from legal/compliance part-time.
+                    </p>
+                    <h4>Задачи</h4>
+                    <p>
+                        AI gateway, model/vendor registry, prompt/spec/eval
+                        repository, agent identity, MCP/tools governance,
+                        logging, cost allocation, approved patterns, sandbox
+                        environments, AI SDLC guidelines, training, reference
+                        implementations, eval harness, security reviews,
+                        internal support.
+                    </p>
+                    <p>
+                        Очень важно: platform team <em>не должна</em> делать все
+                        AI use cases сама. Её задача — собрать
+                        <span
+                            class="term"
+                            data-def="Paved road — концепция из платформенной инженерии: «асфальтированная дорога», по которой команды могут двигаться быстро и безопасно. Команды могут с неё съехать, но тогда отвечают сами; пока едут по ней — платформа решает за них вопросы security, observability, deployment."
+                            >paved road</span
+                        >.
+                    </p>
+
+                    <h3>Этап 6. Lighthouse teams</h3>
+                    <p>
+                        Выберите 3–5 команд по критериям: сильный tech lead;
+                        измеримый поток работы; поддержка product owner;
+                        общепризнанная боль; есть тесты или возможность быстро
+                        построить evals; не самый критичный production-риск;
+                        готовность менять процесс, а не «попробовать tool».
+                    </p>
+                    <p>
+                        Хорошие кандидаты: команда поддержки legacy-модуля,
+                        команда с большим support-driven backlog, платформенная
+                        команда internal tools, QA automation, команда API/SDK,
+                        документация / developer portal.
+                    </p>
+
+                    <h3>Этап 7. Перестроить sprint planning</h3>
+                    <p>
+                        В обычной компании sprint planning — менеджерская
+                        церемония. В AI-native он выглядит так: агент заранее
+                        анализирует предыдущий sprint, находит незавершённые
+                        commitments, сравнивает shipped work с customer impact,
+                        поднимает customer feedback, показывает defects и
+                        incidents, предлагает candidate priorities, проверяет
+                        capacity, находит dependency risks, генерирует draft
+                        plan. Люди не тратят время на сбор фактов — они
+                        обсуждают trade-offs.
+                    </p>
+
+                    <h3>Этап 8. Перестроить роль менеджеров</h3>
+                    <p>
+                        В зрелой компании AI-native трансформация почти всегда
+                        упирается в middle management. Не потому что менеджеры
+                        плохие, а потому что бо́льшая часть их работы исторически
+                        была information routing: собрать статус, пересказать
+                        наверх, спустить вниз, согласовать, напомнить, сделать
+                        отчёт, собрать митинг.
+                    </p>
+                    <p>
+                        Если компания становится queryable — значительная часть
+                        этой работы автоматизируется. Новая роль менеджера:
+                        держать outcome, снимать организационные блокеры,
+                        развивать людей, разруливать конфликты приоритетов,
+                        следить за качеством решений, строить систему, помогать
+                        команде использовать AI правильно, отвечать за
+                        customer/business result.
+                    </p>
+                    <p>
+                        Часть менеджеров станет DRI / value-stream owners; часть
+                        уйдёт в platform/product/program roles; часть станет
+                        people leaders; часть, возможно, окажется лишней — но
+                        <strong
+                            >начинать трансформацию с «сократим людей»
+                            опасно</strong
+                        >. DORA отдельно рекомендует думать о reinvested
+                        capacity, а не о headcount reduction: высвободившуюся
+                        ёмкость лучше направлять на снижение rework, качество,
+                        customer value и платформенные улучшения.
+                    </p>
+
+                    <h3>180-дневный roadmap</h3>
+
+                    <div class="dayplan">
+                        <div class="dayplan-header">
+                            <span class="label">Дни 0–30</span>
+                            <span class="title">Baseline и правила игры</span>
+                        </div>
+                        <div class="dayplan-body">
+                            <p>
+                                Inventory: какие AI-инструменты уже
+                                используются, где данные могут утекать, какие
+                                команды экспериментируют, какие процессы самые
+                                медленные, какие инженерные и продуктовые
+                                метрики сейчас, где больше всего rework и
+                                support load, где слабые тесты, где есть сильные
+                                лидеры для lighthouse.
+                            </p>
+                            <p>
+                                Baseline: lead time, PR cycle time, deployment
+                                frequency, change failure rate, MTTR, escaped
+                                defects, support ticket resolution, onboarding
+                                time, test coverage, release predictability,
+                                developer satisfaction, стоимость rework.
+                            </p>
+                            <p>
+                                На выходе: AI policy, approved tools list, data
+                                classification rules, AI platform backlog,
+                                первые lighthouse teams, AI Opportunity Map,
+                                baseline metrics, план обучения.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="dayplan">
+                        <div class="dayplan-header">
+                            <span class="label">Дни 31–60</span>
+                            <span class="title">Queryable foundation</span>
+                        </div>
+                        <div class="dayplan-body">
+                            <p>
+                                Подключите ключевые источники: repo, tasks,
+                                docs, support, incidents, CI/CD, product
+                                analytics, customer calls. Настройте search/RAG,
+                                permissions, source citations, agent logs, cost
+                                tracking, PII redaction, AI gateway, первые
+                                approved agent tools.
+                            </p>
+                            <p>
+                                Сделайте первые internal agents: codebase Q&A,
+                                support-to-bug assistant, PR summary/risk
+                                assistant, incident summarizer, release notes
+                                assistant, documentation assistant.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="dayplan">
+                        <div class="dayplan-header">
+                            <span class="label">Дни 61–90</span>
+                            <span class="title">Lighthouse loops</span>
+                        </div>
+                        <div class="dayplan-body">
+                            <p>
+                                Каждая lighthouse team внедряет 2–3 closed
+                                loops. Например: support ticket → reproduction →
+                                failing test → PR suggestion; customer call →
+                                product insight → roadmap candidate; incident →
+                                postmortem → prevention task → verification;
+                                spec → generated tests → implementation → eval;
+                                PR → risk analysis → targeted review.
+                            </p>
+                            <p>
+                                К 90-му дню важно показать не демо, а outcome:
+                                PR cycle time снизился; test coverage вырос;
+                                onboarding ускорился; support resolution time
+                                уменьшился; release notes стали автоматическими;
+                                меньше повторяющихся bugs; меньше ручного status
+                                reporting.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="dayplan">
+                        <div class="dayplan-header">
+                            <span class="label">Дни 91–180</span>
+                            <span class="title"
+                                >Масштабирование и оргизменения</span
+                            >
+                        </div>
+                        <div class="dayplan-body">
+                            <p>
+                                Расширьте successful patterns на 30–50%
+                                engineering teams. Создайте: internal AI
+                                academy, prompt/spec/eval library, agent
+                                marketplace, approved MCP/tool registry, AI
+                                champions network, monthly AI operating review,
+                                AI risk review board, software factory для
+                                bounded tasks.
+                            </p>
+                            <p>
+                                Начните менять оргструктуру: value-stream
+                                ownership; меньше статусных митингов; меньше
+                                ручного reporting; больше DRI; platform team как
+                                product; manager scorecards по outcomes;
+                                engineering scorecards с AI metrics; перенос
+                                людей из координации в создание систем.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="callout ru">
+                        <span class="callout-label">Российский контекст</span>
+                        <h4>
+                            Что специфично для трансформации зрелой компании в
+                            РФ
+                        </h4>
+                        <ul>
+                            <li>
+                                <strong>Импортозамещение и AI-стек</strong>:
+                                если компания работает с госсектором, банками
+                                или КИИ, требования по реестру отечественного ПО
+                                распространяются и на AI-инфраструктуру. AI
+                                gateway, vector store, observability должны
+                                иметь обоснование выбора с точки зрения 187-ФЗ и
+                                приказов Минцифры.
+                            </li>
+                            <li>
+                                <strong>On-prem по умолчанию</strong>: для
+                                большинства зрелых компаний в РФ on-prem — не
+                                выбор, а ограничение. Это меняет экономику: не
+                                «платим за токены», а «амортизируем GPU-сервер».
+                                См. главу про FinOps.
+                            </li>
+                            <li>
+                                <strong>Lighthouse-команды легче</strong>: в
+                                больших российских компаниях исторически сильна
+                                культура внутренних R&D-проектов и пилотов. Это
+                                упрощает запуск lighthouse — структурно компания
+                                умеет выделить команду на эксперимент. Сложнее с
+                                масштабированием результатов на core business:
+                                те же иммунные реакции, что и везде.
+                            </li>
+                            <li>
+                                <strong>Найм AI Platform Team</strong>: рынок
+                                узкий, конкуренция за людей с опытом LLMOps
+                                жёсткая. Реалистичный путь — растить из сильных
+                                платформенных инженеров, которые уже умеют в
+                                DevOps и инфраструктуру.
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- ============================================
+     ГЛАВА 6 — SOFTWARE FACTORY
+     ============================================ -->
+                <section class="chapter" id="ch6">
+                    <span class="chapter-num">Глава 06</span>
+                    <h2>Software factory: <em>уровни автономии</em></h2>
+                    <p class="chapter-lede">
+                        Не путать с offshore-моделью 2000-х. Software factory
+                        здесь — это контур, в котором агенты пишут реализацию по
+                        спекам и evals, а человек ревьюит поведение, а не каждую
+                        строку.
+                    </p>
+
+                    <h3>Пять уровней</h3>
+                    <p>
+                        Не надо сразу строить «dark factory», где люди вообще не
+                        смотрят код. Это годится только для очень зрелых, хорошо
+                        проверяемых контуров. Лучше идти по уровням:
+                    </p>
+
+                    <ol class="steps">
+                        <li>
+                            <strong>AI pair programming.</strong> Инженер пишет
+                            код с ассистентом.
+                        </li>
+                        <li>
+                            <strong>Delegated tasks.</strong> Агенту дают
+                            маленькие задачи: написать тесты, сделать refactor,
+                            добавить endpoint, подготовить migration.
+                        </li>
+                        <li>
+                            <strong>Agent PRs.</strong> Агент сам делает PR по
+                            spec, прогоняет тесты, пишет summary, человек
+                            ревьюит.
+                        </li>
+                        <li>
+                            <strong>Spec-driven development.</strong> Основной
+                            труд человека — spec / evals. Агент пишет
+                            implementation. Человек проверяет поведение, а не
+                            каждую строку.
+                        </li>
+                        <li>
+                            <strong>Factory.</strong> Для ограниченных доменов:
+                            fully specified tasks, strong test harness, scenario
+                            validation, automatic iteration, human review только
+                            outcome.
+                        </li>
+                    </ol>
+
+                    <p>
+                        Для раннего стартапа оптимальный целевой уровень — 3–4.
+                        Уровень 5 применим точечно: SDK, CRUD, internal tools,
+                        migration scripts, docs, test generation, data
+                        transformations.
+                    </p>
+
+                    <h3>Software factory для существующей компании</h3>
+                    <p>
+                        Для зрелой ИТ-компании фабрику лучше запускать не на
+                        всём продукте, а на ограниченных доменах.
+                    </p>
+
+                    <div class="versus">
+                        <div class="good">
+                            <span class="label">Подходящие домены</span>
+                            <ul style="margin: 0">
+                                <li>SDK generation</li>
+                                <li>API client updates</li>
+                                <li>Documentation</li>
+                                <li>Test generation</li>
+                                <li>Migration scripts</li>
+                                <li>Internal CRUD tools</li>
+                                <li>Data pipeline transformations</li>
+                                <li>Frontend variants</li>
+                                <li>Contract tests</li>
+                                <li>Dependency upgrades</li>
+                                <li>Legacy modernization</li>
+                                <li>Support bug reproduction</li>
+                            </ul>
+                        </div>
+                        <div class="bad">
+                            <span class="label">Неподходящие домены</span>
+                            <ul style="margin: 0">
+                                <li>Ядро продукта без тестов</li>
+                                <li>Security-critical auth flows</li>
+                                <li>Billing logic без strong invariants</li>
+                                <li>Regulated / high-risk features</li>
+                                <li>Сложные архитектурные изменения</li>
+                                <li>Production actions без sandbox</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>Минимальный комплект factory</h3>
+                    <ul>
+                        <li>
+                            <span
+                                class="term"
+                                data-def="NLSpec — Natural Language Specification: спека, написанная на естественном языке, но в строго структурированном формате (problem, expected behavior, constraints, scenarios, acceptance criteria), пригодном для интерпретации агентом и человеком одновременно."
+                                >NLSpec</span
+                            >
+                            или structured spec
+                        </li>
+                        <li>Acceptance criteria</li>
+                        <li>Scenario set</li>
+                        <li>Test harness</li>
+                        <li>Sandbox</li>
+                        <li>Agent loop</li>
+                        <li>CI/CD integration</li>
+                        <li>Human approval checkpoint</li>
+                        <li>Audit log</li>
+                        <li>Rollback</li>
+                        <li>Post-release monitoring</li>
+                    </ul>
+
+                    <p>
+                        Ключевой сдвиг: человек ревьюит не «каждую строку», а
+                        правильность спеки, полноту сценариев, качество evals,
+                        поведение системы, production impact, риски.
+                    </p>
+
+                    <div class="callout note">
+                        <span class="callout-label">Что говорит DORA 2025</span>
+                        <p>
+                            Acceleration Whiplash — паттерн, описанный в
+                            исследованиях AI-assisted development:
+                            индивидуальная производительность растёт, но
+                            downstream-эффекты накапливаются. Median time в PR
+                            review растёт; PR-ы становятся больше; больше PR-ов
+                            мерджится без ревью. Это прямо означает: factory без
+                            сильного review-pipeline и автоматических evals не
+                            ускоряет, а перегружает компанию.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- ============================================
+     ГЛАВА 7 — EVALS КАК ДИСЦИПЛИНА
+     ============================================ -->
+                <section class="chapter" id="ch7">
+                    <span class="chapter-num">Глава 07</span>
+                    <h2>Evals <em>как дисциплина</em></h2>
+                    <p class="chapter-lede">
+                        Evals — это не «протестировать промпт перед релизом».
+                        Это инженерная дисциплина, без которой AI-инициативы
+                        предсказуемо ломаются на проде. И именно её обычно
+                        недооценивают.
+                    </p>
+
+                    <h3>Зачем нужны evals</h3>
+                    <p>
+                        В обычной разработке у нас есть unit-тесты,
+                        интеграционные тесты, e2e-тесты, контрактные тесты. Они
+                        проверяют детерминированное поведение: для входа X
+                        должен быть выход Y.
+                    </p>
+                    <p>
+                        LLM и агенты — недетерминированы. Один и тот же запрос
+                        на одной и той же модели может дать разные ответы;
+                        промпт, работавший вчера, может ломаться сегодня;
+                        обновление модели у вендора может незаметно изменить
+                        поведение прода. Значит, нужна другая инженерная
+                        практика — evals: систематическая, воспроизводимая
+                        оценка качества AI-системы на наборе контрольных
+                        примеров.
+                    </p>
+
+                    <div class="pull">
+                        «Если вы не меряете, что ваш агент делает в продакшне —
+                        у вас не AI-система, у вас лотерея с уверенным голосом».
+                    </div>
+
+                    <h3>Anatomy: из чего состоит eval</h3>
+                    <p>Минимальный набор слоёв:</p>
+
+                    <h4>Golden dataset</h4>
+                    <p>
+                        Эталонный набор примеров с известными правильными
+                        ответами. Собирается вручную экспертами домена.
+                        Маленький набор (50–200 примеров) — нормальный старт;
+                        рост идёт через накопление реальных сценариев из прода.
+                        Главное правило: golden dataset должен покрывать
+                        <em>граничные и трудные</em> случаи, а не средние.
+                        Средние случаи модель и так решит — ценность в ловле
+                        редких провалов.
+                    </p>
+
+                    <h4>Регрессионные наборы</h4>
+                    <p>
+                        Каждый раз, когда агент ошибается в проде, кейс уезжает
+                        в регрессионный набор с правильным ответом. Так каждый
+                        инцидент превращается в постоянное обучение системы — и
+                        предотвращает повторные регрессии при обновлении
+                        промптов или моделей.
+                    </p>
+
+                    <h4>Adversarial / red-team cases</h4>
+                    <p>
+                        Намеренные попытки сломать систему:
+                        <span
+                            class="term"
+                            data-def="Prompt injection — атака, при которой злоумышленник внедряет инструкции в данные, которые модель должна обработать, заставляя её выполнить действия, которых не хотел оператор. Прямая инъекция — через ввод пользователя; косвенная — через содержимое веб-страниц, документов, email."
+                            >prompt injection</span
+                        >, попытки извлечь системный промпт, обход политик,
+                        утечка PII через косвенные вопросы. Без этих кейсов
+                        eval-комплект не отражает реальные риски.
+                    </p>
+
+                    <h4>Customer outcome checks</h4>
+                    <p>
+                        Самый дорогой и самый ценный слой: eval не на
+                        «правильность ответа», а на «достиг ли пользователь
+                        цели». Для саппорт-агента это «решилась ли проблема
+                        клиента», а не «выглядит ли ответ убедительно». Для
+                        дев-агента — «прошёл ли PR ревью без серьёзных правок»,
+                        а не «компилируется ли код».
+                    </p>
+
+                    <h4>LLM-as-judge</h4>
+                    <p>
+                        Дёшево и масштабируемо: одна модель оценивает выходы
+                        другой по заданным критериям. Но требует калибровки —
+                        судья тоже ошибается, и бывает системно. Рабочая
+                        практика: 5–10% всех LLM-as-judge решений проверяет
+                        человек, и расхождения уходят в дообучение критериев.
+                    </p>
+
+                    <h4>Online monitoring и drift detection</h4>
+                    <p>
+                        Offline evals на golden dataset — это половина работы.
+                        Вторая половина — наблюдение за поведением в проде:
+                        распределение длин ответов, частота вызовов tools, доля
+                        отказов, latency, customer signals. Когда распределение
+                        начинает дрейфовать — значит, что-то изменилось:
+                        пользователи, контекст, модель у вендора.
+                    </p>
+
+                    <h3>Кто отвечает за evals</h3>
+                    <p>
+                        В стартапе — фаундер или первый инженер, и это частичная
+                        роль. В зрелой компании evals — это либо отдельная роль
+                        (evals engineer в AI Platform Team), либо обязательство
+                        каждой команды-владельца агента.
+                    </p>
+                    <p>
+                        Что точно <em>не работает</em>: «evals — задача QA, они
+                        потом покроют». Evals — это design-time дисциплина, а не
+                        post-hoc проверка. Если evals думают в конце — их нет.
+                    </p>
+
+                    <h3>Анти-паттерны</h3>
+
+                    <div class="callout anti">
+                        <span class="callout-label">Анти-паттерн</span>
+                        <h4>Eval-set, который проверяет не то, что важно</h4>
+                        <p>
+                            Команда собрала 200 примеров «модель отвечает на
+                            вопросы о продукте». Метрика — BLEU/ROUGE между
+                            ответом модели и эталоном. Реальный сигнал, важный
+                            для бизнеса — «клиент после ответа решил свою
+                            задачу» — не меряется. В итоге метрика растёт,
+                            удовлетворённость падает.
+                        </p>
+                        <p>
+                            Лекарство: сначала выписать бизнес-исходы, потом
+                            подбирать proxy-метрики, и явно проверять, что proxy
+                            коррелирует с исходом.
+                        </p>
+                    </div>
+
+                    <div class="callout anti">
+                        <span class="callout-label">Анти-паттерн</span>
+                        <h4>LLM-as-judge без калибровки</h4>
+                        <p>
+                            «Пусть GPT-4 оценивает ответы нашей модели». Через
+                            две недели судья начинает систематически
+                            переоценивать определённый стиль ответов — и вся
+                            регрессионная защита сдвигается в эту сторону.
+                            Команда оптимизирует не качество, а склонности
+                            судьи.
+                        </p>
+                        <p>
+                            Лекарство: human review на 5–10% решений судьи;
+                            периодическое переопределение критериев; для
+                            high-stakes доменов — комитет из нескольких судей с
+                            разными промптами.
+                        </p>
+                    </div>
+
+                    <div class="callout anti">
+                        <span class="callout-label">Анти-паттерн</span>
+                        <h4>Evals только перед релизом</h4>
+                        <p>
+                            Команда прогоняет полный eval-комплект раз в спринт
+                            перед релизом. В понедельник запускается обновление
+                            модели у вендора — поведение системы меняется, никто
+                            не замечает 4 дня, пока не приходит жалоба от
+                            крупного клиента.
+                        </p>
+                        <p>
+                            Лекарство: continuous online evals на canary-трафике
+                            + алерты на drift. Offline-eval — это ворота релиза,
+                            не средство мониторинга.
+                        </p>
+                    </div>
+
+                    <div class="callout anti">
+                        <span class="callout-label">Анти-паттерн</span>
+                        <h4>«Мы попробовали — работает»</h4>
+                        <p>
+                            Команда сделала демо, в нём модель отлично отвечает
+                            на 5 примеров. Деплой в прод. Через неделю
+                            обнаруживается, что демо-примеры составляли 80% всех
+                            успешных кейсов, а на реальной выборке доля
+                            правильных ответов — 35%.
+                        </p>
+                        <p>
+                            Лекарство: eval-set должен формироваться
+                            <em>до</em> разработки, не после. Если команда
+                            собирает eval-set из примеров, на которых уже
+                            отлажена система, она меряет не качество, а
+                            собственное умение подгонять.
+                        </p>
+                    </div>
+
+                    <h3>Минимальный жизненный цикл eval</h3>
+                    <ol class="steps">
+                        <li>
+                            Зафиксировать customer outcome, который хочется
+                            получить
+                        </li>
+                        <li>
+                            Определить proxy-метрики, явно проверив их
+                            корреляцию с outcome
+                        </li>
+                        <li>
+                            Собрать golden dataset (50–200 примеров) с акцентом
+                            на граничные случаи
+                        </li>
+                        <li>Добавить adversarial и red-team-кейсы</li>
+                        <li>
+                            Настроить offline eval как обязательный gate в CI/CD
+                        </li>
+                        <li>
+                            Включить online monitoring и drift detection в проде
+                        </li>
+                        <li>
+                            Каждый production-инцидент → новый кейс в
+                            регрессионном наборе
+                        </li>
+                        <li>
+                            Раз в квартал — ревизия eval-set: что устарело, чего
+                            не хватает, где proxy потеряла корреляцию с outcome
+                        </li>
+                    </ol>
+
+                    <div class="callout ru">
+                        <span class="callout-label">Российский контекст</span>
+                        <h4>Evals для локальных моделей</h4>
+                        <p>
+                            Когда вы используете локальную модель (Qwen, Llama,
+                            GigaChat, YandexGPT) вместо API западного вендора, у
+                            evals появляется дополнительный слой: проверка после
+                            каждого обновления модели или промпта именно
+                            <em>на ваших</em> данных, а не на публичных
+                            бенчмарках. Публичные бенчмарки (MMLU, MT-Bench и
+                            т.д.) информативны для общего сравнения, но не
+                            отвечают на вопрос «работает ли это для нашего
+                            customer call summarization». Это требует своего
+                            eval-pipeline и команды, которая его поддерживает.
+                        </p>
+                        <p>
+                            Хорошая новость — на локальном стеке проще делать
+                            массовые eval-прогоны: вы не платите за токены,
+                            только за compute, который у вас и так есть.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- ============================================
+     ГЛАВА 8 — FINOPS И ТОКЕНЫ
+     ============================================ -->
+                <section class="chapter" id="ch8">
+                    <span class="chapter-num">Глава 08</span>
+                    <h2>FinOps и <em>токены</em></h2>
+                    <p class="chapter-lede">
+                        «Купим больше интеллектуальной пропускной способности» —
+                        звучит красиво, но для финансового директора это
+                        означает строчку в P&amp;L, которая до 2024 года не
+                        существовала. Управление этой строчкой — отдельная
+                        дисциплина.
+                    </p>
+
+                    <h3>Что меняет AI в экономике компании</h3>
+                    <p>
+                        В классической модели разработка масштабируется через
+                        найм: больше задач — больше людей. Стоимость выпуска
+                        фичи коррелирует с количеством инженеро-часов.
+                    </p>
+                    <p>
+                        В AI-native модели появляется второй ресурс — compute и
+                        токены. Часть работы, которая раньше требовала
+                        инженеро-часов, теперь требует только времени GPU и
+                        платы за inference. Это даёт новую возможность —
+                        масштабировать throughput без найма — и новый риск:
+                        расходы на токены могут расти быстрее, чем outcome, и
+                        быстро превращаться в существенную строку бюджета.
+                    </p>
+
+                    <h3>Базовые единицы измерения</h3>
+                    <p>
+                        Чтобы управлять, надо мерить. Минимальный набор метрик:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Cost per outcome</strong> — стоимость
+                            токенов на единицу бизнес-результата (closed PR,
+                            решённый ticket, написанный документ, обработанный
+                            звонок). Главная метрика; всё остальное — её
+                            разложения.
+                        </li>
+                        <li>
+                            <strong>Cost per request</strong> — средняя
+                            стоимость одного агентного вызова, по типам задач
+                        </li>
+                        <li>
+                            <strong>Tokens per outcome</strong> — input + output
+                            токены на единицу результата
+                        </li>
+                        <li>
+                            <strong>Routing distribution</strong> — какая доля
+                            запросов уходит на какую модель
+                        </li>
+                        <li>
+                            <strong>Cache hit rate</strong> — для запросов,
+                            которые поддаются кэшированию
+                        </li>
+                        <li>
+                            <strong>Failure-and-retry overhead</strong> — какая
+                            доля стоимости уходит на повторы из-за сбоев
+                        </li>
+                    </ul>
+
+                    <h3>Рычаги управления стоимостью</h3>
+
+                    <h4>1. Routing между моделями</h4>
+                    <p>
+                        Самый большой рычаг. Не каждая задача требует самой
+                        мощной модели. Простая классификация — мелкая модель;
+                        сложное рассуждение — большая; критичные действия —
+                        большая с верификацией. AI gateway должен уметь
+                        маршрутизировать на основе типа задачи, бюджета и SLA.
+                    </p>
+
+                    <h4>2. Cascading / fallback</h4>
+                    <p>
+                        Сначала пробуем дешёвую модель; если confidence низкий —
+                        эскалируем на дорогую. Для многих задач 70–80% запросов
+                        решаются на дешёвой ступени.
+                    </p>
+
+                    <h4>3. Кэширование</h4>
+                    <p>
+                        Многие запросы повторяются. Кэш на уровне промпта или на
+                        уровне семантического сходства даёт ощутимую экономию
+                        для агентов, работающих с FAQ, документацией, типовыми
+                        вопросами.
+                    </p>
+
+                    <h4>4. Prompt compression и context management</h4>
+                    <p>
+                        Длинные системные промпты и большие контексты — главный
+                        источник скрытых расходов. Регулярная ревизия: что
+                        реально используется в контексте, что можно вынести в
+                        RAG, что можно убрать совсем.
+                    </p>
+
+                    <h4>
+                        5. Локальные модели для high-volume / low-stakes задач
+                    </h4>
+                    <p>
+                        Если задача не требует frontier-модели и объёмы большие,
+                        локальный inference часто экономически выгоднее API.
+                        Точка перелома зависит от объёма, но обычно начинается
+                        на десятках миллионов токенов в месяц.
+                    </p>
+
+                    <h4>6. Cost allocation</h4>
+                    <p>
+                        Без атрибуции расходов по командам и use cases — нет
+                        управления. Каждый запрос через gateway должен
+                        помечаться: какая команда, какой агент, какой
+                        пользователь, какой use case. Месячный отчёт по командам
+                        быстро выявляет: где расходы оправданы outcome, а где
+                        нет.
+                    </p>
+
+                    <h3>Типичная ловушка: «дадим всем самую мощную модель»</h3>
+                    <p>
+                        На старте кажется, что разница в цене между моделями не
+                        критична. Через 6–9 месяцев, когда агенты встроены в
+                        десятки workflow и работают с реальным трафиком, разница
+                        начинает измеряться существенно. Команды, которые на
+                        старте поленились настроить routing, переплачивают в
+                        3–10 раз — и обнаруживают это в момент, когда CFO
+                        начинает задавать вопросы.
+                    </p>
+
+                    <h3>Контракты с вендорами</h3>
+                    <p>
+                        Несколько вещей, которые имеет смысл явно проговаривать:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Data residency</strong> — где физически
+                            обрабатываются и хранятся ваши запросы
+                        </li>
+                        <li>
+                            <strong>Training-on-data clauses</strong> — могут ли
+                            ваши данные использоваться для обучения моделей; в
+                            enterprise-договорах это обычно опционально
+                        </li>
+                        <li>
+                            <strong>SLA на качество и latency</strong> — не
+                            только uptime, но и стабильность поведения
+                        </li>
+                        <li>
+                            <strong>Model deprecation policy</strong> — за
+                            сколько вас уведомят о снятии модели; что произойдёт
+                            с вашими интеграциями
+                        </li>
+                        <li>
+                            <strong>Multi-vendor strategy</strong> — какая
+                            модель чем заменяется при отказе вендора; есть ли
+                            eval-проверки совместимости
+                        </li>
+                    </ul>
+
+                    <div class="callout ru">
+                        <span class="callout-label">Российский контекст</span>
+                        <h4>FinOps когда токены не покупаешь</h4>
+                        <p>
+                            В РФ типичная ситуация — частично или полностью
+                            on-prem стек. Это переворачивает FinOps:
+                        </p>
+                        <ul>
+                            <li>
+                                Главная стоимость — не токены, а GPU-сервер, его
+                                амортизация, электричество, сервисное
+                                обслуживание и инженерное время на поддержку.
+                            </li>
+                            <li>
+                                Метрика «cost per outcome» сохраняется, но
+                                считается через утилизацию: сколько outcome-ов в
+                                день генерирует сервер, какой процент времени
+                                GPU простаивает.
+                            </li>
+                            <li>
+                                Появляется новая ловушка: «у нас же сервер уже
+                                есть, гоняйте сколько хотите». Это приводит к
+                                тому, что compute расходуется на низкоценные
+                                задачи, а к моменту запуска важного проекта
+                                мощностей не хватает.
+                            </li>
+                            <li>
+                                Решение — внутренний accounting: каждая команда
+                                видит, сколько GPU-часов потратила, и сравнивает
+                                это с outcome. Никто никому не платит, но сама
+                                видимость создаёт дисциплину.
+                            </li>
+                        </ul>
+                        <p>
+                            Для high-stakes use case остаётся гибридная схема:
+                            low-stakes на локальных моделях, чувствительные
+                            сценарии — на отдельном изолированном контуре с
+                            более крупными моделями (например, через российского
+                            провайдера или собственным fine-tuned решением).
+                        </p>
+                    </div>
+                </section>
+
+                <!-- ============================================
+     ГЛАВА 9 — GOVERNANCE И БЕЗОПАСНОСТЬ
+     ============================================ -->
+                <section class="chapter" id="ch9">
+                    <span class="chapter-num">Глава 09</span>
+                    <h2>Governance <em>и безопасность</em></h2>
+                    <p class="chapter-lede">
+                        Governance в AI-native компании — это не комитет,
+                        который запрещает. Это система, которая позволяет
+                        безопасно ускоряться. Без неё ускорение быстро
+                        становится катастрофой.
+                    </p>
+
+                    <h3>Минимальный AI governance kit</h3>
+                    <ul>
+                        <li>
+                            AI use case registry — реестр всех AI-инициатив с
+                            риск-классификацией
+                        </li>
+                        <li>
+                            Model registry — какие модели одобрены, для каких
+                            задач, с какими ограничениями
+                        </li>
+                        <li>
+                            Data classification — что можно отправлять в какую
+                            модель
+                        </li>
+                        <li>
+                            Vendor risk assessment — оценка поставщиков моделей
+                            и инструментов
+                        </li>
+                        <li>
+                            Prompt / tool versioning — версионирование промптов
+                            и tools, как кода
+                        </li>
+                        <li>
+                            Eval results — публичные внутри компании результаты
+                            evals
+                        </li>
+                        <li>
+                            Human approval policy — где нужно ручное одобрение,
+                            где нет
+                        </li>
+                        <li>
+                            Audit logs — полный лог действий агентов,
+                            восстановимый
+                        </li>
+                        <li>
+                            AI incident process — что делать, когда агент сделал
+                            что-то не то
+                        </li>
+                        <li>
+                            Red-teaming — регулярные попытки сломать систему
+                        </li>
+                        <li>
+                            Security review — обязательная стадия перед продом
+                        </li>
+                        <li>
+                            Training — для сотрудников: ограничения, риски,
+                            правила
+                        </li>
+                        <li>
+                            Retention / deletion policy — политика хранения
+                            данных в AI-системах
+                        </li>
+                    </ul>
+
+                    <h3>OWASP Top 10 for LLM Applications 2025</h3>
+                    <p>
+                        Для LLM-приложений и агентов обязательно учитывать
+                        актуальный OWASP Top 10 for LLM. Версия 2025 года
+                        заметно отличается от 2023-й и явно отражает агентный
+                        сдвиг:
+                    </p>
+
+                    <div class="callout">
+                        <span class="callout-label"
+                            >OWASP Top 10 LLM 2025 — ключевые изменения</span
+                        >
+                        <ul>
+                            <li>
+                                <strong>LLM01 — Prompt Injection</strong>
+                                остался #1; явно разделён на direct и indirect
+                                (через внешний контент)
+                            </li>
+                            <li>
+                                <strong
+                                    >LLM02 — Sensitive Information
+                                    Disclosure</strong
+                                >
+                                — поднялся с #6 на #2; включает PII, IP,
+                                конфиденциальные системные данные
+                            </li>
+                            <li>
+                                <strong>LLM03 — Supply Chain</strong> —
+                                расширенный охват рисков от модели до вендоров
+                            </li>
+                            <li>
+                                <strong
+                                    >LLM04 — Data and Model Poisoning</strong
+                                >
+                                — отравление данных и моделей
+                            </li>
+                            <li>
+                                <strong
+                                    >LLM05 — Improper Output Handling</strong
+                                >
+                                — неправильная обработка выходов модели в
+                                downstream-системах
+                            </li>
+                            <li>
+                                <strong>LLM06 — Excessive Agency</strong> —
+                                расширен под агентные архитектуры; самый важный
+                                пункт для агентов
+                            </li>
+                            <li>
+                                <strong>LLM07 — System Prompt Leakage</strong> —
+                                новая категория: утечка системных промптов
+                            </li>
+                            <li>
+                                <strong
+                                    >LLM08 — Vector and Embedding
+                                    Weaknesses</strong
+                                >
+                                — новая категория: уязвимости RAG и
+                                embedding-систем
+                            </li>
+                            <li>
+                                <strong>LLM09 — Misinformation</strong> —
+                                генерация уверенно неверных утверждений и
+                                overreliance
+                            </li>
+                            <li>
+                                <strong>LLM10 — Unbounded Consumption</strong> —
+                                неограниченное потребление ресурсов (DoS,
+                                затраты)
+                            </li>
+                        </ul>
+                    </div>
+
+                    <h3>Практические правила безопасности</h3>
+                    <ul>
+                        <li>
+                            У агента не должно быть broad admin access — всегда
+                            minimum scope
+                        </li>
+                        <li>
+                            Каждый tool call логируется с пользователем,
+                            агентом, входом, выходом
+                        </li>
+                        <li>
+                            Опасные действия требуют approval — explicit human
+                            confirmation, не «agent decides»
+                        </li>
+                        <li>Production-действия идут через sandbox / canary</li>
+                        <li>
+                            Секреты не доступны напрямую модели — proxy через
+                            secret manager
+                        </li>
+                        <li>
+                            MCP / tools проходят security review перед approval
+                        </li>
+                        <li>
+                            Prompt injection тестируется регулярно, в том числе
+                            автоматически
+                        </li>
+                        <li>
+                            External content (web pages, документы, email)
+                            считается недоверенным
+                        </li>
+                        <li>
+                            <span
+                                class="term"
+                                data-def="Agent identity — отдельная цифровая идентичность для агента, не привязанная к человеческому пользователю. Имеет собственные scoped permissions, audit trail, owner. Позволяет отделить ответственность и видеть, что именно агент сделал в системе."
+                                >Agent identity</span
+                            >
+                            отделена от human identity
+                        </li>
+                        <li>
+                            Все действия можно отозвать, откатить или
+                            расследовать
+                        </li>
+                    </ul>
+
+                    <h3>Agent identity на практике</h3>
+                    <p>
+                        Когда агент действует в системе, он действует от
+                        какого-то имени. Базовый вопрос: от чьего? У него есть
+                        три типичных ответа, и только один правильный.
+                    </p>
+
+                    <div class="versus">
+                        <div class="bad">
+                            <span class="label">Неправильно №1</span>
+                            <p>
+                                Агент действует от имени технического
+                                пользователя с широкими правами («service
+                                account»). Аудит показывает «service-bot сделал
+                                X», но непонятно, кто его запустил и зачем.
+                            </p>
+                        </div>
+                        <div class="bad">
+                            <span class="label">Неправильно №2</span>
+                            <p>
+                                Агент действует от имени конкретного человека
+                                через его OAuth-токен. Удобно — но если агент
+                                сделал ошибку, в логах это выглядит как ошибка
+                                человека, и невозможно отделить намеренное
+                                действие от агентного.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="callout note">
+                        <span class="callout-label">Правильно</span>
+                        <p>
+                            У агента — собственная identity (например,
+                            <code>agent:pr-reviewer-v3</code>), привязанная к
+                            owner-команде. Эта identity получает scoped
+                            permissions через delegation от человека, который её
+                            запустил. В audit log видны обе стороны:
+                            «pr-reviewer-v3, действуя от имени @pavel, выполнил
+                            merge». При проблеме можно расследовать обе линии —
+                            что сделал агент и кто его авторизовал.
+                        </p>
+                    </div>
+
+                    <h3>Human-in-the-loop по уровням риска</h3>
+                    <ul>
+                        <li>
+                            <strong>Низкий риск:</strong> агент делает сам,
+                            человек проверяет выборочно
+                        </li>
+                        <li>
+                            <strong>Средний риск:</strong> агент готовит,
+                            человек approve
+                        </li>
+                        <li>
+                            <strong>Высокий риск:</strong> агент анализирует,
+                            человек действует
+                        </li>
+                        <li>
+                            <strong>Критический риск:</strong> агент только
+                            помогает с информацией, решение остаётся у
+                            ответственного лица
+                        </li>
+                    </ul>
+
+                    <h3>MCP и tool ecosystem</h3>
+                    <p>
+                        MCP стал де-факто стандартом подключения AI-приложений к
+                        данным и инструментам. Для governance это означает:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Approved MCP server registry</strong> —
+                            какие MCP-серверы разрешены, для каких задач, кем
+                            владеются
+                        </li>
+                        <li>
+                            <strong>Tool-level permissions</strong> — у каждого
+                            tool — свой scope; агент получает доступ к набору
+                            tools, не к серверу целиком
+                        </li>
+                        <li>
+                            <strong
+                                >Security review для каждого MCP-сервера</strong
+                            >
+                            — что сервер делает, какие данные видит, с кем
+                            общается
+                        </li>
+                        <li>
+                            <strong>Audit на уровне tool call</strong> — каждый
+                            вызов логируется с входом, выходом, контекстом
+                        </li>
+                        <li>
+                            <strong>Sandbox для тестирования</strong> — новые
+                            MCP-серверы тестируются в изоляции, прежде чем
+                            получают prod-доступ
+                        </li>
+                        <li>
+                            <strong>Deprecation процесс</strong> — что
+                            происходит, когда MCP-сервер выводится из
+                            эксплуатации; как уведомляются владельцы агентов,
+                            которые его используют
+                        </li>
+                    </ul>
+
+                    <div class="callout ru">
+                        <span class="callout-label">Российский контекст</span>
+                        <h4>152-ФЗ и AI Gateway</h4>
+                        <p>
+                            152-ФЗ требует, чтобы персональные данные граждан РФ
+                            хранились и первично обрабатывались на территории
+                            России. Для AI это означает:
+                        </p>
+                        <ul>
+                            <li>
+                                Запросы, содержащие PII, не могут уходить в
+                                зарубежные модели без согласия субъекта и
+                                обоснования
+                            </li>
+                            <li>
+                                PII redaction должен работать
+                                <em>на входе</em> в gateway, до того, как запрос
+                                попадает в любой LLM (включая локальный — это
+                                упрощает audit и compliance)
+                            </li>
+                            <li>
+                                Audit log запросов хранится локально, в течение
+                                сроков, требуемых регулятором
+                            </li>
+                            <li>
+                                Для отдельных индустрий (банки, медицина,
+                                госсектор) добавляются отраслевые требования:
+                                187-ФЗ, ГОСТ Р, приказы Банка России и Минздрава
+                            </li>
+                        </ul>
+                        <p>
+                            На практике это формирует архитектуру с двумя
+                            контурами: внешний (без PII, можно использовать
+                            любую модель) и внутренний (с PII, только локальные
+                            модели или сертифицированные российские провайдеры).
+                            AI gateway должен явно различать эти два режима и не
+                            позволять пересекать границу.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- ============================================
+     ГЛАВА 10 — КОГДА AI-NATIVE НЕ РАБОТАЕТ
+     ============================================ -->
+                <section class="chapter" id="ch10">
+                    <span class="chapter-num">Глава 10</span>
+                    <h2>Когда AI-native <em>не работает</em></h2>
+                    <p class="chapter-lede">
+                        Честная глава, которую обычно пропускают. Не каждая
+                        компания, не каждый процесс и не каждая команда —
+                        кандидат на AI-native трансформацию прямо сейчас.
+                    </p>
+
+                    <h3>1. Когда нет ground truth</h3>
+                    <p>
+                        AI-native контур требует возможности проверить
+                        результат. Если у задачи нет объективного критерия
+                        правильности — стратегические решения, креативные
+                        направления, политические компромиссы — закрытый цикл не
+                        замкнуть. Агенты могут помогать готовить материал, но
+                        превращать такие задачи в автоматизированные потоки
+                        опасно: ошибки невидимы, копятся и обнаруживаются, когда
+                        уже сложно откатить.
+                    </p>
+
+                    <h3>2. Когда cost of error >>> cost of human delay</h3>
+                    <p>
+                        Регулируемые домены, где ошибка приводит к юридическим
+                        последствиям, угрозе безопасности или серьёзному
+                        финансовому ущербу: медицинские диагнозы, авторизация
+                        транзакций сверх порога, юридически значимые документы,
+                        операции с высоким impact на клиента. В таких контурах
+                        AI остаётся помощником, а решение — за человеком, и это
+                        правильно.
+                    </p>
+
+                    <h3>3. Когда у команды слабые инженерные практики</h3>
+                    <p>
+                        DORA 2025 сформулировал это как «AI — зеркало и
+                        усилитель». На команды без сильного CI/CD, без тестов,
+                        без code review, без устоявшихся ритуалов AI
+                        накладывается и ускоряет хаос. Сначала надо построить
+                        инженерные основы, потом подключать AI. Иначе вы
+                        получаете ту же дисфункцию, но в три раза быстрее.
+                    </p>
+
+                    <h3>4. Когда домен слишком новый или слишком редкий</h3>
+                    <p>
+                        Модели хорошо работают там, где много данных. Если ваш
+                        бизнес — это редкий B2B-сценарий с десятками клиентов и
+                        крайне специфичным контекстом, общие модели на нём
+                        работают плохо, а собственные данные — слишком малы для
+                        fine-tuning. AI применим, но через узкие use cases с
+                        человеческой проверкой, а не через автономные контуры.
+                    </p>
+
+                    <h3>
+                        5. Когда внутри компании нет психологической
+                        безопасности для ошибок
+                    </h3>
+                    <p>
+                        AI-native трансформация — это серия экспериментов с
+                        понятным процентом неудач. Если в компании ошибка стоит
+                        человеку карьеры, никто не будет экспериментировать
+                        честно. Все будут делать видимость трансформации,
+                        прятать неудачи, рисовать KPI. Без культуры, в которой
+                        можно сказать «мы попробовали, не получилось, вот что
+                        узнали» — никакая AI-стратегия не работает.
+                    </p>
+
+                    <h3>6. Когда лидерство не меняет свою работу</h3>
+                    <p>
+                        Самый частый источник провалов в зрелых компаниях.
+                        CEO/CTO говорит «мы делаем AI-трансформацию», нанимает
+                        консультантов, выделяет бюджет — и сам продолжает
+                        работать как до AI: те же митинги, те же отчёты, те же
+                        запросы информации, те же критерии оценки людей.
+                        Сотрудники смотрят на это и понимают: реально ничего не
+                        меняется. Трансформация требует, чтобы лидерство первым
+                        изменило свои привычки.
+                    </p>
+
+                    <h3>Что делать в этих случаях</h3>
+                    <p>
+                        Это не значит «забыть про AI». Это значит: применить
+                        локально, осознанно, с фокусом на конкретные узкие use
+                        cases, где AI приносит ценность без структурных
+                        изменений. Например, в регулируемом домене это может
+                        быть AI-помощник для подготовки draft, который потом
+                        ревьюит человек — без всякой автоматизации.
+                    </p>
+                    <p>
+                        А структурную AI-native трансформацию начинать тогда,
+                        когда инженерная зрелость, культура и лидерство к ней
+                        готовы.
+                    </p>
+                </section>
+
+                <!-- ============================================
+     ГЛАВА 11 — КУЛЬТУРА И АНТИ-ПАТТЕРНЫ
+     ============================================ -->
+                <section class="chapter" id="ch11">
+                    <span class="chapter-num">Глава 11</span>
+                    <h2>Культура <em>и анти-паттерны</em></h2>
+                    <p class="chapter-lede">
+                        Технология без культуры даёт локальный прирост, но не
+                        трансформацию. Шесть норм, которые отличают AI-native
+                        команду, и семь способов всё испортить.
+                    </p>
+
+                    <h3>Шесть норм</h3>
+
+                    <h4>Норма 1. Prototype before opinion</h4>
+                    <p>
+                        Если человек предлагает идею, он приходит не с
+                        презентацией, а с прототипом, симуляцией, анализом или
+                        working draft. AI делает создание прототипа дёшевым — у
+                        людей больше нет оправдания приходить с одними словами.
+                    </p>
+
+                    <h4>Норма 2. No artifact — no decision</h4>
+                    <p>
+                        Решение без артефакта для компании не существует. Агент
+                        не может его найти, новый сотрудник не может понять,
+                        почему так, команда не может на нём учиться.
+                    </p>
+
+                    <h4>Норма 3. Specs are leverage</h4>
+                    <p>
+                        Плохая спека даёт плохой AI-output. Поэтому writing
+                        specs становится ключевым навыком — для всех ролей, не
+                        только для PM. Менеджер пишет спеку для того, что
+                        ожидает от команды. Инженер — для того, что должен
+                        сделать агент. Дизайнер — для того, как должен выглядеть
+                        и вести себя интерфейс.
+                    </p>
+
+                    <h4>Норма 4. Evals over vibes</h4>
+                    <p>
+                        Впечатляющее демо ничего не значит без evals. AI-native
+                        компания доверяет не красивому ответу модели, а
+                        воспроизводимой проверке.
+                    </p>
+
+                    <h4>Норма 5. Managers own outcomes, not status</h4>
+                    <p>
+                        Статус собирается автоматически из артефактов.
+                        Человеческое время тратится на решения и на людей, не на
+                        сбор информации.
+                    </p>
+
+                    <h4>Норма 6. AI literacy is mandatory</h4>
+                    <p>
+                        Сотрудники должны понимать ограничения моделей, риски,
+                        правила использования данных и способы проверки
+                        результата. Это не курс на час, а постоянная практика,
+                        встроенная в онбординг и регулярное обучение.
+                    </p>
+
+                    <h3>Анти-паттерны</h3>
+
+                    <div class="callout anti">
+                        <span class="callout-label">Анти-паттерн 1</span>
+                        <h4>
+                            «Дадим всем Copilot и назовём это трансформацией»
+                        </h4>
+                        <p>
+                            Это повысит локальную производительность части
+                            людей. Но не сделает компанию AI-native. Без context
+                            layer, evals, governance и closed loops — это просто
+                            более дорогие IDE-ы.
+                        </p>
+                    </div>
+
+                    <div class="callout anti">
+                        <span class="callout-label">Анти-паттерн 2</span>
+                        <h4>«Сначала построим огромный data lake»</h4>
+                        <p>
+                            Data lake без workflow, permissions, semantic layer
+                            и agents — это дорогой архив. Постройка lake-а на 18
+                            месяцев — гарантированный способ потратить бюджет до
+                            того, как кто-нибудь увидит работающий контур.
+                        </p>
+                    </div>
+
+                    <div class="callout anti">
+                        <span class="callout-label">Анти-паттерн 3</span>
+                        <h4>«Сделаем корпоративного чат-бота для всего»</h4>
+                        <p>
+                            Универсальный чат-бот обычно становится игрушкой.
+                            Лучше встроенные агенты в конкретные процессы — они
+                            приживаются и приносят пользу.
+                        </p>
+                    </div>
+
+                    <div class="callout anti">
+                        <span class="callout-label">Анти-паттерн 4</span>
+                        <h4>«Будем мерить процент AI-generated code»</h4>
+                        <p>
+                            Это почти бесполезная метрика. Важны lead time,
+                            defects, adoption, customer value, cost per outcome.
+                            Известный кейс: компания отчитывается «50% кода
+                            написано AI» — параллельно растут review times,
+                            количество дефектов в проде и rework. Метрика «% AI
+                            code» оптимизируется в ущерб всему остальному.
+                        </p>
+                    </div>
+
+                    <div class="callout anti">
+                        <span class="callout-label">Анти-паттерн 5</span>
+                        <h4>«Сразу автономные агенты в production»</h4>
+                        <p>
+                            Без evals, sandbox, approval и audit это не
+                            AI-native, а negligence. Любая компания, которая
+                            выкатила автономного агента в прод и потом
+                            разгребает последствия, проходит этот путь — и
+                            обычно после этого governance строится «по живому».
+                        </p>
+                    </div>
+
+                    <div class="callout anti">
+                        <span class="callout-label">Анти-паттерн 6</span>
+                        <h4>«AI strategy отдадим innovation lab»</h4>
+                        <p>
+                            Если CEO/CTO/product/engineering leadership не
+                            меняют свою работу — компания не изменится.
+                            Innovation lab может выпустить демо. Но настоящие
+                            изменения требуют, чтобы лидерство приняло AI как
+                            часть собственной операционной модели.
+                        </p>
+                    </div>
+
+                    <div class="callout anti">
+                        <span class="callout-label">Анти-паттерн 7</span>
+                        <h4>«Сократим людей, а потом разберёмся»</h4>
+                        <p>
+                            Это убивает доверие и learning capacity. Сначала
+                            надо доказать, где AI реально высвобождает ёмкость,
+                            и направить её на качество, скорость, customer value
+                            и новые продукты. Сокращения, проведённые до
+                            доказательства устойчивости новых процессов — это
+                            потеря экспертизы и страх, который останавливает
+                            любые эксперименты.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- ============================================
+     ГЛАВА 12 — ЧТО ДОЛЖНО ПОЛУЧИТЬСЯ
+     ============================================ -->
+                <section class="chapter" id="ch12">
+                    <span class="chapter-num">Глава 12</span>
+                    <h2>Что должно <em>получиться</em></h2>
+                    <p class="chapter-lede">
+                        Признаки того, что трансформация удалась — и в стартапе,
+                        и в зрелой компании.
+                    </p>
+
+                    <h3>AI-native стартап через 6–12 месяцев</h3>
+                    <p>
+                        Маленькая команда делает объём работы, который раньше
+                        требовал нескольких функций. Customer feedback напрямую
+                        питает roadmap. У каждой фичи есть spec и evals. Агенты
+                        пишут значимую часть кода, тестов и документации.
+                        Founders лично задают AI-культуру. Компания queryable с
+                        первого дня. Лишних менеджерских слоёв нет. Скорость
+                        обучения выше скорости найма.
+                    </p>
+
+                    <h3>Зрелая AI-native компания через 12–18 месяцев</h3>
+                    <p>
+                        Бо́льшая часть инженерной работы видима и queryable.
+                        Status reporting почти автоматизирован. Support, product
+                        и engineering связаны closed loops. AI platform стала
+                        внутренним продуктом. Команды используют agentic
+                        workflows в SDLC. Software factories работают в
+                        ограниченных доменах. Governance встроен в процесс.
+                        Менеджеры отвечают за outcomes, а не за маршрутизацию
+                        информации. Метрики показывают не «AI adoption», а
+                        улучшение cycle time, quality, support, adoption и
+                        revenue impact.
+                    </p>
+
+                    <h3>Главный критерий</h3>
+                    <div class="pull">
+                        «Если AI исчезнет завтра, и компания просто потеряет
+                        инструмент — она не AI-native. Если AI исчезнет, и
+                        операционная модель начнёт ломаться, потому что
+                        процессы, контекст и скорость принятия решений уже
+                        построены вокруг intelligence layer — вот тогда компания
+                        действительно AI-native».
+                    </div>
+
+                    <h3>Финальные тезисы</h3>
+
+                    <h4>Для стартапа</h4>
+                    <p>
+                        Сначала AI-native operating system, потом найм. Сначала
+                        specs и evals, потом код. Сначала customer loop, потом
+                        масштабирование.
+                    </p>
+
+                    <h4>Для зрелой компании</h4>
+                    <p>
+                        Сначала queryable foundation, потом lighthouse loops.
+                        Сначала governance и evals, потом автономия. Сначала
+                        outcome-метрики, потом оргизменения.
+                    </p>
+
+                    <h4>Для всех</h4>
+                    <p>
+                        AI-native — это не цель. Это способность учиться
+                        быстрее, чем меняется реальность вокруг. В этом смысле
+                        трансформация никогда не заканчивается — заканчиваются
+                        только её отдельные этапы.
+                    </p>
+                </section>
+
+                <!-- ============================================
+     ИСТОЧНИКИ
+     ============================================ -->
+                <section class="chapter sources" id="sources">
+                    <span class="chapter-num">Источники</span>
+                    <h2>Что я <em>читал и проверял</em></h2>
+                    <p class="chapter-lede">
+                        Гайд опирается на источники, актуальные на апрель 2026
+                        года. Ниже — что стоит почитать самостоятельно, если
+                        хочется углубиться.
+                    </p>
+
+                    <h3>Концептуальная рамка</h3>
+                    <ol>
+                        <li>
+                            <strong>Diana Hu (Y Combinator)</strong> —
+                            <a
+                                href="https://youtu.be/EN7frwQIbKc?is=caF40i4LgFEu1cja"
+                                >How To Build A Company With AI From The Ground
+                                Up.</a
+                            >
+                        </li>
+                        <li>
+                            <strong
+                                >Anthropic — Building Effective AI
+                                Agents</strong
+                            >.
+                            <a
+                                href="https://www.anthropic.com/research/building-effective-agents"
+                                >anthropic.com/research/building-effective-agents</a
+                            >. Ключевое различие workflows vs agents, принципы
+                            построения агентных систем, контрольные точки.
+                        </li>
+                        <li>
+                            <strong>Anthropic — Model Context Protocol</strong>.
+                            <a
+                                href="https://www.anthropic.com/news/model-context-protocol"
+                                >anthropic.com/news/model-context-protocol</a
+                            >. Стандарт подключения AI к внешним данным и
+                            инструментам.
+                        </li>
+                    </ol>
+
+                    <h3>Исследования и индустриальные отчёты</h3>
+                    <ol start="4">
+                        <li>
+                            <strong
+                                >DORA — State of AI-assisted Software
+                                Development 2025</strong
+                            >.
+                            <a href="https://dora.dev/research/2025/"
+                                >dora.dev/research/2025</a
+                            >. AI Capabilities Model, семь team archetypes,
+                            ключевой вывод: «AI — зеркало и усилитель».
+                        </li>
+                        <li>
+                            <strong
+                                >DORA — ROI of AI-assisted Software
+                                Development</strong
+                            >.
+                            <a
+                                href="https://cloud.google.com/resources/content/dora-roi-of-ai-assisted-software-development"
+                                >cloud.google.com</a
+                            >. Reinvested capacity vs headcount reduction.
+                        </li>
+                        <li>
+                            <strong>McKinsey — State of AI 2025</strong>.
+                            <a
+                                href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai"
+                                >mckinsey.com</a
+                            >. Связь между redesign workflows, лидерским
+                            ownership и enterprise-level value.
+                        </li>
+                        <li>
+                            <strong>StrongDM — The Software Factory</strong>.
+                            <a
+                                href="https://www.strongdm.com/blog/the-strongdm-software-factory-building-software-with-ai"
+                                >strongdm.com</a
+                            >. Радикальный пример spec-driven factory.
+                        </li>
+                        <li>
+                            <strong
+                                >GitHub — Best practices for using GitHub
+                                Copilot</strong
+                            >.
+                            <a
+                                href="https://docs.github.com/en/copilot/get-started/best-practices"
+                                >docs.github.com</a
+                            >. Практические рекомендации, режимы использования,
+                            проверка работы AI.
+                        </li>
+                    </ol>
+
+                    <h3>Безопасность и governance</h3>
+                    <ol start="9">
+                        <li>
+                            <strong
+                                >OWASP Top 10 for LLM Applications 2025</strong
+                            >.
+                            <a href="https://genai.owasp.org/llm-top-10/"
+                                >genai.owasp.org/llm-top-10</a
+                            >. Актуальный список рисков с расширенным охватом
+                            агентных архитектур.
+                        </li>
+                        <li>
+                            <strong>NIST AI Risk Management Framework</strong>.
+                            <a
+                                href="https://www.nist.gov/itl/ai-risk-management-framework"
+                                >nist.gov</a
+                            >. Рамка управления рисками AI-систем.
+                        </li>
+                        <li>
+                            <strong>ISO/IEC 42001</strong> — стандарт AI
+                            management system. Требования к управлению AI как
+                            постоянной организационной способности.
+                        </li>
+                        <li>
+                            <strong>EU AI Act</strong>.
+                            <a
+                                href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai"
+                                >digital-strategy.ec.europa.eu</a
+                            >. Полный timeline применения, GPAI Code of
+                            Practice, guidelines.
+                        </li>
+                    </ol>
+
+                    <h3>Российский контекст</h3>
+                    <ol start="13">
+                        <li>
+                            <strong>152-ФЗ «О персональных данных»</strong> —
+                            базовый нормативный акт по обработке PII в РФ.
+                        </li>
+                        <li>
+                            <strong>187-ФЗ «О безопасности КИИ»</strong> — для
+                            компаний, работающих с критической информационной
+                            инфраструктурой.
+                        </li>
+                        <li>
+                            <strong>Кодекс этики в сфере ИИ</strong> (2021) —
+                            рекомендательный документ, на который ссылаются
+                            крупные игроки.
+                        </li>
+                        <li>
+                            <strong
+                                >Методические рекомендации Банка России по
+                                применению ИИ</strong
+                            >
+                            — для финансового сектора.
+                        </li>
+                        <li>
+                            <strong>Реестр отечественного ПО Минцифры</strong> —
+                            для компаний с требованиями импортозамещения.
+                        </li>
+                    </ol>
+                </section>
+            </article>
+        </div>
+
+        <footer class="colophon">
+            <span class="ornament">⌘ · ⌘ · ⌘</span>
+            Гайд написан для русскоязычной аудитории — с учётом ограничений
+            рынка<br />
+            и реальной практики работы с AI в большой компании.<br /><br />
+            © 2026 Павел Павленко. Личная позиция автора, не позиция
+            работодателя.<br />
+            Текст можно цитировать со ссылкой на оригинал.
+        </footer>
+
+        <script>
+            // Прогресс-бар чтения
+            (function () {
+                const bar = document.getElementById("progress");
+                function update() {
+                    const h = document.documentElement;
+                    const scrolled = h.scrollTop;
+                    const max = h.scrollHeight - h.clientHeight;
+                    const pct = max > 0 ? (scrolled / max) * 100 : 0;
+                    bar.style.width = pct + "%";
+                }
+                window.addEventListener("scroll", update, { passive: true });
+                window.addEventListener("resize", update);
+                update();
+            })();
+
+            // Highlight active TOC item
+            (function () {
+                const links = document.querySelectorAll(".toc a");
+                const sections = Array.from(links)
+                    .map((a) => document.querySelector(a.getAttribute("href")))
+                    .filter(Boolean);
+                function update() {
+                    const y = window.scrollY + 100;
+                    let active = sections[0];
+                    for (const s of sections) {
+                        if (s.offsetTop <= y) active = s;
+                    }
+                    links.forEach((a) =>
+                        a.classList.toggle(
+                            "active",
+                            a.getAttribute("href") ===
+                                "#" + (active && active.id),
+                        ),
+                    );
+                }
+                window.addEventListener("scroll", update, { passive: true });
+                update();
+            })();
+
+            // TOC collapse on mobile
+            (function () {
+                const toc = document.getElementById("toc");
+                const toggle = document.getElementById("tocToggle");
+                function isMobile() {
+                    return window.matchMedia("(max-width: 1100px)").matches;
+                }
+                function init() {
+                    if (isMobile()) {
+                        toc.classList.add("collapsed");
+                    } else {
+                        toc.classList.remove("collapsed");
+                    }
+                }
+                toggle.addEventListener("click", () => {
+                    if (isMobile()) toc.classList.toggle("collapsed");
+                });
+                toc.querySelectorAll("a").forEach((a) =>
+                    a.addEventListener("click", () => {
+                        if (isMobile()) toc.classList.add("collapsed");
+                    }),
+                );
+                window.addEventListener("resize", init);
+                init();
+            })();
+
+            // Touch-friendly term popovers (tap to open on mobile)
+            (function () {
+                let openTerm = null;
+                document.addEventListener("click", (e) => {
+                    const term = e.target.closest(".term");
+                    if (term) {
+                        e.preventDefault();
+                        if (openTerm && openTerm !== term)
+                            openTerm.classList.remove("is-open");
+                        term.classList.toggle("is-open");
+                        openTerm = term.classList.contains("is-open")
+                            ? term
+                            : null;
+                    } else if (openTerm) {
+                        openTerm.classList.remove("is-open");
+                        openTerm = null;
+                    }
+                });
+            })();
+
+            // Scroll-hint smooth
+            document
+                .querySelector(".scroll-hint")
+                ?.addEventListener("click", () => {
+                    document
+                        .getElementById("article")
+                        .scrollIntoView({ behavior: "smooth" });
+                });
+        </script>
+
+    </body>
+</html>
