@@ -244,15 +244,40 @@ git commit -m "feat: add AI-native guide templates"
 
 **Files:**
 - Create: `scripts/check_ai_native_book.py`
-- Create: `tests/book-v2.test.mjs`
+- Create: `tests/test_check_ai_native_book.py`
 
 **Interfaces:**
 - Consumes: будущие `index.html`, `v1/index.html`, CSS, JS и шаблоны.
-- Produces: команда проверки структуры и тестируемые функции `computeProfile`, `serializeState`, `scorecardToMarkdown`.
+- Produces: проверяемая команда с режимами `--phase structure` и `--phase all`.
 
-- [ ] **Step 1: Написать структурную проверку, которая сначала падает**
+- [ ] **Step 1: Написать модульные тесты проверяющего скрипта**
 
-Скрипт Python проверяет:
+Тесты создают временные HTML-файлы и проверяют, что валидный минимальный пример принимается, а аналитика, потерянный якорь и отсутствующая архивная метка отклоняются.
+
+```python
+from scripts.check_ai_native_book import validate_html_text
+
+def test_rejects_yandex_analytics():
+    errors = validate_html_text(
+        '<main id="ch1"></main><script src="https://mc.yandex.ru/metrika/tag.js"></script>',
+        archive=False,
+    )
+    assert any("аналитик" in error.lower() for error in errors)
+```
+
+- [ ] **Step 2: Запустить тесты и увидеть ожидаемое падение**
+
+Run:
+
+```bash
+python3 -m unittest tests/test_check_ai_native_book.py -v
+```
+
+Expected: FAIL, потому что модуль проверки ещё не существует.
+
+- [ ] **Step 3: Реализовать структурную проверку**
+
+Скрипт использует Python standard library и константы:
 
 ```python
 EXPECTED_IDS = {
@@ -279,67 +304,32 @@ EXPECTED_TEMPLATES = {
 FORBIDDEN = ("mc.yandex.ru", "ym(", "webvisor", "clickmap")
 ```
 
-Он также требует skip-link, `main`, один `h1`, `details/summary`, canonical, локальные CSS/JS, `noindex,follow` в v1 и отсутствие запрещённых строк в обоих HTML.
+Режим `structure` требует skip-link, `main`, один `h1`, `details/summary`, canonical, все идентификаторы, ссылки на 13 шаблонов, `noindex,follow` в v1 и отсутствие запрещённых строк. Режим `all` дополнительно требует локальные CSS/JS и их приватностные проверки.
 
-- [ ] **Step 2: Запустить проверку и увидеть ожидаемое падение**
-
-Run:
-
-```bash
-python3 scripts/check_ai_native_book.py
-```
-
-Expected: FAIL, потому что `ai_native_book/v1/index.html` и новые активы ещё не созданы.
-
-- [ ] **Step 3: Написать тесты чистых функций JavaScript**
-
-```javascript
-import test from "node:test";
-import assert from "node:assert/strict";
-import {
-  computeProfile,
-  serializeState,
-  scorecardToMarkdown,
-} from "../ai_native_book/assets/book-v2.js";
-
-test("profile keeps all eight dimensions and never hides the minimum", () => {
-  const values = [3, 3, 2, 3, 4, 3, 3, 3];
-  assert.deepEqual(computeProfile(values), {
-    values,
-    minimum: 2,
-    managed: false,
-  });
-});
-
-test("state contains only integer levels and boolean checks", () => {
-  assert.deepEqual(
-    serializeState({ levels: [0, 1, 2, 3, 4, 2, 1, 0], checks: [true, false] }),
-    { levels: [0, 1, 2, 3, 4, 2, 1, 0], checks: [true, false] },
-  );
-});
-
-test("markdown export names the profile and storage warning", () => {
-  const result = scorecardToMarkdown([0, 1, 2, 3, 4, 2, 1, 0]);
-  assert.match(result, /Карта зрелости/);
-  assert.match(result, /Ценность и портфель/);
-  assert.doesNotMatch(result, /средний балл/i);
-});
-```
-
-- [ ] **Step 4: Подтвердить второе ожидаемое падение**
+- [ ] **Step 4: Запустить модульные тесты**
 
 Run:
 
 ```bash
-node --test tests/book-v2.test.mjs
+python3 -m unittest tests/test_check_ai_native_book.py -v
 ```
 
-Expected: FAIL, потому что модуль `book-v2.js` ещё не существует.
+Expected: PASS.
 
-- [ ] **Step 5: Зафиксировать проверки**
+- [ ] **Step 5: Подтвердить ожидаемое состояние текущего проекта**
+
+Run:
 
 ```bash
-git add scripts/check_ai_native_book.py tests/book-v2.test.mjs
+python3 scripts/check_ai_native_book.py --phase structure
+```
+
+Expected: FAIL, потому что архив v1 и новая структура страницы ещё не созданы. Это не падение тестов скрипта, а ожидаемый диагноз проверяемого проекта.
+
+- [ ] **Step 6: Зафиксировать проверки**
+
+```bash
+git add scripts/check_ai_native_book.py tests/test_check_ai_native_book.py
 git commit -m "test: define AI-native guide acceptance checks"
 ```
 
@@ -448,10 +438,10 @@ git commit -m "feat: archive AI-native guide v1 privately"
 Run:
 
 ```bash
-python3 scripts/check_ai_native_book.py
+python3 scripts/check_ai_native_book.py --phase structure
 ```
 
-Expected: возможны только ошибки отсутствующих CSS/JS; структура HTML, архив и шаблоны проходят.
+Expected: PASS; отсутствие CSS/JS проверяется только в режиме `all`.
 
 - [ ] **Step 9: Зафиксировать HTML**
 
@@ -500,7 +490,7 @@ git commit -m "style: add AI-native guide v2 layout"
 
 **Files:**
 - Create: `ai_native_book/assets/book-v2.js`
-- Modify: `tests/book-v2.test.mjs`
+- Create: `tests/book-v2.test.mjs`
 
 **Interfaces:**
 - Produces:
@@ -508,11 +498,56 @@ git commit -m "style: add AI-native guide v2 layout"
   - `serializeState({levels, checks}) -> {levels, checks}`
   - `scorecardToMarkdown(values: number[]) -> string`
 
-- [ ] **Step 1: Реализовать чистые функции**
+- [ ] **Step 1: Написать тесты чистых функций**
+
+```javascript
+import test from "node:test";
+import assert from "node:assert/strict";
+import {
+  computeProfile,
+  serializeState,
+  scorecardToMarkdown,
+} from "../ai_native_book/assets/book-v2.js";
+
+test("profile keeps all eight dimensions and never hides the minimum", () => {
+  const values = [3, 3, 2, 3, 4, 3, 3, 3];
+  assert.deepEqual(computeProfile(values), {
+    values,
+    minimum: 2,
+    managed: false,
+  });
+});
+
+test("state contains only integer levels and boolean checks", () => {
+  assert.deepEqual(
+    serializeState({ levels: [0, 1, 2, 3, 4, 2, 1, 0], checks: [true, false] }),
+    { levels: [0, 1, 2, 3, 4, 2, 1, 0], checks: [true, false] },
+  );
+});
+
+test("markdown export names the profile", () => {
+  const result = scorecardToMarkdown([0, 1, 2, 3, 4, 2, 1, 0]);
+  assert.match(result, /Карта зрелости/);
+  assert.match(result, /Ценность и портфель/);
+  assert.doesNotMatch(result, /средний балл/i);
+});
+```
+
+- [ ] **Step 2: Запустить тесты и увидеть ожидаемое падение**
+
+Run:
+
+```bash
+node --test tests/book-v2.test.mjs
+```
+
+Expected: FAIL, потому что модуль `book-v2.js` ещё не существует.
+
+- [ ] **Step 3: Реализовать чистые функции**
 
 Экспортировать функции из ES-модуля. `computeProfile` требует восемь целых значений 0–4; `managed` истинно только при восьми значениях не ниже 3. `serializeState` отбрасывает строки и лишние поля.
 
-- [ ] **Step 2: Запустить модульные тесты**
+- [ ] **Step 4: Запустить модульные тесты**
 
 Run:
 
@@ -522,23 +557,23 @@ node --test tests/book-v2.test.mjs
 
 Expected: PASS, 3 tests.
 
-- [ ] **Step 3: Подключить карту зрелости**
+- [ ] **Step 5: Подключить карту зрелости**
 
 На `change` читать восемь групп, пересчитывать профиль, обновлять текстовый результат и сохранять только массив уровней и булевы отметки под ключом `ai-native-book:v2:scorecard`.
 
-- [ ] **Step 4: Добавить явную очистку**
+- [ ] **Step 6: Добавить явную очистку**
 
 Кнопка очистки удаляет только ключи с префиксом `ai-native-book:v2:` и сообщает результат через `aria-live`. Она не очищает другие данные домена.
 
-- [ ] **Step 5: Добавить поиск, маршруты и ход чтения**
+- [ ] **Step 7: Добавить поиск, маршруты и ход чтения**
 
 Поиск отмечает совпадения и показывает число результатов. Маршрут меняет подсветку ссылок, но не `display` и не `hidden` у глав. Индикатор чтения не мешает `prefers-reduced-motion`.
 
-- [ ] **Step 6: Добавить копирование и экспорт**
+- [ ] **Step 8: Добавить копирование и экспорт**
 
 Копирование использует `navigator.clipboard` с резервным выделением видимого текста. Экспорт создаёт `Blob` и локальную ссылку `download`; `fetch`, `XMLHttpRequest`, `sendBeacon` и внешние адреса не используются.
 
-- [ ] **Step 7: Проверить синтаксис и приватность**
+- [ ] **Step 9: Проверить синтаксис и приватность**
 
 Run:
 
@@ -550,7 +585,7 @@ rg -n 'fetch\\(|XMLHttpRequest|sendBeacon|https?://' ai_native_book/assets/book-
 
 Expected: синтаксис и тесты проходят; поиск сетевых API пуст.
 
-- [ ] **Step 8: Зафиксировать JavaScript**
+- [ ] **Step 10: Зафиксировать JavaScript**
 
 ```bash
 git add ai_native_book/assets/book-v2.js tests/book-v2.test.mjs
