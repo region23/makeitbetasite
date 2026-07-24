@@ -19,6 +19,11 @@ a { color: #9C4A0E; text-decoration-thickness: 1px; text-underline-offset: 0.18e
 a:hover { color: #6E3509; text-decoration-thickness: 2px; }
 ::selection { background: #EADFC4; }
 
+.chapter-rail { flex:1 1 200px; max-width:240px; position:sticky; top:24px; }
+@media (max-width:760px) {
+  .chapter-rail { position:static; max-width:none; flex-basis:100%; }
+}
+
 .hv0:hover { background:#171106 }
 .hv1:hover { background:#F4EEDD }
 </style>
@@ -51,7 +56,7 @@ a:hover { color: #6E3509; text-decoration-thickness: 2px; }
   </section>
 
   <div style="max-width:1280px; margin:0 auto; padding:40px 24px 0; display:flex; gap:48px; align-items:flex-start; flex-wrap:wrap">
-    <nav aria-label="В этой главе" style="flex:1 1 200px; max-width:240px; position:sticky; top:24px">
+    <nav aria-label="В этой главе" class="chapter-rail">
       <p style="margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#7A6B52">В этой главе</p>
       <ol style="margin:0 0 16px; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px; line-height:1.4; border-left:2px solid rgba(23,17,6,0.14)">
         <li style="padding-left:14px"><a href="#карта-девяноста-дней" style="text-decoration:none; color:#4A4030">Карта девяноста дней</a></li>

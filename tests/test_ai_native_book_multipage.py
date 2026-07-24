@@ -203,6 +203,33 @@ process.stdout.write(JSON.stringify(actual));
 
 
 class NavigationTests(unittest.TestCase):
+    def test_mobile_chapter_rails_scroll_with_the_document(self) -> None:
+        pages = (
+            *CHAPTER_FILES,
+            "sources.html",
+            "version.html",
+        )
+        for filename in pages:
+            with self.subTest(page=filename):
+                document = (DESIGN / filename).read_text(encoding="utf-8")
+                rail = re.search(
+                    r'<nav\b(?=[^>]*\baria-label="В (?:этой главе|этом приложении)")'
+                    r"[^>]*>",
+                    document,
+                )
+                self.assertIsNotNone(rail)
+                self.assertRegex(rail.group(0), r'\bclass="[^"]*\bchapter-rail\b')
+                self.assertNotRegex(
+                    rail.group(0),
+                    r'\bstyle="[^"]*\bposition\s*:\s*sticky',
+                    "Inline sticky нельзя надёжно отключить на мобильной ширине",
+                )
+                self.assertRegex(
+                    document,
+                    r"@media\s*\(max-width\s*:\s*760px\)"
+                    r"[\s\S]*?\.chapter-rail\s*\{\s*position\s*:\s*static\b",
+                )
+
     def test_hub_links_directly_to_every_chapter_page(self) -> None:
         index = (DESIGN / "index.html").read_text(encoding="utf-8")
         index_hrefs = hrefs(index)
