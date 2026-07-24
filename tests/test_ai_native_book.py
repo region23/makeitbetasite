@@ -199,9 +199,13 @@ class LayoutStylesheetTests(unittest.TestCase):
             encoding="utf-8"
         )
         self.assertIn("@media (min-width: 100rem)", css)
-        wide_screen_rules = css.split("@media (min-width: 100rem)", 1)[1]
+        wide_screen_rules = css.split("@media (min-width: 100rem)", 1)[1].split(
+            "\n@media", 1
+        )[0]
 
-        self.assertIn("font-size: 1.6875rem;", wide_screen_rules)
+        self.assertIn("font-size: 150%;", wide_screen_rules)
+        self.assertIn("font-size: 1.125rem;", wide_screen_rules)
+        self.assertNotIn("font-size: 1.6875rem;", wide_screen_rules)
         self.assertIn("--measure: 78ch;", wide_screen_rules)
         self.assertIn("--shell: 110rem;", wide_screen_rules)
         self.assertIn("--rail: 14rem;", wide_screen_rules)

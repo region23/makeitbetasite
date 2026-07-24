@@ -1261,10 +1261,11 @@ mark,
     --measure: 78ch;
     --shell: 110rem;
     --rail: 14rem;
+    font-size: 150%;
   }
 
   body {
-    font-size: 1.6875rem;
+    font-size: 1.125rem;
   }
 }
 
