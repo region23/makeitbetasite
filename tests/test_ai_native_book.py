@@ -108,6 +108,33 @@ class VersionTwoSourceAndTemplateTests(unittest.TestCase):
         )
 
 
+class NoJavaScriptRouteTests(unittest.TestCase):
+    def test_v2_rejects_routes_without_static_links(self) -> None:
+        html = minimal_page(
+            """<h1>Руководство</h1><h2>Как читать</h2>
+            <p>Автор: Павел Павленко.
+              <a href="https://t.me/pavlenkodev">Telegram</a>
+              <a href="https://makeitbeta.ru">Сайт</a>
+            </p>
+            <button data-route="startup">Я строю стартап</button>
+            <button data-route="mature">Я меняю зрелую компанию</button>""",
+            head=(
+                '<meta name="book-version" content="2.0">'
+                '<meta name="author" content="Павел Павленко">'
+            ),
+        )
+
+        errors = validate_html_text(html, archive=False)
+
+        self.assertTrue(
+            any(
+                "маршрут" in error.lower() and "javascript" in error.lower()
+                for error in errors
+            ),
+            errors,
+        )
+
+
 class ArchiveDependencyTests(unittest.TestCase):
     def test_archive_rejects_remote_styles_scripts_and_connection_hints(self) -> None:
         html = """<!doctype html>

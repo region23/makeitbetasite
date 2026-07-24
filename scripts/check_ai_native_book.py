@@ -54,6 +54,7 @@ class _HtmlSummary(HTMLParser):
         self.summary_inside_details = 0
         self.headings: list[int] = []
         self.template_registry: list[str] = []
+        self.route_controls: list[tuple[str, dict[str, str]]] = []
         self.text_parts: list[str] = []
         self._open_tags: list[str] = []
 
@@ -77,6 +78,8 @@ class _HtmlSummary(HTMLParser):
             self.template_registry.append(
                 PurePosixPath(attributes["data-template-file"]).name
             )
+        if attributes.get("data-route"):
+            self.route_controls.append((tag, attributes))
         if tag == "a":
             self.anchors.append(attributes)
         elif tag == "link":
@@ -252,6 +255,25 @@ def validate_html_text(html: str, *, archive: bool = False) -> list[str]:
                 "Реестр 13 шаблонов должен в точности соответствовать "
                 "каноническому порядку Markdown-файлов"
             )
+        expected_route_targets = {
+            "startup": "маршрут-стартапа",
+            "mature": "маршрут-зрелой-компании",
+        }
+        route_controls = {
+            attributes.get("data-route"): (tag, attributes)
+            for tag, attributes in summary.route_controls
+        }
+        for route, target_id in expected_route_targets.items():
+            tag, attributes = route_controls.get(route, ("", {}))
+            if (
+                tag != "a"
+                or attributes.get("href") != f"#{target_id}"
+                or target_id not in summary.ids
+            ):
+                errors.append(
+                    f"Маршрут {route} должен работать без JavaScript: "
+                    f"нужна ссылка на статическое описание #{target_id}"
+                )
 
     return errors
 

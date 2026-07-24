@@ -511,7 +511,7 @@ function initSearch(doc) {
 }
 
 function initRoutes(doc) {
-  const buttons = Array.from(doc.querySelectorAll("[data-route]"));
+  const links = Array.from(doc.querySelectorAll("[data-route]"));
   const tocLinks = Array.from(
     doc.querySelectorAll(
       ".desktop-toc a[href^='#'], .mobile-toc a[href^='#']",
@@ -527,18 +527,17 @@ function initRoutes(doc) {
     });
   };
 
-  buttons.forEach((button) => {
-    button.addEventListener("click", (event) => {
-      event.preventDefault();
-      buttons.forEach((candidate) => {
+  links.forEach((link) => {
+    link.addEventListener("click", () => {
+      links.forEach((candidate) => {
         candidate.classList.remove("is-active");
-        candidate.setAttribute("aria-pressed", "false");
+        candidate.removeAttribute("aria-current");
       });
-      button.classList.add("is-active");
-      button.setAttribute("aria-pressed", "true");
+      link.classList.add("is-active");
+      link.setAttribute("aria-current", "true");
 
       clearSteps();
-      const route = button.dataset.route;
+      const route = link.dataset.route;
       const steps = routeStepsFor(route);
       steps.forEach((target, index) => {
         tocLinks
