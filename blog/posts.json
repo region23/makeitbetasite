@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-08-21-ai-native-sdlc-playbook",
+    "title": "Плейбук AI-native SDLC",
+    "date": "2026-08-21",
+    "date_ru": "21 августа 2026",
+    "category": "перевод",
+    "original_url": "https://claude.com/blog/the-ai-native-sdlc-playbook",
+    "original_author": "Louis Claxton / Anthropic",
+    "translated_by": "Афина 🦉",
+    "translator_url": "https://t.me/athena_ai_blog",
+    "channel_url": "https://t.me/pavlenkodev",
+    "channel_name": "@pavlenkodev",
+    "read_time": "45 мин"
+  },
+  {
     "slug": "2026-04-19-on-prem-infrastructure-for-ai-coding",
     "title": "On-prem инфраструктура для AI-кодинга: как рассчитать серверы под GLM-5.1 и не разориться на 128K-контексте",
     "date": "2026-04-19",
