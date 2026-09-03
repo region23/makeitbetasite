@@ -273,17 +273,6 @@ html, body { overflow-x: hidden; }
   line-height: 1.55 !important;
 }
 
-.post-intro-mark {
-  width: 112px;
-  margin: 4px 0 22px;
-}
-
-.post-intro-mark img {
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--bg);
-}
-
 .post-note {
   margin: 0 0 38px;
   padding: 14px 18px;
