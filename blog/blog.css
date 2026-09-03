@@ -267,37 +267,77 @@ html, body { overflow-x: hidden; }
 
 .post-lead {
   max-width: 720px;
-  margin: 0 0 16px;
+  margin: 20px 0 0;
   color: var(--ink-soft) !important;
   font-size: 1.12rem;
   line-height: 1.55 !important;
 }
 
-.post-translation-note {
+.post-context {
+  margin: 0 0 40px;
+  padding: 16px 18px;
+  border-left: 3px solid #cc3300;
+  border-radius: 0 5px 5px 0;
+  background: #ffe8e0;
+  color: var(--ink);
+}
+
+.post-context__translation {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  margin: 0 0 24px;
-  padding: 14px 18px;
-  border-left: 3px solid var(--accent);
-  border-radius: 0 5px 5px 0;
-  background: color-mix(in srgb, var(--accent) 7%, transparent);
   color: var(--ink-soft);
   font-size: .9rem;
   line-height: 1.6;
 }
 
-.post-translation-note .tag {
+.post-context__translation .tag {
   flex-shrink: 0;
   margin: 1px 0 0;
 }
 
-.post-translation-note code {
+.post-context__translation code {
   padding: 2px 5px;
   border-radius: 3px;
-  background: var(--border);
+  background: rgba(255, 255, 255, .58);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: .86em;
+}
+
+.post-context__original {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(204, 51, 0, .2);
+  color: var(--ink);
+  font-size: .875rem;
+}
+
+.post-context__original a {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.post-context__original a:hover {
+  color: #cc3300;
+}
+
+[data-theme="dark"] .post-context {
+  border-left-color: #ff7755;
+  background: #3d1000;
+}
+
+[data-theme="dark"] .post-context__translation code {
+  background: rgba(0, 0, 0, .22);
+}
+
+[data-theme="dark"] .post-context__original {
+  border-top-color: rgba(255, 119, 85, .28);
+}
+
+[data-theme="dark"] .post-context__original a:hover {
+  color: #ff7755;
 }
 
 .post-body--sdlc .stage {
@@ -473,7 +513,7 @@ html, body { overflow-x: hidden; }
 }
 
 @media (max-width: 640px) {
-  .post-translation-note {
+  .post-context__translation {
     flex-direction: column;
     gap: 7px;
   }
