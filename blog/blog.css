@@ -267,14 +267,17 @@ html, body { overflow-x: hidden; }
 
 .post-lead {
   max-width: 720px;
-  margin: 0 0 22px;
+  margin: 0 0 16px;
   color: var(--ink-soft) !important;
   font-size: 1.12rem;
   line-height: 1.55 !important;
 }
 
-.post-note {
-  margin: 0 0 38px;
+.post-translation-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0 0 24px;
   padding: 14px 18px;
   border-left: 3px solid var(--accent);
   border-radius: 0 5px 5px 0;
@@ -282,6 +285,19 @@ html, body { overflow-x: hidden; }
   color: var(--ink-soft);
   font-size: .9rem;
   line-height: 1.6;
+}
+
+.post-translation-note .tag {
+  flex-shrink: 0;
+  margin: 1px 0 0;
+}
+
+.post-translation-note code {
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: var(--border);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .86em;
 }
 
 .post-body--sdlc .stage {
@@ -457,6 +473,11 @@ html, body { overflow-x: hidden; }
 }
 
 @media (max-width: 640px) {
+  .post-translation-note {
+    flex-direction: column;
+    gap: 7px;
+  }
+
   .post-body--sdlc .vs {
     grid-template-columns: 1fr;
   }
