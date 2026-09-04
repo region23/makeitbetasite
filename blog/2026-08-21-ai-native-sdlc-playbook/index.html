@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../styles.css" />
-  <link rel="stylesheet" href="../blog.css?v=4" />
+  <link rel="stylesheet" href="../blog.css?v=5" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
   <script>
     (function() {
@@ -62,8 +62,10 @@
         <span>Перевод на русский. Примеры файлов (<code>intent.md</code>, <code>CLAUDE.md</code>, конфиги, скрипты) оставлены на английском, как в оригинале, — их можно копировать как есть.</span>
       </div>
       <div class="post-context__original">
-        Оригинал: <a href="https://claude.com/blog/the-ai-native-sdlc-playbook" target="_blank"><strong>Louis Claxton / Anthropic</strong></a>
+        <span>Оригинал: <a href="https://claude.com/blog/the-ai-native-sdlc-playbook" target="_blank"><strong>Louis Claxton / Anthropic</strong></a></span>
+        <button class="original-toggle" type="button" data-original-toggle aria-pressed="true">EN-подсказки: включены</button>
       </div>
+      <p class="post-context__hint">Наведите на предложение, чтобы увидеть английский оригинал. На телефоне — нажмите.</p>
     </div>
 
     <article class="post-body post-body--sdlc">
@@ -926,6 +928,8 @@ tiers:
   </footer>
 
   <script src="../../script.js"></script>
+  <script src="originals.js?v=1"></script>
+  <script src="../translation-tooltips.js?v=1"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
