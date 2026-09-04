@@ -368,11 +368,6 @@ html, body { overflow-x: hidden; }
 }
 
 .post-body--sdlc.originals-enabled .original-sentence {
-  text-decoration-line: underline;
-  text-decoration-style: dotted;
-  text-decoration-color: color-mix(in srgb, var(--accent) 38%, transparent);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
   cursor: help;
 }
 
@@ -380,8 +375,7 @@ html, body { overflow-x: hidden; }
 .post-body--sdlc.originals-enabled .original-sentence:focus-visible {
   border-radius: 2px;
   outline: none;
-  background: color-mix(in srgb, var(--accent) 9%, transparent);
-  text-decoration-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
 }
 
 .original-tooltip {
