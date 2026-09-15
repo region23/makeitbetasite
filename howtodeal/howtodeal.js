@@ -151,6 +151,15 @@
     }).join('');
   }
 
+  function buildAdaptationMarkup(profile) {
+    return '<details class="detail-accordion">' +
+      '<summary><span class="accordion-summary"><span class="accordion-kicker">РАСШИРЕННАЯ ВЕРСИЯ</span><span class="accordion-title">Открыть подробную русскую адаптацию</span></span><span class="accordion-mark" aria-hidden="true">+</span></summary>' +
+      '<div class="accordion-content"><p class="accordion-note">Это редакционная адаптация методики: она разворачивает короткую карточку, но не является дословной публикацией исходной статьи.</p>' +
+      '<div class="accordion-copy"><div class="accordion-copy__item"><span>Сценарий</span><p>' + escapeHtml(profile.summary + ' ' + profile.signal) + '</p></div>' +
+      '<div class="accordion-copy__item"><span>Разбор ситуации</span><p>' + escapeHtml(profile.move) + '</p></div>' +
+      '<div class="accordion-copy__item"><span>Граница</span><p>' + escapeHtml(profile.avoid) + '</p></div></div></div></details>';
+  }
+
   function openProfile(id, updateHash) {
     var profile = profiles.filter(function (item) { return item.id === id; })[0];
     if (!profile) return;
@@ -164,6 +173,7 @@
       '<p class="dialog-sub"><em>' + escapeHtml(profile.en) + '</em> · ' + escapeHtml(profile.summary) + '</p>' +
       '<div class="dialog-columns"><div class="detail-block"><span>Как выглядит</span><p>' + escapeHtml(profile.signal) + '</p></div><div class="detail-block detail-block--accent"><span>Первый ход</span><p>' + escapeHtml(profile.move) + '</p></div></div>' +
       '<div class="detail-block detail-block--spaced"><span>Не сработает</span><p>' + escapeHtml(profile.avoid) + '</p></div>' +
+      buildAdaptationMarkup(profile) +
       '<div class="dialog-footer"><span>Опасное сочетание</span>' + partnerMarkup + '</div>';
     if (typeof dialog.showModal === 'function') dialog.showModal();
     else dialog.setAttribute('open', '');
