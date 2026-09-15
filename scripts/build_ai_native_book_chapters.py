@@ -13,6 +13,20 @@ ROOT = Path(__file__).resolve().parents[1]
 BOOK = ROOT / "ai_native_book_new_design"
 SOURCE = BOOK / "full.html"
 
+YANDEX_METRIKA = """<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+ (function(m,e,t,r,i,k,a){
+   m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+ })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108768403', 'ym');
+
+ ym(108768403, 'init', {ssr:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108768403" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->"""
+
 
 @dataclass(frozen=True)
 class Chapter:
@@ -315,6 +329,7 @@ def render(chapter: Chapter, source: str) -> str:
 </div>
 
 <script src="./assets/book-v3.js" defer></script>
+{YANDEX_METRIKA}
 </body>
 </html>
 """

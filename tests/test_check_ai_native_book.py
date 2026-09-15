@@ -90,15 +90,28 @@ class ValidateHtmlTextTests(unittest.TestCase):
 
         self.assertEqual(errors, [])
 
-    def test_rejects_yandex_analytics(self) -> None:
+    def test_accepts_yandex_metrika_without_session_recording_or_ecommerce(self) -> None:
         html = valid_html().replace(
             "</body>",
-            '<script src="https://mc.yandex.ru/metrika/tag.js"></script></body>',
+            """<script src="https://mc.yandex.ru/metrika/tag.js?id=108768403"></script>
+            <img src="https://mc.yandex.ru/watch/108768403" alt="">
+            </body>""",
         )
 
         errors = validate_html_text(html_from_temp_file(html), archive=False)
 
-        self.assertTrue(any("аналитик" in error.lower() for error in errors))
+        self.assertEqual(errors, [])
+
+    def test_rejects_session_recording_and_ecommerce_options(self) -> None:
+        html = valid_html().replace(
+            "</body>",
+            '<script>ym(108768403, "init", {webvisor:true, ecommerce:"dataLayer"});</script></body>',
+        )
+
+        errors = validate_html_text(html_from_temp_file(html), archive=False)
+
+        self.assertTrue(any("webvisor" in error for error in errors))
+        self.assertTrue(any("ecommerce" in error for error in errors))
 
     def test_rejects_page_with_lost_chapter_anchor(self) -> None:
         html = valid_html().replace('<section id="ch1"></section>', "")

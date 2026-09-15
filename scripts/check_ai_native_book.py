@@ -35,7 +35,9 @@ EXPECTED_TEMPLATE_SEQUENCE = (
 EXPECTED_TEMPLATES = {
     *EXPECTED_TEMPLATE_SEQUENCE,
 }
-FORBIDDEN = ("mc.yandex.ru", "ym(", "webvisor", "clickmap")
+FORBIDDEN = ("webvisor", "ecommerce")
+YANDEX_METRIKA_TAG = "https://mc.yandex.ru/metrika/tag.js?id=108768403"
+YANDEX_METRIKA_WATCH = "https://mc.yandex.ru/watch/108768403"
 NETWORK_APIS = ("fetch(", "xmlhttprequest", "sendbeacon", "websocket(")
 REMOTE_URL = re.compile(r"(?:https?:)?//", re.IGNORECASE)
 NETWORK_REFERENCE = re.compile(
@@ -206,6 +208,14 @@ def _forbidden_errors(text: str) -> list[str]:
     ]
 
 
+def _is_yandex_metrika_script(reference: str) -> bool:
+    return reference == YANDEX_METRIKA_TAG
+
+
+def _is_yandex_metrika_watch(reference: str) -> bool:
+    return reference == YANDEX_METRIKA_WATCH
+
+
 def _external_dependency_errors(summary: _HtmlSummary) -> list[str]:
     errors: list[str] = []
     for link in summary.link_elements:
@@ -224,6 +234,8 @@ def _external_dependency_errors(summary: _HtmlSummary) -> list[str]:
                 )
     for script in summary.scripts:
         reference = script.get("src", "")
+        if _is_yandex_metrika_script(reference):
+            continue
         parsed = urlsplit(reference)
         if reference and (
             parsed.scheme or parsed.netloc or reference.startswith("//")
@@ -364,6 +376,8 @@ def _asset_errors(root: Path, html_path: Path, html: str) -> list[str]:
 
     for kind, references in (("CSS", stylesheets), ("JavaScript", scripts)):
         for reference in references:
+            if kind == "JavaScript" and _is_yandex_metrika_script(reference):
+                continue
             if not _is_local_reference(reference):
                 errors.append(f"{kind} должен быть локальным: {reference}")
                 continue
@@ -483,6 +497,8 @@ def _multipage_asset_errors(
             reference = attributes.get(attribute, "").strip()
             if not reference:
                 continue
+            if attribute == "src" and _is_yandex_metrika_watch(reference):
+                continue
             if attribute == "srcset":
                 is_external = bool(NETWORK_REFERENCE.search(reference))
             else:
@@ -496,6 +512,8 @@ def _multipage_asset_errors(
     for script in summary.scripts:
         reference = script.get("src", "")
         if not reference:
+            continue
+        if _is_yandex_metrika_script(reference):
             continue
         if not _is_local_reference(reference):
             errors.append(f"Внешний JavaScript запрещён: {reference}")

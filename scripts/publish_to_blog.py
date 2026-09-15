@@ -33,6 +33,7 @@ REPO_ROOT = Path(__file__).parent.parent
 BLOG_DIR = REPO_ROOT / 'blog'
 POSTS_JSON = BLOG_DIR / 'posts.json'
 TEMPLATE = BLOG_DIR / '_template.html'
+YANDEX_METRIKA_MARKER = 'https://mc.yandex.ru/metrika/tag.js?id=108768403'
 
 MONTHS_RU = ['января','февраля','марта','апреля','мая','июня',
              'июля','августа','сентября','октября','ноября','декабря']
@@ -213,6 +214,10 @@ def md_to_html(md: str) -> str:
 
 def render_article(args, content_html: str) -> str:
     tpl = TEMPLATE.read_text()
+    if YANDEX_METRIKA_MARKER not in tpl:
+        raise RuntimeError(
+            f'В шаблоне статьи отсутствует счётчик Яндекс.Метрики: {YANDEX_METRIKA_MARKER}'
+        )
 
     # Category tag
     cat_class = 'translation' if args.category == 'перевод' else 'original'
