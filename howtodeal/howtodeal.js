@@ -152,12 +152,23 @@
   }
 
   function buildAdaptationMarkup(profile) {
+    var details = window.howToDealDetails && window.howToDealDetails[profile.id];
+    if (!details) return '';
+    var sourceSections = {
+      product: 'product-managers',
+      design: 'designers',
+      project: 'project-managers',
+      devmanager: 'development-managers',
+      developer: 'developers',
+      qa: 'quality-assurance'
+    };
+    var sourceUrl = 'https://neilonsoftware.com/difficult-people-on-software-projects/' + sourceSections[profile.role] + '/the-' + profile.id + '/';
     return '<details class="detail-accordion">' +
-      '<summary><span class="accordion-summary"><span class="accordion-kicker">РАСШИРЕННАЯ ВЕРСИЯ</span><span class="accordion-title">Открыть подробную русскую адаптацию</span></span><span class="accordion-mark" aria-hidden="true">+</span></summary>' +
-      '<div class="accordion-content"><p class="accordion-note">Это редакционная адаптация методики: она разворачивает короткую карточку, но не является дословной публикацией исходной статьи.</p>' +
-      '<div class="accordion-copy"><div class="accordion-copy__item"><span>Сценарий</span><p>' + escapeHtml(profile.summary + ' ' + profile.signal) + '</p></div>' +
-      '<div class="accordion-copy__item"><span>Разбор ситуации</span><p>' + escapeHtml(profile.move) + '</p></div>' +
-      '<div class="accordion-copy__item"><span>Граница</span><p>' + escapeHtml(profile.avoid) + '</p></div></div></div></details>';
+      '<summary><span class="accordion-summary"><span class="accordion-kicker">ПОДРОБНЫЙ РАЗБОР</span><span class="accordion-title">Открыть расширенный русский пересказ</span></span><span class="accordion-mark" aria-hidden="true">+</span></summary>' +
+      '<div class="accordion-content"><p class="accordion-note">Пересказ разделов Problem и Solution исходного материала. <a href="' + sourceUrl + '" target="_blank" rel="noopener noreferrer">Оригинальная статья ↗</a></p>' +
+      '<div class="accordion-copy"><div class="accordion-copy__item"><span>В чём проблема</span><p>' + escapeHtml(details.problem) + '</p></div>' +
+      '<div class="accordion-copy__item"><span>Почему закрепляется</span><p>' + escapeHtml(details.why) + '</p></div>' +
+      '<div class="accordion-copy__item"><span>Что делать</span><p>' + escapeHtml(details.response) + '</p></div></div></div></details>';
   }
 
   function openProfile(id, updateHash) {

@@ -161,6 +161,7 @@ h1 { max-width: 760px; font-size: clamp(3.2rem,8.2vw,7.7rem); }
 .detail-accordion summary:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
 .accordion-content { padding: 0 18px 19px; border-top: 1px solid var(--line); }
 .accordion-note { margin-top: 16px; color: var(--muted); font-size: .74rem; line-height: 1.6; }
+.accordion-note a { color: var(--blue); font-weight: 700; text-underline-offset: 3px; }
 .accordion-copy { display: grid; gap: 14px; margin-top: 18px; }
 .accordion-copy__item { padding-top: 14px; border-top: 1px solid var(--line); }
 .accordion-copy__item > span { color: var(--orange-dark); font-size: .66rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
