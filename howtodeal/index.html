@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Русская редакционная адаптация атласа трудных паттернов поведения в софтверных командах." />
+  <title>Трудные люди в софтверных проектах — Make It Beta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unbounded:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="howtodeal.css" />
+</head>
+<body>
+  <header class="guide-header">
+    <div class="guide-shell header-inner">
+      <a class="back-link" href="../" aria-label="Вернуться на Make It Beta"><span aria-hidden="true">←</span> Make It Beta</a>
+      <div class="guide-mark" aria-label="How to Deal по-русски">HOW TO DEAL <span>RU / 01</span></div>
+      <a class="header-link" href="#profiles">К атласу <span aria-hidden="true">↓</span></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="guide-hero guide-shell">
+      <div class="hero-copy">
+        <p class="eyebrow">Практическое пособие для софтверных команд</p>
+        <h1>Когда дело<br />не в коде.</h1>
+        <p class="hero-lead">Русская редакционная адаптация <em>How to Deal with Difficult People on Software Projects</em> — атлас рабочих паттернов, которые мешают команде двигаться.</p>
+      </div>
+      <aside class="hero-note">
+        <span class="note-index">0 → 3</span>
+        <h2>Сначала — паттерн,<br />потом — разговор.</h2>
+        <p>Не приклеивайте человеку ярлык. Узнайте повторяющийся сценарий, его цену для проекта и следующий разговор, который вернёт работу в русло.</p>
+      </aside>
+    </section>
+
+    <section class="guide-shell stats" aria-label="О пособии">
+      <div class="stat"><strong>48</strong><span>профилей</span></div>
+      <div class="stat"><strong>06</strong><span>ролей</span></div>
+      <div class="stat"><strong>03</strong><span>шага диагностики</span></div>
+      <div class="stat stat--wide"><strong>1</strong><span>цель: сделать следующий разговор продуктивнее</span></div>
+    </section>
+
+    <section class="guide-shell workspace" id="profiles">
+      <div class="workspace-heading">
+        <div>
+          <p class="eyebrow">Атлас</p>
+          <h2>Найдите знакомый сценарий</h2>
+        </div>
+        <button class="button button--dark" id="randomProfile" type="button"><span aria-hidden="true">✦</span> Случайный профиль</button>
+      </div>
+
+      <div class="controls" aria-label="Фильтры профилей">
+        <label class="search-box">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <span class="visually-hidden">Поиск по профилям</span>
+          <input id="searchInput" type="search" placeholder="Искать по роли, признаку или действию" autocomplete="off" />
+          <kbd>/</kbd>
+        </label>
+        <div class="role-filters" id="roleFilters" role="tablist" aria-label="Фильтр по ролям"></div>
+      </div>
+
+      <div class="workspace-layout">
+        <aside class="method-card">
+          <div class="method-card__top"><span class="eyebrow">Как пользоваться</span><span class="method-card__mark">01</span></div>
+          <ol>
+            <li><strong>Назовите поведение.</strong> Что человек делает регулярно, а не какой он «по жизни»?</li>
+            <li><strong>Посмотрите на ущерб.</strong> Что именно тормозится: решение, качество, доверие или ответственность?</li>
+            <li><strong>Выберите ход.</strong> Начните с границы и конкретной договорённости, а не с диагноза.</li>
+          </ol>
+          <p class="method-card__quote">«Паттерн — это гипотеза для разговора, а не приговор человеку.»</p>
+        </aside>
+
+        <div class="profile-area">
+          <div class="results-line" aria-live="polite">
+            <span id="resultCount">48 профилей</span>
+            <span id="activeFilter">Все роли</span>
+          </div>
+          <div class="profile-grid" id="profileGrid"></div>
+          <div class="empty-state" id="emptyState" hidden>
+            <span class="empty-state__mark">∅</span>
+            <h3>Такого профиля нет</h3>
+            <p>Попробуйте другое слово или покажите все роли.</p>
+            <button class="button button--outline" id="resetFilters" type="button">Сбросить фильтры</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="guide-shell principles" id="method">
+      <div class="principles-intro">
+        <p class="eyebrow">Мини-методика</p>
+        <h2>Снять ярлык.<br /><span>Вернуть разговор.</span></h2>
+        <p>Люди редко приходят в проект с намерением его испортить. Чаще плохой паттерн — это защита, доведённая до крайности. Поэтому начинайте с наблюдаемого поведения и контекста.</p>
+      </div>
+      <div class="principle-list">
+        <article class="principle">
+          <span class="principle__number">01</span>
+          <div><h3>Факт вместо оценки</h3><p>«Три задачи изменились после согласования» полезнее, чем «ты постоянно меняешь правила».</p></div>
+        </article>
+        <article class="principle">
+          <span class="principle__number">02</span>
+          <div><h3>Цена вместо обвинения</h3><p>Свяжите поведение с результатом: сроком, качеством, риском или доверием внутри команды.</p></div>
+        </article>
+        <article class="principle">
+          <span class="principle__number">03</span>
+          <div><h3>Договорённость вместо надежды</h3><p>Завершайте разговор владельцем действия, сроком проверки и понятным сигналом, что стало лучше.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="guide-shell source-note">
+      <div class="source-note__label">Источник и статус</div>
+      <div>
+        <p>Основано на <a href="https://www.howtodeal.dev/" target="_blank" rel="noreferrer">How to Deal with Difficult People on Software Projects</a> by Neil Green / Neil on Software. Это русская редакционная адаптация: тексты сокращены и переформулированы для практического применения, оригинальные названия сохранены в карточках.</p>
+        <p class="source-note__small">Материал помогает обсуждать рабочие паттерны и не заменяет оценку конкретной ситуации, медиатора или руководителя.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="guide-footer">
+    <div class="guide-shell footer-inner">
+      <a class="back-link" href="../">Make It Beta <span aria-hidden="true">🧪</span></a>
+      <span>Сделано для разговоров, после которых работа движется.</span>
+      <a href="#profiles">Наверх ↑</a>
+    </div>
+  </footer>
+
+  <dialog class="profile-dialog" id="profileDialog" aria-labelledby="dialogTitle">
+    <div class="dialog-inner">
+      <button class="dialog-close" id="dialogClose" type="button" aria-label="Закрыть карточку">×</button>
+      <div id="dialogContent"></div>
+    </div>
+  </dialog>
+
+  <script src="howtodeal.js"></script>
+</body>
+</html>
