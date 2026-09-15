@@ -67,6 +67,39 @@
     { id: 'qa', label: 'QA' }
   ];
 
+  var partnerIds = {
+    'Дива-разработчик': 'diva',
+    'Диктатор': 'dictator',
+    'Расширитель объёма': 'scope-creeper',
+    'Солдат-разработчик': 'soldier',
+    'Идеалист-разработчик': 'idealist',
+    'Планировщик встреч': 'meeting-scheduler',
+    'Процессоман': 'process-obsessed',
+    'Миротворец': 'peacemaker',
+    'Технологический энтузиаст': 'technology-enamored',
+    'Влюблённый в технологии': 'technology-enamored',
+    'Бык в посудной лавке': 'bull-in-china-shop',
+    'Бывший технарь': 'formerly-technical',
+    'Карьерист': 'ladder-climber',
+    'Нависающий': 'hoverer',
+    'Черлидер': 'cheerleader',
+    'Тиран': 'tyrant',
+    'Рок-звезда': 'rockstar',
+    'Чертёжник': 'blueprinter',
+    'Стенографист': 'note-taker',
+    'Секретарь стейкхолдеров': 'executive-assistant',
+    'Сильно занижающий оценки': 'extreme-underestimator',
+    'Хочет быть технарём': 'wants-to-be-technical',
+    'Художник': 'artist',
+    'Оптимист': 'optimist',
+    'Пессимист': 'pessimist',
+    'Патентописец': 'patent-author',
+    'Набросчик на салфетке': 'napkin-sketcher',
+    'Обвинитель': 'blamer',
+    'Забитый QA': 'downtrodden',
+    'Забитый': 'downtrodden'
+  };
+
   var grid = document.getElementById('profileGrid');
   var filters = document.getElementById('roleFilters');
   var search = document.getElementById('searchInput');
@@ -121,12 +154,16 @@
     var profile = profiles.filter(function (item) { return item.id === id; })[0];
     if (!profile) return;
     var index = String(profiles.indexOf(profile) + 1).padStart(2, '0');
+    var partnerId = partnerIds[profile.partner];
+    var partnerMarkup = partnerId
+      ? '<button class="partner-link" type="button" data-partner-id="' + escapeHtml(partnerId) + '" aria-label="Открыть профиль ' + escapeHtml(profile.partner) + '">' + escapeHtml(profile.partner) + '</button>'
+      : '<strong>' + escapeHtml(profile.partner) + '</strong>';
     dialogContent.innerHTML = '<div class="dialog-top"><span class="role-chip role-' + profile.role + '">' + escapeHtml(profile.roleLabel) + '</span><span class="dialog-index">' + index + ' / 48</span></div>' +
       '<h2 id="dialogTitle">' + escapeHtml(profile.name) + '</h2>' +
       '<p class="dialog-sub"><em>' + escapeHtml(profile.en) + '</em> · ' + escapeHtml(profile.summary) + '</p>' +
       '<div class="dialog-columns"><div class="detail-block"><span>Как выглядит</span><p>' + escapeHtml(profile.signal) + '</p></div><div class="detail-block detail-block--accent"><span>Первый ход</span><p>' + escapeHtml(profile.move) + '</p></div></div>' +
       '<div class="detail-block detail-block--spaced"><span>Не сработает</span><p>' + escapeHtml(profile.avoid) + '</p></div>' +
-      '<div class="dialog-footer"><span>Опасное сочетание</span><strong>' + escapeHtml(profile.partner) + '</strong></div>';
+      '<div class="dialog-footer"><span>Опасное сочетание</span>' + partnerMarkup + '</div>';
     if (typeof dialog.showModal === 'function') dialog.showModal();
     else dialog.setAttribute('open', '');
     if (updateHash) history.replaceState(null, '', '#profile=' + profile.id);
@@ -167,6 +204,10 @@
   });
 
   dialogClose.addEventListener('click', closeProfile);
+  dialogContent.addEventListener('click', function (event) {
+    var partner = event.target.closest('[data-partner-id]');
+    if (partner) openProfile(partner.getAttribute('data-partner-id'), true);
+  });
   dialog.addEventListener('click', function (event) {
     if (event.target === dialog) closeProfile();
   });
