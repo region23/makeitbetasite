@@ -79,6 +79,7 @@
     'Технологический энтузиаст': 'technology-enamored',
     'Влюблённый в технологии': 'technology-enamored',
     'Бык в посудной лавке': 'bull-in-china-shop',
+    'Слон в посудной лавке': 'bull-in-china-shop',
     'Бывший технарь': 'formerly-technical',
     'Карьерист': 'ladder-climber',
     'Нависающий': 'hoverer',
