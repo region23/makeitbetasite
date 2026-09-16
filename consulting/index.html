@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Внедрение ИИ в разработку — Павел Павленко</title>
+  <meta name="description" content="Не презентации, а пилот в ваших командах с метриками до и после. Согласую с безопасниками, доведу до прода." />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://makeitbeta.ru/consulting/" />
+  <meta property="og:title" content="Внедрение ИИ в разработку — Павел Павленко" />
+  <meta property="og:description" content="Не презентации, а пилот в ваших командах с метриками до и после. Согласую с безопасниками, доведу до прода." />
+  <meta property="og:image" content="https://makeitbeta.ru/consulting/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="ru_RU" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Внедрение ИИ в разработку — Павел Павленко" />
+  <meta name="twitter:description" content="Не презентации, а пилот в ваших командах с метриками до и после. Согласую с безопасниками, доведу до прода." />
+  <meta name="twitter:image" content="https://makeitbeta.ru/consulting/og.png" />
+  <link rel="canonical" href="https://makeitbeta.ru/consulting/" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <!-- Тема применяется ДО рендера страницы, чтобы не было вспышки -->
+  <script>
+    (function() {
+      var stored = localStorage.getItem('theme');
+      var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    })();
+  </script>
+  <style>
+    /* ===== CONSULTING PAGE ===== */
+    .c-header__nav { display: flex; align-items: center; gap: 16px; }
+
+    .c-hero {
+      padding: 72px 0 64px;
+      border-bottom: 1px solid var(--border);
+    }
+    .c-hero__title {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(1.9rem, 5.2vw, 3.6rem);
+      line-height: 1.08;
+      letter-spacing: -.035em;
+      max-width: 15ch;
+      margin-bottom: 28px;
+    }
+    .c-hero__lead {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      max-width: 600px;
+      margin-bottom: 36px;
+    }
+    .c-cta {
+      display: inline-block;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: .95rem;
+      letter-spacing: .02em;
+      text-decoration: none;
+      color: var(--bg);
+      background: var(--ink);
+      padding: 20px 36px;
+      border-radius: 6px;
+      transition: background .2s;
+      text-align: center;
+    }
+    .c-cta:hover { background: var(--accent); }
+    .c-hero__byline {
+      margin-top: 24px;
+      font-size: .9rem;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      max-width: 600px;
+    }
+    .c-hero__byline strong { color: var(--ink); font-weight: 600; }
+
+    .c-section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .c-section__wrap {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .c-section .section-title { margin-bottom: 28px; }
+    .c-section__body { max-width: 720px; }
+    .c-section__body > p {
+      color: var(--ink-soft);
+      max-width: 620px;
+      margin-bottom: 16px;
+    }
+
+    /* Форматы */
+    .c-formats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: none;
+    }
+    .c-format {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 32px 28px 28px;
+      display: flex;
+      flex-direction: column;
+    }
+    .c-format__title {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -.02em;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+    .c-format__meta {
+      font-size: .8rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+    .c-format__label {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 10px;
+    }
+    .c-format__list {
+      list-style: none;
+      margin: 0 0 24px;
+      padding: 0;
+    }
+    .c-format__list li {
+      position: relative;
+      padding-left: 18px;
+      font-size: .95rem;
+      line-height: 1.55;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .c-format__list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .68em;
+      width: 8px;
+      height: 1.5px;
+      background: var(--accent);
+    }
+    .c-format__result {
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: .95rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+    .c-format__result strong { color: var(--ink); font-weight: 600; }
+
+    /* Что за спиной */
+    .c-track {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-top: 1px solid var(--border);
+    }
+    .c-track li {
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.55;
+      max-width: 680px;
+    }
+    .c-track strong { font-weight: 600; }
+
+    /* Как начать */
+    .c-steps {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      counter-reset: step;
+    }
+    .c-steps li {
+      counter-increment: step;
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 16px;
+      align-items: baseline;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      max-width: 680px;
+      line-height: 1.55;
+    }
+    .c-steps li:first-child { border-top: 1px solid var(--border); }
+    .c-steps li::before {
+      content: "0" counter(step);
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 1.3rem;
+      color: var(--accent);
+      letter-spacing: -.02em;
+    }
+
+    /* FAQ */
+    .c-faq { max-width: 680px; }
+    .c-faq dt {
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .c-faq dd {
+      margin: 0 0 28px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+    }
+    .c-faq dd:last-child { margin-bottom: 0; }
+
+    /* Финальный призыв */
+    .c-final {
+      padding: 96px 0;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .c-final__title {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      letter-spacing: -.03em;
+      line-height: 1.15;
+      max-width: 640px;
+      margin: 0 auto 16px;
+    }
+    .c-final__text {
+      color: var(--ink-soft);
+      max-width: 520px;
+      margin: 0 auto 36px;
+    }
+
+    /* Футер */
+    .c-footer { padding: 32px 0; }
+    .c-footer__wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px 28px;
+      font-size: .85rem;
+      color: var(--ink-soft);
+    }
+    .c-footer__links { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+    .c-footer__links a {
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .c-footer__links a:hover { color: var(--accent); }
+    .c-footer__name { color: var(--ink); font-weight: 500; }
+
+    @media (max-width: 768px) {
+      .c-section__wrap { grid-template-columns: 1fr; gap: 20px; }
+      .c-section { padding: 64px 0; }
+      .c-formats { grid-template-columns: 1fr; }
+      .c-final { padding: 72px 0; }
+    }
+
+    @media (max-width: 480px) {
+      .c-hero { padding: 40px 0 44px; }
+      .c-hero__title { font-size: clamp(1.75rem, 8.6vw, 2.4rem); margin-bottom: 18px; }
+      .c-hero__lead { font-size: 1.02rem; margin-bottom: 24px; }
+      .c-cta { display: block; width: 100%; padding: 18px 20px; }
+      .c-hero__byline { margin-top: 18px; font-size: .85rem; }
+      .c-section { padding: 52px 0; }
+      .c-format { padding: 24px 20px 22px; }
+      .c-steps li { grid-template-columns: 44px 1fr; gap: 12px; }
+      .c-footer__wrap { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="wrap header__wrap">
+      <a href="/" class="logo">Make It Beta<sup>🧪</sup></a>
+      <div class="c-header__nav">
+        <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+          <span id="themeIcon">🌙</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="c-hero">
+      <div class="wrap">
+        <h1 class="c-hero__title">Внедряю ИИ‑агентов в&nbsp;разработку крупных компаний</h1>
+        <p class="c-hero__lead">Не презентации, а&nbsp;пилот в&nbsp;ваших командах с&nbsp;метриками до и&nbsp;после. Согласую с&nbsp;безопасниками, доведу до&nbsp;прода.</p>
+        <a href="https://t.me/region23" class="c-cta" target="_blank" rel="noopener">Написать в Telegram</a>
+        <p class="c-hero__byline"><strong>Павел Павленко</strong> · Head of GenAI в&nbsp;IT‑компании авиационной группы · 24&nbsp;года в&nbsp;разработке</p>
+      </div>
+    </section>
+
+    <!-- ДЛЯ КОГО -->
+    <section class="c-section">
+      <div class="wrap c-section__wrap">
+        <div class="section-num">01</div>
+        <div class="c-section__body">
+          <h2 class="section-title">Для кого</h2>
+          <p>Для CTO и&nbsp;руководителей разработки, у&nbsp;которых команда от&nbsp;30&nbsp;разработчиков, а&nbsp;от&nbsp;ИИ нужен не&nbsp;«попробовать», а&nbsp;измеримый эффект. Особенно если у&nbsp;вас корпоративный контур, безопасники и&nbsp;вопрос «а&nbsp;можно&nbsp;ли вообще отправлять код наружу».</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ДВА ФОРМАТА -->
+    <section class="c-section">
+      <div class="wrap c-section__wrap">
+        <div class="section-num">02</div>
+        <div class="c-section__body c-section__body--wide">
+          <h2 class="section-title">Два формата работы</h2>
+          <div class="c-formats">
+
+            <article class="c-format">
+              <h3 class="c-format__title">Воркшоп для команды разработки</h3>
+              <div class="c-format__meta">1&nbsp;день · на&nbsp;вашем стеке · до&nbsp;15&nbsp;человек</div>
+              <div class="c-format__label">Что внутри</div>
+              <ul class="c-format__list">
+                <li>Как реально работает агентная разработка в&nbsp;2026‑м: что взлетело, что нет</li>
+                <li>Практика на&nbsp;вашем коде: агентные IDE, генерация тестов, ревью, документация</li>
+                <li>Как посчитать эффект и&nbsp;не&nbsp;обмануть себя</li>
+                <li>Что делать с&nbsp;безопасностью и&nbsp;корпоративными ограничениями</li>
+              </ul>
+              <p class="c-format__result"><strong>Результат:</strong> команда умеет пользоваться инструментами, а&nbsp;вы понимаете, где эффект будет, а&nbsp;где нет.</p>
+            </article>
+
+            <article class="c-format">
+              <h3 class="c-format__title">Спринт внедрения</h3>
+              <div class="c-format__meta">3–4&nbsp;недели · пилот в&nbsp;1–2&nbsp;командах · отчёт для CTO</div>
+              <div class="c-format__label">Как проходит</div>
+              <ul class="c-format__list">
+                <li><strong>Неделя&nbsp;1.</strong> Аудит: процессы, стек, ограничения ИБ, выбор инструментов и&nbsp;метрик</li>
+                <li><strong>Недели&nbsp;2–3.</strong> Пилот в&nbsp;командах: настройка, обучение, сопровождение</li>
+                <li><strong>Неделя&nbsp;4.</strong> Замер, отчёт, план масштабирования</li>
+              </ul>
+              <p class="c-format__result"><strong>Результат:</strong> цифры по&nbsp;эффекту, рекомендация «раскатывать или нет» и&nbsp;план на&nbsp;следующий квартал.</p>
+            </article>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ЧТО ЗА СПИНОЙ -->
+    <section class="c-section">
+      <div class="wrap c-section__wrap">
+        <div class="section-num">03</div>
+        <div class="c-section__body">
+          <h2 class="section-title">Что за спиной</h2>
+          <ul class="c-track">
+            <li><strong>Lamoda Tech:</strong> первым провёл пилот GitHub Copilot, +40% к&nbsp;скорости написания кода, +50% к&nbsp;удовлетворённости разработчиков</li>
+            <li><strong>IT‑компания авиационной группы:</strong> строю AI SDLC, агентов в&nbsp;CI/CD, провёл серию пилотов ИИ‑инструментов в&nbsp;командах</li>
+            <li>Собрал ИИ‑аватара для выставки ЦИПР‑2026, о&nbsp;проекте писали в&nbsp;СМИ</li>
+            <li>Выступал на&nbsp;GoCloud с&nbsp;докладом о&nbsp;реальной ценности GenAI</li>
+            <li>24&nbsp;года в&nbsp;разработке: от&nbsp;первой веб‑студии до&nbsp;технического директора и&nbsp;тимлида трёх команд</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- КАК НАЧАТЬ -->
+    <section class="c-section">
+      <div class="wrap c-section__wrap">
+        <div class="section-num">04</div>
+        <div class="c-section__body">
+          <h2 class="section-title">Как начать</h2>
+          <ol class="c-steps">
+            <li>Напишите в&nbsp;Telegram, коротко опишите команду и&nbsp;задачу</li>
+            <li>Созвон на&nbsp;30&nbsp;минут: разберём, какой формат подходит и&nbsp;подходит&nbsp;ли вообще</li>
+            <li>Предложение с&nbsp;программой, сроками и&nbsp;стоимостью</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ВОПРОСЫ -->
+    <section class="c-section">
+      <div class="wrap c-section__wrap">
+        <div class="section-num">05</div>
+        <div class="c-section__body">
+          <h2 class="section-title">Частые вопросы</h2>
+          <dl class="c-faq">
+            <dt>Работаете с&nbsp;российскими моделями и&nbsp;on‑prem?</dt>
+            <dd>Да. GigaChat, YandexGPT, открытые модели в&nbsp;вашем контуре. Выбор инструмента зависит от&nbsp;ваших ограничений, а&nbsp;не&nbsp;от&nbsp;моих предпочтений.</dd>
+            <dt>Нужен&nbsp;ли NDA?</dt>
+            <dd>Подписываю ваш стандартный.</dd>
+            <dt>Сколько стоит?</dt>
+            <dd>Зависит от&nbsp;формата и&nbsp;размера команды. Ориентир назову на&nbsp;первом созвоне.</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ФИНАЛЬНЫЙ ПРИЗЫВ -->
+    <section class="c-final">
+      <div class="wrap">
+        <h2 class="c-final__title">Обсудим вашу команду и&nbsp;задачу</h2>
+        <p class="c-final__text">Коротко опишите ситуацию, и&nbsp;за&nbsp;30&nbsp;минут на&nbsp;созвоне разберём, какой формат подходит.</p>
+        <a href="https://t.me/region23" class="c-cta" target="_blank" rel="noopener">Написать в Telegram</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="c-footer">
+    <div class="wrap c-footer__wrap">
+      <span class="c-footer__name">Павел Павленко</span>
+      <nav class="c-footer__links" aria-label="Ссылки">
+        <a href="https://t.me/pavlenkodev" target="_blank" rel="noopener">Telegram‑канал «Павленко внедряет ИИ»</a>
+        <a href="https://linkedin.com/in/region23" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+      <span class="footer__copy">© 2026 makeitbeta.ru</span>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+ (function(m,e,t,r,i,k,a){
+ m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+ m[i].l=1*new Date();
+ for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+ k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+ })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108768403', 'ym');
+
+ ym(108768403, 'init', {ssr:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108768403" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</body>
+</html>
