@@ -40,7 +40,7 @@
     .c-header__nav { display: flex; align-items: center; gap: 16px; }
 
     .c-hero {
-      padding: 88px 0 80px;
+      padding: 60px 0 56px;
       border-bottom: 1px solid var(--border);
     }
     .c-hero__grid {
@@ -106,7 +106,7 @@
     .c-hero__byline strong { color: var(--ink); font-weight: 600; }
 
     .c-section {
-      padding: 120px 0;
+      padding: 80px 0;
       border-bottom: 1px solid var(--border);
     }
     .c-section__wrap {
@@ -125,9 +125,10 @@
 
     /* Цифры */
     .c-stats {
-      padding: 96px 0;
+      padding: 64px 0;
       border-bottom: 1px solid var(--border);
     }
+    .c-stats__body { max-width: 720px; }
     .c-stats__row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -369,7 +370,7 @@
 
     /* Финальный призыв */
     .c-final {
-      padding: 140px 0;
+      padding: 96px 0;
       border-bottom: 1px solid var(--border);
       text-align: center;
     }
@@ -412,8 +413,9 @@
       .c-hero__grid { grid-template-columns: 1fr; gap: 32px; }
       .c-hero__photo { min-height: 0; height: 320px; max-height: 320px; }
       .c-section__wrap { grid-template-columns: 1fr; gap: 20px; }
-      .c-section { padding: 96px 0; }
-      .c-stats { padding: 80px 0; }
+      .c-stats__spacer { display: none; }
+      .c-section { padding: 64px 0; }
+      .c-stats { padding: 52px 0; }
       .c-stats__row { grid-template-columns: 1fr; }
       .c-stat { padding: 0 0 28px; }
       .c-stat + .c-stat { padding: 28px 0 0; border-left: none; border-top: 1px solid var(--border); }
@@ -424,19 +426,20 @@
       .c-timeline li:last-child::before { display: none; }
       .c-timeline__week { margin-bottom: 4px; }
       .c-photos__grid { grid-template-columns: 1fr; }
-      .c-final { padding: 108px 0; }
+      .c-final { padding: 72px 0; }
     }
 
     @media (max-width: 480px) {
-      .c-hero { padding: 40px 0 52px; }
+      .c-hero { padding: 32px 0 40px; }
       .c-hero__grid { gap: 28px; }
       .c-hero__photo { height: 280px; }
       .c-hero__title { font-size: clamp(1.75rem, 8.6vw, 2.4rem); margin-bottom: 18px; }
       .c-hero__lead { font-size: 1.02rem; margin-bottom: 24px; }
       .c-cta { display: block; width: 100%; padding: 18px 20px; }
       .c-hero__byline { margin-top: 18px; font-size: .85rem; }
-      .c-section { padding: 76px 0; }
-      .c-stats { padding: 64px 0; }
+      .c-section { padding: 52px 0; }
+      .c-stats { padding: 44px 0; }
+      .c-final { padding: 60px 0; }
       .c-photos { margin-bottom: 32px; }
       .c-format { padding: 24px 20px 22px; }
       .c-steps li { grid-template-columns: 44px 1fr; gap: 12px; }
@@ -490,7 +493,9 @@
 
     <!-- ЦИФРЫ -->
     <section class="c-stats" aria-label="Результаты пилота">
-      <div class="wrap">
+      <div class="wrap c-section__wrap">
+        <div class="c-stats__spacer" aria-hidden="true"></div>
+        <div class="c-stats__body">
         <div class="c-stats__row">
           <div class="c-stat">
             <div class="c-stat__num"><span>+</span>40%</div>
@@ -502,6 +507,7 @@
           </div>
         </div>
         <p class="c-stats__note">Пилот GitHub Copilot, Lamoda Tech</p>
+        </div>
       </div>
     </section>
 
