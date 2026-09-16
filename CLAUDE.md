@@ -5,7 +5,7 @@ Landing page / portfolio site for Make It Beta (makeitbeta.ru) — an AI-first p
 
 ## Requirements
 - Modern, clean, professional landing page
-- **LIGHT THEME ONLY. No dark mode. No dark theme. No dark backgrounds.**
+- Two themes: light (default) and dark, switched by the toggle in the header. Theme is stored in `localStorage` (`theme`) and applied before render via the inline script in `<head>`; all colors go through CSS variables in `styles.css` (`:root` and `[data-theme="dark"]`). Every new page must include the same inline script and the toggle.
 - Use the /frontend-designer skill for all design work
 - Single page with sections:
   1. Hero: "Make It Beta" — AI-first pocket company
@@ -29,7 +29,7 @@ Landing page / portfolio site for Make It Beta (makeitbeta.ru) — an AI-first p
 
 ## Design Guidelines
 - Light, airy, modern
-- Accent colors: can use tech-blue or vibrant gradients, but background MUST be light/white
+- Colors only via CSS variables (`--bg`, `--ink`, `--ink-soft`, `--accent`, `--border`) so both themes work; no hardcoded backgrounds
 - Clean typography
 - Subtle animations welcome
 - Cards for portfolio items
