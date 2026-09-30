@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Модели, которые не пишут текст: Jev и его открытые аналоги — Make It Beta</title>
+  <meta name="description" content="Модели, которые не пишут текст: Jev и его открытые аналоги" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../blog.css?v=3" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+  <script>
+    (function() {
+      var stored = localStorage.getItem('theme');
+      var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="wrap header__wrap">
+      <a href="/" class="logo">Make It Beta<sup>🧪</sup></a>
+      <nav class="header__nav" id="headerNav">
+        <a href="/blog/" class="header__link">Блог</a>
+        <a href="/ai_native_book/" class="header__link">AI-native компании</a>
+        <a href="https://t.me/pavlenkodev" class="header__link" target="_blank">Телеграм-канал</a>
+        <a href="https://t.me/makeitbetabot" class="header__link" target="_blank">Написать нам</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+          <span id="themeIcon">🌙</span>
+        </button>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="blog-wrap">
+
+    <nav class="post-breadcrumb">
+      <a href="/">Главная</a> <span>→</span>
+      <a href="/blog/">Блог</a> <span>→</span>
+      <span style="color:var(--ink);">Модели, которые не пишут текст: Jev и его открытые аналоги</span>
+    </nav>
+
+    <header class="post-header">
+      <span class="tag tag--original">оригинал</span>
+      <h1>Модели, которые не пишут текст: Jev и его открытые аналоги</h1>
+      <div class="post-meta">
+        <time>30 сентября 2026</time>
+        <span class="post-meta__sep">·</span>
+        <span>8 мин чтения</span>
+        
+      </div>
+    </header>
+
+    
+
+    <article class="post-body">
+      <p>15 сентября стартап TypeSafe (основатель — выходец из OpenAI, $40M сида) выпустил Jev. Через сутки после появления на Vercel AI Gateway его попробовали 13% платных команд. Это самый быстрый запуск модели в истории гейтвея.</p>
+<p>При этом писать текст Jev не умеет. Совсем.</p>
+<h2>Что он делает</h2>
+<p>Вы даёте модели кусок данных: письмо, тикет, лог, JSON. К нему прикладываете список вопросов строгого типа:</p>
+<ul>
+<li>выбери один вариант из списка (choice);</li>
+<li>да или нет (bool);</li>
+<li>оценка по шкале с описанными уровнями (score).</li>
+</ul>
+<p>В ответ приходит решение и вероятность каждого варианта. Один проход, ~100 мс, $0,042 за миллион входных токенов, выход бесплатный.</p>
+<p>TypeSafe называет это System One, по Канеману: быстрое интуитивное мышление против медленного рассуждающего. А имя Jev — от Джевонса, автора парадокса Джевонса. Логика та же: если решение стоит меньше цента, его начнут вставлять туда, куда раньше LLM никто бы не позвал.</p>
+<h2>Почему это всколыхнуло рынок</h2>
+<p>Посмотрите на любого агента в проде. Текст он пишет редко, а решения принимает постоянно: куда отправить запрос, срочный ли тикет, релевантен ли найденный чанк, не опасен ли вызов инструмента, справилась ли модель с задачей.</p>
+<p>Сейчас мы гоняем на эти вопросы GPT или Claude с reasoning. Платим секундами и центами, парсим JSON, который иногда ломается, и получаем уверенность «на словах».</p>
+<p>С Jev всё иначе:</p>
+<ul>
+<li>он на порядки быстрее и дешевле;</li>
+<li>невалидного ответа не бывает: модель выбирает только из ваших вариантов;</li>
+<li>есть вероятность, а значит, можно ставить пороги. Уверен на 95% — действуем автоматически, меньше — зовём большую модель или человека.</li>
+</ul>
+<h2>Почему этого не было раньше</h2>
+<p>Классификаторы живут в проде со времён BERT. Но каждый приходилось обучать под свои классы на размеченных данных: новый вопрос — новый датасет и новое обучение.</p>
+<p>LLM решили проблему гибкости: задал вопрос словами и получил ответ без обучения. Зато они медленные, дорогие и отвечают текстом.</p>
+<p>Jev взял сильное от обоих. Вопросы и варианты задаются словами прямо в запросе, как у LLM, а ответ приходит за один проход с откалиброванными вероятностями, как у классификатора. Сам трюк «читать логиты вариантов вместо генерации» известен давно. Новое в том, что его упаковали в универсальный продукт и отдельно научили модель честно оценивать свою уверенность.</p>
+<p>Минус один, и для нас он решающий: Jev — закрытое API в американском облаке. Для крупной российской компании с чувствительными данными это сразу мимо.</p>
+<h2>Ответ open source</h2>
+<p>За две недели появилось около 70 открытых реплик Jev. Их даже сравнивают на отдельном лидерборде, Decision Index: ~120 тысяч решений на каждую модель. Дальше цифры по его последней версии, 0.2.1. Вот три модели, на которые стоит смотреть.</p>
+<p><strong>Nimble от Bespoke Labs.</strong> Вышел через три дня после Jev. Под капотом Qwen3.5-9B + LoRA и всего 2 676 синтетических примеров.</p>
+<p>Главная фишка — контрастивная курация данных. Пишутся два почти одинаковых примера, которые отличаются одним фактом. «Возврат подписала Мира, а право подписи есть только у Миры» — ответ «да». Меняем Миру на Ноа — ответ «нет». Модель учится смотреть ровно на тот факт, который меняет решение.</p>
+<p>На собственном тесте Bespoke из 324 примеров первая версия совпала с эталоном в 90,1% случаев против 93,2% у Jev. Свежий <strong>Nimble V3</strong>, по замеру самих Bespoke Labs, набрал 56,88 на Decision Index против 57,91 у Jev: разрыв в один пункт при 9B параметров. Но V3 вышел под некоммерческой лицензией CC BY-NC. Для прода остаётся первая версия под Apache 2.0, она уже есть в предрелизной версии Ollama.</p>
+<p><strong>Laya от Convai.</strong> Подход совсем другой: не генеративная LLM, а энкодер ModernBERT на 421M параметров. ~33 мс на старенькой T4, есть мультиязычная версия на 100+ языков.</p>
+<p>Из коробки Laya почти случайна: 6,04 на Decision Index против 57,91 у Jev. Это база под дообучение, а не готовый решатель. После дообучения на своей задаче она обгоняла Jev по точности: 0,766 против опубликованных 0,727, по данным авторов.</p>
+<p><strong>Open-Jev.</strong> Семейство 2B / 9B / 27B от Zefan Cai: LoRA плюс отдельно обученная «голова» решений, Apache 2.0. Старшая 27B решает 197 из 231 задачи публичного JevBench против 200 у Jev (цифры авторов).</p>
+<h2>Где это применять</h2>
+<ul>
+<li><strong>Роутинг</strong>: какую модель или агента звать на задачу — дешёвую или мощную.</li>
+<li><strong>Гарды и модерация</strong> на входе в корпоративного ассистента.</li>
+<li><strong>RAG</strong>: отсев нерелевантных чанков до вызова большой модели.</li>
+<li><strong>Триаж</strong> тикетов, инцидентов, MR.</li>
+<li><strong>Проверка действий агента</strong>: «может ли этот shell-вызов навредить?»</li>
+<li><strong>LLM-as-judge с эскалацией</strong>: уверен — принимаем, сомневается — отдаём большой модели.</li>
+</ul>
+<p>Общий паттерн — каскад. Маленькая модель закрывает поток рутинных решений, а большая подключается только там, где маленькая не уверена. Отсюда экономия в десятки раз и задержка в сотни миллисекунд вместо секунд.</p>
+<h2>Моё мнение как практика</h2>
+<p>Направление мне нравится: связка «System One для решений + System Two для рассуждений» почти наверняка станет стандартной архитектурой агентов. Но тащить эти модели в прод завтра я бы не стал.</p>
+<ul>
+<li><strong>Русский язык придётся проверять самим</strong>, на своих данных.</li>
+<li><strong>Калибровка у всех разная.</strong> У Nimble v2 на лидерборде она даже лучше, чем у Jev (ошибка 0,024 против 0,074), а у некоторых реплик втрое хуже. А пороги «автомат или человек» держатся именно на ней.</li>
+<li><strong>Лицензии.</strong> Nimble V3, например, нельзя использовать коммерчески.</li>
+<li><strong>Модели только выбирают из заданного.</strong> Объяснить своё решение они не могут.</li>
+</ul>
+<p>Рецепт такой: берёте открытую модель, собираете 200–300 своих реальных кейсов с разметкой и меряете. Если цифры устроят, дообучаете на своём домене. Прелесть open source в том, что это вообще можно сделать.</p>
+<ul>
+<li>Nimble: <a href="https://github.com/bespokelabsai/nimble">github.com/bespokelabsai/nimble</a></li>
+<li>Лидерборд Decision Index: <a href="https://huggingface.co/spaces/multimodalart/jev-decision-index">huggingface.co/spaces/multimodalart/jev-decision-index</a></li>
+</ul>
+<h2>Хотите так же у себя?</h2>
+<p>Провожу воркшопы для команд разработки на вашем стеке и веду спринты внедрения с метриками: <a href="https://makeitbeta.ru/consulting/">makeitbeta.ru/consulting</a>. Новые разборы — в Telegram-канале <a href="https://t.me/pavlenkodev">@pavlenkodev</a>.</p>
+    </article>
+
+    <footer class="post-translator">
+      Автор: <a href="https://t.me/pavlenkodev">Павел Павленко</a> для канала <a href="https://t.me/pavlenkodev">@pavlenkodev</a>
+    </footer>
+
+  </div>
+
+  <footer class="footer" style="border-top:1px solid var(--border);">
+    <div class="wrap footer__wrap">
+      <span class="footer__copy">© 2026 Make It Beta</span>
+      <a href="https://t.me/pavlenkodev" class="footer__contact" target="_blank">@pavlenkodev ↗</a>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('pre code').forEach(function (el) {
+        hljs.highlightElement(el);
+      });
+    });
+  </script>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+ (function(m,e,t,r,i,k,a){
+ m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+ m[i].l=1*new Date();
+ for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+ k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+ })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108768403', 'ym');
+
+ ym(108768403, 'init', {ssr:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108768403" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</body>
+</html>
