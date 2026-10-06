@@ -1,4 +1,4 @@
-.post-body--splash > p, .post-body--splash > h2 { max-width: 760px; }
+.post-body--splash { max-width: 760px; }
 .post-body--splash > p:first-child { font-size: 1.18rem; line-height: 1.7; }
 .splash-figure {
   --chart-omlx: #2869b0;
@@ -18,7 +18,7 @@
 .chart-legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: .82rem; color: var(--ink); }
 .chart-legend span { display: inline-flex; align-items: center; gap: 6px; }
 .chart-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; background: var(--series-color); }
-.chart-switch { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--border); border-radius: 8px; width: fit-content; }
+.chart-switch { display: flex; flex-wrap: wrap; max-width: 100%; gap: 4px; padding: 4px; border: 1px solid var(--border); border-radius: 8px; width: fit-content; }
 .chart-switch button { font: inherit; font-size: .84rem; line-height: 1.4; padding: 8px 12px; border: 0; border-radius: 5px; background: transparent; color: var(--ink-soft); cursor: pointer; }
 .chart-switch button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
 .chart-switch button:focus-visible, .splash-figure summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
@@ -29,6 +29,7 @@
 .chart-host .chart-grid { stroke: var(--border); stroke-width: 1; }
 .chart-host .value-label { font-weight: 500; }
 .chart-host .saving-label { fill: var(--accent); font-size: 13px; font-weight: 600; }
+.chart-host .time-increase { fill: var(--ink); }
 .chart-host .series-splash { fill: var(--chart-splash); stroke: var(--chart-splash); }
 .chart-host .series-ollama { fill: var(--chart-ollama); stroke: var(--chart-ollama); }
 .chart-host .series-omlx { fill: var(--chart-omlx); stroke: var(--chart-omlx); }
@@ -41,14 +42,13 @@
 .splash-figure table, .splash-method table { width: 100%; border-collapse: collapse; font-size: .86rem; text-align: left; line-height: 1.5; }
 .splash-figure th, .splash-figure td, .splash-method th, .splash-method td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--border); }
 .splash-figure th:not(:first-child), .splash-figure td:not(:first-child) { text-align: right; white-space: nowrap; }
-.splash-method { max-width: 850px; margin-bottom: 28px; }
+.splash-method { max-width: 100%; margin-bottom: 28px; }
 .splash-method p { font-size: .92rem; }
 .splash-figure .chart-note { font-size: .86rem; color: var(--ink-soft); line-height: 1.6; margin: 14px 0 0; }
 [hidden] { display: none !important; }
 @media (max-width: 600px) {
   .blog-wrap { padding: 0 20px; }
   .post-header h1 { font-size: 1.55rem; }
-  .splash-figure { margin-left: -6px; margin-right: -6px; }
   .chart-tools { gap: 16px; }
   .chart-host .saving-label { font-size: 12px; }
 }

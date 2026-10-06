@@ -56,7 +56,11 @@
     rows.forEach((row, i) => {
       const y = i * rowH;
       text(svg, left, y + 19, row.label, 'value-label');
-      if (row.saving !== null && row.saving !== undefined) text(svg, w - 2, y + 19, `−${Math.round(row.saving)}%`, 'saving-label', 'end');
+      if (row.saving !== null && row.saving !== undefined) {
+        const delta = -Math.round(row.saving);
+        const sign = delta > 0 ? '+' : delta < 0 ? '−' : '';
+        text(svg, w - 2, y + 19, `${sign}${Math.abs(delta)}%`, `saving-label${delta > 0 ? ' time-increase' : ''}`, 'end');
+      }
       ['Ollama', 'Splash'].forEach((engine, index) => {
         const value = row[engine.toLowerCase()];
         const by = y + 35 + index * 26;
@@ -76,10 +80,11 @@
       });
     });
   }
-  const states = {basic: 'relative', context: 'first'};
+  const states = {basic: 'relative', context: 'first', agent: 'relative'};
   const basicHost = document.getElementById('basic-chart');
   const contextHost = document.getElementById('context-chart');
   const vendorHost = document.getElementById('vendor-chart');
+  const agentHost = document.getElementById('agent-chart');
   function basic() {
     const relative = states.basic === 'relative';
     paired(basicHost, data.basic, states.basic, relative ? 100 : 200, relative ? [0,25,50,75,100] : [0,50,100,150,200], relative ? '%' : 'с', relative ? 'Полное время ответа относительно Ollama. Ollama принята за 100%. Меньше лучше.' : 'Полное время ответа в секундах. Меньше лучше.');
@@ -91,20 +96,30 @@
     paired(contextHost, rows, first ? 'minutes' : 'seconds', first ? 120 : 6, first ? [0,30,60,90,120] : [0,1,2,3,4,5,6], first ? 'мин' : 'с', first ? 'Первый запрос на большом контексте, минуты. Таймаут не считается завершённым ответом.' : 'Следующий ход с общим префиксом, секунды. Для Ollama 256K запрос пропущен после таймаута.');
     document.getElementById('context-note').textContent = first ? 'Ollama 256K: таймаут, процент не вычисляется.' : 'Продолжение с заданным правильным ответом в истории.';
   }
+  function agent() {
+    const relative = states.agent === 'relative';
+    const names = {quote:'Корзина', events:'Возвраты', csv:'Импорт CSV'};
+    const rows = data.agent.tasks.map(row => ({label:names[row.task], ollama:row.ollama_seconds, splash:row.splash_seconds, saving:row.waiting_time_reduction_pct}));
+    rows.push({label:'Вся цепочка', ollama:data.agent.engines.ollama.seconds, splash:data.agent.engines.splash.seconds, saving:data.agent.total_waiting_time_reduction_pct});
+    paired(agentHost, rows, states.agent, relative ? 125 : 300, relative ? [0,25,50,75,100,125] : [0,60,120,180,240,300], relative ? '%' : 'с', relative ? 'Полное время работы Pi относительно Ollama. По заданиям и за всю цепочку, включая CSV. Меньше лучше.' : 'Полное время работы Pi в секундах, по заданиям и за всю цепочку. Меньше лучше.');
+    document.getElementById('agent-note').textContent = 'Вся цепочка включает все три задания, в том числе CSV.';
+  }
   document.querySelectorAll('[data-chart-controls]').forEach(group => {
     group.hidden = false;
     group.querySelectorAll('button').forEach(button => button.addEventListener('click', () => {
       states[group.dataset.chartControls] = button.dataset.mode;
       group.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
-      if (group.dataset.chartControls === 'basic') basic(); else context();
+      if (group.dataset.chartControls === 'basic') basic();
+      else if (group.dataset.chartControls === 'agent') agent();
+      else context();
     }));
   });
   let pending;
-  const render = () => {vendor(vendorHost); basic(); context();};
+  const render = () => {vendor(vendorHost); basic(); context(); agent();};
   const observer = new ResizeObserver(() => {
     cancelAnimationFrame(pending);
     pending = requestAnimationFrame(render);
   });
-  [vendorHost, basicHost, contextHost].forEach(host => observer.observe(host));
+  [vendorHost, basicHost, contextHost, agentHost].forEach(host => observer.observe(host));
   render();
 })();
