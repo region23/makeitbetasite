@@ -8,8 +8,12 @@
     "reasoning": false,
     "basic_repeats": 3,
     "large_context_repeats": 1,
-    "actual_tool_agent": false,
-    "followup": "Fixed canonical correct assistant answer supplied for equal histories; checks continuation and cache, not independent retrieval."
+    "actual_tool_agent": true,
+    "followup": "HTTP 128K/256K: canonical correct answer supplied for equal histories, checking continuation/cache. Pi: genuine generated answers and tool results retained in growing history.",
+    "tool_agent_windows": [
+      32768
+    ],
+    "http_benchmarks_use_tools": false
   },
   "vendor": {
     "source": "https://inco.ai/blog/splash/",
@@ -106,5 +110,81 @@
       "ollama_partial_stream_retained": false
     }
   ],
-  "source_comparison_sha256": "53fe7000df336977c637b179535fd1b8cac05a9fbc4fc469119f9d798fa53a4d"
+  "source_comparison_sha256": "53fe7000df336977c637b179535fd1b8cac05a9fbc4fc469119f9d798fa53a4d",
+  "agent": {
+    "pi": "1.0.4",
+    "window": 32768,
+    "repeats": 1,
+    "initial_request_identical_except_model": true,
+    "initial_request_sha256_except_model": "40507d04166cc72d5c0bafa98ebbb3f35668d032b1d372e58ff37f433267fd68",
+    "max_prompt_tokens": {
+      "ollama": 11515,
+      "splash": 13145
+    },
+    "tasks": [
+      {
+        "task": "quote",
+        "ollama_seconds": 73.05114204100391,
+        "splash_seconds": 61.15213124999718,
+        "tests": 8,
+        "ollama_success": true,
+        "splash_success": true,
+        "waiting_time_reduction_pct": 16.288603379161092,
+        "ollama_calls": 6,
+        "splash_calls": 7,
+        "ollama_tools": 6,
+        "splash_tools": 8
+      },
+      {
+        "task": "events",
+        "ollama_seconds": 81.30204558301193,
+        "splash_seconds": 64.13298333399871,
+        "tests": 18,
+        "ollama_success": true,
+        "splash_success": true,
+        "waiting_time_reduction_pct": 21.117626408898992,
+        "ollama_calls": 6,
+        "splash_calls": 6,
+        "ollama_tools": 6,
+        "splash_tools": 6
+      },
+      {
+        "task": "csv",
+        "ollama_seconds": 83.61567262499011,
+        "splash_seconds": 91.22197379200952,
+        "tests": 27,
+        "ollama_success": true,
+        "splash_success": true,
+        "waiting_time_reduction_pct": -9.096740991528085,
+        "ollama_calls": 5,
+        "splash_calls": 8,
+        "ollama_tools": 5,
+        "splash_tools": 8
+      }
+    ],
+    "engines": {
+      "ollama": {
+        "success": true,
+        "seconds": 237.96886024900596,
+        "model_calls": 17,
+        "tool_completed": 17,
+        "blocked_tools": 0,
+        "tool_errors": 0,
+        "thinking_blocks": 0,
+        "output_tokens": 2900
+      },
+      "splash": {
+        "success": true,
+        "seconds": 216.5070883760054,
+        "model_calls": 21,
+        "tool_completed": 22,
+        "blocked_tools": 0,
+        "tool_errors": 0,
+        "thinking_blocks": 0,
+        "output_tokens": 2996
+      }
+    },
+    "total_waiting_time_reduction_pct": 9.018731211530518
+  },
+  "source_agent_comparison_sha256": "d0c086a0474b4d92a1d61dcf22ec33959d0095f9c64b4dc761c1c3f02446823e"
 }
