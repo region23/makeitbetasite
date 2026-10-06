@@ -124,7 +124,8 @@
     const rows=accepted.map(r=>({label:labels[r.task],ollama:r.ollama_seconds,splash:r.splash_seconds,saving:r.waiting_time_reduction_pct}));
     if(complete) rows.push({label:'Вся цепочка',ollama:pilot.engines.ollama.seconds,splash:pilot.engines.splash.seconds,saving:pilot.total_waiting_time_reduction_pct});
     paired(hosts.agent,rows,states.agent==='relative',complete?'Pi: время заданий и всей завершённой цепочки. Меньше лучше.':'Pi: время заданий, принятых у обоих движков. Меньше лучше.');
-    document.getElementById('agent-note').textContent=complete?'Вся цепочка включает все три задания, в том числе CSV.':`Принято заданий: Ollama ${pilot.engines.ollama.tasks_completed}/3, Splash ${pilot.engines.splash.tasks_completed}/3. На графике только исправления, принятые у обоих; процент выигрыша всей цепочки не вычисляется.`;
+    const metric=states.agent==='relative'?'Время исправлений: Ollama = 100%. Чем меньше, тем лучше.':'Время исправлений в секундах. Чем меньше, тем лучше.';
+    document.getElementById('agent-note').textContent=complete?metric:`${metric} Принято заданий: Ollama ${pilot.engines.ollama.tasks_completed}/3, Splash ${pilot.engines.splash.tasks_completed}/3. На графике только исправления, принятые у обоих; процент выигрыша всей цепочки не вычисляется.`;
   }
   document.querySelectorAll('[data-chart-controls]').forEach(group=>{
     group.hidden=false;
