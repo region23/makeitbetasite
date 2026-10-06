@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-10-06-splash-ollama-mac-mini",
+    "title": "Splash и Ollama на Mac mini: проверил скорость до 256K контекста",
+    "date": "2026-10-06",
+    "date_ru": "6 октября 2026",
+    "category": "оригинал",
+    "original_url": "",
+    "original_author": "",
+    "translated_by": "Павел Павленко",
+    "translator_url": "https://t.me/pavlenkodev",
+    "channel_url": "https://t.me/pavlenkodev",
+    "channel_name": "@pavlenkodev",
+    "read_time": "6 мин"
+  },
+  {
     "slug": "2026-09-30-jev-decision-models",
     "title": "Модели, которые не пишут текст: Jev и его открытые аналоги",
     "date": "2026-09-30",

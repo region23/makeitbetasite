@@ -1,0 +1,58 @@
+.post-body--splash > p, .post-body--splash > h2 { max-width: 760px; }
+.post-body--splash > p:first-child { font-size: 1.18rem; line-height: 1.7; }
+.splash-figure {
+  --chart-omlx: #2869b0;
+  --chart-uzu: #8255a5;
+  --chart-splash: var(--accent);
+  --chart-ollama: var(--ink-soft);
+  margin: 32px 0 38px;
+  padding: 24px clamp(14px, 3vw, 30px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--border) 12%, var(--bg));
+}
+[data-theme="dark"] .splash-figure { --chart-omlx: #79afea; --chart-uzu: #c7a0e4; }
+.splash-figure figcaption { font-size: 1.05rem; font-weight: 600; line-height: 1.5; color: var(--ink); }
+.splash-figure .chart-caption { font-size: .88rem; color: var(--ink-soft); line-height: 1.6; margin: 6px 0 14px; }
+.chart-tools { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+.chart-legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: .82rem; color: var(--ink); }
+.chart-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.chart-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; background: var(--series-color); }
+.chart-switch { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--border); border-radius: 8px; width: fit-content; }
+.chart-switch button { font: inherit; font-size: .84rem; line-height: 1.4; padding: 8px 12px; border: 0; border-radius: 5px; background: transparent; color: var(--ink-soft); cursor: pointer; }
+.chart-switch button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.chart-switch button:focus-visible, .splash-figure summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.chart-host { width: 100%; min-width: 0; }
+.chart-host svg { display: block; width: 100%; overflow: visible; }
+.chart-host text { font-family: var(--font-body); font-size: 13px; fill: var(--ink); font-variant-numeric: tabular-nums; }
+.chart-host .axis-label { fill: var(--ink-soft); font-size: 12px; }
+.chart-host .chart-grid { stroke: var(--border); stroke-width: 1; }
+.chart-host .value-label { font-weight: 500; }
+.chart-host .saving-label { fill: var(--accent); font-size: 13px; font-weight: 600; }
+.chart-host .series-splash { fill: var(--chart-splash); stroke: var(--chart-splash); }
+.chart-host .series-ollama { fill: var(--chart-ollama); stroke: var(--chart-ollama); }
+.chart-host .series-omlx { fill: var(--chart-omlx); stroke: var(--chart-omlx); }
+.chart-host .series-uzu { fill: var(--chart-uzu); stroke: var(--chart-uzu); }
+.chart-host .series-line { fill: none; stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
+.chart-host .timeout-line { stroke: var(--chart-ollama); stroke-dasharray: 5 4; stroke-width: 2; }
+.splash-figure details, .splash-method { margin-top: 18px; border-top: 1px solid var(--border); padding-top: 14px; }
+.splash-figure summary, .splash-method summary { cursor: pointer; font-size: .9rem; color: var(--ink-soft); }
+.splash-table-scroll { overflow-x: auto; margin-top: 16px; }
+.splash-figure table, .splash-method table { width: 100%; border-collapse: collapse; font-size: .86rem; text-align: left; line-height: 1.5; }
+.splash-figure th, .splash-figure td, .splash-method th, .splash-method td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--border); }
+.splash-figure th:not(:first-child), .splash-figure td:not(:first-child) { text-align: right; white-space: nowrap; }
+.splash-method { max-width: 850px; margin-bottom: 28px; }
+.splash-method p { font-size: .92rem; }
+.splash-figure .chart-note { font-size: .86rem; color: var(--ink-soft); line-height: 1.6; margin: 14px 0 0; }
+[hidden] { display: none !important; }
+@media (max-width: 600px) {
+  .blog-wrap { padding: 0 20px; }
+  .post-header h1 { font-size: 1.55rem; }
+  .splash-figure { margin-left: -6px; margin-right: -6px; }
+  .chart-tools { gap: 16px; }
+  .chart-host .saving-label { font-size: 12px; }
+}
+@media print {
+  .chart-switch { display: none; }
+  .splash-figure { break-inside: avoid; }
+}
