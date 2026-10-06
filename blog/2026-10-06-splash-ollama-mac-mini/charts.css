@@ -18,6 +18,7 @@
 .chart-legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: .82rem; color: var(--ink); }
 .chart-legend span { display: inline-flex; align-items: center; gap: 6px; }
 .chart-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; background: var(--series-color); }
+.chart-key { width: 24px; height: 12px; flex: none; }
 .chart-switch { display: flex; flex-wrap: wrap; max-width: 100%; gap: 4px; padding: 4px; border: 1px solid var(--border); border-radius: 8px; width: fit-content; }
 .chart-switch button { font: inherit; font-size: .84rem; line-height: 1.4; padding: 8px 12px; border: 0; border-radius: 5px; background: transparent; color: var(--ink-soft); cursor: pointer; }
 .chart-switch button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
@@ -43,6 +44,7 @@
 .splash-figure th, .splash-figure td, .splash-method th, .splash-method td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--border); }
 .splash-figure th:not(:first-child), .splash-figure td:not(:first-child) { text-align: right; white-space: nowrap; }
 .splash-method { max-width: 100%; margin-bottom: 28px; }
+.splash-method { overflow-wrap: anywhere; }
 .splash-method p { font-size: .92rem; }
 .splash-figure .chart-note { font-size: .86rem; color: var(--ink-soft); line-height: 1.6; margin: 14px 0 0; }
 [hidden] { display: none !important; }
