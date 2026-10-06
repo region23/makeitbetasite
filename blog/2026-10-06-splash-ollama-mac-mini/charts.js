@@ -80,7 +80,7 @@
     }));
     lineChart(hosts.context,rows,series,decode?'токенов/с':'секунды',decode?'Mac mini: скорость генерации после чтения входа, 8K–128K. Reasoning включён.':'Mac mini: ожидание первого токена на холодном входе. На 128K один замер.',{labels:true,decimals:decode?1:0});
     document.getElementById('context-caption').textContent=decode?'Mac mini: скорость и размер контекста':'Mac mini: ожидание первого токена';
-    document.getElementById('context-note').textContent=decode?'128K: один вход и три генерации. Остальные точки: три разных задания.':'8K–32K: медиана трёх холодных запросов. 128K: один холодный запрос.';
+    document.getElementById('context-note').textContent=decode?'Медианы и диапазоны трёх генераций. 128K: один вход; остальные точки: три разных задания.':'8K–32K: медиана трёх холодных запросов. 128K: один холодный запрос.';
   }
   function paired(host,rows,relative,title) {
     const values=rows.flatMap(r=>relative?[100,r.splash/r.ollama*100]:[r.ollama,r.splash]);
