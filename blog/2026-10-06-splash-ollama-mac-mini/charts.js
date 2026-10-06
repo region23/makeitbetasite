@@ -83,13 +83,13 @@
   function basic() {
     const relative = states.basic === 'relative';
     paired(basicHost, data.basic, states.basic, relative ? 100 : 200, relative ? [0,25,50,75,100] : [0,50,100,150,200], relative ? '%' : 'с', relative ? 'Полное время ответа относительно Ollama. Ollama принята за 100%. Меньше лучше.' : 'Полное время ответа в секундах. Меньше лучше.');
-    document.getElementById('basic-note').textContent = relative ? 'Ollama = 100%. Оранжевая полоса показывает оставшееся время Splash. Процент справа от задания показывает сокращение ожидания.' : 'Полное время от отправки запроса до конца ответа. Медианы трёх повторов; для четырёх запросов измерена вся серия.';
+    document.getElementById('basic-note').textContent = relative ? 'Полное время ответа. Ollama = 100%.' : 'Полное время ответа, секунды.';
   }
   function context() {
     const first = states.context === 'first';
     const rows = data.context.map(row => ({label: row.label, ollama: row[first ? 'first' : 'followup'].ollama === null ? null : row[first ? 'first' : 'followup'].ollama / (first ? 60 : 1), splash: row[first ? 'first' : 'followup'].splash / (first ? 60 : 1), saving: row[first ? 'first' : 'followup'].saving, timeout: first && row.first.ollama === null}));
     paired(contextHost, rows, first ? 'minutes' : 'seconds', first ? 120 : 6, first ? [0,30,60,90,120] : [0,1,2,3,4,5,6], first ? 'мин' : 'с', first ? 'Первый запрос на большом контексте, минуты. Таймаут не считается завершённым ответом.' : 'Следующий ход с общим префиксом, секунды. Для Ollama 256K запрос пропущен после таймаута.');
-    document.getElementById('context-note').textContent = first ? 'Пунктир показывает границу таймаута Ollama, а не время завершённого ответа. На 256K процент не вычисляется. На каждом окне один прогон.' : 'В истории задан правильный ответ для одинакового входа. Этот ход проверяет продолжение и кэш. Входные токены: 129 999 на 128K; 261 099 у Splash на 256K.';
+    document.getElementById('context-note').textContent = first ? 'Ollama 256K: таймаут, процент не вычисляется.' : 'Продолжение с заданным правильным ответом в истории.';
   }
   document.querySelectorAll('[data-chart-controls]').forEach(group => {
     group.hidden = false;
