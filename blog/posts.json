@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-11-02-deepseek-super-agent",
+    "title": "Исследуя устройство суперагента: на пути к более автономной агентной системе",
+    "date": "2026-11-02",
+    "date_ru": "2 ноября 2026",
+    "category": "перевод",
+    "original_url": "https://x.com/DeepSeekHarness/status/2116857257245987236",
+    "original_author": "Yujia Qiao / DeepSeek Harness",
+    "translated_by": "Codex",
+    "translator_url": "https://openai.com/codex/",
+    "channel_url": "https://t.me/pavlenkodev",
+    "channel_name": "@pavlenkodev",
+    "read_time": "35 мин"
+  },
+  {
     "slug": "2026-10-06-splash-ollama-mac-mini",
     "title": "Протестировал Splash и Ollama на своём Mac mini",
     "date": "2026-10-06",
