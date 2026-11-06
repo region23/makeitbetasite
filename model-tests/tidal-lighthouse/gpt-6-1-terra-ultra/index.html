@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#dce9e6" />
+  <title>The Tidal Lighthouse</title>
+  <script type="module" crossorigin src="/model-tests/tidal-lighthouse/gpt-6-1-terra-ultra/assets/index-DLL0CZKw.js"></script>
+  <link rel="stylesheet" crossorigin href="/model-tests/tidal-lighthouse/gpt-6-1-terra-ultra/assets/index-CR8WEsh4.css">
+</head>
+<body>
+  <main id="app" aria-label="Animated coastal lighthouse diorama">
+    <canvas id="scene" aria-label="Interactive three-dimensional coastal diorama"></canvas>
+    <div class="interface" id="interface">
+      <header class="masthead">
+        <span class="eyebrow">A little world by the sea</span>
+        <h1>The Tidal<br><em>Lighthouse</em></h1>
+        <div class="rule"></div>
+        <p>Where the headland meets<br>the open water.</p>
+      </header>
+      <div class="scene-note"><span class="dot"></span> LATE AFTERNOON <span class="slash">/</span> THE COAST</div>
+      <aside class="controls" aria-label="Camera controls">
+        <div><span class="mouse-icon">◒</span><span>Drag to orbit</span></div>
+        <div><span class="key">↗</span><span>Right-drag to pan</span></div>
+        <div><span class="key">↕</span><span>Scroll to zoom</span></div>
+        <div class="control-divider"></div>
+        <div><span class="key">R</span><span>Reset view</span></div>
+        <div><span class="key">H</span><span>Hide interface</span></div>
+      </aside>
+      <button class="about-trigger" id="about-trigger" type="button" aria-haspopup="dialog">About this diorama <span aria-hidden="true">↗</span></button>
+      <footer>AN INTERACTIVE COASTAL STUDY <span>✳</span> TAKE YOUR TIME</footer>
+    </div>
+    <dialog class="about-dialog" id="about-dialog" aria-labelledby="about-title">
+      <div class="about-heading">
+        <div><span class="about-kicker">Behind the scene</span><h2 id="about-title">About this diorama</h2></div>
+        <button class="about-close" id="about-close" type="button" aria-label="Close dialog">×</button>
+      </div>
+      <p class="model-label">Created with</p>
+      <p class="model-name">GPT-6.1 Terra Ultra</p>
+      <div class="about-rule"></div>
+      <h3>Prompt to recreate</h3>
+      <div class="prompt-text">
+        <p>Build an animated Three.js diorama: THE TIDAL LIGHTHOUSE.</p>
+        <p>A rugged miniature coastline curves around a sheltered turquoise harbor. On the highest rocky point stands a weathered red-and-white lighthouse. A winding stone stair connects it to a tiny fishing cottage, a wooden jetty and two moored boats.</p>
+        <p>Compose the landscape as one irregular island-like display piece against a soft pale background. Its cutaway sides reveal layered rock, sand and the underwater seabed. Give the coastline a strong silhouette and make it interesting from every side.</p>
+        <p>The ocean is the main visual attraction. On the exposed side, rolling swells approach the rocks, steepen and break into white foam. Water washes across low rock shelves and drains back. In the sheltered harbor, use smaller ripples and clearer water, revealing sand, stones and patches of sea grass. Transition naturally from deep blue to turquoise to transparent shallows.</p>
+        <p>Give the lighthouse and cottage tactile detail: worn plaster, stone foundations, a copper lantern roof, window frames, warm interior light, ropes and fishing equipment near the jetty. Use coastal grasses and small flowers sparingly.</p>
+        <p>Set the scene in late-afternoon light: warm sun on the buildings, cool blue shadows in the rocks, bright foam and restrained reflections. Keep the scene readable and richly colored.</p>
+        <p>Everything runs continuously: waves arrive in overlapping sets, foam disperses, boats bob gently on their moorings, a few gulls circle and grass moves in the wind. Keep the water motion coherent, with the sheltered harbor visibly calmer than the open coast.</p>
+        <p>During the daylight scene, add a few dolphins (3–5) swimming through the open ocean. They occasionally surface and make small, graceful leaps out of the water at varied, semi-random intervals, with subtle splashes and wakes. Vary their routes and stagger their timing so their appearances feel natural and spontaneous. Keep them away from the rocks and boats, and make their appearances occasional enough that the water remains the main attraction.</p>
+        <p>Give me full manual camera control: mouse drag to orbit, right-drag to pan, wheel to zoom, with smooth damping. Start with a beautiful elevated three-quarter view showing both the harbor and breaking waves. Keep the camera entirely under my control. H hides any interface; R resets the view.</p>
+        <p>Generate all geometry and textures in code. Use Three.js and necessary libraries, without downloaded images or models. Deliver a compact runnable web project.</p>
+        <p>Concentrate on beautiful water, a strong composition and convincing light. Check the result in the browser from an overall view and a closer water-level view, fix obvious problems, then deliver with launch instructions. Avoid adding unrelated features or a testing framework.</p>
+        <p>In the finished diorama, include an accessible, unobtrusive section that identifies the AI model used to create it and displays the complete prompt used to generate it, including this instruction, so others can copy it and try it themselves. Use the actual model name and variant when known; if they are not available, say so rather than guessing. Keep this section hidden along with the rest of the interface when H is pressed.</p>
+      </div>
+    </dialog>
+    <div class="loading" id="loading">Finding the shoreline<span>…</span></div>
+  </main>
+</body>
+</html>

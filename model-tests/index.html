@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Сравниваем, как разные модели справляются с одними и теми же промптами">
+  <title>Тесты моделей — Make It Beta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/model-tests/model-tests.css">
+  <script>(function(){var stored=localStorage.getItem('theme');var dark=stored?stored==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',dark?'dark':'light');})();</script>
+</head>
+<body>
+  <header class="header"><div class="wrap header__wrap">
+    <a href="/" class="logo">Make It Beta<sup>🧪</sup></a>
+    <nav class="header__nav" id="headerNav" aria-label="Основная навигация">
+      <a href="/model-tests/" class="header__link" aria-current="page">Тесты моделей</a>
+      <a href="/blog/" class="header__link">Блог</a>
+      <a href="/" class="header__link">На главную</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему"><span id="themeIcon">🌙</span></button>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Меню"><span></span><span></span><span></span></button>
+  </div></header>
+  <main class="tests wrap">
+    <div class="breadcrumbs"><a href="/">Главная</a><span>/</span><span>Тесты моделей</span></div>
+    <section class="tests-hero">
+      <div><p class="eyebrow">Практические эксперименты</p><h1>Один промпт.<br><em>Разные модели</em></h1></div>
+      <div class="hero-copy"><p>Смотрим, что получается, когда разные модели получают одну и ту же задачу. Без выдуманных оценок — с промптом, условиями и готовыми результатами.</p><a class="text-link" href="#cases">Смотреть эксперименты <span>↓</span></a></div>
+    </section>
+    <section id="cases" class="cases" aria-labelledby="cases-title">
+      <div class="section-line"><h2 id="cases-title">Эксперименты</h2><span>01 / каталог</span></div>
+      <a href="/model-tests/tidal-lighthouse/" class="case-card">
+        <div class="case-visual" aria-hidden="true"><span class="visual-orbit orbit-one"></span><span class="visual-orbit orbit-two"></span><span class="visual-land"></span><span class="visual-tower"><i></i></span><span class="visual-water"></span></div>
+        <div class="case-copy"><p class="case-kicker">Three.js · интерактивная сцена</p><h3>The Tidal Lighthouse</h3><p>Анимированная береговая диорама с маяком, волнами и дельфинами. Один и тот же промпт для разных моделей.</p><div class="case-bottom"><span>1 опубликованный результат</span><span class="case-arrow" aria-hidden="true">↗</span></div></div>
+      </a>
+    </section>
+    <aside class="method"><span class="method-mark">✳</span><div><h2>Как читать результаты</h2><p>В каждом эксперименте собраны промпт, условия создания и работающие результаты. Новые модели добавим, когда проведём для них тесты.</p></div></aside>
+  </main>
+  <footer class="footer"><div class="wrap footer__wrap"><a href="/" class="logo">Make It Beta 🧪</a><a href="/blog/" class="footer__contact">Блог</a><a href="https://t.me/pavlenkodev" class="footer__contact">Телеграм-канал</a><span class="footer__copy">© 2026 makeitbeta.ru</span></div></footer>
+  <script src="/script.js"></script>
+</body></html>
