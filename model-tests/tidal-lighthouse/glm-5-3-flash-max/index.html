@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Tidal Lighthouse</title>
+<style>
+  :root { --ink: #1e2a30; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; background: #dfe7ec; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  #app { position: fixed; inset: 0; }
+  canvas { display: block; }
+
+  #loading {
+    position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: #dfe7ec; color: #5c6b74; font-size: 14px; letter-spacing: 0.14em; z-index: 20;
+    transition: opacity 0.6s ease; text-transform: uppercase;
+  }
+  #loading.done { opacity: 0; pointer-events: none; }
+
+  #ui { position: fixed; inset: 0; pointer-events: none; z-index: 10; color: var(--ink); }
+  #ui.transition, #ui #title, #ui #hints, #ui #aboutBtn { transition: opacity 0.35s ease; }
+  body.hide-ui #ui { opacity: 0; pointer-events: none !important; }
+  body.hide-ui #ui * { pointer-events: none !important; }
+
+  #title {
+    position: absolute; top: 18px; left: 22px; pointer-events: none;
+  }
+  #title h1 {
+    font-size: 15px; font-weight: 600; letter-spacing: 0.34em; text-transform: uppercase;
+    color: #2b3a42; text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+  }
+  #title p { margin-top: 4px; font-size: 11px; letter-spacing: 0.12em; color: #6b7a83; }
+
+  #hints {
+    position: absolute; right: 20px; bottom: 16px; pointer-events: none;
+    font-size: 11px; letter-spacing: 0.08em; color: #55666f;
+    background: rgba(255,255,255,0.42); backdrop-filter: blur(6px);
+    padding: 7px 12px; border-radius: 999px; border: 1px solid rgba(30,42,48,0.08);
+    white-space: nowrap;
+  }
+  #hints b { font-weight: 600; color: #2b3a42; }
+
+  #aboutBtn {
+    position: absolute; left: 20px; bottom: 16px; pointer-events: auto; cursor: pointer;
+    font-size: 11px; letter-spacing: 0.08em; color: #2b3a42;
+    background: rgba(255,255,255,0.42); backdrop-filter: blur(6px);
+    padding: 7px 12px; border-radius: 999px; border: 1px solid rgba(30,42,48,0.08);
+  }
+  #aboutBtn:hover { background: rgba(255,255,255,0.7); }
+
+  #about {
+    position: absolute; top: 0; right: 0; height: 100%; width: min(520px, 92vw);
+    background: rgba(250, 249, 244, 0.96); backdrop-filter: blur(10px);
+    border-left: 1px solid rgba(30,42,48,0.12);
+    transform: translateX(103%); transition: transform 0.35s ease;
+    pointer-events: auto; display: flex; flex-direction: column;
+    box-shadow: -12px 0 40px rgba(30,42,48,0.10);
+  }
+  #about.open { transform: translateX(0); }
+  #about header { padding: 22px 26px 14px; }
+  #about header h2 { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #2b3a42; }
+  #about header .model { margin-top: 10px; font-size: 13.5px; line-height: 1.55; color: #3c4c55; }
+  #about header .model b { color: #1e2a30; }
+  #about header .model .sub { display: block; margin-top: 3px; font-size: 11.5px; color: #6b7a83; }
+  #aboutClose {
+    position: absolute; top: 16px; right: 18px; cursor: pointer; border: none; background: none;
+    font-size: 20px; color: #6b7a83; line-height: 1; padding: 4px;
+  }
+  #aboutClose:hover { color: #1e2a30; }
+  #about .scroll { flex: 1; overflow-y: auto; padding: 6px 26px 20px; }
+  #about label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #6b7a83; }
+  #promptText {
+    margin-top: 10px; white-space: pre-wrap; font: 12px/1.65 ui-monospace, "SF Mono", Menlo, monospace;
+    color: #33434c; background: rgba(255,255,255,0.65); border: 1px solid rgba(30,42,48,0.10);
+    border-radius: 10px; padding: 16px;
+  }
+  #copyPrompt {
+    margin-top: 12px; cursor: pointer; border: 1px solid rgba(30,42,48,0.16); background: #fff;
+    color: #2b3a42; font-size: 12px; letter-spacing: 0.06em; padding: 8px 14px; border-radius: 999px;
+  }
+  #copyPrompt:hover { background: #eef3f5; }
+  #about .tech { margin-top: 14px; font-size: 11.5px; color: #6b7a83; line-height: 1.6; }
+</style>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="loading">assembling the coastline&hellip;</div>
+
+  <div id="ui">
+    <div id="title">
+      <h1>The Tidal Lighthouse</h1>
+      <p>a miniature coast</p>
+    </div>
+    <div id="hints"><b>drag</b> orbit &nbsp;·&nbsp; <b>right-drag</b> pan &nbsp;·&nbsp; <b>wheel</b> zoom &nbsp;·&nbsp; <b>R</b> reset &nbsp;·&nbsp; <b>H</b> hide</div>
+    <button id="aboutBtn" aria-haspopup="dialog">about · model &amp; prompt</button>
+
+    <section id="about" role="dialog" aria-label="About this piece">
+      <header>
+        <h2>About this piece</h2>
+        <p class="model">
+          Created with <b>GLM-5.3-Flash</b> (Z.ai).
+          <span class="sub">The GLM model powering this ZCode session · November 2026. All geometry, water and textures are generated in code — no images or models are downloaded.</span>
+        </p>
+      </header>
+      <button id="aboutClose" aria-label="Close">✕</button>
+      <div class="scroll">
+        <label>The complete prompt</label>
+        <pre id="promptText"></pre>
+        <button id="copyPrompt">copy prompt</button>
+        <p class="tech">Built with Three.js r160 (vendored locally). Drag to orbit, right-drag to pan, wheel to zoom. H hides this interface; R resets the view.</p>
+      </div>
+    </section>
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./vendor/three.module.js",
+      "three/addons/": "./vendor/"
+    }
+  }
+  </script>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
