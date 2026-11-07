@@ -1,0 +1,300 @@
+/* The Tidal Lighthouse — interface chrome.  Kept light, low-contrast and out of
+   the way of the picture; it all disappears with H. */
+
+:root {
+  --ink: #26333c;
+  --ink-soft: #56666f;
+  --paper: rgba(246, 242, 233, 0.82);
+  --line: rgba(38, 51, 60, 0.16);
+  --accent: #9c3f38;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #e7dfd3;
+  color: var(--ink);
+  font: 400 14px/1.55 ui-sans-serif, -apple-system, "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#stage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  outline: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.ui {
+  position: fixed;
+  z-index: 5;
+  user-select: none;
+}
+
+.ui.hidden {
+  display: none;
+}
+
+/* ----------------------------------------------------------------- title */
+
+#hud {
+  top: 18px;
+  left: 20px;
+  max-width: 34ch;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+#hud .title {
+  margin: 0;
+  font: 600 19px/1.2 "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  letter-spacing: 0.01em;
+}
+
+#hud .sub {
+  margin: 2px 0 12px;
+  font-size: 11.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+#hud .keys {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+
+#hud .keys li {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+kbd {
+  font: 500 10.5px/1.5 ui-monospace, "SF Mono", Menlo, monospace;
+  padding: 1px 5px;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--ink);
+}
+
+/* ----------------------------------------------------------------- about */
+
+#about {
+  bottom: 16px;
+  left: 20px;
+  width: min(560px, calc(100vw - 40px));
+  font-size: 12.5px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  backdrop-filter: blur(7px) saturate(1.1);
+  box-shadow: 0 8px 26px -18px rgba(20, 30, 40, 0.55);
+}
+
+#about summary {
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  color: var(--ink-soft);
+  list-style: none;
+}
+
+#about summary::-webkit-details-marker {
+  display: none;
+}
+
+#about summary::before {
+  content: "▸ ";
+  color: var(--accent);
+}
+
+#about details[open] summary::before {
+  content: "▾ ";
+}
+
+#about summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  border-radius: 8px;
+}
+
+.about-body {
+  padding: 0 14px 13px;
+  max-height: min(56vh, 460px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-top: 1px solid var(--line);
+  user-select: text;
+}
+
+.about-body h2 {
+  margin: 12px 0 3px;
+  font: 600 11px/1.4 "Iowan Old Style", Palatino, Georgia, serif;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.about-body p {
+  margin: 0 0 6px;
+}
+
+.about-body code {
+  font: 500 11.5px/1.5 ui-monospace, Menlo, monospace;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 0 3px;
+  border-radius: 3px;
+}
+
+#prompt {
+  margin: 6px 0 8px;
+  padding: 10px 12px;
+  max-height: 220px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  font: 400 11.5px/1.65 ui-monospace, Menlo, monospace;
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  color: #2b3640;
+}
+
+#prompt:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+#copy {
+  font: 500 11.5px/1 system-ui, sans-serif;
+  padding: 6px 11px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+#copy:hover {
+  background: #fff;
+}
+
+#copy:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+#copy-state {
+  margin-left: 8px;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+
+#about .fine {
+  margin-top: 9px;
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------------- boot */
+
+#boot {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-content: center;
+  gap: 10px;
+  background: #e7dfd3;
+  color: var(--ink-soft);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  transition: opacity 0.7s ease;
+  text-align: center;
+  padding: 0 24px;
+}
+
+#boot.done {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#boot .bar {
+  width: min(280px, 70vw);
+  height: 2px;
+  margin: 0 auto;
+  background: rgba(38, 51, 60, 0.14);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+#boot .bar i {
+  display: block;
+  height: 100%;
+  width: 4%;
+  background: var(--accent);
+  transition: width 0.35s ease;
+}
+
+#nojs {
+  position: fixed;
+  inset: auto 0 0;
+  padding: 14px;
+  background: #fff3f0;
+  color: #7a2f28;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  #hud {
+    top: 12px;
+    left: 14px;
+  }
+  #hud .keys {
+    font-size: 11px;
+  }
+  #about {
+    left: 14px;
+    right: 14px;
+    width: auto;
+    bottom: 10px;
+  }
+  .about-body {
+    max-height: 44vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #boot {
+    transition: none;
+  }
+}

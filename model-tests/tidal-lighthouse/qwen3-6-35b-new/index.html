@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Tidal Lighthouse — Diorama</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { overflow: hidden; background: #d6e4ec; font-family: 'Georgia', serif; }
+canvas { display: block; }
+
+#ui-overlay {
+  position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+  font-size: 12px; color: #4a6274; opacity: 0.7; text-align: center;
+  pointer-events: none; transition: opacity 0.4s ease;
+  background: rgba(255,255,255,0.5); padding: 6px 14px; border-radius: 8px;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+#ui-overlay.hidden { opacity: 0; }
+
+#info-panel {
+  position: fixed; bottom: 16px; right: 16px; max-width: 300px;
+  font-size: 11px; color: #5a7a8c; opacity: 0.6; text-align: right;
+  pointer-events: none; transition: opacity 0.4s ease; line-height: 1.6;
+}
+#info-panel.hidden { opacity: 0; }
+
+.prompt-btn {
+  position: fixed; bottom: 16px; right: 16px;
+  font-size: 12px; color: #5a7a8c; opacity: 0.5;
+  cursor: pointer; pointer-events: auto;
+  background: rgba(255,255,255,0.6); padding: 6px 12px;
+  border-radius: 8px; border: none; font-family: Georgia, serif;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  transition: opacity 0.3s, background 0.3s;
+}
+.prompt-btn:hover { opacity: 1; background: rgba(255,255,255,0.9); }
+.prompt-btn.hidden { opacity: 0; pointer-events: none; }
+
+#prompt-modal {
+  display: none; position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,0.4); justify-content: center; align-items: center;
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+}
+#prompt-modal.open { display: flex; }
+#prompt-modal-content {
+  background: #f8f6f0; border-radius: 12px; padding: 28px 32px;
+  max-width: 640px; max-height: 80vh; overflow-y: auto;
+  font-size: 12px; line-height: 1.75; color: #3a4a5c;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+}
+#prompt-modal-content h3 { font-size: 15px; margin-bottom: 8px; color: #2a3a4c; }
+#prompt-modal-content .model-name { font-style: italic; color: #5a6a7c; }
+#prompt-modal-content textarea {
+  width: 100%; min-height: 200px; border: 1px solid #d0ccc4;
+  border-radius: 6px; padding: 12px; font-family: 'Courier New', monospace;
+  font-size: 11px; line-height: 1.6; resize: vertical; background: #faf8f4;
+}
+#prompt-close {
+  margin-top: 12px; padding: 8px 20px; background: #e8e4dc;
+  border: none; border-radius: 6px; cursor: pointer; font-family: Georgia, serif;
+}
+#prompt-close:hover { background: #ddd8d0; }
+</style>
+</head>
+<body>
+
+<div id="ui-overlay">
+  drag to orbit · right-drag to pan · scroll to zoom · R reset · H hide
+</div>
+
+<button class="prompt-btn" id="promptBtn">ℹ About this scene</button>
+
+<div id="prompt-modal">
+  <div id="prompt-modal-content">
+    <h3>The Tidal Lighthouse — Diorama</h3>
+    <p>AI Model: <span class="model-name" id="modelInfo">Loading...</span></p>
+    <p style="margin-top:8px;">Generated Prompt:</p>
+    <textarea id="promptText" readonly></textarea>
+    <button id="prompt-close">Close</button>
+  </div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>

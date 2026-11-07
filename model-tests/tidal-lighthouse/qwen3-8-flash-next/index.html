@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Tidal Lighthouse — a generated diorama</title>
+<meta name="description" content="An animated Three.js diorama of a lighthouse on a rugged miniature coastline, with breaking swell, a sheltered turquoise harbour and dolphins." />
+<link rel="stylesheet" href="./styles.css" />
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three.module.js",
+    "three/addons/": "./vendor/"
+  }
+}
+</script>
+</head>
+<body>
+<canvas id="stage" role="img" aria-labelledby="stage-title stage-desc" tabindex="0"></canvas>
+
+<h1 id="stage-title" class="sr-only">The Tidal Lighthouse — animated diorama</h1>
+<p id="stage-desc" class="sr-only">
+  A rugged miniature island cut away like a museum display piece: a weathered red-and-white
+  lighthouse on the highest rock, a stone stair winding down to a fishing cottage, a wooden jetty
+  with two moored boats, and an ocean that rolls in as swelling breakers and foam on the exposed
+  coast while the harbour inside stays clear, turquoise and nearly flat. Gulls circle, grasses bend
+  in the wind and dolphins occasionally surface and leap in the open water. Everything is generated
+  in code and rendered in real time; drag to orbit, scroll to zoom.
+</p>
+
+<div id="hud" class="ui">
+  <p class="title">The Tidal Lighthouse</p>
+  <p class="sub">generated diorama · late afternoon, falling tide</p>
+  <ul class="keys" aria-label="Camera controls">
+    <li><kbd>drag</kbd><span>orbit</span></li>
+    <li><kbd>right-drag</kbd><span>pan</span></li>
+    <li><kbd>wheel</kbd><span>zoom</span></li>
+    <li><kbd>H</kbd><span>hide interface</span></li>
+    <li><kbd>R</kbd><span>reset view</span></li>
+  </ul>
+</div>
+
+<aside id="about" class="ui" aria-label="About this scene">
+  <details>
+    <summary>About this scene — model and full prompt</summary>
+    <div class="about-body">
+      <h2>Made by</h2>
+      <p>
+        <strong>Qwen3.8 Flash-Next</strong>, quantised variant <strong>oQ4e&nbsp;MTP</strong>, served
+        locally through the <em>pi</em> coding agent as model id <code>strong</code> on the
+        <code>omlx</code> provider (display name
+        <strong>Strong&nbsp;·&nbsp;Qwen3.8&nbsp;Flash-Next&nbsp;oQ4e&nbsp;MTP</strong>, reasoning effort
+        <code>xhigh</code>). No newer vendor revision string is published by that local endpoint, so
+        none is claimed here.
+      </p>
+      <h2>How it is built</h2>
+      <p>
+        Three.js r166. Every vertex and every texture is produced at load time — heightfield, strata,
+        rocks, plaster, slate, wood, tower bands, netting — with no downloaded images or models. The sea
+        is a Gerstner swell summed from eight components with a fetched wave-shadow and travel-time lag
+        map, screen-space refraction, sky reflection, sun glitter and depth-driven foam; the same wave
+        field is re-evaluated on the CPU so the boats, spray and dolphins ride exactly the water you see.
+      </p>
+      <h2>The complete prompt</h2>
+      <p>
+        Reproduced verbatim, including the instructions about this very section, so you can hand it to
+        another model and compare.
+      </p>
+      <pre id="prompt" tabindex="0" aria-label="Complete prompt used to generate this scene"></pre>
+      <button id="copy" type="button">Copy prompt</button>
+      <span id="copy-state" role="status" aria-live="polite"></span>
+      <p class="fine">
+        Press <kbd>H</kbd> to hide this panel and the rest of the interface; press <kbd>H</kbd> again to
+        bring them back.
+      </p>
+    </div>
+  </details>
+</aside>
+
+<div id="boot">
+  <p id="boot-msg">carving the coastline…</p>
+  <p class="bar"><i id="boot-bar"></i></p>
+</div>
+
+<noscript>
+  <p id="nojs">This diorama needs JavaScript and WebGL&nbsp;2. Please enable both and reload.</p>
+</noscript>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

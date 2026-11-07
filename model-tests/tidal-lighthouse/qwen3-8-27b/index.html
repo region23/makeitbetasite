@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Tidal Lighthouse — an animated diorama</title>
+<style>
+  :root {
+    --ink: #233038;
+    --ink-soft: #4d5a60;
+    --paper: rgba(247, 243, 235, 0.82);
+    --paper-line: rgba(66, 56, 44, 0.18);
+    --copper: #a8622f;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #eee9df; }
+  canvas { display: block; }
+
+  .ui {
+    position: fixed; z-index: 10;
+    color: var(--ink);
+    transition: opacity 0.45s ease, visibility 0.45s ease;
+  }
+  body.ui-hidden .ui { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  .ui-title { top: 18px; left: 22px; max-width: min(46vw, 380px); }
+  .ui-title h1 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(19px, 2.4vw, 27px);
+    letter-spacing: 0.01em;
+  }
+  .ui-title p {
+    margin: 3px 0 0;
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .ui-title .rule {
+    width: 44px; height: 2px; margin-top: 9px;
+    background: var(--copper); opacity: 0.75;
+  }
+
+  .ui-hints {
+    left: 22px; bottom: 16px;
+    font-family: var(--sans);
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    background: var(--paper);
+    border: 1px solid var(--paper-line);
+    border-radius: 8px;
+    padding: 7px 11px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    max-width: min(72vw, 560px);
+    line-height: 1.5;
+  }
+  .ui-hints b { font-weight: 600; color: var(--ink); }
+  .ui-hints .dot { opacity: 0.45; margin: 0 7px; }
+
+  .ui-credits { right: 18px; bottom: 16px; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+  .ui-credits button#creditsBtn {
+    font-family: var(--sans);
+    font-size: 11.5px;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--paper-line);
+    border-left: 3px solid var(--copper);
+    border-radius: 8px;
+    padding: 7px 12px;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .ui-credits button#creditsBtn:hover { background: rgba(255, 251, 243, 0.95); }
+  .ui-credits .panel {
+    width: min(86vw, 360px);
+    max-height: 56vh;
+    overflow: auto;
+    background: var(--paper);
+    border: 1px solid var(--paper-line);
+    border-radius: 10px;
+    padding: 14px 16px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 10px 30px rgba(40, 34, 26, 0.18);
+    font-family: var(--sans);
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .ui-credits .panel h2 {
+    margin: 0 0 4px;
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .ui-credits .panel h2 + h2, .ui-credits .panel p + h2 { margin-top: 14px; }
+  .ui-credits .panel p { margin: 0 0 4px; color: var(--ink-soft); }
+  .ui-credits .panel pre {
+    margin: 8px 0 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid var(--paper-line);
+    border-radius: 7px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+    user-select: text;
+  }
+  .ui-credits .panel button#copyBtn {
+    font-family: var(--sans);
+    font-size: 11.5px;
+    background: var(--copper);
+    color: #fff7ec;
+    border: none;
+    border-radius: 7px;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  .ui-credits .panel button#copyBtn:hover { background: #8f5124; }
+  .ui-credits .panel #copyStatus { font-size: 11px; color: var(--copper); margin-left: 8px; }
+
+  :focus-visible { outline: 2px solid var(--copper); outline-offset: 2px; }
+
+  @media (max-width: 640px) {
+    .ui-hints { display: none; }
+    .ui-title { max-width: 70vw; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ui { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="ui ui-title" role="banner">
+    <h1>The Tidal Lighthouse</h1>
+    <p>an animated coastal diorama — the sea is the star</p>
+    <div class="rule"></div>
+  </div>
+
+  <div class="ui ui-hints" role="note">
+    <b>drag</b> orbit<span class="dot">·</span><b>right-drag</b> pan<span class="dot">·</span><b>wheel</b> zoom<span class="dot">·</span><b>H</b> hide interface<span class="dot">·</span><b>R</b> reset view
+  </div>
+
+  <div class="ui ui-credits">
+    <div id="creditsPanel" class="panel" hidden>
+      <h2>Made with an AI agent</h2>
+      <p>
+        Created by an AI coding agent — <em>pi</em> (Earendil Works) — running locally on the
+        author's machine. The agent's environment only exposes the model alias
+        <code>daily</code>, served by the local <code>omlx</code> inference provider
+        (<code>PI_MODEL=daily</code>, <code>PI_PROVIDER=omlx</code>). The exact underlying model
+        name and variant are not available to the agent, so rather than guess, this is stated
+        plainly.
+      </p>
+      <h2>Full prompt</h2>
+      <p>The complete prompt used to generate this diorama, including the instruction about this very section:</p>
+<pre id="promptText">Build an animated Three.js diorama: THE TIDAL LIGHTHOUSE.
+
+A rugged miniature coastline curves around a sheltered turquoise harbor. On the highest rocky point stands a weathered red-and-white lighthouse. A winding stone stair connects it to a tiny fishing cottage, a wooden jetty and two moored boats.
+
+Compose the landscape as one irregular island-like display piece against a soft pale background. Its cutaway sides reveal layered rock, sand and the underwater seabed. Give the coastline a strong silhouette and make it interesting from every side.
+
+The ocean is the main visual attraction. On the exposed side, rolling swells approach the rocks, steepen and break into white foam. Water washes across low rock shelves and drains back. In the sheltered harbor, use smaller ripples and clearer water, revealing sand, stones and patches of sea grass. Transition naturally from deep blue to turquoise to transparent shallows.
+
+Give the lighthouse and cottage tactile detail: worn plaster, stone foundations, a copper lantern roof, window frames, warm interior light, ropes and fishing equipment near the jetty. Use coastal grasses and small flowers sparingly.
+
+Set the scene in late-afternoon light: warm sun on the buildings, cool blue shadows in the rocks, bright foam and restrained reflections. Keep the scene readable and richly colored.
+
+Everything runs continuously: waves arrive in overlapping sets, foam disperses, boats bob gently on their moorings, a few gulls circle and grass moves in the wind. Keep the water motion coherent, with the sheltered harbor visibly calmer than the open coast.
+
+During the daylight scene, add a few dolphins (3–5) swimming through the open ocean. They occasionally surface and make small, graceful leaps out of the water at varied, semi-random intervals, with subtle splashes and wakes. Vary their routes and stagger their timing so their appearances feel natural and spontaneous. Keep them away from the rocks and boats, and make their appearances occasional enough that the water remains the main attraction.
+
+Give me full manual camera control: mouse drag to orbit, right-drag to pan, wheel to zoom, with smooth damping. Start with a beautiful elevated three-quarter view showing both the harbor and breaking waves. Keep the camera entirely under my control. H hides any interface; R resets the view.
+
+Generate all geometry and textures in code. Use Three.js and necessary libraries, without downloaded images or models. Deliver a compact runnable web project.
+
+Concentrate on beautiful water, a strong composition and convincing light. Check the result in the browser from an overall view and a closer water-level view, fix obvious problems, then deliver with launch instructions. Avoid adding unrelated features or a testing framework.
+
+In the finished diorama, include an accessible, unobtrusive section that identifies the AI model used to create it and displays the complete prompt used to generate it, including this instruction, so others can copy it and try it themselves. Use the actual model name and variant when known; if they are not available, say so rather than guessing. Keep this section hidden along with the rest of the interface when H is pressed.</pre>
+      <button id="copyBtn">Copy prompt</button><span id="copyStatus" role="status" aria-live="polite"></span>
+    </div>
+    <button id="creditsBtn" aria-expanded="false" aria-controls="creditsPanel">made with AI — details</button>
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./vendor/three.module.js"
+    }
+  }
+  </script>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
