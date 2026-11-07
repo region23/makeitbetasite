@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Tidal Lighthouse — a Three.js diorama</title>
+  <link rel="icon" href="data:," />
+  <script type="module" crossorigin src="/model-tests/tidal-lighthouse/claude-opus-5-5-medium/assets/index-DZUW-I3k.js"></script>
+  <link rel="stylesheet" crossorigin href="/model-tests/tidal-lighthouse/claude-opus-5-5-medium/assets/index-DqWXP-89.css">
+</head>
+<body>
+  <canvas id="scene" role="img" aria-label="Animated 3D diorama of a rocky coastline with a red-and-white lighthouse, a fishing cottage, a jetty with two moored boats, breaking waves, gulls and occasional dolphins."></canvas>
+
+  <div id="ui">
+    <header class="panel title">
+      <h1>The Tidal Lighthouse</h1>
+      <p class="keys">Drag to orbit · Right-drag to pan · Wheel to zoom · <kbd>R</kbd> reset view · <kbd>H</kbd> hide interface</p>
+    </header>
+
+    <section class="panel about" aria-labelledby="about-summary">
+      <details>
+        <summary id="about-summary">About this piece — model &amp; prompt</summary>
+        <div class="about-body">
+          <p>
+            Created by <strong>Claude Opus 5.5</strong> (Anthropic; model ID <code>claude-opus-5-5</code>),
+            working as a coding agent in Claude Code with medium reasoning effort.
+            All geometry and textures are generated in code with Three.js.
+          </p>
+          <p>The complete prompt used to generate it:</p>
+          <button type="button" id="copy-prompt">Copy prompt</button>
+          <pre id="prompt-text" tabindex="0" aria-label="Full generation prompt">Build an animated Three.js diorama: THE TIDAL LIGHTHOUSE.
+
+A rugged miniature coastline curves around a sheltered turquoise harbor. On the highest rocky point stands a weathered red-and-white lighthouse. A winding stone stair connects it to a tiny fishing cottage, a wooden jetty and two moored boats.
+
+Compose the landscape as one irregular island-like display piece against a soft pale background. Its cutaway sides reveal layered rock, sand and the underwater seabed. Give the coastline a strong silhouette and make it interesting from every side.
+
+The ocean is the main visual attraction. On the exposed side, rolling swells approach the rocks, steepen and break into white foam. Water washes across low rock shelves and drains back. In the sheltered harbor, use smaller ripples and clearer water, revealing sand, stones and patches of sea grass. Transition naturally from deep blue to turquoise to transparent shallows.
+
+Give the lighthouse and cottage tactile detail: worn plaster, stone foundations, a copper lantern roof, window frames, warm interior light, ropes and fishing equipment near the jetty. Use coastal grasses and small flowers sparingly.
+
+Set the scene in late-afternoon light: warm sun on the buildings, cool blue shadows in the rocks, bright foam and restrained reflections. Keep the scene readable and richly colored.
+
+Everything runs continuously: waves arrive in overlapping sets, foam disperses, boats bob gently on their moorings, a few gulls circle and grass moves in the wind. Keep the water motion coherent, with the sheltered harbor visibly calmer than the open coast.
+
+During the daylight scene, add a few dolphins (3–5) swimming through the open ocean. They occasionally surface and make small, graceful leaps out of the water at varied, semi-random intervals, with subtle splashes and wakes. Vary their routes and stagger their timing so their appearances feel natural and spontaneous. Keep them away from the rocks and boats, and make their appearances occasional enough that the water remains the main attraction.
+
+Give me full manual camera control: mouse drag to orbit, right-drag to pan, wheel to zoom, with smooth damping. Start with a beautiful elevated three-quarter view showing both the harbor and breaking waves. Keep the camera entirely under my control. H hides any interface; R resets the view.
+
+Generate all geometry and textures in code. Use Three.js and necessary libraries, without downloaded images or models. Deliver a compact runnable web project.
+
+Concentrate on beautiful water, a strong composition and convincing light. Check the result in the browser from an overall view and a closer water-level view, fix obvious problems, then deliver with launch instructions. Avoid adding unrelated features or a testing framework.
+
+In the finished diorama, include an accessible, unobtrusive section that identifies the AI model used to create it and displays the complete prompt used to generate it, including this instruction, so others can copy it and try it themselves. Use the actual model name and variant when known; if they are not available, say so rather than guessing. Keep this section hidden along with the rest of the interface when H is pressed.</pre>
+        </div>
+      </details>
+    </section>
+  </div>
+
+</body>
+</html>
