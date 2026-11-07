@@ -8,7 +8,7 @@ let uiVisible = true;
 let waterOriginalPositions = null;
 
 // ── Model metadata & prompt ─────────────────────────────
-const MODEL_INFO = typeof PI_MODEL !== 'undefined' ? PI_MODEL : 'Unknown';
+const MODEL_INFO = 'Qwen3.6-35B-A3B — Thinking';
 const FULL_PROMPT = `Build an animated Three.js diorama: THE TIDAL LIGHTHOUSE.
 
 A rugged miniature coastline curves around a sheltered turquoise harbor. On the highest rocky point stands a weathered red-and-white lighthouse. A winding stone stair connects it to a tiny fishing cottage, a wooden jetty and two moored boats.
@@ -34,7 +34,7 @@ Concentrate on beautiful water, a strong composition and convincing light. Check
 In the finished diorama, include an accessible, unobtrusive section that identifies the AI model used to create it and displays the complete prompt used to generate it, including this instruction, so others can copy it and try it themselves. Use the actual model name and variant when known; if they are not available, say so rather than guessing. Keep this section hidden along with the rest of the interface when H is pressed.`;
 
 document.getElementById('promptText').value = FULL_PROMPT;
-document.getElementById('modelInfo').textContent = `${MODEL_INFO} (detected from runtime)`;
+document.getElementById('modelInfo').textContent = MODEL_INFO;
 
 // ── UI handlers ─────────────────────────────────────────
 document.getElementById('promptBtn').addEventListener('click', () => {
