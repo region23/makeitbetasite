@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<link rel="icon" href="data:," />
+<title>The Tidal Lighthouse</title>
+<style>
+  :root {
+    --ink: rgba(30, 40, 48, 0.86);
+    --paper: rgba(250, 246, 238, 0.72);
+    --accent: #c8443a;
+  }
+  html, body {
+    margin: 0; padding: 0; height: 100%; overflow: hidden;
+    background: #e9eef0;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  #app { position: fixed; inset: 0; }
+  canvas { display: block; }
+
+  #ui {
+    position: fixed; inset: 0; pointer-events: none;
+    transition: opacity .25s ease;
+  }
+  #ui.hidden { opacity: 0; }
+  #ui.hidden * { pointer-events: none; }
+
+  .panel {
+    position: absolute;
+    pointer-events: auto;
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid rgba(255,255,255,0.55);
+    border-radius: 12px;
+    padding: 10px 14px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 6px 24px rgba(40, 60, 80, 0.12);
+    max-width: min(420px, calc(100vw - 28px));
+  }
+
+  #title { top: 16px; left: 16px; }
+  #title h1 {
+    margin: 0; font-size: 17px; font-weight: 650; letter-spacing: .02em;
+    color: #23303a;
+  }
+  #title .sub { margin-top: 2px; font-size: 12px; opacity: .72; }
+
+  #help { bottom: 16px; left: 16px; font-size: 12px; line-height: 1.55; opacity: .92; }
+  #help b { font-weight: 600; }
+  #help .k {
+    display: inline-block; min-width: 15px; text-align: center;
+    border: 1px solid rgba(40,55,70,.28); border-radius: 4px;
+    padding: 0 4px; margin: 0 1px; font-size: 11px; background: rgba(255,255,255,.4);
+  }
+
+  #about-toggle {
+    position: absolute; bottom: 16px; right: 16px; pointer-events: auto;
+    font: inherit; font-size: 12px; font-weight: 600;
+    color: var(--ink); background: var(--paper);
+    border: 1px solid rgba(255,255,255,0.55); border-radius: 20px;
+    padding: 7px 14px; cursor: pointer;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 6px 24px rgba(40, 60, 80, 0.12);
+  }
+  #about-toggle:hover { background: rgba(255,255,255,0.9); }
+
+  #about {
+    position: absolute; right: 16px; bottom: 58px; pointer-events: auto;
+    display: none;
+    max-width: min(520px, calc(100vw - 28px));
+    max-height: min(64vh, 560px);
+    overflow: auto;
+  }
+  #about.open { display: block; }
+  #about h2 { margin: 0 0 6px; font-size: 14px; color: #23303a; }
+  #about .meta { font-size: 12px; margin-bottom: 10px; opacity: .85; }
+  #about .meta code {
+    background: rgba(40,55,70,.08); border-radius: 5px; padding: 1px 6px; font-size: 11px;
+  }
+  #prompt {
+    margin: 0; padding: 10px 12px; font-size: 11.5px; line-height: 1.5;
+    background: rgba(255,255,255,.5); border: 1px solid rgba(40,55,70,.12);
+    border-radius: 8px; white-space: pre-wrap; word-break: break-word;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  #copy-btn {
+    margin-top: 8px; font: inherit; font-size: 11.5px; font-weight: 600;
+    color: #fff; background: #33506b; border: none; border-radius: 6px;
+    padding: 6px 12px; cursor: pointer;
+  }
+  #copy-btn:hover { background: #29415a; }
+
+  #loading {
+    position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: #e9eef0; color: #33506b; font-size: 14px; letter-spacing: .04em;
+    transition: opacity .6s ease; z-index: 10;
+  }
+  #loading.done { opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <div id="ui">
+    <div class="panel" id="title">
+      <h1>The Tidal Lighthouse</h1>
+      <div class="sub">A miniature animated coastline — late-afternoon light</div>
+    </div>
+
+    <div class="panel" id="help">
+      <b>Drag</b> orbit &nbsp;·&nbsp; <b>Right-drag</b> pan &nbsp;·&nbsp; <b>Wheel</b> zoom<br/>
+      <span class="k">H</span> hide interface &nbsp;&nbsp; <span class="k">R</span> reset view
+    </div>
+
+    <button id="about-toggle">About this piece</button>
+
+    <div class="panel" id="about" role="dialog" aria-label="About this piece">
+      <h2>About this diorama</h2>
+      <div class="meta">
+        Created with <b>Three.js</b> · all geometry and textures generated in code (no downloaded assets).<br/>
+        AI model: <code id="model-name">…</code>
+      </div>
+      <div class="meta" id="prompt-label">Complete prompt used to generate this piece (copy to try it yourself):</div>
+      <pre id="prompt"></pre>
+      <button id="copy-btn">Copy prompt</button>
+    </div>
+  </div>
+
+  <div id="loading">Building the diorama…</div>
+
+  <script type="importmap">
+  { "imports": { "three": "./vendor/three.module.js" } }
+  </script>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

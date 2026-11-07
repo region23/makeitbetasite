@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Tidal Lighthouse — an animated miniature coast</title>
+<link rel="icon" href="data:,">
+<style>
+  :root {
+    --ink: #33404a;
+    --paper: rgba(250, 249, 245, 0.85);
+    --line: rgba(51, 64, 74, 0.18);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; background: #dfe7e9; }
+  body { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; color: var(--ink); }
+  canvas { display: block; }
+
+  #ui {
+    position: fixed; inset: 0; pointer-events: none; z-index: 10;
+    transition: opacity 0.35s ease;
+  }
+  body.hide-ui #ui { opacity: 0; visibility: hidden; }
+
+  #title-block {
+    position: absolute; top: 22px; left: 26px;
+  }
+  #title-block h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400; font-size: 24px; letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  #title-block p {
+    margin-top: 4px; font-size: 12px; opacity: 0.75; letter-spacing: 0.04em;
+  }
+
+  #hints {
+    position: absolute; bottom: 20px; left: 26px;
+    font-size: 12px; opacity: 0.8;
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: 8px; padding: 7px 12px;
+    backdrop-filter: blur(5px);
+  }
+  #hints b { font-weight: 600; }
+  #hints .sep { opacity: 0.4; margin: 0 5px; }
+
+  #about { position: absolute; bottom: 20px; right: 24px; text-align: right; }
+  #about button {
+    pointer-events: auto; cursor: pointer;
+    font: inherit; font-size: 12px; color: var(--ink);
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: 8px; padding: 7px 12px;
+    backdrop-filter: blur(5px);
+  }
+  #about button:hover { background: rgba(255, 255, 255, 0.95); }
+  #about-panel {
+    pointer-events: auto; text-align: left;
+    margin-bottom: 10px; max-width: 400px; max-height: 46vh; overflow: auto;
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: 10px; padding: 14px 16px;
+    backdrop-filter: blur(6px);
+    font-size: 12px; line-height: 1.55;
+  }
+  #about-panel h2 {
+    font-family: Georgia, serif; font-weight: 400; font-size: 14px;
+    letter-spacing: 0.06em; margin-bottom: 6px;
+  }
+  #about-panel .meta { opacity: 0.85; margin-bottom: 10px; }
+  #prompt-body {
+    white-space: pre-wrap; word-break: break-word;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 10.5px; line-height: 1.5;
+    border-top: 1px solid var(--line); padding-top: 10px;
+  }
+  #copy-btn { margin-top: 10px; }
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+
+<div id="ui">
+  <header id="title-block">
+    <h1>The Tidal Lighthouse</h1>
+    <p>a miniature animated coast · built with Three.js</p>
+  </header>
+
+  <div id="hints">
+    drag orbit <span class="sep">·</span> right-drag pan <span class="sep">·</span> scroll zoom
+    <span class="sep">·</span> <b>R</b> reset <span class="sep">·</span> <b>H</b> hide interface
+  </div>
+
+  <div id="about">
+    <div id="about-panel" hidden>
+      <h2>About this piece</h2>
+      <p class="meta">
+        Created with <b>GLM-5.3</b> (Z.ai, account variant
+        <code>zai-individual-coding-plan/GLM-5.3</code>) running as the ZCode coding agent.
+        All geometry and textures are generated procedurally in code — no downloaded
+        images or models. The complete generating prompt is below so you can copy it
+        and try it yourself.
+      </p>
+      <pre id="prompt-body"></pre>
+      <button id="copy-btn">copy prompt</button>
+    </div>
+    <button id="about-btn">about &amp; prompt</button>
+  </div>
+</div>
+
+<script type="text/plain" id="source-prompt">Build an animated Three.js diorama: THE TIDAL LIGHTHOUSE.
+
+A rugged miniature coastline curves around a sheltered turquoise harbor. On the highest rocky point stands a weathered red-and-white lighthouse. A winding stone stair connects it to a tiny fishing cottage, a wooden jetty and two moored boats.
+
+Compose the landscape as one irregular island-like display piece against a soft pale background. Its cutaway sides reveal layered rock, sand and the underwater seabed. Give the coastline a strong silhouette and make it interesting from every side.
+
+The ocean is the main visual attraction. On the exposed side, rolling swells approach the rocks, steepen and break into white foam. Water washes across low rock shelves and drains back. In the sheltered harbor, use smaller ripples and clearer water, revealing sand, stones and patches of sea grass. Transition naturally from deep blue to turquoise to transparent shallows.
+
+Give the lighthouse and cottage tactile detail: worn plaster, stone foundations, a copper lantern roof, window frames, warm interior light, ropes and fishing equipment near the jetty. Use coastal grasses and small flowers sparingly.
+
+Set the scene in late-afternoon light: warm sun on the buildings, cool blue shadows in the rocks, bright foam and restrained reflections. Keep the scene readable and richly colored.
+
+Everything runs continuously: waves arrive in overlapping sets, foam disperses, boats bob gently on their moorings, a few gulls circle and grass moves in the wind. Keep the water motion coherent, with the sheltered harbor visibly calmer than the open coast.
+
+During the daylight scene, add a few dolphins (3–5) swimming through the open ocean. They occasionally surface and make small, graceful leaps out of the water at varied, semi-random intervals, with subtle splashes and wakes. Vary their routes and stagger their timing so their appearances feel natural and spontaneous. Keep them away from the rocks and boats, and make their appearances occasional enough that the water remains the main attraction.
+
+Give me full manual camera control: mouse drag to orbit, right-drag to pan, wheel to zoom, with smooth damping. Start with a beautiful elevated three-quarter view showing both the harbor and breaking waves. Keep the camera entirely under my control. H hides any interface; R resets the view.
+
+Generate all geometry and textures in code. Use Three.js and necessary libraries, without downloaded images or models. Deliver a compact runnable web project.
+
+Concentrate on beautiful water, a strong composition and convincing light. Check the result in the browser from an overall view and a closer water-level view, fix obvious problems, then deliver with launch instructions. Avoid adding unrelated features or a testing framework.
+
+In the finished diorama, include an accessible, unobtrusive section that identifies the AI model used to create it and displays the complete prompt used to generate it, including this instruction, so others can copy it and try it themselves. Use the actual model name and variant when known; if they are not available, say so rather than guessing. Keep this section hidden along with the rest of the interface when H is pressed.</script>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
