@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Utrish Lighthouse — a diorama</title>
+<meta name="description" content="An animated, fully procedural Three.js diorama of Utrish Islet and the lighthouse of Bolshoy Utrish on the Black Sea.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2312303f'/%3E%3Cpath d='M0 24h32v8H0z' fill='%231d5468'/%3E%3Cpath d='M11 24l1.6-13h6.8L21 24z' fill='%23efe9dc'/%3E%3Crect x='11.4' y='8' width='9.2' height='3.4' fill='%23efe9dc'/%3E%3Crect x='12.6' y='4.6' width='6.8' height='3' fill='%23a8352c'/%3E%3Cpath d='M16 1.4l3.4 3.2h-6.8z' fill='%23a8352c'/%3E%3C/svg%3E" type="image/svg+xml">
+<link rel="stylesheet" href="./styles.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three.module.js",
+    "three/addons/": "./vendor/"
+  }
+}
+</script>
+</head>
+<body>
+<canvas id="scene"></canvas>
+
+<div id="ui">
+
+  <div id="hud">
+    <div class="plate">
+      <h1>The Utrish&nbsp;Lighthouse</h1>
+      <p class="sub">Utrish Islet &middot; Bolshoy Utrish &middot; near Anapa &middot; Black Sea</p>
+      <p class="body">A seventeen-metre monument of 1975 on the islet's gravel terrace; below it the 1911 tower,
+        stripped of its lantern and crowned as the Chapel of St&nbsp;Nicholas; twenty metres of open water between
+        them, and a steel footbridge over it. Wind from the southwest, the sun going down into the sea.</p>
+      <ul class="key">
+        <li><i class="dot d1"></i>1975 lighthouse-monument, chain fence, relief band</li>
+        <li><i class="dot d2"></i>Chapel of St&nbsp;Nicholas in the old lighthouse</li>
+        <li><i class="dot d3"></i>Riveted footbridge over the strait</li>
+        <li><i class="dot d4"></i>Quay, jetty, moorings, net cages</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="rail">
+    <button data-view="diorama" class="on" title="Whole piece — key 1">Diorama</button>
+    <button data-view="strait" title="From the water — key 2">The strait</button>
+    <button data-view="tower" title="Monument — key 3">Tower</button>
+    <button data-view="chapel" title="Chapel &amp; bridge — key 4">Chapel</button>
+    <button data-view="cutaway" title="Geological section — key 5">Cutaway</button>
+    <button data-view="aerial" title="Map view — key 6">Aerial</button>
+    <button id="btn-rotate" title="Slow turntable — key T">Turntable</button>
+  </div>
+
+  <div id="meta">
+    <span id="fps">&nbsp;</span>
+    <span class="sep">&middot;</span>
+    <span>drag orbits &middot; right-drag pans &middot; wheel zooms &middot; <b>R</b> resets &middot; <b>H</b> hides this</span>
+    <details id="about">
+      <summary aria-label="About this miniature">About this miniature</summary>
+      <div class="sheet">
+        <h2>What this is</h2>
+        <p>An artistic miniature of the <b>Utrish lighthouse on Utrish Islet, Bolshoy Utrish, about 20&nbsp;km
+          south-east of Anapa on the Black Sea coast of Russia</b>. It is an interpretive model, not a survey:
+          proportions, heights and the layout are read from photographs, drone views and open map data, then
+          generalised. Positions are approximate; the coastline, the terrace levels and the harbor are simplified.</p>
+        <p>Everything in the image is generated at run time by code &mdash; terrain, textures, water, sky, light.
+          No photographs, scans or 3D models were downloaded or embedded.</p>
+        <h2>Made by</h2>
+        <p id="made-by"><b>Qwen3.8 Flash Next</b>, run with bb + Pi + oMLX in Extra High mode.</p>
+        <h2>The prompt it was built from</h2>
+        <pre id="prompt" tabindex="0" aria-label="Complete generation prompt"></pre>
+        <button id="btn-copy" type="button">Copy the complete prompt</button>
+        <span id="copy-state" role="status"></span>
+      </div>
+    </details>
+  </div>
+</div>
+
+<div id="loader">
+  <div class="lamp"><i></i></div>
+  <p id="loader-msg">measuring the coastline&hellip;</p>
+</div>
+
+<noscript><p style="color:#e7e2d5;padding:2rem;font-family:Georgia,serif">This diorama needs JavaScript and WebGL.</p></noscript>
+<script type="module" src="./src/main.js"></script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+ (function(m,e,t,r,i,k,a){
+   m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+ })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108768403', 'ym');
+
+ ym(108768403, 'init', {ssr:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108768403" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</body>
+</html>

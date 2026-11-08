@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Utrish Lighthouse — animated diorama</title>
+<style>
+  :root { color-scheme: light; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #e6e3d5; }
+  #scene { position: fixed; inset: 0; }
+  #scene canvas { display: block; }
+  #ui { position: fixed; inset: 0; pointer-events: none; font-family: "Helvetica Neue", system-ui, sans-serif; }
+  #ui.hidden { display: none; }
+
+  #title {
+    position: absolute; top: 18px; left: 20px; color: #3a352b;
+    text-shadow: 0 1px 6px rgba(255,255,255,0.6);
+  }
+  #title h1 { font-size: 17px; font-weight: 600; letter-spacing: 0.3px; }
+  #title p { font-size: 12px; opacity: 0.75; margin-top: 2px; }
+
+  #controls {
+    position: absolute; bottom: 16px; left: 20px; color: #3a352b; font-size: 11.5px;
+    background: rgba(255,255,255,0.55); backdrop-filter: blur(6px);
+    padding: 8px 12px; border-radius: 10px; line-height: 1.5;
+    text-shadow: 0 1px 3px rgba(255,255,255,0.5);
+  }
+  #controls b { font-weight: 600; }
+
+  #infoBtn {
+    position: absolute; bottom: 16px; right: 20px; pointer-events: auto;
+    width: 34px; height: 34px; border-radius: 50%; border: none; cursor: pointer;
+    background: rgba(255,255,255,0.7); backdrop-filter: blur(6px);
+    color: #3a352b; font-size: 17px; font-weight: 700;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+  }
+  #infoBtn:hover { background: rgba(255,255,255,0.95); }
+
+  #infoPanel {
+    position: absolute; bottom: 62px; right: 20px; width: 380px; max-width: calc(100vw - 40px);
+    max-height: 70vh; overflow-y: auto; pointer-events: auto;
+    background: rgba(255,255,252,0.92); backdrop-filter: blur(10px);
+    border-radius: 14px; box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+    padding: 18px 18px 16px; color: #322e26; font-size: 13px; line-height: 1.5;
+    opacity: 0; transform: translateY(8px); transition: 0.25s; display: none;
+  }
+  #infoPanel.open { display: block; opacity: 1; transform: none; }
+  #infoPanel h2 { font-size: 15px; margin-bottom: 4px; }
+  #infoPanel .sub { font-size: 11.5px; opacity: 0.7; margin-bottom: 10px; }
+  #infoPanel h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.6px; opacity: 0.6; margin: 14px 0 6px; }
+  #infoPanel p { margin-bottom: 6px; }
+  #infoPanel code { background: rgba(0,0,0,0.06); padding: 1px 5px; border-radius: 4px; font-size: 12px; }
+  #promptText {
+    white-space: pre-wrap; word-break: break-word; font-family: ui-monospace, Menlo, monospace;
+    font-size: 11px; line-height: 1.45; background: rgba(0,0,0,0.045);
+    border-radius: 8px; padding: 12px; max-height: 220px; overflow-y: auto; margin-top: 6px;
+  }
+  #copyPrompt, #closeInfo {
+    pointer-events: auto; cursor: pointer; border: 1px solid rgba(0,0,0,0.15);
+    background: #fff; border-radius: 8px; padding: 6px 12px; font-size: 12px; margin-top: 8px;
+  }
+  #closeInfo { position: absolute; top: 10px; right: 12px; background: transparent; border: none; font-size: 16px; }
+</style>
+</head>
+<body>
+  <div id="scene"></div>
+
+  <div id="ui">
+    <div id="title">
+      <h1>The Utrish Lighthouse</h1>
+      <p>Bolshoy Utrish, near Anapa — Black Sea · an artistic miniature</p>
+    </div>
+    <div id="controls">
+      <b>drag</b> orbit · <b>right-drag</b> pan · <b>scroll</b> zoom<br>
+      <b>H</b> hide interface · <b>R</b> reset view
+    </div>
+    <button id="infoBtn" title="About this diorama">i</button>
+
+    <div id="infoPanel" role="dialog" aria-label="About this diorama">
+      <button id="closeInfo" aria-label="Close">×</button>
+      <h2>The Utrish Lighthouse</h2>
+      <div class="sub">Bolshoy Utrish · Abrau peninsula · near Anapa, Krasnodar Krai, Russia — Black Sea coast</div>
+
+      <p>This is an <b>artistic miniature interpretation</b> of the real place — the Utrish island, the 1975 lighthouse-monument, the 1911 lighthouse now the Chapel of St. Nicholas, the metal bridge over the strait, and the cape of Bolshoy Utrish. It is <b>not an exact survey</b>: proportions, colours and details are stylised, generated entirely in code (Three.js, procedural geometry and canvas textures, no downloaded images or models).</p>
+
+      <h3>Created by</h3>
+      <p>AI model: <code>Qwen3.8-27B-oQ4e-mtp</code> (local alias <code>daily</code>), run with bb + Pi + oMLX in Extra High mode.</p>
+
+      <h3>Prompt used</h3>
+      <p>The complete prompt, so you can copy it and try it yourself:</p>
+      <div id="promptText">Build an animated Three.js diorama: THE UTRISH LIGHTHOUSE.
+Recreate a real place: the Utrish lighthouse on the Black Sea coast of Russia, at the village of Bolshoy Utrish, about 20 km south-east of Anapa, at the edge of the Utrish nature reserve on the Abrau peninsula. Aim for a faithful, recognizable miniature of this specific site, not a generic seaside scene.
+REFERENCE RESEARCH
+Before building, research the real location online: search for and look at multiple photos of the Utrish lighthouse, the chapel, the bridge, Utrish Island and the Bolshoy Utrish cape from different angles (including aerial or drone views and satellite maps if available). Note the actual shapes, proportions, colours, the lantern design, the relief band, the bridge construction, the rock colour and how the island sits relative to the cape. Briefly list the key visual facts you found before you start coding, and use them to guide the build. Where your references contradict the descriptions below, follow the references. Use photos only as visual reference: do not download, embed or trace any images, textures or models into the project; all geometry and textures must still be generated in code. If you cannot access images in your environment, say so and work from text descriptions.
+THE PLACE
+Utrish Island is a small, steep, rocky island separated from the Bolshoy Utrish cape by a strait only about 20 m wide. A narrow metal bridge crosses the strait, and a footpath runs along a low causeway from the bridge to the lighthouses. The island's shores are mostly sheer rock, so nobody can walk around it at the water's edge. Geologically the cape and island are the tongue of a huge ancient landslide ("Utrish" is usually translated as "landslide" or "collapsed mountain"), so the rock should read as broken, tilted, fractured strata of light grey-ochre limestone and marl, with fallen blocks at the waterline.
+On the island stand two lighthouses:
+- The 1975 lighthouse-monument, about 17 m tall, designed by Anapa architect Boris Kamaev. It is a memorial to the Black Sea sailors of the Second World War. A sculpted relief band runs around the tower. Nearby is a granite slab with memorial names. Show it as a slender pale tower with the relief band, a gallery and a lantern on top.
+- The low 1911 lighthouse a short distance from the shoreline, converted into the small Chapel of St. Nicholas, patron saint of sailors, with a small dome. Show it in its pre-2025 state, before the chapel's relocation began.
+Keep the scene respectful: this is a memorial site.
+Across the strait, the Bolshoy Utrish cape has a pebble beach, a small pier for pleasure boats, and a few moored motorboats and a small excursion boat. Behind them, the ridges of the Abrau peninsula rise steeply. They are covered in the reserve's relict, Mediterranean-looking open woodland: dark-green juniper, pistachio and Pitsunda pine, with pale rock showing through and dry summer grass. Hint at the edge of the open-air dolphinarium lagoon with its floating net pens, at a modest scale. A few small buildings of the village may appear at the edge, but keep the focus on the island, the strait and the sea.
+COMPOSITION
+Compose the cape, strait, island and a slice of the hillside as one irregular display piece against a soft pale background. Its cutaway sides should show the landslide geology in layers: tilted limestone and marl, pebble and gravel beach deposits, and the seabed sloping into deep water. Give the island and cape a strong silhouette, and make the piece interesting from every side.
+THE SEA
+The sea is the main visual attraction, and it should feel like the Black Sea: no tides; very clear, slightly green-tinted water over pebbles and rock; quickly deepening blue offshore. On the open western side, swells roll in from the open sea, steepen against the island's cliffs and fallen blocks, burst into white foam, wash over low rock ledges and drain back. In the narrow strait, the water surges and sloshes between the walls. In the lee of the island and along the pebble beach of the cape, the water is calm, with small ripples and high clarity, revealing rounded pebbles, boulders and patches of seagrass and brown algae. The colour should shift naturally from deep blue to blue-green to transparent shallows. Keep the motion coherent: the sheltered beach is visibly calmer than the exposed side of the island.
+DETAIL
+Give the buildings tactile detail: weathered whitewash and plaster over stone, the relief band on the tower, the lantern glazing and gallery railing, the chapel's small dome and cross, the riveted metal bridge with railings and slight rust, the memorial slab, and the pier with ropes, fenders and buoys. Use coastal vegetation sparingly: tufts of dry grass on the island, small wildflowers in crevices, junipers clinging to the cliff edges of the cape.
+LIGHT
+Set the scene in warm late-afternoon light, with the sun lowering over the open sea to the west, as seen from the Anapa coast: warm light on the tower and chapel, cool blue shadows in the fractured rock and the strait, bright foam and restrained, sparkling reflections on the water. A soft warm glow in the lantern room is fine. Keep the scene readable and richly coloured.
+LIFE
+Everything runs continuously: wave sets arrive in overlapping groups, foam disperses, boats bob gently at the pier and at their moorings, a few gulls circle over the island, and grass and juniper branches move in the wind.
+Add a few wild Black Sea dolphins (3–5, bottlenose or common dolphins) swimming in the open sea beyond the island. They occasionally surface and make small, graceful leaps at varied, semi-random intervals, with subtle splashes and wakes. Vary their routes and stagger their timing so their appearances feel natural. Keep them away from the rocks, the strait, the pier and the boats, and keep their appearances occasional enough that the water stays the main attraction.
+CAMERA AND CONTROLS
+Give me full manual camera control: mouse drag to orbit, right-drag to pan, wheel to zoom, with smooth damping. Start with a beautiful elevated three-quarter view from the sea side that shows the island with both lighthouses, the bridge and strait, the calm beach of the cape and the surf breaking on the exposed cliffs. Keep the camera entirely under my control. H hides any interface; R resets the view.
+TECHNICAL
+Generate all geometry and textures in code. Use Three.js and any necessary libraries, without downloaded images or models. Deliver a compact runnable web project.
+Concentrate on beautiful water, a strong composition, convincing light and recognizable fidelity to the real place. Check the result in the browser from an overall view and from a closer water-level view of the strait and the cliffs, compare it against your reference notes, fix obvious problems, then deliver with launch instructions. Avoid adding unrelated features or a testing framework.
+In the finished diorama, include an accessible, unobtrusive section that:
+- names the real place (Utrish lighthouse, Bolshoy Utrish, near Anapa, Black Sea) and states that this is an artistic miniature interpretation, not an exact survey;
+- identifies the AI model used to create it, with its actual name and variant when known (if they are not available, say so rather than guessing);
+- displays the complete prompt used to generate it, including this instruction, so others can copy it and try it themselves.
+Keep this section hidden along with the rest of the interface when H is pressed.</div>
+      <button id="copyPrompt">Copy prompt</button>
+    </div>
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./libs/three.module.js",
+      "three/addons/": "./libs/"
+    }
+  }
+  </script>
+  <script type="module" src="./main.js"></script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+ (function(m,e,t,r,i,k,a){
+   m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+ })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108768403', 'ym');
+
+ ym(108768403, 'init', {ssr:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108768403" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</body>
+</html>

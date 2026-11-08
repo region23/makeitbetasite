@@ -31,14 +31,14 @@ class ExperimentCatalogTests(unittest.TestCase):
                 self.assertTrue((ROOT / target.lstrip('/') / 'index.html').is_file())
 
 class ExperimentResultTests(unittest.TestCase):
-    def test_utrish_has_six_runnable_results_and_original_prompt(self):
+    def test_utrish_has_eight_runnable_results_and_original_prompt(self):
         from html import unescape
         import re
 
         page = (ROOT / 'model-tests/utrish-lighthouse/index.html').read_text(encoding='utf-8')
         targets = re.findall(r'href="(/model-tests/utrish-lighthouse/[^"/]+/)"', page)
-        self.assertEqual(len(targets), 6)
-        self.assertEqual(len(set(targets)), 6)
+        self.assertEqual(len(targets), 8)
+        self.assertEqual(len(set(targets)), 8)
         for target in targets:
             with self.subTest(target=target):
                 self.assertTrue((ROOT / target.lstrip('/') / 'index.html').is_file())
