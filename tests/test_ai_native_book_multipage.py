@@ -413,8 +413,12 @@ class LocalLinkTests(unittest.TestCase):
                     target = book / "index.html"
                 elif relative_path.startswith("/ai_native_book/"):
                     target = book / relative_path.removeprefix("/ai_native_book/")
+                elif relative_path.startswith("/"):
+                    target = ROOT / relative_path.lstrip("/")
                 else:
                     target = page if not relative_path else (page.parent / relative_path)
+                if target.is_dir():
+                    target = target / "index.html"
                 target = target.resolve()
                 if not target.is_file():
                     errors.append(

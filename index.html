@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="home.css" />
+  <meta name="description" content="Проекты, руководства и эксперименты Павла Павленко об искусственном интеллекте и разработке." />
   <!-- Тема применяется ДО рендера страницы, чтобы не было вспышки -->
   <script>
     (function() {
@@ -16,236 +18,133 @@
       document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
     })();
   </script>
+<link rel="stylesheet" href="/site-shell/site-shell.css">
 </head>
 <body>
 
-  <header class="header">
-    <div class="wrap header__wrap">
-      <a href="/" class="logo">Make It Beta<sup>🧪</sup></a>
-      <nav class="header__nav" id="headerNav">
-        <a href="/model-tests/" class="header__link">Тесты моделей</a>
-        <a href="/blog/" class="header__link">Блог</a>
-        <a href="/ai_native_book/" class="header__link">AI-native компании</a>
-        <a href="/howtodeal/" class="header__link">Трудные люди</a>
-        <a href="/consulting/" class="header__link">Консалтинг</a>
-        <a href="https://t.me/pavlenkodev" class="header__link" target="_blank">Телеграм-канал</a>
-        <a href="https://t.me/makeitbetabot" class="header__link" target="_blank">Написать нам</a>
-        <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
-          <span id="themeIcon">🌙</span>
-        </button>
-      </nav>
-      <button class="hamburger" id="hamburger" aria-label="Меню">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
+  <!-- site-header:start -->
+<header class="mib-site-header">
+  <div class="mib-site-header__inner">
+    <a class="mib-site-logo" href="/">Make It Beta<sup>🧪</sup></a>
+    <nav class="mib-site-nav" id="mib-site-nav" aria-label="Основная навигация">
+      <a href="/#projects">Проекты</a>
+      <a href="/model-tests/">Эксперименты</a>
+      <a href="/blog/">Блог</a>
+      <a href="/consulting/">Консалтинг</a>
+      <a href="/#contact">Написать</a>
+      <button class="mib-site-theme" type="button" aria-label="Переключить тему" title="Переключить тему"><span aria-hidden="true">🌙</span></button>
+    </nav>
+    <button class="mib-site-menu" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mib-site-nav"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<!-- site-header:end -->
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="wrap">
-      <div class="hero__label">AI-first pocket company</div>
-      <h1 class="hero__title">Компания,<br>где работают<br><em>агенты.</em></h1>
-      <div class="hero__meta">
-        <p>Один основатель. Никаких сотрудников.<br>Рой ИИ делает операционку, код и маркетинг.</p>
-        <a href="https://t.me/pavlenkodev" class="cta" target="_blank">Следить за экспериментом ↗</a>
-      </div>
-    </div>
-    <div class="hero__counter wrap">
-      <div class="counter-item"><span class="counter-num">6</span><span class="counter-label">проектов</span></div>
-      <div class="counter-item"><span class="counter-num">7</span><span class="counter-label">агентов</span></div>
-      <div class="counter-item"><span class="counter-num">1</span><span class="counter-label">человек</span></div>
-      <div class="counter-item"><span class="counter-num">24/7</span><span class="counter-label">работа</span></div>
-    </div>
-  </section>
-
-  <!-- IDEA -->
-  <section class="idea">
-    <div class="wrap idea__wrap">
-      <div class="section-num">01</div>
-      <div class="idea__body">
-        <h2 class="section-title">Что это такое</h2>
-        <p>Make It Beta — это эксперимент в реальном времени. Мы строим компанию, где вместо сотрудников работают специализированные AI-агенты. Основатель Павел Павленко задаёт направление и принимает решения. Всё остальное — рой ИИ.</p>
-        <p>Весь процесс — публично, с результатами, с ошибками. В канале <a href="https://t.me/pavlenkodev" target="_blank">@pavlenkodev</a>.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- AGENTS -->
-  <section class="agents">
-    <div class="wrap">
-      <div class="section-header">
-        <div class="section-num">02</div>
-        <h2 class="section-title">Команда</h2>
-      </div>
-      <div class="agents__list">
-        <div class="agent">
-          <span class="agent__emoji">🦉</span>
-          <div class="agent__info">
-            <strong>Афина</strong>
-            <span>Операционка, коммуникации, координация</span>
-          </div>
-        </div>
-        <div class="agent">
-          <span class="agent__emoji">🎸</span>
-          <div class="agent__info">
-            <strong>Rockstar Dev</strong>
-            <span>Разработка ПО — от ТЗ до продакшена</span>
-          </div>
-        </div>
-        <div class="agent">
-          <span class="agent__emoji">🧪</span>
-          <div class="agent__info">
-            <strong>Make It Beta</strong>
-            <span>Продукт, гипотезы, маркетинг, монетизация</span>
-          </div>
-        </div>
-        <div class="agent agent--soon">
-          <span class="agent__emoji">📊</span>
-          <div class="agent__info">
-            <strong>Аналитик</strong>
-            <span>Данные, метрики, инсайты <em class="soon-tag">скоро</em></span>
-          </div>
-        </div>
-        <div class="agent agent--soon">
-          <span class="agent__emoji">🤝</span>
-          <div class="agent__info">
-            <strong>Сейлз</strong>
-            <span>Продажи, партнёрства <em class="soon-tag">скоро</em></span>
-          </div>
-        </div>
-        <div class="agent agent--soon">
-          <span class="agent__emoji">✍️</span>
-          <div class="agent__info">
-            <strong>Контент</strong>
-            <span>Тексты, соцсети, SEO <em class="soon-tag">скоро</em></span>
+  <main>
+    <section class="home-hero">
+      <div class="wrap home-hero__inner">
+        <div class="home-hero__identity">Павел Павленко <span>Make It Beta</span></div>
+        <div class="home-hero__main">
+          <h1>ИИ-агенты,<br>разработка и<br>свои проекты</h1>
+          <div class="home-hero__bottom">
+            <p>Внедряю ИИ-агентов в разработку, исследую модели и создаю проекты. Здесь собираю то, что получилось.</p>
+            <a class="home-hero__jump" href="#projects">К проектам <span aria-hidden="true">↓</span></a>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- PROJECTS -->
-  <section class="projects">
-    <div class="wrap">
-      <div class="section-header">
-        <div class="section-num">03</div>
-        <h2 class="section-title">Проекты</h2>
-      </div>
-      <div class="projects__list">
-
-        <a class="project" href="https://geekgpt.pro" target="_blank">
-          <div class="project__left">
-            <span class="project__name">GeekGPT</span>
-            <span class="project__desc">Агрегатор нейронок — LLM, изображения, видео</span>
-          </div>
-          <div class="project__right">
-            <span class="tag tag--live">Live</span>
-            <span class="project__arrow">↗</span>
-          </div>
-        </a>
-
-        <a class="project" href="https://gopublic.su" target="_blank">
-          <div class="project__left">
-            <span class="project__name">GoPublic</span>
-            <span class="project__desc">Российский аналог ngrok — туннели для локальных сервисов</span>
-          </div>
-          <div class="project__right">
-            <span class="tag tag--live">Live</span>
-            <span class="tag tag--oss">Open Source</span>
-            <span class="project__arrow">↗</span>
-          </div>
-        </a>
-
-        <a class="project" href="https://t.me/bjushkabot" target="_blank">
-          <div class="project__left">
-            <span class="project__name">Бжушка</span>
-            <span class="project__desc">AI-нутрициолог в Telegram — анализ блюд по фото</span>
-          </div>
-          <div class="project__right">
-            <span class="tag tag--live">Live</span>
-            <span class="project__arrow">↗</span>
-          </div>
-        </a>
-
-        <div class="project project--no-link">
-          <div class="project__left">
-            <span class="project__name">Foodzy</span>
-            <span class="project__desc">AI улучшает фото блюд для кафе и ресторанов</span>
-          </div>
-          <div class="project__right">
-            <span class="tag tag--dev">В разработке</span>
-          </div>
+    <section class="home-projects" id="projects" aria-labelledby="projects-title">
+      <div class="wrap">
+        <div class="home-section-head">
+          <h2 id="projects-title">Проекты и<br>руководства</h2>
+          <p>Инструменты и материалы, которые можно попробовать</p>
         </div>
-
-        <a class="project" href="https://region23.github.io/microGPT" target="_blank">
-          <div class="project__left">
-            <span class="project__name">microGPT эксплейнер</span>
-            <span class="project__desc">Интерактивные гайды по трансформерам Карпати</span>
-          </div>
-          <div class="project__right">
-            <span class="tag tag--oss">Open Source</span>
-            <span class="project__arrow">↗</span>
-          </div>
-        </a>
-
-        <a class="project" href="/ai_native_book/">
-          <div class="project__left">
-            <span class="project__name">AI-native компании</span>
-            <span class="project__desc">Практическое руководство по созданию AI-native компании</span>
-          </div>
-          <div class="project__right">
-            <span class="tag tag--live">Free</span>
-            <span class="project__arrow">↗</span>
-          </div>
-        </a>
-
-        <a class="project" href="/howtodeal/">
-          <div class="project__left">
-            <span class="project__name">Трудные люди в проектах</span>
-            <span class="project__desc">Русский интерактивный атлас рабочих паттернов в софтверных командах</span>
-          </div>
-          <div class="project__right">
-            <span class="tag tag--live">Free</span>
-            <span class="project__arrow">↗</span>
-          </div>
-        </a>
-
-        <a class="project" href="https://region23.github.io/ai_agents_book" target="_blank">
-          <div class="project__left">
-            <span class="project__name">AI Agents Book</span>
-            <span class="project__desc">Интерактивный учебник по AI-агентам</span>
-          </div>
-          <div class="project__right">
-            <span class="tag tag--oss">Open Source</span>
-            <span class="project__arrow">↗</span>
-          </div>
-        </a>
-
+        <div class="home-project-list">
+          <a class="home-project" href="https://region23.github.io/microGPT" target="_blank" rel="noopener noreferrer">
+            <span class="home-project__type">Интерактивный гайд</span>
+            <span class="home-project__content"><strong>microGPT эксплейнер</strong><span>Как работают трансформеры и microGPT Андрея Карпати</span></span>
+            <span class="home-project__arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="home-project" href="/ai_native_book/">
+            <span class="home-project__type">Руководство</span>
+            <span class="home-project__content"><strong>AI-native компании</strong><span>Практическое руководство по созданию AI-native компании</span></span>
+            <span class="home-project__arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="home-project" href="/howtodeal/">
+            <span class="home-project__type">Интерактивный атлас</span>
+            <span class="home-project__content"><strong>Трудные люди в проектах</strong><span>Рабочие паттерны в софтверных командах</span></span>
+            <span class="home-project__arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="home-project" href="https://region23.github.io/ai_agents_book" target="_blank" rel="noopener noreferrer">
+            <span class="home-project__type">Учебник</span>
+            <span class="home-project__content"><strong>AI Agents Book</strong><span>Интерактивный учебник по AI-агентам</span></span>
+            <span class="home-project__arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <details class="home-archive">
+          <summary>Архив проектов <span>4 проекта</span></summary>
+          <p>Проекты, которые больше не работают</p>
+          <ul>
+            <li><strong>GeekGPT</strong><span>Агрегатор нейросетей</span></li>
+            <li><strong>GoPublic</strong><span>Туннели для локальных сервисов</span></li>
+            <li><strong>Бжушка</strong><span>AI-нутрициолог в Telegram</span></li>
+            <li><strong>Foodzy</strong><span>Улучшение фото блюд для кафе и ресторанов</span></li>
+          </ul>
+        </details>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- MANIFESTO -->
-  <section class="manifesto">
-    <div class="wrap">
-      <blockquote>
-        «Интеллектуальный труд переходит к агентам. Человек задаёт направление. Остальное — рой ИИ.»
-      </blockquote>
-      <div class="cta-group">
-        <a href="https://t.me/pavlenkodev" class="cta cta--dark" target="_blank">Читать о процессе ↗</a>
-        <a href="https://t.me/athena_ai_blog" class="cta cta--ghost" target="_blank">Дневник Афины ↗</a>
+    <section class="home-experiments" aria-labelledby="experiments-title">
+      <div class="wrap home-experiments__inner">
+        <div>
+          <p class="home-experiments__label">Практика с ИИ</p>
+          <h2 id="experiments-title">Один промпт.<br>Разные модели</h2>
+        </div>
+        <div class="home-experiments__copy">
+          <p>Сравниваю, как модели справляются с одной задачей: с исходным промптом, условиями и результатами.</p>
+          <a href="/model-tests/">Все эксперименты <span aria-hidden="true">↗</span></a>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer class="footer">
-    <div class="wrap footer__wrap">
-      <span class="logo">Make It Beta 🧪</span>
-      <a href="/consulting/" class="footer__contact">Консалтинг</a>
-      <a href="https://t.me/makeitbetabot" class="footer__contact" target="_blank">💬 Написать нам</a>
-      <span class="footer__copy">© 2026 makeitbeta.ru</span>
-    </div>
-  </footer>
+    <section class="home-about" aria-labelledby="about-title">
+      <div class="wrap home-about__inner">
+        <div class="home-about__portrait">
+          <picture>
+            <source srcset="/consulting/img/pavel.webp" type="image/webp" />
+            <img src="/consulting/img/pavel.jpg" alt="Павел Павленко" width="680" height="840" loading="lazy" />
+          </picture>
+        </div>
+        <div class="home-about__content">
+          <h2 id="about-title">Обо мне</h2>
+          <p>Я Павел Павленко. Больше 20 лет в разработке: был техническим директором и руководил командами. Сейчас внедряю ИИ-агентов в процессы разработки, провожу пилоты и исследую, как меняется работа команд.</p>
+          <p>На этом сайте — мои проекты, руководства и эксперименты. О работе и результатах пишу в блоге и телеграм-канале.</p>
+          <div class="home-about__links"><a href="/consulting/">Подробнее обо мне <span aria-hidden="true">↗</span></a><a href="/blog/">Читать блог <span aria-hidden="true">↗</span></a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-contact" id="contact" aria-labelledby="contact-title">
+      <div class="wrap home-contact__inner">
+        <div>
+          <h2 id="contact-title">Написать мне</h2>
+          <p>Обсудить внедрение ИИ в разработку, проекты или выступление</p>
+        </div>
+        <a href="https://t.me/region23" target="_blank" rel="noopener noreferrer" class="home-contact__link">Telegram <span aria-hidden="true">↗</span><small>@region23</small></a>
+      </div>
+    </section>
+  </main>
+
+  <!-- site-footer:start -->
+<footer class="mib-site-footer">
+  <div class="mib-site-footer__inner">
+    <a class="mib-site-logo" href="/">Make It Beta<sup>🧪</sup></a>
+    <a href="/consulting/">Консалтинг</a>
+    <a href="https://t.me/pavlenkodev" target="_blank" rel="noopener noreferrer">Телеграм-канал</a>
+    <span>© 2026 makeitbeta.ru</span>
+  </div>
+</footer>
+<!-- site-footer:end -->
 
   <script src="script.js"></script>
 
@@ -262,5 +161,6 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/108768403" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+<script src="/site-shell/site-shell.js" defer></script>
 </body>
 </html>

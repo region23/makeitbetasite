@@ -1,0 +1,55 @@
+/* Общие элементы сайта изолированы от стилей отдельных проектов */
+.mib-site-header, .mib-site-footer {
+  --mib-bg: #f7f5f0;
+  --mib-ink: #0d0c0a;
+  --mib-soft: #6b6860;
+  --mib-accent: #c4430d;
+  --mib-border: #e0ddd6;
+  color: var(--mib-ink);
+  background: var(--mib-bg);
+  font: 400 16px/1.5 'Inter', Arial, sans-serif;
+  box-sizing: border-box;
+}
+[data-theme="dark"] .mib-site-header, [data-theme="dark"] .mib-site-footer {
+  --mib-bg: #111110;
+  --mib-ink: #f0ede6;
+  --mib-soft: #aaa79f;
+  --mib-accent: #ff8b59;
+  --mib-border: #373632;
+}
+.mib-site-header *, .mib-site-header *::before, .mib-site-header *::after,
+.mib-site-footer *, .mib-site-footer *::before, .mib-site-footer *::after { box-sizing: border-box; }
+.mib-site-header { position: relative; z-index: 90; border-bottom: 1px solid var(--mib-border); }
+.mib-site-header__inner, .mib-site-footer__inner { max-width: 1100px; margin: 0 auto; padding-left: 32px; padding-right: 32px; }
+.mib-site-header__inner { min-height: 84px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+.mib-site-header .mib-site-logo, .mib-site-footer .mib-site-logo { color: var(--mib-ink); text-decoration: none; font: 700 16px/1.3 'Unbounded', Arial, sans-serif; letter-spacing: -.025em; white-space: nowrap; }
+.mib-site-logo sup { font-size: .75em; margin-left: 2px; }
+.mib-site-nav { display: flex; align-items: center; gap: 24px; }
+.mib-site-header .mib-site-nav a, .mib-site-footer a:not(.mib-site-logo) { font: 500 14px/1.5 'Inter', Arial, sans-serif; color: var(--mib-soft); text-decoration: none; white-space: nowrap; }
+.mib-site-header .mib-site-nav a:hover, .mib-site-footer a:hover { color: var(--mib-accent); }
+.mib-site-header .mib-site-nav a[aria-current="page"] { color: var(--mib-ink); }
+.mib-site-header .mib-site-theme { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; padding: 0; border: 1px solid var(--mib-border); border-radius: 50%; background: transparent; color: var(--mib-ink); cursor: pointer; font-size: 16px; line-height: 1; }
+.mib-site-header .mib-site-theme:hover { border-color: var(--mib-accent); }
+.mib-site-header .mib-site-menu { display: none; }
+.mib-site-header a:focus-visible, .mib-site-header button:focus-visible, .mib-site-footer a:focus-visible { outline: 2px solid var(--mib-accent); outline-offset: 4px; }
+.mib-site-footer { border-top: 1px solid var(--mib-border); }
+.mib-site-footer__inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px 24px; padding-top: 24px; padding-bottom: 24px; }
+.mib-site-footer__inner > span { font-size: 14px; color: var(--mib-soft); }
+@media (max-width: 960px) {
+  .mib-site-header__inner { flex-wrap: wrap; padding-top: 22px; padding-bottom: 22px; }
+  .mib-site-nav { flex-wrap: wrap; gap: 12px 20px; }
+  .mib-site-header.mib-site--enhanced .mib-site-header__inner { flex-wrap: nowrap; padding-top: 0; padding-bottom: 0; }
+  .mib-site-header.mib-site--enhanced .mib-site-nav { display: none; position: fixed; inset: 0; background: var(--mib-bg); flex-direction: column; align-items: center; justify-content: center; gap: 28px; z-index: 100; }
+  .mib-site-header.mib-site--enhanced .mib-site-nav.mib-site-nav--open { display: flex; }
+  .mib-site-header.mib-site--enhanced .mib-site-nav a { font-size: 20px; }
+  .mib-site-header.mib-site--enhanced .mib-site-menu { position: relative; z-index: 101; display: flex; flex-direction: column; gap: 5px; padding: 8px; border: 0; background: none; cursor: pointer; }
+  .mib-site-header .mib-site-menu span { display: block; width: 22px; height: 2px; border-radius: 1px; background: var(--mib-ink); }
+  .mib-site-header .mib-site-menu[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .mib-site-header .mib-site-menu[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .mib-site-header .mib-site-menu[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+}
+@media (max-width: 480px) {
+  .mib-site-header__inner, .mib-site-footer__inner { padding-left: 20px; padding-right: 20px; }
+}
+/* Без JavaScript ссылки остаются доступны, а неработающая кнопка темы скрыта */
+.mib-site-header:not(.mib-site--enhanced) .mib-site-theme { display: none; }

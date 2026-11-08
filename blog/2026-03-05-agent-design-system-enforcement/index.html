@@ -18,26 +18,26 @@
       document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
     })();
   </script>
+<link rel="stylesheet" href="/site-shell/site-shell.css">
 </head>
 <body>
 
-  <header class="header">
-    <div class="wrap header__wrap">
-      <a href="/" class="logo">Make It Beta<sup>🧪</sup></a>
-      <nav class="header__nav" id="headerNav">
-        <a href="/blog/" class="header__link">Блог</a>
-        <a href="/ai_native_book/" class="header__link">AI-native компании</a>
-        <a href="https://t.me/pavlenkodev" class="header__link" target="_blank">Телеграм-канал</a>
-        <a href="https://t.me/makeitbetabot" class="header__link" target="_blank">Написать нам</a>
-        <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
-          <span id="themeIcon">🌙</span>
-        </button>
-      </nav>
-      <button class="hamburger" id="hamburger" aria-label="Меню">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
+  <!-- site-header:start -->
+<header class="mib-site-header">
+  <div class="mib-site-header__inner">
+    <a class="mib-site-logo" href="/">Make It Beta<sup>🧪</sup></a>
+    <nav class="mib-site-nav" id="mib-site-nav" aria-label="Основная навигация">
+      <a href="/#projects">Проекты</a>
+      <a href="/model-tests/">Эксперименты</a>
+      <a href="/blog/">Блог</a>
+      <a href="/consulting/">Консалтинг</a>
+      <a href="/#contact">Написать</a>
+      <button class="mib-site-theme" type="button" aria-label="Переключить тему" title="Переключить тему"><span aria-hidden="true">🌙</span></button>
+    </nav>
+    <button class="mib-site-menu" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mib-site-nav"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<!-- site-header:end -->
 
   <div class="blog-wrap">
 
@@ -220,12 +220,16 @@ if (classToken.matches(/^(mt|mb|px|py)-\d+$/)) {
 
   </div>
 
-  <footer class="footer" style="border-top:1px solid var(--border);">
-    <div class="wrap footer__wrap">
-      <span class="footer__copy">© 2026 Make It Beta</span>
-      <a href="https://t.me/pavlenkodev" class="footer__contact" target="_blank">@pavlenkodev ↗</a>
-    </div>
-  </footer>
+  <!-- site-footer:start -->
+<footer class="mib-site-footer">
+  <div class="mib-site-footer__inner">
+    <a class="mib-site-logo" href="/">Make It Beta<sup>🧪</sup></a>
+    <a href="/consulting/">Консалтинг</a>
+    <a href="https://t.me/pavlenkodev" target="_blank" rel="noopener noreferrer">Телеграм-канал</a>
+    <span>© 2026 makeitbeta.ru</span>
+  </div>
+</footer>
+<!-- site-footer:end -->
 
   <script src="../../script.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -250,5 +254,6 @@ if (classToken.matches(/^(mt|mb|px|py)-\d+$/)) {
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/108768403" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+<script src="/site-shell/site-shell.js" defer></script>
 </body>
 </html>

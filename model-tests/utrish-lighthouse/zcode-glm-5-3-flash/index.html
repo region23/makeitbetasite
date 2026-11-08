@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Utrish Lighthouse — an animated miniature · Маяк Утриш</title>
+<meta name="description" content="Animated Three.js diorama of the Utrish lighthouse, Bolshoy Utrish, near Anapa, Black Sea — an artistic miniature interpretation.">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+<div id="app"></div>
+
+<div class="ui" id="uiRoot">
+  <div class="card" role="region" aria-label="About this diorama">
+    <h1>Утришский маяк · <span class="latin">Utrish Lighthouse</span></h1>
+    <p class="place">Bolshoy Utrish, near Anapa · Black Sea, Russia</p>
+    <p class="note">Artistic miniature interpretation — not an exact survey of the site.
+      A memorial place; recreated with respect.</p>
+    <p class="model">Built by <strong>GLM-5.3-Flash</strong> <span class="dim">(Z.ai)</span> · Three.js, all geometry &amp; textures generated in code</p>
+    <details id="promptDetails">
+      <summary>About &amp; full prompt</summary>
+      <div class="prompt-body">
+        <p>This is an animated Three.js diorama of a real place: the Utrish lighthouse on the
+        Black Sea coast of Russia, at the village of Bolshoy Utrish, ~20 km south-east of Anapa,
+        at the edge of the Utrish nature reserve on the Abrau peninsula. Two lighthouses stand on
+        the rocky island: the 17-metre 1975 lighthouse-monument (arch. Boris Kamaev, memorial to
+        Black Sea sailors of WWII, with its sculpted relief band) and the low 1911 lighthouse,
+        now the little blue-domed Chapel of St Nicholas. A rusty metal footbridge crosses the
+        ~20-metre strait from the sickle spit of the cape; a pebble beach, a small pier with
+        boats and the dry juniper-and-pine ridges of the Abrau peninsula lie across the water.
+        Everything below is the complete prompt used to generate this piece, so you can copy it
+        and try it yourself:</p>
+        <pre id="promptText" tabindex="0"></pre>
+      </div>
+    </details>
+    <p class="keys">drag — orbit · right-drag — pan · wheel — zoom · <b>H</b> — hide interface · <b>R</b> — reset view</p>
+  </div>
+</div>
+
+<div class="ui hint" id="hint">drag to orbit · right-drag to pan · wheel to zoom · H hides this interface · R resets the view</div>
+<div class="ui loading" id="loading">building the diorama…</div>
+
+<script type="module" src="js/main.js"></script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+ (function(m,e,t,r,i,k,a){
+   m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+ })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108768403', 'ym');
+
+ ym(108768403, 'init', {ssr:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108768403" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</body>
+</html>

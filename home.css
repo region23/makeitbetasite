@@ -1,0 +1,75 @@
+/* Главная */
+.home-hero { border-bottom: 1px solid var(--border); }
+.home-hero__inner { display: grid; grid-template-columns: 190px 1fr; gap: 42px; padding-top: 110px; padding-bottom: 100px; }
+.home-hero__identity { color: var(--ink); font-size: .88rem; font-weight: 500; line-height: 1.6; padding-top: 10px; }
+.home-hero__identity span { display: block; color: var(--ink-soft); font-weight: 400; }
+.home-hero h1 { max-width: 850px; font-family: var(--font-head); font-weight: 700; font-size: clamp(2.8rem, 6.4vw, 5.3rem); letter-spacing: -.055em; line-height: 1.09; }
+.home-hero__bottom { display: flex; justify-content: space-between; align-items: end; gap: 32px; margin-top: 50px; }
+.home-hero__bottom p { max-width: 430px; color: var(--ink-soft); font-size: 1.05rem; line-height: 1.65; }
+.home-hero__jump { color: var(--ink); font-weight: 500; text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 5px; white-space: nowrap; }
+.home-hero__jump span { color: var(--accent); margin-left: 10px; }
+.home-projects { padding: 105px 0 96px; }
+.home-section-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 52px; }
+.home-section-head h2, .home-experiments h2, .home-about h2, .home-contact h2 { font-family: var(--font-head); font-weight: 700; font-size: clamp(2rem, 4.6vw, 3.6rem); letter-spacing: -.045em; line-height: 1.15; }
+.home-section-head p { max-width: 240px; color: var(--ink-soft); font-size: .95rem; }
+.home-project { display: grid; grid-template-columns: 190px 1fr auto; align-items: start; gap: 28px; padding: 29px 0; color: var(--ink); text-decoration: none; border-top: 1px solid var(--border); }
+.home-project:last-child { border-bottom: 1px solid var(--border); }
+.home-project__type { color: var(--ink-soft); font-size: .82rem; padding-top: 5px; }
+.home-project__content { display: flex; flex-direction: column; gap: 8px; }
+.home-project__content strong { font-family: var(--font-head); font-size: clamp(1.15rem, 2vw, 1.55rem); letter-spacing: -.025em; line-height: 1.3; }
+.home-project__content > span { color: var(--ink-soft); font-size: .9rem; }
+.home-project__arrow { color: var(--accent); font-size: 1.3rem; }
+.home-project:hover strong, .home-about a:hover, .home-experiments a:hover, .home-contact__link:hover { color: var(--accent); }
+.home-archive { margin-top: 40px; color: var(--ink-soft); font-size: .9rem; }
+.home-archive summary { cursor: pointer; width: fit-content; color: var(--ink); font-weight: 500; }
+.home-archive summary span { color: var(--ink-soft); font-weight: 400; margin-left: 12px; }
+.home-archive > p { margin: 20px 0 12px; }
+.home-archive ul { list-style: none; max-width: 700px; }
+.home-archive li { display: grid; grid-template-columns: 190px 1fr; gap: 28px; padding: 10px 0; border-top: 1px solid var(--border); }
+.home-archive li strong { color: var(--ink); font-weight: 500; }
+.home-experiments { background: var(--ink); color: var(--bg); padding: 84px 0; }
+.home-experiments__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: end; }
+.home-experiments__label { color: var(--accent); font-size: .9rem; margin-bottom: 22px; }
+.home-experiments__copy { max-width: 360px; justify-self: end; }
+.home-experiments__copy p { opacity: .8; margin-bottom: 28px; }
+.home-experiments a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+.home-about { padding: 110px 0; border-bottom: 1px solid var(--border); }
+.home-about__inner { display: grid; grid-template-columns: minmax(220px, 340px) 1fr; gap: clamp(48px, 10vw, 140px); align-items: center; }
+.home-about__portrait { overflow: hidden; background: var(--border); }
+.home-about__portrait img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+.home-about__content { max-width: 550px; }
+.home-about__content h2 { margin-bottom: 28px; }
+.home-about__content p { color: var(--ink-soft); margin-bottom: 16px; }
+.home-about__links { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 28px; }
+.home-about__links a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+.home-contact { padding: 90px 0; border-bottom: 1px solid var(--border); }
+.home-contact__inner { display: flex; justify-content: space-between; gap: 40px; align-items: end; }
+.home-contact p { color: var(--ink-soft); max-width: 390px; margin-top: 22px; }
+.home-contact__link { display: grid; grid-template-columns: auto auto; gap: 3px 35px; min-width: 210px; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--accent); padding: 0 0 14px; font-family: var(--font-head); font-size: 1.2rem; font-weight: 700; }
+.home-contact__link > span { justify-self: end; color: var(--accent); }
+.home-contact__link small { grid-column: 1 / -1; color: var(--ink-soft); font-family: var(--font-body); font-size: .85rem; font-weight: 400; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+@media (max-width: 768px) {
+  .home-hero__inner { grid-template-columns: 1fr; gap: 32px; padding-top: 65px; padding-bottom: 70px; }
+  .home-hero h1 { font-size: clamp(2.35rem, 8vw, 4rem); }
+  .home-hero__bottom, .home-section-head { align-items: start; flex-direction: column; }
+  .home-hero__bottom { margin-top: 32px; }
+  .home-projects, .home-about, .home-contact { padding: 72px 0; }
+  .home-project { grid-template-columns: 1fr auto; gap: 10px; }
+  .home-project__type { grid-column: 1; }
+  .home-project__content { grid-column: 1; }
+  .home-project__arrow { grid-column: 2; grid-row: 1 / 3; }
+  .home-experiments__inner { grid-template-columns: 1fr; gap: 32px; }
+  .home-experiments__copy { justify-self: start; }
+  .home-about__inner { grid-template-columns: 1fr; gap: 38px; }
+  .home-about__portrait { max-width: 300px; }
+  .home-contact__inner { flex-direction: column; align-items: start; }
+}
+@media (max-width: 480px) {
+  .home-hero h1 { font-size: clamp(2.1rem, 8.4vw, 2.8rem); }
+  .home-archive li { grid-template-columns: 1fr; gap: 2px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+/* В тёмной теме контрастный блок становится светлым */
+[data-theme="dark"] .home-experiments__label,
+[data-theme="dark"] .home-experiments a:hover { color: #a33b0d; }

@@ -9,15 +9,31 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unbounded:wght@400;600;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="howtodeal.css?v=details-1" />
+<link rel="stylesheet" href="/site-shell/site-shell.css">
 </head>
 <body>
-  <header class="guide-header">
+<!-- site-header:start -->
+<header class="mib-site-header">
+  <div class="mib-site-header__inner">
+    <a class="mib-site-logo" href="/">Make It Beta<sup>🧪</sup></a>
+    <nav class="mib-site-nav" id="mib-site-nav" aria-label="Основная навигация">
+      <a href="/#projects">Проекты</a>
+      <a href="/model-tests/">Эксперименты</a>
+      <a href="/blog/">Блог</a>
+      <a href="/consulting/">Консалтинг</a>
+      <a href="/#contact">Написать</a>
+      <button class="mib-site-theme" type="button" aria-label="Переключить тему" title="Переключить тему"><span aria-hidden="true">🌙</span></button>
+    </nav>
+    <button class="mib-site-menu" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mib-site-nav"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<!-- site-header:end -->
+  <div class="guide-header">
     <div class="guide-shell header-inner">
-      <a class="back-link" href="../" aria-label="Вернуться на Make It Beta"><span aria-hidden="true">←</span> Make It Beta</a>
       <div class="guide-mark" aria-label="How to Deal по-русски">HOW TO DEAL <span>RU / 01</span></div>
       <a class="header-link" href="#profiles">К атласу <span aria-hidden="true">↓</span></a>
     </div>
-  </header>
+  </div>
 
   <main>
     <section class="guide-hero guide-shell">
@@ -117,13 +133,22 @@
     </section>
   </main>
 
-  <footer class="guide-footer">
+  <aside class="guide-footer" aria-label="Навигация атласа">
     <div class="guide-shell footer-inner">
-      <a class="back-link" href="../">Make It Beta <span aria-hidden="true">🧪</span></a>
       <span>Сделано для разговоров, после которых работа движется.</span>
       <a href="#profiles">Наверх ↑</a>
     </div>
-  </footer>
+  </aside>
+<!-- site-footer:start -->
+<footer class="mib-site-footer">
+  <div class="mib-site-footer__inner">
+    <a class="mib-site-logo" href="/">Make It Beta<sup>🧪</sup></a>
+    <a href="/consulting/">Консалтинг</a>
+    <a href="https://t.me/pavlenkodev" target="_blank" rel="noopener noreferrer">Телеграм-канал</a>
+    <span>© 2026 makeitbeta.ru</span>
+  </div>
+</footer>
+<!-- site-footer:end -->
 
   <dialog class="profile-dialog" id="profileDialog" aria-labelledby="dialogTitle">
     <div class="dialog-inner">
@@ -147,5 +172,6 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/108768403" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+<script src="/site-shell/site-shell.js" defer></script>
 </body>
 </html>

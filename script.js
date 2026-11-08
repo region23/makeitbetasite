@@ -68,15 +68,22 @@ document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el
 var hamburger = document.getElementById('hamburger');
 var nav = document.getElementById('headerNav');
 if (hamburger && nav) {
+  function setMenuOpen(open) {
+    hamburger.classList.toggle('is-open', open);
+    nav.classList.toggle('is-open', open);
+    hamburger.setAttribute('aria-expanded', String(open));
+    hamburger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+  }
   hamburger.addEventListener('click', function() {
-    hamburger.classList.toggle('is-open');
-    nav.classList.toggle('is-open');
+    setMenuOpen(!nav.classList.contains('is-open'));
   });
-  // Close on nav link click
   nav.querySelectorAll('.header__link').forEach(function(link) {
-    link.addEventListener('click', function() {
-      hamburger.classList.remove('is-open');
-      nav.classList.remove('is-open');
-    });
+    link.addEventListener('click', function() { setMenuOpen(false); });
+  });
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' && nav.classList.contains('is-open')) {
+      setMenuOpen(false);
+      hamburger.focus();
+    }
   });
 }

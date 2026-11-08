@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#edf0eb">
+  <meta name="description" content="An interactive miniature of the Utrish lighthouse and the Black Sea coast near Anapa.">
+  <title>The Utrish Lighthouse</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23203c43' d='M9 29h14l-2-17H11zM10 10h12V6H10zM8 5l8-4 8 4z'/%3E%3Cpath fill='%23a67549' d='M9 17h14v3H9z'/%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-CeZjjMVV.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-SoxfroWl.css">
+</head>
+<body>
+  <main aria-label="The Utrish Lighthouse diorama">
+    <div id="stage"></div>
+    <p id="status" role="status">Preparing the coast…</p>
+    <div id="interface">
+      <header class="plate">
+        <div class="place"><span class="mark" aria-hidden="true">✦</span> Black Sea coast</div>
+        <h1>The Utrish<br>Lighthouse</h1>
+        <p>Bolshoy Utrish, near Anapa</p>
+      </header>
+      <aside class="coordinates" aria-label="Lighthouse coordinates">
+        <span class="coordinates-line"></span>
+        44°45′31″ N &nbsp; 37°22′41″ E
+      </aside>
+      <footer>
+        <div class="caption">
+          <span>Abrau Peninsula</span>
+          <span>Coastal miniature · Late afternoon</span>
+        </div>
+        <div class="tools">
+          <div class="gestures" aria-label="Camera gestures">Drag to orbit <i></i> Right-drag to pan <i></i> Scroll to zoom</div>
+          <nav aria-label="Diorama controls">
+            <button id="reset" type="button" title="Reset view (R)" aria-keyshortcuts="R">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 8a6 6 0 1 1 .7 6M4 4v4h4"/></svg>
+              <span>Reset view</span><kbd>R</kbd>
+            </button>
+            <button id="hide" type="button" title="Hide interface (H to show)" aria-keyshortcuts="H">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 4H4v3m9-3h3v3M4 13v3h3m9-3v3h-3"/></svg>
+              <span>Hide UI</span><kbd>H</kbd>
+            </button>
+            <button id="about" type="button" aria-haspopup="dialog">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.3"/><path d="M10 9v4m0-6v.1"/></svg>
+              <span>About</span>
+            </button>
+          </nav>
+        </div>
+      </footer>
+    </div>
+    <dialog id="notes" aria-labelledby="notes-title">
+      <div class="dialog-head">
+        <h2 id="notes-title">About the miniature</h2>
+        <form method="dialog"><button type="submit" aria-label="Close about" class="close" autofocus>×</button></form>
+      </div>
+      <p>The Utrish lighthouse stands on Utrish Island in Bolshoy Utrish, near Anapa on the Black Sea. This is an artistic miniature interpretation, not an exact survey. It depicts the chapel at its location before the 2025 relocation began.</p>
+      <p><strong>AI model</strong> OpenAI Codex used GPT‑6.1 Sol (<code>gpt-6.1-sol</code>) with Ultra reasoning.</p>
+      <div class="prompt-head">
+        <label for="prompt">Complete generation prompt</label>
+        <button id="copy" type="button">Copy prompt</button>
+      </div>
+      <textarea id="prompt" readonly rows="11" spellcheck="false"></textarea>
+      <span id="copy-status" role="status"></span>
+    </dialog>
+  </main>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+ (function(m,e,t,r,i,k,a){
+   m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+ })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108768403', 'ym');
+
+ ym(108768403, 'init', {ssr:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108768403" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</body>
+</html>

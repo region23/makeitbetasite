@@ -29,6 +29,11 @@ import sys
 from datetime import date
 from pathlib import Path
 
+try:
+    from .site_shell import apply_shell_templates
+except ImportError:
+    from site_shell import apply_shell_templates
+
 REPO_ROOT = Path(__file__).parent.parent
 BLOG_DIR = REPO_ROOT / 'blog'
 POSTS_JSON = BLOG_DIR / 'posts.json'
@@ -213,7 +218,7 @@ def md_to_html(md: str) -> str:
 
 
 def render_article(args, content_html: str) -> str:
-    tpl = TEMPLATE.read_text()
+    tpl = apply_shell_templates(TEMPLATE.read_text(encoding="utf-8"))
     if YANDEX_METRIKA_MARKER not in tpl:
         raise RuntimeError(
             f'В шаблоне статьи отсутствует счётчик Яндекс.Метрики: {YANDEX_METRIKA_MARKER}'

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Utrish Lighthouse — animated diorama</title>
+  <meta name="description" content="An animated Three.js miniature of the Utrish lighthouse, island and strait at Bolshoy Utrish near Anapa on the Black Sea." />
+  <style>:root{--ink:#2b2620;--ink-soft:#5d5446;--paper:#faf6efd6;--line:#3c30202e;--accent:#a8561f}*{box-sizing:border-box}html,body{height:100%;margin:0;overflow:hidden}body{color:var(--ink);background:radial-gradient(120% 90% at 50% 38%,#f6f1e8 0%,#e9e1d3 55%,#d8cebd 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}#stage{cursor:grab;touch-action:none;outline:none;width:100%;height:100%;display:block;position:fixed;inset:0}#stage:active{cursor:grabbing}.ui{z-index:5;position:fixed}.ui-hidden .ui{display:none!important}#title{pointer-events:none;text-shadow:0 1px #fff9;max-width:min(420px,70vw);top:18px;left:22px}#title h1{letter-spacing:.22em;text-transform:uppercase;margin:0;font:600 17px/1.1 ui-serif,Georgia,Times New Roman,serif}#title p{color:var(--ink-soft);margin:6px 0 0;font-size:12px;line-height:1.45}#hint{color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);-webkit-backdrop-filter:blur(8px);border-radius:999px;padding:7px 14px;font-size:11.5px;bottom:18px;left:22px}#hint kbd{border:1px solid var(--line);color:var(--ink);background:#fff;border-bottom-width:2px;border-radius:4px;padding:1px 5px;font:600 10.5px ui-monospace,Menlo,monospace}#about{background:var(--paper);border:1px solid var(--line);-webkit-backdrop-filter:blur(10px);border-radius:12px;width:min(430px,100vw - 36px);font-size:12.5px;line-height:1.5;bottom:18px;right:18px;box-shadow:0 6px 28px #3c28141f}#about summary{cursor:pointer;letter-spacing:.04em;border-radius:12px;align-items:center;gap:8px;padding:9px 14px;font-weight:600;list-style:none;display:flex}#about summary::-webkit-details-marker{display:none}#about summary:before{content:"i";border:1.5px solid var(--accent);width:17px;height:17px;color:var(--accent);border-radius:50%;place-items:center;font:italic 700 11px/1 ui-serif,Georgia,serif;display:inline-grid}#about summary:focus-visible,#about button:focus-visible,#about textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}#about[open] summary{border-bottom:1px solid var(--line);border-radius:12px 12px 0 0}#about .body{max-height:min(62vh,560px);padding:4px 16px 14px;overflow:auto}#about h2{letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:14px 0 4px;font:600 11px/1.2 system-ui,sans-serif}#about p{color:var(--ink);margin:0 0 6px}#about .small{color:var(--ink-soft);font-size:11.5px}#about textarea{resize:vertical;width:100%;height:190px;color:var(--ink);border:1px solid var(--line);background:#ffffffb3;border-radius:8px;padding:8px 10px;font:11px/1.45 ui-monospace,Menlo,Consolas,monospace}#about .row{align-items:center;gap:10px;margin-top:6px;display:flex}#about button{color:#fff;background:var(--accent);cursor:pointer;border:0;border-radius:7px;padding:6px 12px;font:600 11.5px system-ui,sans-serif}#about button:hover{filter:brightness(1.08)}#copystatus{color:var(--ink-soft);font-size:11.5px}#loading{z-index:9;color:var(--ink-soft);letter-spacing:.2em;text-transform:uppercase;background:#efe8db;place-items:center;font:600 12px/1 system-ui,sans-serif;transition:opacity .8s;display:grid;position:fixed;inset:0}#loading.done{opacity:0;pointer-events:none}@media (width<=640px){#hint{display:none}#about{bottom:10px;right:10px}#title{top:12px;left:14px}}@media (prefers-reduced-motion:reduce){#loading{transition:none}}</style>
+  <script type="module" crossorigin src="./assets/index-DsCiP-lI.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/world-CglFy8wA.js">
+</head>
+<body>
+  <canvas id="stage" tabindex="0" aria-label="Animated 3D diorama of the Utrish lighthouse. Drag to orbit, right-drag to pan, scroll to zoom. H hides the interface, R resets the view."></canvas>
+
+  <div id="loading" role="status">Shaping the coast…</div>
+
+  <header id="title" class="ui">
+    <h1>The Utrish Lighthouse</h1>
+    <p>Bolshoy Utrish, near Anapa · Black Sea<br />An artistic miniature of a memorial site</p>
+  </header>
+
+  <div id="hint" class="ui" aria-hidden="true">
+    drag <b>orbit</b> · right-drag <b>pan</b> · wheel <b>zoom</b> · <kbd>R</kbd> reset · <kbd>H</kbd> hide
+  </div>
+
+  <details id="about" class="ui">
+    <summary>About this miniature, the model &amp; the prompt</summary>
+    <div class="body">
+      <h2>The place</h2>
+      <p>The <strong>Utrish lighthouse</strong> stands on Utrish Island at <strong>Bolshoy Utrish</strong>, about 20&nbsp;km south-east of <strong>Anapa</strong> on the Russian <strong>Black Sea</strong> coast, at the edge of the Utrish nature reserve. Two lighthouses share the island: the 1975 lighthouse-monument to Black Sea sailors of the Second World War, and the small 1911 lighthouse that became the Chapel of St&nbsp;Nicholas.</p>
+      <p><strong>This is an artistic miniature interpretation, not an exact survey.</strong> Distances, the shape of the coast, the strait width and the sea state are simplified and exaggerated for readability. It is a memorial site and is meant to be shown with respect.</p>
+
+      <h2>Made by</h2>
+      <p>The AI model <strong>Claude Sonnet 5.5</strong> (model ID <code>claude-sonnet-5-5</code>), working in Claude Code at high reasoning effort. No further variant information is available to the model, so none is claimed here.</p>
+      <p class="small">Real photographs were looked at in a browser only as visual reference. No images, textures or models are embedded: all geometry, textures and shaders are generated in code with Three.js.</p>
+
+      <h2>The complete prompt</h2>
+      <p class="small">Copy it and try it yourself with any capable coding model.</p>
+      <label for="prompt" class="small" style="display:block;position:absolute;left:-9999px">Complete prompt used to generate this diorama</label>
+      <textarea id="prompt" readonly spellcheck="false"></textarea>
+      <div class="row">
+        <button id="copy" type="button">Copy prompt</button>
+        <span id="copystatus" role="status" aria-live="polite"></span>
+      </div>
+    </div>
+  </details>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+ (function(m,e,t,r,i,k,a){
+   m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+ })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108768403', 'ym');
+
+ ym(108768403, 'init', {ssr:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108768403" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</body>
+</html>

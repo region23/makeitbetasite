@@ -12,6 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BOOK = ROOT / "ai_native_book_new_design"
 SOURCE = BOOK / "full.html"
+SITE_SHELL = ROOT / "site-shell"
 
 YANDEX_METRIKA = """<!-- Yandex.Metrika counter -->
 <script type="text/javascript">
@@ -264,6 +265,8 @@ def render(chapter: Chapter, source: str) -> str:
     previous = footer_link(chapter.number, "prev")
     following = footer_link(chapter.number, "next")
     title = html.escape(chapter.title)
+    site_header = (SITE_SHELL / "header.html").read_text(encoding="utf-8").strip()
+    site_footer = (SITE_SHELL / "footer.html").read_text(encoding="utf-8").strip()
     return f"""<!doctype html>
 <html lang="ru">
 <head>
@@ -275,12 +278,18 @@ def render(chapter: Chapter, source: str) -> str:
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..900;1,7..72,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Unbounded:wght@700&amp;display=swap">
+<link rel="stylesheet" href="/site-shell/site-shell.css">
 <style>
 {STYLE}
 </style>
 </head>
 <body data-page="ch{chapter.number}">
 <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
+
+<!-- site-header:start -->
+{site_header}
+<!-- site-header:end -->
 
 <div>
   <div aria-hidden="true" style="position:fixed; top:0; left:0; right:0; height:3px; background:rgba(23,17,6,0.08); z-index:50">
@@ -328,6 +337,11 @@ def render(chapter: Chapter, source: str) -> str:
   </footer>
 </div>
 
+<!-- site-footer:start -->
+{site_footer}
+<!-- site-footer:end -->
+
+<script src="/site-shell/site-shell.js" defer></script>
 <script src="./assets/book-v3.js" defer></script>
 {YANDEX_METRIKA}
 </body>

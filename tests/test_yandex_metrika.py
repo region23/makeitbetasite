@@ -7,7 +7,7 @@ from scripts.publish_to_blog import render_article
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EXCLUDED_PREFIXES = ("howtodeal/source-original/",)
+EXCLUDED_PREFIXES = ("howtodeal/source-original/", "site-shell/")
 MARKERS = (
     "https://mc.yandex.ru/metrika/tag.js?id=108768403",
     "ym(108768403, 'init'",

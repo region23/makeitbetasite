@@ -1,0 +1,91 @@
+:root {
+  --ink: #23272b;
+  --ink-soft: #565d63;
+  --paper: rgba(250, 248, 244, 0.78);
+  --paper-strong: rgba(250, 248, 244, 0.94);
+  --line: rgba(35, 39, 43, 0.12);
+  --accent: #2f5f8f;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #ece9e3; color: var(--ink); font-family: var(--sans); }
+#app, #app canvas { position: fixed; inset: 0; display: block; width: 100%; height: 100%; }
+#app canvas { touch-action: none; }
+
+#loading {
+  position: fixed; inset: 0; display: grid; place-items: center; z-index: 20;
+  background: #ece9e3; font-family: var(--serif); font-size: 18px; color: var(--ink-soft);
+  transition: opacity 0.8s ease;
+}
+#loading.done { opacity: 0; pointer-events: none; }
+
+#ui { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+#ui > * { pointer-events: auto; }
+body.ui-hidden #ui { display: none; }
+
+.card {
+  background: var(--paper);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(40, 40, 40, 0.08);
+}
+.title-card { position: absolute; top: 16px; left: 16px; padding: 10px 16px 11px; }
+.title-card h1 { margin: 0; font-family: var(--serif); font-weight: 600; font-size: 21px; letter-spacing: 0.01em; }
+.title-card p { margin: 2px 0 0; font-size: 12.5px; color: var(--ink-soft); letter-spacing: 0.02em; }
+
+.hints {
+  position: absolute; left: 16px; bottom: 16px; margin: 0; padding: 7px 12px;
+  display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--ink-soft);
+  max-width: calc(100% - 32px - 190px);
+}
+kbd {
+  font-family: var(--sans); font-size: 11px; color: var(--ink);
+  background: rgba(255, 255, 255, 0.7); border: 1px solid var(--line); border-bottom-width: 2px;
+  border-radius: 4px; padding: 0 5px; margin-right: 4px;
+}
+.corner { position: absolute; right: 16px; bottom: 16px; }
+.pill {
+  font: 500 13px var(--sans); color: var(--ink); padding: 8px 14px; cursor: pointer;
+  border-radius: 999px;
+}
+.pill.small { font-size: 12px; padding: 5px 11px; background: rgba(255, 255, 255, 0.8); border: 1px solid var(--line); }
+.pill:hover { background: var(--paper-strong); }
+button:focus-visible, pre:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.about {
+  position: absolute; right: 16px; bottom: 64px; top: 16px;
+  width: min(520px, calc(100% - 32px)); padding: 16px 18px 18px;
+  background: var(--paper-strong); overflow: auto; font-size: 14px; line-height: 1.5;
+}
+.about[hidden] { display: none; }
+.about-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.about h2 { margin: 0; font-family: var(--serif); font-size: 20px; font-weight: 600; }
+.about h3 { margin: 16px 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); }
+.about p { margin: 0 0 8px; }
+.about .note { color: var(--ink-soft); font-size: 13px; }
+.about code { font-size: 12.5px; background: rgba(0, 0, 0, 0.05); padding: 1px 4px; border-radius: 4px; }
+.icon-btn {
+  border: 0; background: transparent; font-size: 24px; line-height: 1; cursor: pointer; color: var(--ink-soft);
+  width: 32px; height: 32px; border-radius: 8px;
+}
+.icon-btn:hover { background: rgba(0, 0, 0, 0.06); color: var(--ink); }
+.prompt-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+.prompt-head h3 { margin: 0; }
+#prompt, #prompt-2 {
+  margin: 8px 0 0; padding: 12px; max-height: 46vh; overflow: auto;
+  white-space: pre-wrap; word-wrap: break-word;
+  font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  background: rgba(255, 255, 255, 0.75); border: 1px solid var(--line); border-radius: 8px; color: #2b3035;
+}
+
+@media (max-width: 640px) {
+  .hints { display: none; }
+  .title-card h1 { font-size: 18px; }
+  .about { left: 16px; width: auto; }
+}
+
+.about h3.followup { margin-top: 14px; }
+#prompt-2 { max-height: 22vh; }

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#dbe7e4" />
+  <link rel="stylesheet" href="./style.css" />
+  <title>Utrish Lighthouse — a miniature of the Black Sea</title>
+</head>
+<body>
+  <main id="app">
+    <div id="scene" aria-label="Animated three-dimensional miniature of Utrish Island and the lighthouse"></div>
+    <div class="interface" id="interface">
+      <header class="masthead">
+        <div class="place-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div><p class="location">Black Sea &nbsp;/&nbsp; Bolshoy Utrish</p><h1>Utrish Lighthouse</h1><p class="subtitle">A small piece of the coast</p></div>
+      </header>
+      <div class="side-note"><span>44°45′ N</span><span>37°23′ E</span></div>
+      <footer class="controls">
+        <div class="instructions"><span><b>Drag</b> to orbit</span><span><b>Right drag</b> to pan</span><span><b>Scroll</b> to zoom</span></div>
+        <div class="actions"><button id="reset" type="button" title="Reset view (R)"><span aria-hidden="true">↺</span> Reset view <kbd>R</kbd></button><button id="about" type="button" aria-haspopup="dialog">About this place <span aria-hidden="true">↗</span></button><span class="hide-hint"><kbd>H</kbd> hide interface</span></div>
+      </footer>
+    </div>
+    <dialog id="about-dialog" aria-labelledby="about-title">
+      <div class="dialog-head"><p class="location">A note on the miniature</p><button id="close" class="close" type="button" aria-label="Close">×</button></div>
+      <h2 id="about-title">A real coast,<br><em>reimagined</em></h2>
+      <p>Utrish Lighthouse stands on Utrish Island at Bolshoy Utrish, near Anapa on the Black Sea. This is an artistic miniature interpretation, not an exact survey. The lighthouse is also a memorial to sailors of the Second World War.</p>
+      <p class="model">Created with <strong>OpenAI GPT-6.1 Terra</strong> in Codex, using Ultra mode.</p>
+      <details><summary>Read the complete prompt <span>+</span></summary><div class="prompt-head"><p>The original request, reproduced in full</p><button id="copy" type="button">Copy prompt</button></div><pre id="prompt"></pre></details>
+    </dialog>
+    <div id="error" role="alert" hidden>Unable to start the 3D scene. Please check that WebGL is available in your browser.</div>
+  </main>
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/"}}</script>
+  <script type="module" src="./main.js"></script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+ (function(m,e,t,r,i,k,a){
+   m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+ })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108768403', 'ym');
+
+ ym(108768403, 'init', {ssr:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108768403" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</body>
+</html>

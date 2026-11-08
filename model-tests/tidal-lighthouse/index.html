@@ -11,20 +11,27 @@
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/model-tests/model-tests.css?v=20261107-previews-2">
   <script>(function(){var stored=localStorage.getItem('theme');var dark=stored?stored==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',dark?'dark':'light');})();</script>
+<link rel="stylesheet" href="/site-shell/site-shell.css">
 </head>
 <body>
-  <header class="header"><div class="wrap header__wrap">
-    <a href="/" class="logo">Make It Beta<sup>🧪</sup></a>
-    <nav class="header__nav" id="headerNav" aria-label="Основная навигация">
-      <a href="/model-tests/" class="header__link" aria-current="page">Тесты моделей</a>
-      <a href="/blog/" class="header__link">Блог</a>
-      <a href="/" class="header__link">На главную</a>
-      <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему"><span id="themeIcon">🌙</span></button>
+  <!-- site-header:start -->
+<header class="mib-site-header">
+  <div class="mib-site-header__inner">
+    <a class="mib-site-logo" href="/">Make It Beta<sup>🧪</sup></a>
+    <nav class="mib-site-nav" id="mib-site-nav" aria-label="Основная навигация">
+      <a href="/#projects">Проекты</a>
+      <a href="/model-tests/">Эксперименты</a>
+      <a href="/blog/">Блог</a>
+      <a href="/consulting/">Консалтинг</a>
+      <a href="/#contact">Написать</a>
+      <button class="mib-site-theme" type="button" aria-label="Переключить тему" title="Переключить тему"><span aria-hidden="true">🌙</span></button>
     </nav>
-    <button class="hamburger" id="hamburger" aria-label="Меню"><span></span><span></span><span></span></button>
-  </div></header>
+    <button class="mib-site-menu" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mib-site-nav"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<!-- site-header:end -->
   <main class="tests wrap">
-    <div class="breadcrumbs"><a href="/">Главная</a><span>/</span><a href="/model-tests/">Тесты моделей</a><span>/</span><span>The Tidal Lighthouse</span></div>
+    <div class="breadcrumbs"><a href="/">Главная</a><span>/</span><a href="/model-tests/">Эксперименты</a><span>/</span><span>The Tidal Lighthouse</span></div>
     <section class="challenge-hero"><p class="eyebrow">Тест на создание интерфейса · Three.js</p><h1>The Tidal<br><em>Lighthouse</em></h1><p>Один промпт, разные модели и диорама, которую можно исследовать самому. Здесь собираем результаты по мере проведения тестов.</p><div class="hero-actions"><a class="primary-action" href="#results">К результатам <span>↓</span></a><a class="text-link" href="#prompt">Посмотреть промпт</a></div></section>
     <section id="results" class="results" aria-labelledby="results-title"><div class="section-line"><h2 id="results-title">Результаты</h2><span>8 диорам</span></div>
       <article class="result-card"><span class="result-index">01</span><img class="result-preview" src="/model-tests/tidal-lighthouse/previews/claude.jpg" alt="Диорама Claude Opus 5.5 Medium" width="640" height="400" loading="lazy" decoding="async"><h3 class="result-name">Claude Opus 5.5 Medium</h3><dl class="result-facts"><div><dt>Среда</dt><dd>Claude Code CLI</dd></div><div><dt>Режим</dt><dd>Medium</dd></div></dl><a class="primary-action result-open" target="_blank" rel="noopener noreferrer" href="/model-tests/tidal-lighthouse/claude-opus-5-5-medium/">Открыть диораму <span aria-hidden="true">↗</span></a></article>
@@ -63,7 +70,30 @@ In the finished diorama, include an accessible, unobtrusive section that identif
     </section>
     <a class="back-link" href="/model-tests/">← Все эксперименты</a>
   </main>
-  <footer class="footer"><div class="wrap footer__wrap"><a href="/" class="logo">Make It Beta 🧪</a><a href="/blog/" class="footer__contact">Блог</a><a href="https://t.me/pavlenkodev" class="footer__contact">Телеграм-канал</a><span class="footer__copy">© 2026 makeitbeta.ru</span></div></footer>
+  <!-- site-footer:start -->
+<footer class="mib-site-footer">
+  <div class="mib-site-footer__inner">
+    <a class="mib-site-logo" href="/">Make It Beta<sup>🧪</sup></a>
+    <a href="/consulting/">Консалтинг</a>
+    <a href="https://t.me/pavlenkodev" target="_blank" rel="noopener noreferrer">Телеграм-канал</a>
+    <span>© 2026 makeitbeta.ru</span>
+  </div>
+</footer>
+<!-- site-footer:end -->
   <script src="/script.js"></script>
   <script src="/model-tests/model-tests.js"></script>
+<script src="/site-shell/site-shell.js" defer></script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+ (function(m,e,t,r,i,k,a){
+   m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+ })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108768403', 'ym');
+
+ ym(108768403, 'init', {ssr:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108768403" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </body></html>
