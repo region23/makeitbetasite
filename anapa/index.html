@@ -6,8 +6,8 @@
     <meta name="theme-color" content="#184858" />
     <meta name="description" content="Интерактивная 3D-карта набережной Анапы по данным OpenStreetMap" />
     <title>Slop Anapa — набережная Анапы в 3D</title>
-    <script type="module" crossorigin src="./assets/index-DXsUazGL.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-DVm7E2ZS.css">
+    <script type="module" crossorigin src="./assets/index-ClGkc6xu.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-vNR9498-.css">
   </head>
   <body data-mode="orbit">
     <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -62,6 +62,10 @@
 
     <aside class="chart-places paper" aria-labelledby="places-title">
       <h2 id="places-title">Ориентиры</h2>
+      <details class="venue-directory">
+        <summary>Заведения</summary>
+        <div id="venues" class="venue-list"></div>
+      </details>
       <div id="places" class="places"></div>
     </aside>
 
@@ -95,6 +99,7 @@
           <h2>Данные модели</h2>
           <p>Берег, улицы и контуры зданий взяты из OpenStreetMap. Высоты части зданий оценены. В километре от Горгиппии рельеф взят из GEDTM30 с шагом около 20 × 28 м. Отметки террас и спусков уточнены по фото.</p>
           <p>Участок от маяка до Горгиппии уточнён по панорамам и фотографиям. Ширины дорожек и высоты ярусов здесь оценочные.</p>
+          <p>Фасады заведений восстановлены по снимкам разных лет. Некоторые вывески исторические.</p>
           <p>Улицы и фундаменты Горгиппии нанесены по <a href="https://kleio.asu.ru/2015/1-2/hcsj-122015_16-27.pdf#page=11" target="_blank" rel="noopener noreferrer">ортофотоплану раскопа</a>. Глубины подвалов оценочные.</p>
           <p>Карты высот · <a href="https://doi.org/10.5069/G9BV7DT1" target="_blank" rel="noopener noreferrer">GEDTM30</a> · <a href="https://registry.opendata.aws/terrain-tiles/" target="_blank" rel="noopener noreferrer">Mapzen Terrain Tiles</a></p>
           <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener noreferrer">Лицензия данных ODbL</a>
