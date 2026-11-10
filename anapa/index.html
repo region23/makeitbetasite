@@ -6,8 +6,8 @@
     <meta name="theme-color" content="#184858" />
     <meta name="description" content="Интерактивная 3D-карта набережной Анапы по данным OpenStreetMap" />
     <title>Slop Anapa — набережная Анапы в 3D</title>
-    <script type="module" crossorigin src="./assets/index-BUm2jNh8.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-534fx8FI.css">
+    <script type="module" crossorigin src="./assets/index-CiwejL7B.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-B3s_rlBn.css">
   </head>
   <body data-mode="orbit">
     <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -71,11 +71,15 @@
 
     <aside class="chart-places paper" aria-labelledby="places-title">
       <h2 id="places-title">Ориентиры</h2>
-      <details class="venue-directory">
-        <summary>Заведения</summary>
-        <div id="venues" class="venue-list"></div>
-      </details>
-      <div id="places" class="places"></div>
+      <input class="places-toggle" type="checkbox" id="places-open" />
+      <label class="places-toggle-label" for="places-open">Ориентиры</label>
+      <div class="places-content">
+        <details class="venue-directory">
+          <summary>Заведения</summary>
+          <div id="venues" class="venue-list"></div>
+        </details>
+        <div id="places" class="places"></div>
+      </div>
     </aside>
 
     <div class="move paper" role="group" aria-label="Перемещение">
@@ -113,6 +117,7 @@
           <p>Фасады заведений восстановлены по снимкам разных лет. Некоторые вывески исторические.</p>
           <p>Улицы и фундаменты Горгиппии нанесены по <a href="https://kleio.asu.ru/2015/1-2/hcsj-122015_16-27.pdf#page=11" target="_blank" rel="noopener noreferrer">ортофотоплану раскопа</a>. Глубины подвалов оценочные.</p>
           <p>Карты высот · <a href="https://doi.org/10.5069/G9BV7DT1" target="_blank" rel="noopener noreferrer">GEDTM30</a> · <a href="https://registry.opendata.aws/terrain-tiles/" target="_blank" rel="noopener noreferrer">Mapzen Terrain Tiles</a></p>
+          <p class="mobile-illustration"><a href="./illustration/index.html">Пробная иллюстрация</a></p>
           <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener noreferrer">Лицензия данных ODbL</a>
         </div>
       </details>
