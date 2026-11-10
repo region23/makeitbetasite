@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Анапа · пробная иллюстрация</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; color: #182d35; background: #eeeee3; }
+    body { margin: 0; }
+    main { max-width: 860px; margin: auto; padding: clamp(14px, 4vw, 36px); }
+    a { color: #1e5761; text-underline-offset: .2em; }
+    h1 { margin: .4em 0 .15em; font-size: clamp(25px, 5vw, 40px); line-height: 1.12; }
+    p { margin: .5em 0 1em; line-height: 1.5; }
+    figure { margin: 0; }
+    .comparison {
+      --split: 50%;
+      display: grid;
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1;
+      isolation: isolate;
+      border: 1px solid #72898a;
+      border-radius: 7px;
+      background: #b8c4b2;
+    }
+    .comparison img { grid-area: 1 / 1; display: block; width: 100%; height: 100%; object-fit: contain; }
+    .color { clip-path: inset(0 calc(100% - var(--split)) 0 0); }
+    .divider {
+      position: absolute;
+      left: var(--split);
+      inset-block: 0;
+      width: 2px;
+      background: #fffdf0;
+      box-shadow: 0 0 4px #122f3d;
+      pointer-events: none;
+    }
+    .slider {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      opacity: 0;
+      cursor: ew-resize;
+      touch-action: pan-y;
+    }
+    .comparison:focus-within { outline: 3px solid #22606e; outline-offset: 3px; }
+    figcaption { display: flex; justify-content: space-between; gap: 8px; padding: 9px 0; font-weight: 650; }
+    .note { font-size: .88rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../">← Вернуться в 3D</a>
+    <h1>Набережная Анапы в иллюстрации</h1>
+    <p>Пробный участок от Queue до «Парохода». Перетащите границу между кадрами, чтобы сверить берег, здания и раскоп Горгиппии.</p>
+    <figure>
+      <div class="comparison">
+        <img src="./painted.webp" alt="Иллюстрация набережной" width="1024" height="1024">
+        <img class="color" src="./render.webp" alt="Исходный снимок той же 3D-сцены" width="1024" height="1024">
+        <div class="divider" aria-hidden="true"></div>
+        <input class="slider" type="range" min="0" max="100" value="50" aria-label="Доля исходного 3D-снимка">
+      </div>
+      <figcaption><span>Исходный 3D-снимок</span><span>Иллюстрация</span></figcaption>
+    </figure>
+    <p class="note">На проверенном отрезке берег почти совпал с исходным кадром. Генератор добавил деревья на заднем плане и местами изменил контуры кладки в раскопе. Для прогулки, велосипеда и машины откройте 3D.</p>
+    <p class="note"><a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a> · <a href="https://doi.org/10.5069/G9BV7DT1">Рельеф GEDTM30</a></p>
+  </main>
+  <script>
+    const slider = document.querySelector('.slider');
+    const comparison = document.querySelector('.comparison');
+    function update() {
+      comparison.style.setProperty('--split', slider.value + '%');
+      slider.setAttribute('aria-valuetext', slider.value + ' % исходного снимка');
+    }
+    slider.addEventListener('input', update);
+    update();
+  </script>
+</body>
+</html>

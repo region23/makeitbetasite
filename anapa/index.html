@@ -6,13 +6,15 @@
     <meta name="theme-color" content="#184858" />
     <meta name="description" content="Интерактивная 3D-карта набережной Анапы по данным OpenStreetMap" />
     <title>Slop Anapa — набережная Анапы в 3D</title>
-    <script type="module" crossorigin src="./assets/index-ClGkc6xu.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-vNR9498-.css">
+    <script type="module" crossorigin src="./assets/index-DX8Agjqk.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-OWhbmIKp.css">
   </head>
   <body data-mode="orbit">
     <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <symbol id="icon-orbit" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><ellipse cx="12" cy="12" rx="11" ry="4.5" transform="rotate(-34 12 12)"/></symbol>
       <symbol id="icon-walk" viewBox="0 0 24 24"><circle cx="13" cy="4" r="2"/><path d="m6 12 4-2 2-2 3 2 3 2m-6-4-2 7 5 2 2 5m-7-7-2 4-3 2"/></symbol>
+      <symbol id="icon-bike" viewBox="0 0 24 24"><circle cx="5.5" cy="16.5" r="3.5"/><circle cx="18.5" cy="16.5" r="3.5"/><path d="M5.5 16.5 9 10l4 6.5 3.5-6.5H9m9.5 6.5L15.5 6H13m-5 3h3"/></symbol>
+      <symbol id="icon-car" viewBox="0 0 24 24"><path d="m5 11 2-5h10l2 5M4 11h16v7H4zm1 7v2m14-2v2M7 14h1m8 0h1"/></symbol>
       <symbol id="icon-map" viewBox="0 0 24 24"><path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2V5Zm6-2v16m6-14v16"/></symbol>
       <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></symbol>
       <symbol id="icon-sunset" viewBox="0 0 24 24"><path d="M3 17h18M6 20h12m-11-6a5 5 0 0 1 10 0m-5-8V3M6 9 4 7m14 2 2-2"/></symbol>
@@ -39,6 +41,8 @@
       <h1>Анапа</h1>
       <p>Городская набережная<br class="title-break" /> на берегу Чёрного моря</p>
       <a class="coordinates" id="coordinates" href="https://www.openstreetmap.org/#map=16/44.8965/37.3095" target="_blank" rel="noopener noreferrer">44.8965° N &nbsp; 37.3095° E</a>
+      <output class="vehicle-speed" id="vehicle-speed" aria-label="Скорость" aria-live="off" hidden>0 км/ч</output>
+      <a class="illustration-link" href="./illustration/index.html">Пробная иллюстрация →</a>
     </header>
 
     <aside class="orientation" aria-label="Ориентация и масштаб">
@@ -82,6 +86,8 @@
         <div class="switch modes" role="group" aria-label="Режим просмотра">
           <button type="button" data-mode="orbit" aria-pressed="true"><svg aria-hidden="true"><use href="#icon-orbit" /></svg>Облёт</button>
           <button type="button" data-mode="walk" aria-pressed="false"><svg aria-hidden="true"><use href="#icon-walk" /></svg>Пешком</button>
+          <button type="button" data-mode="bike" aria-pressed="false" aria-label="Велосипед" title="Велосипед"><svg aria-hidden="true"><use href="#icon-bike" /></svg>Вело</button>
+          <button type="button" data-mode="car" aria-pressed="false" aria-label="Машина" title="Машина"><svg aria-hidden="true"><use href="#icon-car" /></svg>Авто</button>
           <button type="button" data-mode="map" aria-pressed="false"><svg aria-hidden="true"><use href="#icon-map" /></svg>Сверху</button>
         </div>
         <div class="switch lighting" role="group" aria-label="Время суток">
