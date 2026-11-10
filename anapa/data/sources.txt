@@ -1,0 +1,14 @@
+Slop Anapa — источники геоданных
+
+Береговая линия, пути, здания и точки ориентиров: © OpenStreetMap contributors.
+Лицензия Open Database License (ODbL): https://www.openstreetmap.org/copyright
+Локальная производная выборка: anapa.json
+
+Рельеф в центре: GEDTM30 v1.2, Ho & Hengl (2025), OpenTopography.
+Выборка исходного растра и интерполяция в сцене. https://doi.org/10.5069/G9BV7DT1
+CC BY 4.0: https://creativecommons.org/licenses/by/4.0/
+
+Фоновый рельеф: Mapzen Terrain Tiles.
+Атрибуция первичных источников: https://github.com/tilezen/joerd/blob/master/docs/attribution.md
+
+Объекты набережной смоделированы по фотографиям и панорамам.
