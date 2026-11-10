@@ -6,8 +6,8 @@
     <meta name="theme-color" content="#184858" />
     <meta name="description" content="Интерактивная 3D-карта набережной Анапы по данным OpenStreetMap" />
     <title>Slop Anapa — набережная Анапы в 3D</title>
-    <script type="module" crossorigin src="./assets/index-DX8Agjqk.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-OWhbmIKp.css">
+    <script type="module" crossorigin src="./assets/index-c4qXDk1F.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-534fx8FI.css">
   </head>
   <body data-mode="orbit">
     <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -42,6 +42,10 @@
       <p>Городская набережная<br class="title-break" /> на берегу Чёрного моря</p>
       <a class="coordinates" id="coordinates" href="https://www.openstreetmap.org/#map=16/44.8965/37.3095" target="_blank" rel="noopener noreferrer">44.8965° N &nbsp; 37.3095° E</a>
       <output class="vehicle-speed" id="vehicle-speed" aria-label="Скорость" aria-live="off" hidden>0 км/ч</output>
+      <div class="view-actions">
+        <button class="view-action" id="cartoon-style" type="button" aria-pressed="true">Мультяшный стиль</button>
+        <button class="view-action" id="vehicle-view" type="button" aria-pressed="false" hidden>Камера снаружи</button>
+      </div>
       <a class="illustration-link" href="./illustration/index.html">Пробная иллюстрация →</a>
     </header>
 
