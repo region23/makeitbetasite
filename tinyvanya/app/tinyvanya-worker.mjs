@@ -4,11 +4,11 @@
 //               {type: "error", id, message}
 import * as ort from "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.29.0/dist/ort.wasm.min.mjs";
 import TinyVanyaEspeak from "./espeak/tv-espeak.mjs";
-import { Frontend, NothingToPronounce, UnsupportedAccent } from "./tinyvanya-frontend.mjs?v=20261127c";
-import { Speech } from "./tinyvanya-speech.mjs?v=20261127c";
+import { Frontend, NothingToPronounce, UnsupportedAccent } from "./tinyvanya-frontend.mjs?v=20261127d";
+import { Speech } from "./tinyvanya-speech.mjs?v=20261127d";
 
 const MODEL_BASE = "https://huggingface.co/region23/tiny-vanya/resolve/main/";
-const CACHE = "tiny-vanya-v0.1";
+const CACHE = "tiny-vanya-v0.2";
 ort.env.wasm.wasmPaths = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.29.0/dist/";
 ort.env.wasm.numThreads = self.crossOriginIsolated ? Math.min(4, navigator.hardwareConcurrency || 1) : 1;
 

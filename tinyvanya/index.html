@@ -35,7 +35,7 @@
 
     <section class="tv-hero">
       <div>
-        <p class="tv-label">Синтез русской речи · v0.1</p>
+        <p class="tv-label">Синтез русской речи · v0.2</p>
         <h1>Малёк<br><em>Ванёк</em></h1>
         <p class="tv-latin">По-английски — Tiny Vanya</p>
       </div>
@@ -48,10 +48,11 @@
     <section class="tv-section" id="try" aria-labelledby="try-title">
       <header><span class="tv-label">Попробовать</span><h2 id="try-title">Напишите свою фразу</h2></header>
       <div class="tv-demo">
-        <label class="tv-muted" for="tv-text">Текст по-русски, до 600 символов. Ударение можно поставить сами: «+» перед гласной.</label>
+        <label class="tv-muted" for="tv-text">Текст по-русски, до 600 символов. Ударение можно поставить сами: «+» перед гласной, главное слово вопроса — «^» перед словом.</label>
         <textarea id="tv-text" maxlength="600">Здравствуйте! Я Малёк Ванёк. Встречу перенесли на 15:30 — вы успеете?</textarea>
         <div class="tv-examples" aria-label="Примеры">
           <button type="button" data-example="Ты правда думал, что я забуду про твой день рождения?">Вопрос</button>
+          <button type="button" data-example="Ты купил ^хлеб по дороге домой?">^главное слово</button>
           <button type="button" data-example="В з+амке сломался зам+ок, и мы ждали мастера до вечера.">з+амок и зам+ок</button>
           <button type="button" data-example="Осенью в парке особенно тихо: листья медленно падают на дорожки, а воздух пахнет дождём и дымом.">Осень</button>
           <button type="button" data-example="Билет стоит 1250 рублей, поезд отправляется третьего мая в 7:45.">Числа и даты</button>
@@ -103,7 +104,8 @@
       <div class="tv-grid3">
         <div class="tv-card"><h3>Ударение</h3><p>Поставьте «+» перед ударной гласной. Так же работает знак ударения после гласной.</p><code>з+амок · зам+ок · Ст+ороны договорились</code></div>
         <div class="tv-card"><h3>Буква ё</h3><p>Пишите «ё», где она есть. Без неё модель восстановит «ё» только в словах, которые знает лишь с «ё».</p><code>Всё готово · Он вёл машину</code></div>
-        <div class="tv-card"><h3>Интонация</h3><p>Её задаёт пунктуация: «?» поднимает тон в конце вопроса, «!» даёт восклицание, запятая, «—», «:» и «…» — паузы. Слово, на котором поднимается тон в вопросе, модель выбирает сама.</p><code>Ты придёшь? · Нет — я занят!</code></div>
+        <div class="tv-card"><h3>Интонация</h3><p>Её задаёт пунктуация: «?» поднимает тон в конце вопроса, «!» даёт восклицание, запятая, «—», «:» и «…» — паузы. Если вопрос прозвучит как утверждение, модель сама это заметит и поднимет тон.</p><code>Ты придёшь? · Нет — я занят!</code></div>
+        <div class="tv-card"><h3>Главное слово вопроса</h3><p>Поставьте «^» перед словом, о котором спрашиваете: тон поднимется на нём, а слова после него опустятся.</p><code>Ты купил ^хлеб? · ^Ты купил хлеб?</code></div>
         <div class="tv-card"><h3>Числа и даты</h3><p>Время, суммы и количества раскрываются в слова сами. Даты и порядковые числа пишите словами: падеж модель пока не угадывает, «3 мая» прочитается как «три мая».</p><code>в 15:30 · 1250 рублей · третьего мая</code></div>
         <div class="tv-card"><h3>Темп и высота</h3><p>В демо есть темп. В коде ещё высота голоса <span class="mono">pitch_shift</span> (0,058 — около полутона) и размах интонации <span class="mono">pitch_range</span>.</p><code>--speed 1.1</code></div>
         <div class="tv-card"><h3>Длинный текст</h3><p>Текст любой длины читается по предложениям, звук склеивается. Слишком длинная фраза делится по запятым.</p><code>--text-file book.txt</code></div>
@@ -124,7 +126,7 @@
     <section class="tv-section" id="run" aria-labelledby="run-title">
       <header><span class="tv-label">Запуск</span><h2 id="run-title">Модель в своём проекте</h2>
         <p class="tv-muted">Веса, инструкция, Core ML для iPhone и пакет для Python — в <a href="https://huggingface.co/region23/tiny-vanya" target="_blank" rel="noopener noreferrer">репозитории на Hugging Face</a>.</p></header>
-<pre><code>pip install "tiny-vanya[onnx] @ https://huggingface.co/region23/tiny-vanya/resolve/main/code/tiny_vanya-0.1.0-py3-none-any.whl"
+<pre><code>pip install "tiny-vanya[onnx] @ https://huggingface.co/region23/tiny-vanya/resolve/main/code/tiny_vanya-0.2.0-py3-none-any.whl"
 hf download region23/tiny-vanya --include "onnx/*" --local-dir tiny-vanya
 python -m tiny_vanya.onnx_infer --model tiny-vanya/onnx/m1.onnx --voice M1 \
   --text "Здравствуйте! Встречу перенесли на 15:30." --output hello.wav</code></pre>
@@ -134,7 +136,7 @@ python -m tiny_vanya.onnx_infer --model tiny-vanya/onnx/m1.onnx --voice M1 \
       <div class="tv-section"><header><span class="tv-label">Ограничения</span><h2>Что пока не умеет</h2></header>
         <ul>
           <li>Только два фиксированных голоса, клонирования голоса нет.</li>
-          <li>В вопросе тон иногда поднимается не на том слове.</li>
+          <li>Слово, на котором поднимается тон в вопросе, модель выбирает сама; поправить можно знаком «^».</li>
           <li>Редкие слова вне словаря получают ударение от eSpeak NG, омографы вроде «замок» по смыслу не различаются.</li>
           <li>Даты цифрами читаются без падежа.</li>
           <li>Английские слова модель читает русскими звуками, с акцентом: Windows — «виндоуз».</li>
@@ -158,7 +160,7 @@ python -m tiny_vanya.onnx_infer --model tiny-vanya/onnx/m1.onnx --voice M1 \
 </footer>
 <!-- site-footer:end -->
   <script src="/script.js"></script>
-  <script type="module" src="/tinyvanya/tinyvanya.js?v=20261127c"></script>
+  <script type="module" src="/tinyvanya/tinyvanya.js?v=20261127d"></script>
 <script src="/site-shell/site-shell.js" defer></script>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">

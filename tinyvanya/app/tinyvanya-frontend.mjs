@@ -281,7 +281,14 @@ export class Frontend {
     if (typeof text !== "string" || !/[а-яА-ЯёЁa-zA-Z0-9]/u.test(text)) throw new NothingToPronounce("в тексте нет букв или цифр для произношения");
     const table = this.table;
     text = normalizeText(text);
-    const marked = this.inferenceHints(spokenCurrency(text));
+    let marked = this.inferenceHints(spokenCurrency(text));
+    let focus = null;
+    if (marked.includes("^")) {
+      // text.py: "^" before a word marks the focus of a question (intonation); it is no sound of its own.
+      const at = marked.indexOf("^");
+      focus = (marked.slice(0, at).replaceAll("^", "").match(V2_WORD()) || []).length;
+      marked = marked.replaceAll("^", "");
+    }
     const pieces = [...chunks(marked)];
     const wordLists = pieces.map(([punct, piece]) => (punct ? [] : piece.match(V2_WORD()) || []));
     for (const [punct, piece] of pieces)
@@ -298,7 +305,7 @@ export class Frontend {
     const rawSegments = segments.map((s) => this.espeakLine(s));
     const rawByWord = new Map(ordered.map((w) => [w, this.espeakLine(w)]));
     const rawFor = (w) => { if (!rawByWord.has(w)) throw new Error(`no raw for ${w}`); return rawByWord.get(w); };
-    const symbols = [BOS], stresses = [0], unknown = [];
+    const symbols = [BOS], stresses = [0], unknown = [], spans = [];
     let segment = 0;
     pieces.forEach(([punct, piece], n) => {
       if (punct) {
@@ -315,6 +322,7 @@ export class Frontend {
       if (contextual.length !== words.length) contextual = words.map((w) => rawFor(v2Parse(w)[0]));
       words.forEach((word, k) => {
         const raw = v2Compound(word, contextual[k], table, rawFor);
+        let start = symbols.length;
         for (const rawWord of raw.split(/\s+/u).filter(Boolean)) {
           const last = symbols[symbols.length - 1];
           if (PHONE_SET.has(last) || last === UNK) { symbols.push(SP); stresses.push(0); }
@@ -323,11 +331,14 @@ export class Frontend {
             mapped.forEach((p, i) => { symbols.push(p); stresses.push(i === carrier ? level : 0); });
           }
         }
+        if (symbols[start] === SP) start += 1;
+        spans.push([start, symbols.length]);
       });
     });
     if (!symbols.some((s) => PHONE_SET.has(s) || s === UNK)) throw new NothingToPronounce("фонемизатор не нашёл произносимых слов");
     symbols.push(EOS); stresses.push(0);
-    return { symbols, ids: symbols.map((s) => SYMBOL_TO_ID.get(s)), stress: stresses, unknown };
+    return { symbols, ids: symbols.map((s) => SYMBOL_TO_ID.get(s)), stress: stresses, unknown,
+             words: spans, focus: focus !== null && focus < spans.length ? focus : null };
   }
 }
 
