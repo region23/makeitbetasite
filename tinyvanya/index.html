@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Малёк Ванёк — компактный синтез русской речи, который работает прямо в браузере и на устройстве. Два голоса, разметка ударений, открытые веса.">
   <title>Малёк Ванёк — синтез русской речи в браузере — Make It Beta</title>
+  <link rel="icon" href="assets/favicon.png" type="image/png" sizes="48x48">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
-  <link rel="stylesheet" href="/tinyvanya/tinyvanya.css?v=20261127">
+  <link rel="stylesheet" href="/tinyvanya/tinyvanya.css?v=20261127-brand">
   <script>(function(){var stored=localStorage.getItem('theme');var dark=stored?stored==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',dark?'dark':'light');})();</script>
 <link rel="stylesheet" href="/site-shell/site-shell.css">
 </head>
@@ -34,11 +35,13 @@
     <div class="breadcrumbs"><a href="/">Главная</a><span>/</span><span>Малёк Ванёк</span></div>
 
     <section class="tv-hero">
-      <div>
+      <div class="tv-hero__title">
         <p class="tv-label">Синтез русской речи · v0.2</p>
         <h1>Малёк<br><em>Ванёк</em></h1>
         <p class="tv-latin">По-английски — Tiny Vanya</p>
       </div>
+      <img class="tv-hero__art" src="assets/vanechka.webp" alt="Ванечка в косоворотке рядом со звуковой волной"
+        width="1536" height="1024" fetchpriority="high">
       <div class="tv-hero__copy">
         <p>Маленькая модель, которая читает русский текст вслух прямо на вашем устройстве: в браузере, на ноутбуке, на сервере без видеокарты, на iPhone. Два голоса, интернет нужен только для первой загрузки.</p>
         <p class="tv-muted">Попробуйте ниже: модель скачается один раз и дальше работает у вас, без сервера.</p>
