@@ -34,6 +34,54 @@ const V2_SUFFIXES = new Set(["то", "нибудь", "либо"]);
 const PHONEMIZER_MARKS = /(\s*[;:,.!?¡¿—…"«»“”(){}\[\]]+\s*)+/gu;
 const CF = /\p{Cf}/u;
 
+// Phones of English and other foreign words that never occur in the training corpus -> nearest learned phones
+// (text.py _SPEAKABLE); the stress stays on the first vowel of the replacement.
+const SPEAKABLE = {
+  "eɪ": ["ɛ", "j"], "aɪ": ["a", "j"], "ɔɪ": ["o", "j"], "aʊ": ["a", "u"], "oʊ": ["o", "u"], "əʊ": ["o", "u"],
+  "iː": ["i"], "uː": ["u"], "ɑː": ["ɑ"], "ɜː": ["ɵ"], "ɚ": ["ʌ", "r"], "æ": ["ɛ"], "ʊ": ["u"],
+  "ɔ": ["o"], "ɐ": ["ʌ"], "ɨ": ["y"], "l": ["ɭ"], "tʃ": ["tʃʲ"], "dʒ": ["d", "ʒ"], "dʒʲ": ["d", "ʒ"],
+  "xʲ": ["x"], "tsʲ": ["ts"], "ʒʲ": ["ʒ"], "ʂ": ["ʃ"], "ʐ": ["ʒ"], "tɕ": ["tʃʲ"], "h": ["x"],
+  "θ": ["s"], "ð": ["z"], "ŋ": ["n", "ɡ"], "ɹ": ["r"], "w": ["v"],
+};
+function speakable(mapped, carrier) {
+  const out = []; let at = 0;
+  mapped.forEach((phone, i) => {
+    const rep = SPEAKABLE[phone] || [phone];
+    if (i === carrier) { const k = rep.findIndex((p) => VOWEL_SET.has(p)); at = out.length + (k < 0 ? 0 : k); }
+    out.push(...rep);
+  });
+  return [out, at];
+}
+
+// Currency signs before or after an amount (text.py _v2_spoken_currency): "$906 тысяч" -> "906 тысяч долларов".
+const CURRENCY = { "$": ["доллар", "доллара", "долларов"], "€": ["евро", "евро", "евро"], "£": ["фунт", "фунта", "фунтов"], "₽": ["рубль", "рубля", "рублей"] };
+const MULTIPLIER = { "тыс": ["тысяча", "тысячи", "тысяч"], "млн": ["миллион", "миллиона", "миллионов"], "млрд": ["миллиард", "миллиарда", "миллиардов"] };
+const AMOUNT = String.raw`(\d+(?:[  ]\d{3})*(?:[.,]\d+)?)`;
+const SCALE = String.raw`(?:\s+(тыс\.?|тысяч[аи]?|млн\.?|миллион(?:а|ов)?|млрд\.?|миллиард(?:а|ов)?))?`;
+const CURRENCY_BEFORE = new RegExp(String.raw`([$€£₽])\s?` + AMOUNT + SCALE + String.raw`(?![\p{L}\p{N}_])`, "gu");
+const CURRENCY_AFTER = new RegExp(AMOUNT + SCALE + String.raw`\s?([$€£₽])`, "gu");
+function plural(number, forms) {
+  if (/[.,]/u.test(number)) return forms[1];
+  const n = Number(number.replace(/\D/gu, "") || 0);
+  if (n % 10 === 1 && n % 100 !== 11) return forms[0];
+  if (n % 10 >= 2 && n % 10 <= 4 && !(n % 100 >= 12 && n % 100 <= 14)) return forms[1];
+  return forms[2];
+}
+function spokenAmount(number, scale, sign) {
+  number = number.replace(/[  ]/gu, "");
+  const words = [number];
+  if (scale) {
+    const key = scale.replace(/\.+$/u, "").toLowerCase();
+    const forms = MULTIPLIER[key] || MULTIPLIER[["тыс", "млн", "млрд"].find((k) => MULTIPLIER[k][2].startsWith(key.slice(0, 4)))];
+    words.push(plural(number, forms), CURRENCY[sign][2]);
+  } else words.push(plural(number, CURRENCY[sign]));
+  return words.join(" ");
+}
+export function spokenCurrency(text) {
+  text = text.replace(CURRENCY_BEFORE, (_, sign, number, scale) => spokenAmount(number, scale, sign));
+  return text.replace(CURRENCY_AFTER, (_, number, scale, sign) => spokenAmount(number, scale, sign));
+}
+
 export class NothingToPronounce extends Error {}
 export class UnsupportedAccent extends Error {}
 
@@ -232,7 +280,7 @@ export class Frontend {
     if (typeof text !== "string" || !/[а-яА-ЯёЁa-zA-Z0-9]/u.test(text)) throw new NothingToPronounce("в тексте нет букв или цифр для произношения");
     const table = this.table;
     text = normalizeText(text);
-    const marked = this.inferenceHints(text);
+    const marked = this.inferenceHints(spokenCurrency(text));
     const pieces = [...chunks(marked)];
     const wordLists = pieces.map(([punct, piece]) => (punct ? [] : piece.match(V2_WORD()) || []));
     for (const [punct, piece] of pieces)
@@ -262,7 +310,7 @@ export class Frontend {
           const last = symbols[symbols.length - 1];
           if (PHONE_SET.has(last) || last === UNK) { symbols.push(SP); stresses.push(0); }
           for (let [phone, mapped, carrier, level] of wordPhones(rawWord)) {
-            if (!mapped) { unknown.push(phone); mapped = [UNK]; }
+            if (!mapped) { unknown.push(phone); mapped = [UNK]; } else [mapped, carrier] = speakable(mapped, carrier);
             mapped.forEach((p, i) => { symbols.push(p); stresses.push(i === carrier ? level : 0); });
           }
         }
@@ -313,4 +361,9 @@ export function shorter(text) {
   if (words.length < 2) return [];
   const half = Math.floor((words.length + 1) / 2);
   return [words.slice(0, half).join(" "), words.slice(half).join(" ")];
+}
+
+/** segments.utterances: a line break ends a sentence even without a mark. */
+export function utterances(text) {
+  return text.split(/[\r\n]+/u).filter((line) => line.trim()).flatMap((line) => sentences(finished(line)));
 }

@@ -4,8 +4,8 @@
 //               {type: "error", id, message}
 import * as ort from "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.29.0/dist/ort.wasm.min.mjs";
 import TinyVanyaEspeak from "./espeak/tv-espeak.mjs";
-import { Frontend, NothingToPronounce, UnsupportedAccent } from "./tinyvanya-frontend.mjs";
-import { Speech } from "./tinyvanya-speech.mjs";
+import { Frontend, NothingToPronounce, UnsupportedAccent } from "./tinyvanya-frontend.mjs?v=20261127b";
+import { Speech } from "./tinyvanya-speech.mjs?v=20261127b";
 
 const MODEL_BASE = "https://huggingface.co/region23/tiny-vanya/resolve/main/";
 const CACHE = "tiny-vanya-v0.1";

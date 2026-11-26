@@ -1,7 +1,7 @@
 // Text -> audio with the ONNX graph: the same steps as tiny_vanya.onnx_infer.Speech.speak, for any onnxruntime
 // (onnxruntime-web in the browser, onnxruntime-node in tests). The graph and the JSON metadata come from
 // tiny_vanya.export (web/make_web_onnx.py makes the half-size browser copy).
-import { NothingToPronounce, finished, sentences, shorter } from "./tinyvanya-frontend.mjs";
+import { NothingToPronounce, shorter, utterances } from "./tinyvanya-frontend.mjs?v=20261127b";
 
 export class Speech {
   constructor(ort, session, meta, frontend) {
@@ -46,7 +46,7 @@ export class Speech {
       if (!parts.length) throw new Error("одно слово не помещается в окно модели");
       for (const part of parts) await pronounce(part);
     };
-    for (const chunk of sentences(finished(text))) await pronounce(chunk);
+    for (const chunk of utterances(text)) await pronounce(chunk);
     if (!output.length) throw new NothingToPronounce("в тексте нет произносимых слов");
     const wave = new Float32Array(output.reduce((n, a) => n + a.length, 0));
     let at = 0, peak = 0;
