@@ -29,6 +29,7 @@ def pages():
     yield ROOT / 'model-tests/index.html'
     yield ROOT / 'model-tests/tidal-lighthouse/index.html'
     yield ROOT / 'model-tests/utrish-lighthouse/index.html'
+    yield ROOT / 'tinyvanya/index.html'
     yield from sorted((ROOT / 'ai_native_book').glob('*.html'))
     yield ROOT / 'ai_native_book/v1/index.html'
     yield from sorted((ROOT / 'ai_native_book_new_design').glob('*.html'))

@@ -1,0 +1,90 @@
+/* Малёк Ванёк — a page of the site; colors only through the site variables (styles.css). */
+.tv { display: grid; gap: 88px; padding-block: 40px 96px }
+.tv .breadcrumbs { display: flex; gap: 8px; color: var(--ink-soft); font-size: 0.9rem }
+.tv .breadcrumbs a { color: inherit }
+.tv h1, .tv h2, .tv h3 { font-family: var(--font-head); line-height: 1.08; text-wrap: balance }
+.tv h2 { font-size: clamp(1.5rem, 3.4vw, 2.2rem) }
+.tv h3 { font-size: 1.02rem; font-weight: 700; line-height: 1.25 }
+.tv p { max-width: 66ch }
+.tv a { color: var(--ink); text-underline-offset: 3px }
+.tv-label { font-size: 0.76rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent) }
+.tv-section { display: grid; gap: 28px }
+.tv-section > header { display: grid; gap: 12px }
+.tv-muted { color: var(--ink-soft) }
+.tv code, .tv pre, .tv .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.86em }
+
+/* hero */
+.tv-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 48px; align-items: end }
+.tv-hero h1 { font-size: clamp(2.8rem, 8vw, 5.6rem); font-weight: 900; letter-spacing: -0.02em }
+.tv-hero h1 em { font-style: normal; color: var(--accent) }
+.tv-hero .tv-latin { margin-top: 14px; color: var(--ink-soft); font-size: 0.95rem }
+.tv-hero__copy { display: grid; gap: 18px }
+.tv-hero__copy p { font-size: 1.12rem }
+
+/* demo */
+.tv-demo { border: 1px solid var(--border); border-radius: 20px; padding: 28px; display: grid; gap: 18px }
+.tv-demo textarea { width: 100%; min-height: 120px; resize: vertical; padding: 16px 18px; border-radius: 14px;
+  border: 1px solid var(--border); background: transparent; color: var(--ink); font: inherit; font-size: 1.08rem; line-height: 1.5 }
+.tv-demo textarea:focus-visible, .tv-demo button:focus-visible, .tv-demo input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.tv-controls { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center }
+.tv-voices { display: inline-flex; border: 1px solid var(--border); border-radius: 999px; padding: 4px }
+.tv-voices button { border: 0; background: transparent; color: var(--ink); font: inherit; font-size: 0.95rem; padding: 8px 16px; border-radius: 999px; cursor: pointer }
+.tv-voices button[aria-pressed="true"] { background: var(--ink); color: var(--bg) }
+.tv-speed { display: inline-flex; align-items: center; gap: 10px; color: var(--ink-soft); font-size: 0.92rem }
+.tv-speed input { accent-color: var(--accent); width: 140px }
+.tv-speed output { font-variant-numeric: tabular-nums; min-width: 3.2em; color: var(--ink) }
+.tv-go { margin-left: auto; border: 0; background: var(--accent); color: #fff; font: inherit; font-weight: 600; padding: 12px 26px; border-radius: 999px; cursor: pointer }
+.tv-go[disabled] { opacity: 0.55; cursor: progress }
+.tv-status { display: grid; gap: 8px; min-height: 1.6em; color: var(--ink-soft); font-size: 0.93rem }
+.tv-bar { height: 6px; border-radius: 3px; background: var(--border); overflow: hidden }
+.tv-bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width 0.2s }
+.tv-out { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center }
+.tv-out audio { width: min(100%, 420px) }
+.tv-examples { display: flex; flex-wrap: wrap; gap: 8px }
+.tv-examples button { border: 1px solid var(--border); background: transparent; color: var(--ink); font: inherit; font-size: 0.88rem;
+  padding: 7px 14px; border-radius: 999px; cursor: pointer; text-align: left }
+.tv-examples button:hover { border-color: var(--ink-soft) }
+
+/* figures */
+.tv-figures { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-block: 1px solid var(--border) }
+.tv-figures div { padding: 22px 16px 22px 0; display: grid; gap: 6px; align-content: start }
+.tv-figures b { font: 700 clamp(1.25rem, 2.6vw, 1.8rem)/1 var(--font-head); font-variant-numeric: tabular-nums }
+.tv-figures span { color: var(--ink-soft); font-size: 0.9rem; line-height: 1.35 }
+
+/* samples */
+.tv-takes { display: grid; border-top: 1px solid var(--border) }
+.tv-take { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px 28px; padding: 20px 0; border-bottom: 1px solid var(--border); align-items: center }
+.tv-take q { quotes: "«" "»"; font-size: 1.08rem }
+.tv-pair { display: flex; gap: 8px }
+.tv-chip { border: 1.5px solid var(--ink); background: transparent; color: var(--ink); font: inherit; font-size: 0.88rem; font-weight: 600;
+  padding: 8px 16px; border-radius: 999px; cursor: pointer; min-width: 70px }
+.tv-chip.playing { background: var(--accent); border-color: var(--accent); color: #fff }
+
+/* rules, steps, cost */
+.tv-grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 32px }
+.tv-grid4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px }
+.tv-card { display: grid; gap: 8px; align-content: start; border-top: 1px solid var(--ink); padding-top: 16px; min-width: 0 }
+.tv-card p { color: var(--ink-soft); font-size: 0.97rem }
+.tv-card code { background: var(--border); border-radius: 8px; padding: 8px 10px; overflow-wrap: anywhere; color: var(--ink) }
+.tv-cost { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; border-block: 1px solid var(--border); padding-block: 22px }
+.tv-cost div { display: grid; gap: 6px; align-content: start }
+.tv-cost b { font: 700 clamp(1.25rem, 2.6vw, 1.7rem)/1 var(--font-head) }
+.tv-cost span { color: var(--ink-soft); font-size: 0.92rem; line-height: 1.4 }
+.tv pre { background: var(--border); border-radius: 14px; padding: 18px 20px; overflow-x: auto; line-height: 1.6; color: var(--ink) }
+.tv-notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px }
+.tv-notes ul { padding-left: 1.1em; display: grid; gap: 10px; color: var(--ink-soft) }
+
+@media (max-width: 900px) {
+  .tv-hero, .tv-notes { grid-template-columns: minmax(0, 1fr) }
+  .tv-figures { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .tv-figures div:last-child { grid-column: 1 / -1 }
+  .tv-grid3, .tv-grid4 { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .tv-cost { grid-template-columns: minmax(0, 1fr) }
+  .tv { gap: 64px }
+}
+@media (max-width: 560px) {
+  .tv-grid3, .tv-grid4 { grid-template-columns: minmax(0, 1fr) }
+  .tv-take { grid-template-columns: minmax(0, 1fr) }
+  .tv-demo { padding: 18px }
+  .tv-go { margin-left: 0; width: 100% }
+}

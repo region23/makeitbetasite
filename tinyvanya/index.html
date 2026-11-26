@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Малёк Ванёк — компактный синтез русской речи, который работает прямо в браузере и на устройстве. Два голоса, разметка ударений, открытые веса.">
+  <title>Малёк Ванёк — синтез русской речи в браузере — Make It Beta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/tinyvanya/tinyvanya.css?v=20261127">
+  <script>(function(){var stored=localStorage.getItem('theme');var dark=stored?stored==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',dark?'dark':'light');})();</script>
+<link rel="stylesheet" href="/site-shell/site-shell.css">
+</head>
+<body>
+  <!-- site-header:start -->
+<header class="mib-site-header">
+  <div class="mib-site-header__inner">
+    <a class="mib-site-logo" href="/">Make It Beta<sup>🧪</sup></a>
+    <nav class="mib-site-nav" id="mib-site-nav" aria-label="Основная навигация">
+      <a href="/#projects">Проекты</a>
+      <a href="/model-tests/">Эксперименты</a>
+      <a href="/blog/">Блог</a>
+      <a href="/consulting/">Консалтинг</a>
+      <a href="/#contact">Написать</a>
+      <button class="mib-site-theme" type="button" aria-label="Переключить тему" title="Переключить тему"><span aria-hidden="true">🌙</span></button>
+    </nav>
+    <button class="mib-site-menu" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mib-site-nav"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<!-- site-header:end -->
+  <main class="tv wrap">
+    <div class="breadcrumbs"><a href="/">Главная</a><span>/</span><span>Малёк Ванёк</span></div>
+
+    <section class="tv-hero">
+      <div>
+        <p class="tv-label">Синтез русской речи · v0.1</p>
+        <h1>Малёк<br><em>Ванёк</em></h1>
+        <p class="tv-latin">По-английски — Tiny Vanya</p>
+      </div>
+      <div class="tv-hero__copy">
+        <p>Маленькая модель, которая читает русский текст вслух прямо на вашем устройстве: в браузере, на ноутбуке, на сервере без видеокарты, на iPhone. Два голоса, интернет нужен только для первой загрузки.</p>
+        <p class="tv-muted">Попробуйте ниже: модель скачается один раз и дальше работает у вас, без сервера.</p>
+      </div>
+    </section>
+
+    <section class="tv-section" id="try" aria-labelledby="try-title">
+      <header><span class="tv-label">Попробовать</span><h2 id="try-title">Напишите свою фразу</h2></header>
+      <div class="tv-demo">
+        <label class="tv-muted" for="tv-text">Текст по-русски, до 600 символов. Ударение можно поставить сами: «+» перед гласной.</label>
+        <textarea id="tv-text" maxlength="600">Здравствуйте! Я Малёк Ванёк. Встречу перенесли на 15:30 — вы успеете?</textarea>
+        <div class="tv-examples" aria-label="Примеры">
+          <button type="button" data-example="Ты правда думал, что я забуду про твой день рождения?">Вопрос</button>
+          <button type="button" data-example="В з+амке сломался зам+ок, и мы ждали мастера до вечера.">з+амок и зам+ок</button>
+          <button type="button" data-example="Осенью в парке особенно тихо: листья медленно падают на дорожки, а воздух пахнет дождём и дымом.">Осень</button>
+          <button type="button" data-example="Билет стоит 1250 рублей, поезд отправляется третьего мая в 7:45.">Числа и даты</button>
+        </div>
+        <div class="tv-controls">
+          <div class="tv-voices" role="group" aria-label="Голос">
+            <button type="button" id="tv-voice-m1" data-voice="M1" aria-pressed="true">Мужской</button>
+            <button type="button" id="tv-voice-f1" data-voice="F1" aria-pressed="false">Женский</button>
+          </div>
+          <label class="tv-speed" for="tv-speed">Темп <input type="range" id="tv-speed" min="0.6" max="1.6" step="0.05" value="1"><output id="tv-speed-out" for="tv-speed">1,00</output></label>
+          <button class="tv-go" type="button" id="tv-go">Озвучить</button>
+        </div>
+        <div class="tv-status" id="tv-status" aria-live="polite">
+          <span id="tv-status-text">Голос скачается при первом нажатии: около 100 МБ, потом браузер возьмёт его из кэша.</span>
+          <div class="tv-bar" id="tv-bar" hidden><i id="tv-bar-fill"></i></div>
+        </div>
+        <div class="tv-out" id="tv-out" hidden>
+          <audio id="tv-audio" controls></audio>
+          <a id="tv-download" download="malek-vanek.wav" href="#">Скачать WAV</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="tv-figures" aria-label="Коротко о модели">
+      <div><b>36 млн</b><span>параметров: акустика 28,5 млн и вокодер 7,7 млн</span></div>
+      <div><b>×77</b><span>быстрее реального времени на 4 ядрах процессора</span></div>
+      <div><b>×93</b><span>на Mac через Core ML, звук на Neural Engine</span></div>
+      <div><b>0,21 %</b><span>ошибок в буквах по Whisper на 60 новых фразах</span></div>
+      <div><b>24 кГц</b><span>моно, до 32 секунд за один вызов модели</span></div>
+    </section>
+
+    <section class="tv-section" id="samples" aria-labelledby="samples-title">
+      <header><span class="tv-label">Примеры</span><h2 id="samples-title">Одни и те же фразы двумя голосами</h2></header>
+      <div class="tv-takes">
+        <div class="tv-take"><q>Здравствуйте! Это Малёк Ванёк, маленькая модель синтеза русской речи, которая работает прямо в браузере.</q>
+          <div class="tv-pair"><button class="tv-chip" type="button" data-src="samples/m1-greeting.wav">Муж.</button><button class="tv-chip" type="button" data-src="samples/f1-greeting.wav">Жен.</button></div></div>
+        <div class="tv-take"><q>Встречу перенесли на 15:30, четырнадцатого марта, так что у нас осталось около сорока пяти минут.</q>
+          <div class="tv-pair"><button class="tv-chip" type="button" data-src="samples/m1-numbers.wav">Муж.</button><button class="tv-chip" type="button" data-src="samples/f1-numbers.wav">Жен.</button></div></div>
+        <div class="tv-take"><q>Ты правда думал, что я забуду про твой день рождения?</q>
+          <div class="tv-pair"><button class="tv-chip" type="button" data-src="samples/m1-question.wav">Муж.</button><button class="tv-chip" type="button" data-src="samples/f1-question.wav">Жен.</button></div></div>
+        <div class="tv-take"><q>Осенью в парке особенно тихо: листья медленно падают на дорожки, а воздух пахнет дождём и дымом.</q>
+          <div class="tv-pair"><button class="tv-chip" type="button" data-src="samples/m1-story.wav">Муж.</button><button class="tv-chip" type="button" data-src="samples/f1-story.wav">Жен.</button></div></div>
+      </div>
+    </section>
+
+    <section class="tv-section" id="markup" aria-labelledby="markup-title">
+      <header><span class="tv-label">Разметка текста</span><h2 id="markup-title">Как подсказать ударение и интонацию</h2>
+        <p class="tv-muted">Обычный текст модель читает сама. Если слово прочитано не так, это можно поправить прямо в тексте.</p></header>
+      <div class="tv-grid3">
+        <div class="tv-card"><h3>Ударение</h3><p>Поставьте «+» перед ударной гласной. Так же работает знак ударения после гласной.</p><code>з+амок · зам+ок · Ст+ороны договорились</code></div>
+        <div class="tv-card"><h3>Буква ё</h3><p>Пишите «ё», где она есть. Без неё модель восстановит «ё» только в словах, которые знает лишь с «ё».</p><code>Всё готово · Он вёл машину</code></div>
+        <div class="tv-card"><h3>Интонация</h3><p>Её задаёт пунктуация: «?» поднимает тон в конце вопроса, «!» даёт восклицание, запятая, «—», «:» и «…» — паузы. Слово, на котором поднимается тон в вопросе, модель выбирает сама.</p><code>Ты придёшь? · Нет — я занят!</code></div>
+        <div class="tv-card"><h3>Числа и даты</h3><p>Время, суммы и количества раскрываются в слова сами. Даты и порядковые числа пишите словами: падеж модель пока не угадывает, «3 мая» прочитается как «три мая».</p><code>в 15:30 · 1250 рублей · третьего мая</code></div>
+        <div class="tv-card"><h3>Темп и высота</h3><p>В демо есть темп. В коде ещё высота голоса <span class="mono">pitch_shift</span> (0,058 — около полутона) и размах интонации <span class="mono">pitch_range</span>.</p><code>--speed 1.1</code></div>
+        <div class="tv-card"><h3>Длинный текст</h3><p>Текст любой длины читается по предложениям, звук склеивается. Слишком длинная фраза делится по запятым.</p><code>--text-file book.txt</code></div>
+      </div>
+    </section>
+
+    <section class="tv-section" id="how" aria-labelledby="how-title">
+      <header><span class="tv-label">Как сделано</span><h2 id="how-title">Почему мы отошли от рецепта tiny‑voca</h2>
+        <p class="tv-muted">Мы начали с рецепта <a href="https://github.com/n4ze3m/tiny-voca" target="_blank" rel="noopener noreferrer">tiny‑voca</a>: крошечная модель сама собирает звук из импульсов и шума, примерно как голосовые связки и рот. На русском такой голос звучал роботизированно, а в мужском был слышен дребезг. Чтобы от него избавиться, мы изменили схему.</p></header>
+      <div class="tv-grid4">
+        <div class="tv-card"><h3>Учитель</h3><p>Большая модель Qwen3‑TTS прочитала около 31 500 фраз каждым голосом. После проверки через Whisper осталось 72 часа речи. Ударения расставил RUAccent, спорные слова мы вычитали вручную.</p></div>
+        <div class="tv-card"><h3>Два шага вместо одного</h3><p>Модель рисует спектрограмму — картинку звука по частотам, а отдельный нейровокодер превращает её в звук. Модель выросла с 4,5 до 36 миллионов параметров.</p></div>
+        <div class="tv-card"><h3>Причина дребезга</h3><p>Гармоники голоса на спектрограмме выглядят как ровные полосы. Ниже 2 кГц модель ставила их не туда: при обучении она видела не ту высоту тона, что в записи, размывала полосы, а потом дорисовывала их наугад.</p></div>
+        <div class="tv-card"><h3>Исправление</h3><p>Теперь при обучении модель видит настоящую высоту тона и получает подсказку, где для неё должны лежать гармоники. Отдельный критик следит за низкими частотами. Полосы встали на место, дребезг ушёл.</p></div>
+      </div>
+      <div class="tv-cost">
+        <div><b>~40 часов</b><span>одной RTX PRO 6000 Blackwell — повторить итоговый рецепт: корпус учителя, разметка, акустика и вокодер</span></div>
+        <div><b>≈ $70</b><span>стоили бы эти часы по тарифу RunPod Community Cloud ($1,69 в час, ноябрь 2026)</span></div>
+        <div><b>~10 суток</b><span>одной карты занял бы весь путь с поиском причины, около 250 часов ≈ $430 по тому же тарифу</span></div>
+      </div>
+    </section>
+
+    <section class="tv-section" id="run" aria-labelledby="run-title">
+      <header><span class="tv-label">Запуск</span><h2 id="run-title">Модель в своём проекте</h2>
+        <p class="tv-muted">Веса, инструкция, Core ML для iPhone и пакет для Python — в <a href="https://huggingface.co/region23/tiny-vanya" target="_blank" rel="noopener noreferrer">репозитории на Hugging Face</a>.</p></header>
+<pre><code>pip install "tiny-vanya[onnx] @ https://huggingface.co/region23/tiny-vanya/resolve/main/code/tiny_vanya-0.1.0-py3-none-any.whl"
+hf download region23/tiny-vanya --include "onnx/*" --local-dir tiny-vanya
+python -m tiny_vanya.onnx_infer --model tiny-vanya/onnx/m1.onnx --voice M1 \
+  --text "Здравствуйте! Встречу перенесли на 15:30." --output hello.wav</code></pre>
+    </section>
+
+    <section class="tv-notes">
+      <div class="tv-section"><header><span class="tv-label">Ограничения</span><h2>Что пока не умеет</h2></header>
+        <ul>
+          <li>Только два фиксированных голоса, клонирования голоса нет.</li>
+          <li>В вопросе тон иногда поднимается не на том слове.</li>
+          <li>Редкие слова вне словаря получают ударение от eSpeak NG, омографы вроде «замок» по смыслу не различаются.</li>
+          <li>Даты цифрами читаются без падежа.</li>
+        </ul></div>
+      <div class="tv-section"><header><span class="tv-label">Лицензия</span><h2>Можно в продукт</h2></header>
+        <ul>
+          <li>Код — Apache‑2.0, основан на <a href="https://github.com/n4ze3m/tiny-voca" target="_blank" rel="noopener noreferrer">tiny‑voca</a>.</li>
+          <li>Веса и словарь ударений — OpenRAIL корпуса <a href="https://huggingface.co/datasets/langswap/dialogs-ru-emotional-conversations" target="_blank" rel="noopener noreferrer">Dialogs</a>: коммерческое использование разрешено с ограничениями по назначению.</li>
+          <li>Не используйте голоса, чтобы выдавать синтетическую речь за слова реальных людей.</li>
+        </ul></div>
+    </section>
+  </main>
+  <!-- site-footer:start -->
+<footer class="mib-site-footer">
+  <div class="mib-site-footer__inner">
+    <a class="mib-site-logo" href="/">Make It Beta<sup>🧪</sup></a>
+    <a href="/consulting/">Консалтинг</a>
+    <a href="https://t.me/pavlenkodev" target="_blank" rel="noopener noreferrer">Телеграм-канал</a>
+    <span>© 2026 makeitbeta.ru</span>
+  </div>
+</footer>
+<!-- site-footer:end -->
+  <script src="/script.js"></script>
+  <script type="module" src="/tinyvanya/tinyvanya.js?v=20261127"></script>
+<script src="/site-shell/site-shell.js" defer></script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+ (function(m,e,t,r,i,k,a){
+   m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+ })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108768403', 'ym');
+
+ ym(108768403, 'init', {ssr:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108768403" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</body></html>
