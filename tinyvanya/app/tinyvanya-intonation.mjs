@@ -1,6 +1,6 @@
 // Question intonation guard (port of src/tiny_vanya/intonation.py): a yes/no question whose focus syllable does
 // not rise after synthesis gets a pitch offset over that syllable and the rest of its word, and is synthesized once
-// more. "^" before a word marks the focus; then the words after it come down to the median.
+// more. "^" before a word marks the focus the guard checks; a rise is only added where the model has none.
 export const SEMITONE = Math.log(2) / 12;
 export const MIN_RISE = 3.0;
 export const TARGET_RISE = 6.0;
@@ -45,13 +45,6 @@ export function correction(phones, durations, prosody) {
   if (rise < MIN_RISE) {
     for (let i = target; i < wordEnd; i++) offset[i] = (TARGET_RISE - rise) * SEMITONE;
     changed = true;
-  }
-  if (phones.focus !== null && phones.focus !== undefined) {
-    const end = phones.words[phones.focus][1];
-    for (let i = end; i < phones.ids.length; i++) {
-      const values = tokenPitch(i);
-      if (values.length && Math.max(...values) > median + SEMITONE) { offset[i] = median - Math.max(...values); changed = true; }
-    }
   }
   return changed ? offset : null;
 }

@@ -36,7 +36,7 @@
 
     <section class="tv-hero">
       <div class="tv-hero__title">
-        <p class="tv-label">Синтез русской речи · v0.2</p>
+        <p class="tv-label">Синтез русской речи · v0.2.1</p>
         <h1>Малёк<br><em>Ванёк</em></h1>
         <p class="tv-latin">По-английски — Tiny Vanya</p>
       </div>
@@ -129,7 +129,7 @@
     <section class="tv-section" id="run" aria-labelledby="run-title">
       <header><span class="tv-label">Запуск</span><h2 id="run-title">Модель в своём проекте</h2>
         <p class="tv-muted">Веса, инструкция, Core ML для iPhone и пакет для Python — в <a href="https://huggingface.co/region23/tiny-vanya" target="_blank" rel="noopener noreferrer">репозитории на Hugging Face</a>.</p></header>
-<pre><code>pip install "tiny-vanya[onnx] @ https://huggingface.co/region23/tiny-vanya/resolve/main/code/tiny_vanya-0.2.0-py3-none-any.whl"
+<pre><code>pip install "tiny-vanya[onnx] @ https://huggingface.co/region23/tiny-vanya/resolve/main/code/tiny_vanya-0.2.1-py3-none-any.whl"
 hf download region23/tiny-vanya --include "onnx/*" --local-dir tiny-vanya
 python -m tiny_vanya.onnx_infer --model tiny-vanya/onnx/m1.onnx --voice M1 \
   --text "Здравствуйте! Встречу перенесли на 15:30." --output hello.wav</code></pre>
@@ -163,7 +163,7 @@ python -m tiny_vanya.onnx_infer --model tiny-vanya/onnx/m1.onnx --voice M1 \
 </footer>
 <!-- site-footer:end -->
   <script src="/script.js"></script>
-  <script type="module" src="/tinyvanya/tinyvanya.js?v=20261127d"></script>
+  <script type="module" src="/tinyvanya/tinyvanya.js?v=20261127e"></script>
 <script src="/site-shell/site-shell.js" defer></script>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
