@@ -30,6 +30,7 @@ const MARKED_VOWEL = /\+(?=[аеёиоуыэюя])/giu;
 const ACUTE = /([аеёиоуыэюя])́/giu;
 const V2_WORD = () => /(?:\+?[а-яёa-z](?:́)?)+(?:-(?:\+?[а-яёa-z](?:́)?)+)*|[0-9]+/giu;
 const V2_SUFFIXES = new Set(["то", "нибудь", "либо"]);
+const DASH_CONJUNCTIONS = new Set(["а", "и", "но", "да", "или", "же"]);
 // phonemizer.punctuation default marks, removed before eSpeak sees a line
 const PHONEMIZER_MARKS = /(\s*[;:,.!?¡¿—…"«»“”(){}\[\]]+\s*)+/gu;
 const CF = /\p{Cf}/u;
@@ -300,7 +301,15 @@ export class Frontend {
     const symbols = [BOS], stresses = [0], unknown = [];
     let segment = 0;
     pieces.forEach(([punct, piece], n) => {
-      if (punct) { if (symbols[symbols.length - 1] !== piece) { symbols.push(piece); stresses.push(0); } return; }
+      if (punct) {
+        // text.py: a dash pauses as ";", except right after a single one-syllable word ("Я — врач")
+        let prev = n > 0 && !pieces[n - 1][0] ? [...wordLists[n - 1]] : null;
+        while (prev && prev.length > 1 && DASH_CONJUNCTIONS.has(v2Parse(prev[0])[0])) prev.shift();  // "а он — учитель"
+        const short = prev !== null && prev.length === 1 && countVowels(v2Parse(prev[0])[0]) <= 1;
+        const mark = piece === "—" && !short ? ";" : piece;
+        if (symbols[symbols.length - 1] !== mark) { symbols.push(mark); stresses.push(0); }
+        return;
+      }
       const words = wordLists[n];
       let contextual = rawSegments[segment++].split(/\s+/u).filter(Boolean);
       if (contextual.length !== words.length) contextual = words.map((w) => rawFor(v2Parse(w)[0]));
