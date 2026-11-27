@@ -85,6 +85,133 @@ export function spokenCurrency(text) {
   return text.replace(CURRENCY_AFTER, (_, number, scale, sign) => spokenAmount(number, scale, sign));
 }
 
+// ---- Numbers with their case (text.py _v2_spoken_numbers; num2words ru, inanimate) ----
+const CARD = {   // nominative, genitive, dative, prepositional
+  1: ["один", "одного", "одному", "одном"], 2: ["два", "двух", "двум", "двух"], 3: ["три", "трёх", "трём", "трёх"],
+  4: ["четыре", "четырёх", "четырём", "четырёх"], 5: ["пять", "пяти", "пяти", "пяти"], 6: ["шесть", "шести", "шести", "шести"],
+  7: ["семь", "семи", "семи", "семи"], 8: ["восемь", "восьми", "восьми", "восьми"], 9: ["девять", "девяти", "девяти", "девяти"],
+  10: ["десять", "десяти", "десяти", "десяти"], 11: ["одиннадцать", "одиннадцати", "одиннадцати", "одиннадцати"],
+  12: ["двенадцать", "двенадцати", "двенадцати", "двенадцати"], 13: ["тринадцать", "тринадцати", "тринадцати", "тринадцати"],
+  14: ["четырнадцать", "четырнадцати", "четырнадцати", "четырнадцати"], 15: ["пятнадцать", "пятнадцати", "пятнадцати", "пятнадцати"],
+  16: ["шестнадцать", "шестнадцати", "шестнадцати", "шестнадцати"], 17: ["семнадцать", "семнадцати", "семнадцати", "семнадцати"],
+  18: ["восемнадцать", "восемнадцати", "восемнадцати", "восемнадцати"], 19: ["девятнадцать", "девятнадцати", "девятнадцати", "девятнадцати"],
+  20: ["двадцать", "двадцати", "двадцати", "двадцати"], 30: ["тридцать", "тридцати", "тридцати", "тридцати"],
+  40: ["сорок", "сорока", "сорока", "сорока"], 50: ["пятьдесят", "пятидесяти", "пятидесяти", "пятидесяти"],
+  60: ["шестьдесят", "шестидесяти", "шестидесяти", "шестидесяти"], 70: ["семьдесят", "семидесяти", "семидесяти", "семидесяти"],
+  80: ["восемьдесят", "восьмидесяти", "восьмидесяти", "восьмидесяти"], 90: ["девяносто", "девяноста", "девяноста", "девяноста"],
+  100: ["сто", "ста", "ста", "ста"], 200: ["двести", "двухсот", "двумстам", "двухстах"], 300: ["триста", "трёхсот", "трёмстам", "трёхстах"],
+  400: ["четыреста", "четырёхсот", "четырёмстам", "четырёхстах"], 500: ["пятьсот", "пятисот", "пятистам", "пятистах"],
+  600: ["шестьсот", "шестисот", "шестистам", "шестистах"], 700: ["семьсот", "семисот", "семистам", "семистах"],
+  800: ["восемьсот", "восьмисот", "восьмистам", "восьмистах"], 900: ["девятьсот", "девятисот", "девятистам", "девятистах"],
+};
+const FEM = { 1: ["одна", "одной", "одной", "одной"], 2: ["две", "двух", "двум", "двух"] };
+const CASE_INDEX = { nominative: 0, genitive: 1, dative: 2, prepositional: 3 };
+const THOUSAND = { one: ["тысяча", "тысячи", "тысяче", "тысяче"], few: ["тысячи", "тысяч", "тысячам", "тысячах"], many: ["тысяч", "тысяч", "тысячам", "тысячах"] };
+
+function below1000(n, c, feminine = false) {
+  const out = [];
+  const h = Math.floor(n / 100) * 100, rest = n % 100;
+  if (h) out.push(CARD[h][c]);
+  if (rest >= 10 && rest < 20) out.push(CARD[rest][c]);
+  else {
+    const t = Math.floor(rest / 10) * 10, u = rest % 10;
+    if (t) out.push(CARD[t][c]);
+    if (u) out.push((feminine && FEM[u] ? FEM[u] : CARD[u])[c]);
+  }
+  return out;
+}
+
+function cardinal(n, caseName) {
+  const c = CASE_INDEX[caseName];
+  if (n === 0) return ["ноль", "ноля", "нолю", "ноле"][c];
+  const thousands = Math.floor(n / 1000), rest = n % 1000, out = [];
+  if (thousands) {
+    if (!(thousands === 1 && c === 0)) out.push(...below1000(thousands, c, true));   // «тысяча», but «одной тысячи»
+    const last = thousands % 100 >= 11 && thousands % 100 <= 19 ? 5 : thousands % 10;
+    const form = last === 1 ? "one" : last >= 2 && last <= 4 ? "few" : "many";
+    // nominative "две тысячи", oblique "двух тысяч": num2words takes the plural form in the oblique cases after 2-4
+    out.push(c === 0 ? THOUSAND[form][0] : form === "one" ? THOUSAND.one[c] : THOUSAND.many[c]);
+  }
+  if (rest) out.push(...below1000(rest, c));
+  return out.join(" ");
+}
+
+const ORD_STEM = {   // stem, nominative masculine ending
+  1: ["перв", "ый"], 2: ["втор", "ой"], 3: ["трет", "ий"], 4: ["четвёрт", "ый"], 5: ["пят", "ый"], 6: ["шест", "ой"], 7: ["седьм", "ой"],
+  8: ["восьм", "ой"], 9: ["девят", "ый"], 10: ["десят", "ый"], 11: ["одиннадцат", "ый"], 12: ["двенадцат", "ый"], 13: ["тринадцат", "ый"],
+  14: ["четырнадцат", "ый"], 15: ["пятнадцат", "ый"], 16: ["шестнадцат", "ый"], 17: ["семнадцат", "ый"], 18: ["восемнадцат", "ый"],
+  19: ["девятнадцат", "ый"], 20: ["двадцат", "ый"], 30: ["тридцат", "ый"], 40: ["сороков", "ой"], 50: ["пятидесят", "ый"],
+  60: ["шестидесят", "ый"], 70: ["семидесят", "ый"], 80: ["восьмидесят", "ый"], 90: ["девяност", "ый"], 100: ["сот", "ый"],
+  200: ["двухсот", "ый"], 300: ["трёхсот", "ый"], 400: ["четырёхсот", "ый"], 500: ["пятисот", "ый"], 600: ["шестисот", "ый"],
+  700: ["семисот", "ый"], 800: ["восьмисот", "ый"], 900: ["девятисот", "ый"],
+};
+
+function ordinalWord([stem, nominative], caseName, gender) {
+  const soft = nominative === "ий";
+  if (caseName === "genitive") return stem + (soft ? "ьего" : "ого");
+  if (caseName === "dative") return stem + (soft ? "ьему" : "ому");
+  if (caseName === "prepositional") return stem + (soft ? "ьем" : "ом");
+  if (gender === "n") return stem + (soft ? "ье" : "ое");          // nominative / inanimate accusative
+  return stem + nominative;
+}
+
+function ordinal(n, caseName, gender = "m") {
+  const thousands = Math.floor(n / 1000), rest = n % 1000;
+  if (!rest && thousands) {                       // 2000 → двухтысячный: the thousands fuse into one word
+    const prefix = thousands === 1 ? "" : cardinal(thousands, "genitive").replace(/\s+/gu, "").replace(/^одной$/u, "");
+    return ordinalWord([prefix + "тысячн", "ый"], caseName, gender);
+  }
+  const words = thousands ? [cardinal(thousands * 1000, "nominative")] : [];
+  const h = Math.floor(rest / 100) * 100, r = rest % 100;
+  const parts = [];
+  if (h) parts.push(h);
+  if (r >= 10 && r < 20) parts.push(r);
+  else { if (Math.floor(r / 10)) parts.push(Math.floor(r / 10) * 10); if (r % 10) parts.push(r % 10); }
+  const last = parts.pop();
+  for (const p of parts) words.push(CARD[p][0]);
+  words.push(ordinalWord(ORD_STEM[last], caseName, gender));
+  return words.join(" ");
+}
+
+const MONTHS = "января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря";
+const DATE = new RegExp(String.raw`(?<![\p{L}\p{N}_.,:])(?:(?<prep>[Кк]|[Нн]а|[Пп]о)\s+)?(?<day>\d{1,2})\s+(?<month>` + MONTHS +
+  String.raw`)(?:\s+(?<year>\d{3,4})\s*(?<unit>года|г\.))?(?![\p{L}\p{N}_])`, "gu");
+const YEAR = new RegExp(String.raw`(?<![\p{L}\p{N}_.,:])(?:(?<prep>[Вв]|[Кк]|[Сс]|[Дд]о|[Оо]т|[Пп]осле|[Оо]коло|[Нн]ачиная\s+с)\s+)?(?<year>\d{3,4})\s*` +
+  String.raw`(?<unit>году|года|год|г\.)(?![\p{L}\p{N}_])`, "gu");
+const GOVERNED = new RegExp(String.raw`(?<![\p{L}\p{N}_])(?<prep>[Сс]о?|[Оо]т|[Дд]о|[Оо]коло|[Бб]олее|[Мм]енее|[Пп]осле|[Бб]ез|[Ии]з|[Кк]роме|[Дд]ля|[Уу]|` +
+  String.raw`[Кк]о?|[Оо]|[Оо]б)\s+(?<number>\d{1,3}(?:[  ]\d{3})+|\d{1,6})(?![\d.,:]\d|[\p{L}\p{N}_]|\s*(?:` + MONTHS + String.raw`|году|года|год|г\.))`, "gu");
+const GOVERNED_CASE = { "с": "genitive", "со": "genitive", "от": "genitive", "до": "genitive", "около": "genitive", "более": "genitive",
+  "менее": "genitive", "после": "genitive", "без": "genitive", "из": "genitive", "кроме": "genitive", "для": "genitive", "у": "genitive",
+  "к": "dative", "ко": "dative", "о": "prepositional", "об": "prepositional" };
+
+export function spokenNumbers(text) {
+  text = text.replace(DATE, (...args) => {
+    const g = args[args.length - 1], whole = args[0];
+    const prep = (g.prep || "").toLowerCase(), day = Number(g.day);
+    if (day < 1 || day > 31) return whole;
+    const caseName = { "к": "dative", "на": "accusative", "по": "accusative" }[prep] || "genitive";
+    let out = (g.prep ? g.prep + " " : "") + ordinal(day, caseName === "accusative" ? "nominative" : caseName, "n") + " " + g.month;
+    if (g.year) out += " " + ordinal(Number(g.year), "genitive") + " года";
+    return out;
+  });
+  text = text.replace(YEAR, (...args) => {
+    const g = args[args.length - 1], offset = args[args.length - 3], whole = args[0], source = args[args.length - 2];
+    const prep = (g.prep || "").toLowerCase();
+    let unit = g.unit, end = "";
+    if (unit === "г.") {
+      unit = prep === "в" ? "году" : "года";
+      const after = source.slice(offset + whole.length).trimStart();
+      if (!after || after[0] !== after[0].toLowerCase()) end = ".";
+    }
+    let caseName = { "году": prep === "к" ? "dative" : "prepositional", "года": "genitive", "год": "nominative" }[unit];
+    return (g.prep ? g.prep + " " : "") + ordinal(Number(g.year), caseName) + " " + unit + end;
+  });
+  return text.replace(GOVERNED, (...args) => {
+    const g = args[args.length - 1];
+    return g.prep + " " + cardinal(Number(g.number.replace(/\s/gu, "")), GOVERNED_CASE[g.prep.toLowerCase()]);
+  });
+}
+
 export class NothingToPronounce extends Error {}
 export class UnsupportedAccent extends Error {}
 
@@ -286,7 +413,7 @@ export class Frontend {
     if (typeof text !== "string" || !/[а-яА-ЯёЁa-zA-Z0-9]/u.test(text)) throw new NothingToPronounce("в тексте нет букв или цифр для произношения");
     const table = this.table;
     text = normalizeText(text);
-    let marked = this.inferenceHints(spokenCurrency(text));
+    let marked = this.inferenceHints(spokenNumbers(spokenCurrency(text)));
     let focus = null;
     if (marked.includes("^")) {
       // text.py: "^" before a word marks the focus of a question (intonation); it is no sound of its own.
