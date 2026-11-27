@@ -1,8 +1,8 @@
 // Text -> audio with the ONNX graph: the same steps as tiny_vanya.onnx_infer.Speech.speak, for any onnxruntime
 // (onnxruntime-web in the browser, onnxruntime-node in tests). The graph and the JSON metadata come from
 // tiny_vanya.export (web/make_web_onnx.py makes the half-size browser copy).
-import { NothingToPronounce, shorter, utterances } from "./tinyvanya-frontend.mjs?v=20261127-v03";
-import { guarded } from "./tinyvanya-intonation.mjs?v=20261127-v03";
+import { NothingToPronounce, shorter, utterances } from "./tinyvanya-frontend.mjs?v=20261128-v031";
+import { guarded } from "./tinyvanya-intonation.mjs?v=20261128-v031";
 
 export class Speech {
   constructor(ort, session, meta, frontend) {

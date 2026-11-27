@@ -43,6 +43,8 @@ const SPEAKABLE = {
   "ɔ": ["o"], "ɐ": ["ʌ"], "ɨ": ["y"], "l": ["ɭ"], "tʃ": ["tʃʲ"], "dʒ": ["d", "ʒ"], "dʒʲ": ["d", "ʒ"],
   "xʲ": ["x"], "tsʲ": ["ts"], "ʒʲ": ["ʒ"], "ʂ": ["ʃ"], "ʐ": ["ʒ"], "tɕ": ["tʃʲ"], "h": ["x"],
   "θ": ["s"], "ð": ["z"], "ŋ": ["n", "ɡ"], "ɹ": ["r"], "w": ["v"],
+  // English phones eSpeak emits outside the model's inventory (text.py, 28.11).
+  "ɒ": ["o"], "əl": ["ʌ", "ɭ"], "iə": ["i", "ʌ"], "eə": ["ɛ", "ʌ"], "aɪə": ["a", "j", "ʌ"], "ʊə": ["u", "ʌ"], "iːː": ["i"],
 };
 function speakable(mapped, carrier) {
   const out = []; let at = 0;
@@ -330,6 +332,7 @@ export class Frontend {
           const last = symbols[symbols.length - 1];
           if (PHONE_SET.has(last) || last === UNK) { symbols.push(SP); stresses.push(0); }
           for (let [phone, mapped, carrier, level] of wordPhones(rawWord)) {
+            if (!mapped && SPEAKABLE[phone]) { mapped = SPEAKABLE[phone]; const k = mapped.findIndex((p) => VOWEL_SET.has(p)); carrier = k < 0 ? 0 : k; }
             if (!mapped) { unknown.push(phone); mapped = [UNK]; } else [mapped, carrier] = speakable(mapped, carrier);
             mapped.forEach((p, i) => { symbols.push(p); stresses.push(i === carrier ? level : 0); });
           }
