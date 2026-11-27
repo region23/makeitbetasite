@@ -254,9 +254,12 @@ export class Frontend {
   known(spelling) { return spelling in this.table.defaults || spelling in this.table.variants; }
 
   inferenceHints(text) {
-    return text.replace(V2_WORD(), (word) => {
+    return text.replace(V2_WORD(), (word, index) => {
       if (word.includes("+") || word.includes("́") || word.includes("-")) return word;
       let spelling = word.toLowerCase();
+      if (spelling === "всем" && /(?<![\p{L}\p{N}_-])(?:о|обо) \^?$/iu.test(text.slice(0, index))) {
+        return word.slice(0, 2) + (word[2] === "Е" ? "Ё" : "ё") + word.slice(3);
+      }
       if (spelling.includes("е") && !this.known(spelling)) {
         for (let i = 0; i < spelling.length; i++) {
           if (spelling[i] === "е" && this.known(spelling.slice(0, i) + "ё" + spelling.slice(i + 1))) {
