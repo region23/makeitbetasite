@@ -4,10 +4,10 @@
 //               {type: "error", id, message}
 import * as ort from "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.29.0/dist/ort.wasm.min.mjs";
 import TinyVanyaEspeak from "./espeak/tv-espeak.mjs";
-import { Frontend, NothingToPronounce, UnsupportedAccent } from "./tinyvanya-frontend.mjs?v=20261128-v032";
-import { Speech } from "./tinyvanya-speech.mjs?v=20261128-v032";
+import { Frontend, NothingToPronounce, UnsupportedAccent } from "./tinyvanya-frontend.mjs?v=20261128-v04";
+import { Speech } from "./tinyvanya-speech.mjs?v=20261128-v04";
 
-const RELEASE = "v0.3";
+const RELEASE = "v0.4";
 const MODEL_BASE = `https://huggingface.co/region23/tiny-vanya/resolve/${RELEASE}/`;
 const CACHE = `tiny-vanya-${RELEASE}`;
 ort.env.wasm.wasmPaths = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.29.0/dist/";
@@ -19,12 +19,13 @@ const speeches = {};       // voice -> Promise<Speech>
 async function loadBase() {
   if (!base) base = (async () => {
     const here = new URL(".", import.meta.url);
-    const [meta, homographs, espeak] = await Promise.all([
+    const [meta, homographs, homographModel, espeak] = await Promise.all([
       fetch(new URL(`tinyvanya-meta.json?v=${RELEASE}`, here)).then((r) => r.json()),
       fetch(new URL("homograph_defaults.json", here)).then((r) => r.json()),
+      fetch(new URL(`homograph_model.json?v=${RELEASE}`, here)).then((r) => r.json()),
       TinyVanyaEspeak({ locateFile: (f) => new URL("espeak/" + f, here).href }),
     ]);
-    return { meta, frontend: new Frontend(espeak, meta.pronunciations, homographs) };
+    return { meta, frontend: new Frontend(espeak, meta.pronunciations, homographs, homographModel) };
   })();
   return base;
 }

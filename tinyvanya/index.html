@@ -36,7 +36,7 @@
 
     <section class="tv-hero">
       <div class="tv-hero__title">
-        <p class="tv-label">Синтез русской речи · v0.3</p>
+        <p class="tv-label">Синтез русской речи · v0.4</p>
         <h1>Малёк<br><em>Ванёк</em></h1>
         <p class="tv-latin">По-английски — Tiny Vanya</p>
       </div>
@@ -91,13 +91,17 @@
       <header><span class="tv-label">Примеры</span><h2 id="samples-title">Одни и те же фразы двумя голосами</h2></header>
       <div class="tv-takes">
         <div class="tv-take"><q>Здравствуйте! Это Малёк Ванёк, маленькая модель синтеза русской речи, которая работает прямо в браузере.</q>
-          <div class="tv-pair"><button class="tv-chip" type="button" data-src="samples/m1-greeting.wav?v=20261127-v03">Муж.</button><button class="tv-chip" type="button" data-src="samples/f1-greeting.wav?v=20261127-v03">Жен.</button></div></div>
+          <div class="tv-pair"><button class="tv-chip" type="button" data-src="samples/m1-greeting.wav?v=20261128-v04">Муж.</button><button class="tv-chip" type="button" data-src="samples/f1-greeting.wav?v=20261128-v04">Жен.</button></div></div>
         <div class="tv-take"><q>Встречу перенесли на 15:30, четырнадцатого марта, так что у нас осталось около сорока пяти минут.</q>
-          <div class="tv-pair"><button class="tv-chip" type="button" data-src="samples/m1-numbers.wav?v=20261127-v03">Муж.</button><button class="tv-chip" type="button" data-src="samples/f1-numbers.wav?v=20261127-v03">Жен.</button></div></div>
+          <div class="tv-pair"><button class="tv-chip" type="button" data-src="samples/m1-numbers.wav?v=20261128-v04">Муж.</button><button class="tv-chip" type="button" data-src="samples/f1-numbers.wav?v=20261128-v04">Жен.</button></div></div>
         <div class="tv-take"><q>Ты правда думал, что я забуду про твой день рождения?</q>
-          <div class="tv-pair"><button class="tv-chip" type="button" data-src="samples/m1-question.wav?v=20261127-v03">Муж.</button><button class="tv-chip" type="button" data-src="samples/f1-question.wav?v=20261127-v03">Жен.</button></div></div>
+          <div class="tv-pair"><button class="tv-chip" type="button" data-src="samples/m1-question.wav?v=20261128-v04">Муж.</button><button class="tv-chip" type="button" data-src="samples/f1-question.wav?v=20261128-v04">Жен.</button></div></div>
         <div class="tv-take"><q>Осенью в парке особенно тихо: листья медленно падают на дорожки, а воздух пахнет дождём и дымом.</q>
-          <div class="tv-pair"><button class="tv-chip" type="button" data-src="samples/m1-story.wav?v=20261127-v03">Муж.</button><button class="tv-chip" type="button" data-src="samples/f1-story.wav?v=20261127-v03">Жен.</button></div></div>
+          <div class="tv-pair"><button class="tv-chip" type="button" data-src="samples/m1-story.wav?v=20261128-v04">Муж.</button><button class="tv-chip" type="button" data-src="samples/f1-story.wav?v=20261128-v04">Жен.</button></div></div>
+        <div class="tv-take"><q>Мы обновили API, и теперь приложение работает в Windows и на iPhone.</q>
+          <div class="tv-pair"><button class="tv-chip" type="button" data-src="samples/m1-mixed.wav?v=20261128-v04">Муж.</button><button class="tv-chip" type="button" data-src="samples/f1-mixed.wav?v=20261128-v04">Жен.</button></div></div>
+        <div class="tv-take"><q lang="en">Hello! I can read English too: this small speech model runs right on your device.</q>
+          <div class="tv-pair"><button class="tv-chip" type="button" data-src="samples/m1-english.wav?v=20261128-v04">Муж.</button><button class="tv-chip" type="button" data-src="samples/f1-english.wav?v=20261128-v04">Жен.</button></div></div>
       </div>
     </section>
 
@@ -105,11 +109,12 @@
       <header><span class="tv-label">Разметка текста</span><h2 id="markup-title">Как подсказать ударение и интонацию</h2>
         <p class="tv-muted">Обычный текст модель читает сама. Если слово прочитано не так, это можно поправить прямо в тексте.</p></header>
       <div class="tv-grid3">
-        <div class="tv-card"><h3>Ударение</h3><p>Поставьте «+» перед ударной гласной. Так же работает знак ударения после гласной.</p><code>з+амок · зам+ок · Ст+ороны договорились</code></div>
+        <div class="tv-card"><h3>Ударение</h3><p>Поставьте «+» перед ударной гласной. Так же работает знак ударения после гласной. Многие омографы модель различает по смыслу сама: «со сторон+ы», но «ст+ороны договорились».</p><code>з+амок · зам+ок · дорог+ой друг</code></div>
         <div class="tv-card"><h3>Буква ё</h3><p>Пишите «ё», где она есть. Модель восстановит её в «о всём», «обо всём» и словах, которые знает только с «ё».</p><code>Всё готово · Он рассказал обо всём</code></div>
         <div class="tv-card"><h3>Интонация</h3><p>Её задаёт пунктуация: «?» поднимает тон в конце вопроса, «!» даёт восклицание, запятая, «—», «:» и «…» — паузы. Если вопрос прозвучит как утверждение, модель сама это заметит и поднимет тон.</p><code>Ты придёшь? · Нет — я занят!</code></div>
         <div class="tv-card"><h3>Главное слово вопроса</h3><p>Поставьте «^» перед словом, о котором спрашиваете. Модель поднимет на нём тон, если подъём слишком слабый.</p><code>Ты купил ^хлеб? · ^Ты купил хлеб?</code></div>
         <div class="tv-card"><h3>Числа и даты</h3><p>Время, суммы, даты и годы раскрываются в слова сами, с нужным падежом: «3 мая» — «третьего мая», «в 2026 году», «с 5 до 7» — «с пяти до семи». Сложные случаи можно написать словами.</p><code>3 мая · в 2026 году · с 5 до 7 · в 15:30</code></div>
+        <div class="tv-card"><h3>Английские слова</h3><p>Пишите их латиницей. Сокращения в русской фразе читаются русскими названиями букв, римские числа — числами. Английское произношение v0.4 пока работает в Python‑пакете; здесь, в браузере, английские слова звучат по-русски.</p><code>API — «эй пи ай» · XIX век</code></div>
         <div class="tv-card"><h3>Темп и высота</h3><p>В демо есть темп. В коде ещё высота голоса <span class="mono">pitch_shift</span> (0,058 — около полутона) и размах интонации <span class="mono">pitch_range</span>.</p><code>--speed 1.1</code></div>
         <div class="tv-card"><h3>Длинный текст</h3><p>Текст любой длины читается по предложениям, звук склеивается. Слишком длинная фраза делится по запятым.</p><code>--text-file book.txt</code></div>
       </div>
@@ -119,7 +124,7 @@
       <header><span class="tv-label">Как сделано</span><h2 id="how-title">Почему мы отошли от рецепта tiny‑voca</h2>
         <p class="tv-muted">Мы начали с рецепта <a href="https://github.com/n4ze3m/tiny-voca" target="_blank" rel="noopener noreferrer">tiny‑voca</a>: крошечная модель сама собирает звук из импульсов и шума, примерно как голосовые связки и рот. На русском такой голос звучал роботизированно, а в мужском был слышен дребезг. Чтобы от него избавиться, мы изменили схему.</p></header>
       <div class="tv-grid4">
-        <div class="tv-card"><h3>Учитель</h3><p>Большая модель Qwen3‑TTS прочитала около 31 500 фраз каждым голосом. После проверки через Whisper осталось 72 часа речи. Для v0.3 добавили 3 237 клипов с вопросами «да/нет». Ударения расставил RUAccent, спорные слова мы вычитали вручную.</p></div>
+        <div class="tv-card"><h3>Учитель</h3><p>Большая модель Qwen3‑TTS прочитала около 31 500 фраз каждым голосом. После проверки через Whisper осталось 72 часа речи. Для v0.3 добавили 3 237 клипов с вопросами «да/нет», для v0.4 — 11 504 клипа с английскими фразами и английскими словами в русских. Ударения расставил RUAccent, спорные слова мы вычитали вручную.</p></div>
         <div class="tv-card"><h3>Два шага вместо одного</h3><p>Модель рисует спектрограмму — картинку звука по частотам, а отдельный нейровокодер превращает её в звук. Модель выросла с 4,5 до 36 миллионов параметров.</p></div>
         <div class="tv-card"><h3>Причина дребезга</h3><p>Гармоники голоса на спектрограмме выглядят как ровные полосы. Ниже 2 кГц модель ставила их не туда: при обучении она видела не ту высоту тона, что в записи, размывала полосы, а потом дорисовывала их наугад.</p></div>
         <div class="tv-card"><h3>Исправление</h3><p>Теперь при обучении модель видит настоящую высоту тона и получает подсказку, где для неё должны лежать гармоники. Отдельный критик следит за низкими частотами. Полосы встали на место, дребезг ушёл.</p></div>
@@ -129,8 +134,8 @@
     <section class="tv-section" id="run" aria-labelledby="run-title">
       <header><span class="tv-label">Запуск</span><h2 id="run-title">Модель в своём проекте</h2>
         <p class="tv-muted">Веса, инструкция, Core ML для iPhone и пакет для Python — в <a href="https://huggingface.co/region23/tiny-vanya" target="_blank" rel="noopener noreferrer">репозитории на Hugging Face</a>.</p></header>
-<pre><code>pip install "tiny-vanya[onnx] @ https://huggingface.co/region23/tiny-vanya/resolve/v0.3/code/tiny_vanya-0.3.0-py3-none-any.whl"
-hf download region23/tiny-vanya --revision v0.3 --include "onnx/*" --local-dir tiny-vanya
+<pre><code>pip install "tiny-vanya[onnx] @ https://huggingface.co/region23/tiny-vanya/resolve/v0.4/code/tiny_vanya-0.4.0-py3-none-any.whl"
+hf download region23/tiny-vanya --revision v0.4 --include "onnx/*" --local-dir tiny-vanya
 python -m tiny_vanya.onnx_infer --model tiny-vanya/onnx/m1.onnx --voice M1 \
   --text "Здравствуйте! Встречу перенесли на 15:30." --output hello.wav</code></pre>
     </section>
@@ -140,8 +145,8 @@ python -m tiny_vanya.onnx_infer --model tiny-vanya/onnx/m1.onnx --voice M1 \
         <ul>
           <li>Только два фиксированных голоса, клонирования голоса нет.</li>
           <li>Слово, на котором поднимается тон в вопросе, модель выбирает сама; поправить можно знаком «^».</li>
-          <li>Редкие слова вне словаря получают ударение от eSpeak NG, омографы вроде «замок» по смыслу не различаются.</li>
-          <li>Английские слова модель читает русскими звуками, с акцентом: Windows — «виндоуз».</li>
+          <li>Редкие слова вне словаря получают ударение от eSpeak NG. Часть омографов, например «замок», по смыслу пока не различается.</li>
+          <li>В браузере английские слова пока звучат по-русски: английский разбор текста v0.4 есть только в Python‑пакете.</li>
         </ul></div>
       <div class="tv-section"><header><span class="tv-label">Лицензия</span><h2>Можно в продукт</h2></header>
         <ul>
@@ -162,7 +167,7 @@ python -m tiny_vanya.onnx_infer --model tiny-vanya/onnx/m1.onnx --voice M1 \
 </footer>
 <!-- site-footer:end -->
   <script src="/script.js"></script>
-  <script type="module" src="/tinyvanya/tinyvanya.js?v=20261128-v032"></script>
+  <script type="module" src="/tinyvanya/tinyvanya.js?v=20261128-v04"></script>
 <script src="/site-shell/site-shell.js" defer></script>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">

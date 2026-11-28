@@ -212,6 +212,60 @@ export function spokenNumbers(text) {
   });
 }
 
+// ---- bilingual.py russian_letter_names: in a sentence with Cyrillic, Roman numerals (I, V, X, L) become digits and
+// all-caps Latin acronyms become Russian letter names (API → эй пи ай). The browser has no English front end yet, so this
+// is the part of v0.4's reading of Latin text it shares with Python. ----
+const LETTER_NAMES = { A: "эй", B: "би", C: "си", D: "ди", E: "и", F: "эф", G: "джи", H: "эйч", I: "ай", J: "джей", K: "кей", L: "эл",
+  M: "эм", N: "эн", O: "оу", P: "пи", Q: "кью", R: "ар", S: "эс", T: "ти", U: "ю", V: "ви", W: "дабл-ю", X: "экс", Y: "уай", Z: "зед" };
+const ROMAN = /^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/u;
+const ROMAN_VALUE = { M: 1000, D: 500, C: 100, L: 50, X: 10, V: 5, I: 1 };
+function roman(token) {
+  if (!token || !ROMAN.test(token)) return null;
+  let total = 0;
+  for (let i = 0; i < token.length; i++) {
+    const value = ROMAN_VALUE[token[i]], next = token[i + 1];
+    total += next !== undefined && ROMAN_VALUE[next] > value ? -value : value;
+  }
+  return total;
+}
+export function russianLetterNames(text) {
+  if (!/[а-яё]/iu.test(text)) return text;
+  text = text.replace(/(?<![A-Za-z0-9/])[IVXL]+(?![A-Za-z0-9/])/gu, (m) => (roman(m) ? String(roman(m)) : m));
+  return text.replace(/(?<![A-Za-z0-9])[A-Z]{2,6}(?:\/[A-Z]{2,6})*(?![A-Za-z0-9])/gu,
+    (m) => [...m].filter((ch) => ch !== "/").map((ch) => LETTER_NAMES[ch]).join(" "));
+}
+
+// text.py _compound_stress: eSpeak stresses the first part of видео-/аудио-... compounds; take the known word's stress.
+const COMPOUND_PREFIXES = ["видео", "аудио", "радио", "фото", "медиа", "стерео"];
+export function compoundStress(spelling, table) {
+  for (const prefix of COMPOUND_PREFIXES) {
+    const rest = spelling.slice(prefix.length);
+    if (spelling.startsWith(prefix) && [...rest].length >= 3 && Object.hasOwn(table.defaults, rest)) {
+      return String([...prefix].filter(isRuVowel).length + Number(table.defaults[rest]));
+    }
+  }
+  return undefined;
+}
+
+/** The stressed vowel number the classifier picks for words[i] (text.py _context_stress). */
+export function contextStress(entry, words, i) {
+  const features = ["b"];
+  for (const k of [-2, -1, 1, 2]) {
+    const j = i + k;
+    const w = j >= 0 && j < words.length ? words[j] : j < 0 ? "^" : "$";
+    features.push(`${k}=${w}`);
+    if ([...w].length > 3) features.push(`${k}s=${[...w].slice(-3).join("")}`);
+  }
+  const scores = entry.classes.map(() => 0);
+  for (const f of features) {
+    const row = Object.hasOwn(entry.weights, f) ? entry.weights[f] : [];
+    row.forEach((v, c) => { scores[c] += v; });
+  }
+  let best = 0;
+  scores.forEach((v, c) => { if (v > scores[best]) best = c; });
+  return entry.classes[best];
+}
+
 export class NothingToPronounce extends Error {}
 export class UnsupportedAccent extends Error {}
 
@@ -360,8 +414,9 @@ function v2Compound(word, raw, table, rawFor) {
 
 export class Frontend {
   /** espeak: the module from tv-espeak.mjs; pronunciations: the "pronunciations" object of the model JSON;
-   *  homographs: homograph_defaults.json ({word: {default}}). */
-  constructor(espeak, pronunciations, homographs) {
+   *  homographs: homograph_defaults.json ({word: {default}}); homographModel: homograph_model.json. */
+  constructor(espeak, pronunciations, homographs, homographModel = {}) {
+    this.homographModel = homographModel;   // homograph_model.json: per-word stress in context (text.py _context_stress)
     this.espeak = espeak;
     this.table = pronunciations;
     this.homographs = Object.fromEntries(Object.entries(homographs).map(([w, v]) => [w, v.default]));
@@ -383,6 +438,8 @@ export class Frontend {
   known(spelling) { return spelling in this.table.defaults || spelling in this.table.variants; }
 
   inferenceHints(text) {
+    const CONTEXT = /[а-яё]+/gu, strip = (t) => t.toLowerCase().replace(/[+\u0301^]/gu, "");
+    const context = strip(text).match(CONTEXT) || [];
     return text.replace(V2_WORD(), (word, index) => {
       if (word.includes("+") || word.includes("́") || word.includes("-")) return word;
       let spelling = word.toLowerCase();
@@ -398,8 +455,17 @@ export class Frontend {
           }
         }
       }
-      const vowel = this.homographs[spelling];
-      if (vowel === undefined || spelling.includes("ё") || spelling in this.table.defaults) return word;
+      let vowel;
+      const compound = this.known(spelling) ? undefined : compoundStress(spelling, this.table);
+      if (compound !== undefined) {
+        vowel = compound;
+      } else if (Object.hasOwn(this.homographModel, spelling) && !spelling.includes("ё")) {
+        const position = (strip(text.slice(0, index)).match(CONTEXT) || []).length;
+        vowel = position < context.length ? contextStress(this.homographModel[spelling], context, position) : undefined;
+      } else {
+        vowel = spelling in this.table.defaults ? undefined : this.homographs[spelling];
+      }
+      if (vowel === undefined || spelling.includes("ё")) return word;
       let count = 0;
       for (let i = 0; i < spelling.length; i++) {
         if (isRuVowel(spelling[i]) && String(++count) === vowel) return word.slice(0, i) + "+" + word.slice(i);
@@ -412,7 +478,7 @@ export class Frontend {
   phonemize(text) {
     if (typeof text !== "string" || !/[а-яА-ЯёЁa-zA-Z0-9]/u.test(text)) throw new NothingToPronounce("в тексте нет букв или цифр для произношения");
     const table = this.table;
-    text = normalizeText(text);
+    text = normalizeText(russianLetterNames(text));
     let marked = this.inferenceHints(spokenNumbers(spokenCurrency(text)));
     let focus = null;
     if (marked.includes("^")) {
