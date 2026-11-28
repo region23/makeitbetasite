@@ -134,7 +134,7 @@
     <section class="tv-section" id="run" aria-labelledby="run-title">
       <header><span class="tv-label">Запуск</span><h2 id="run-title">Модель в своём проекте</h2>
         <p class="tv-muted">Веса, инструкция, Core ML для iPhone и пакет для Python — в <a href="https://huggingface.co/region23/tiny-vanya" target="_blank" rel="noopener noreferrer">репозитории на Hugging Face</a>.</p></header>
-<pre><code>pip install "tiny-vanya[onnx] @ https://huggingface.co/region23/tiny-vanya/resolve/v0.4/code/tiny_vanya-0.4.0-py3-none-any.whl"
+<pre><code>pip install "tiny-vanya[onnx] @ https://huggingface.co/region23/tiny-vanya/resolve/v0.4.1/code/tiny_vanya-0.4.1-py3-none-any.whl"
 hf download region23/tiny-vanya --revision v0.4 --include "onnx/*" --local-dir tiny-vanya
 python -m tiny_vanya.onnx_infer --model tiny-vanya/onnx/m1.onnx --voice M1 \
   --text "Здравствуйте! Встречу перенесли на 15:30." --output hello.wav</code></pre>
@@ -167,7 +167,7 @@ python -m tiny_vanya.onnx_infer --model tiny-vanya/onnx/m1.onnx --voice M1 \
 </footer>
 <!-- site-footer:end -->
   <script src="/script.js"></script>
-  <script type="module" src="/tinyvanya/tinyvanya.js?v=20261128-v041"></script>
+  <script type="module" src="/tinyvanya/tinyvanya.js?v=20261128-v042"></script>
 <script src="/site-shell/site-shell.js" defer></script>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">

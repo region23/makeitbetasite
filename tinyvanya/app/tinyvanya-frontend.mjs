@@ -235,16 +235,16 @@ export function russianLetterNames(text) {
     (m) => [...m].filter((ch) => ch !== "/").map((ch) => LETTER_NAMES[ch]).join(" "));
 }
 
-// text.py _compound_stress: eSpeak stresses the first part of видео-/аудио-... compounds; take the known word's stress.
+// text.py _compound_split: eSpeak stresses the first part of видео-/аудио-... compounds; read the unstressed prefix
+// and then the known word with its own stress.
 const COMPOUND_PREFIXES = ["видео", "аудио", "радио", "фото", "медиа", "стерео"];
-export function compoundStress(spelling, table) {
+export function compoundSplit(spelling, table) {
+  if (Object.hasOwn(table.defaults, spelling) || Object.hasOwn(table.variants, spelling)) return null;
   for (const prefix of COMPOUND_PREFIXES) {
     const rest = spelling.slice(prefix.length);
-    if (spelling.startsWith(prefix) && [...rest].length >= 3 && Object.hasOwn(table.defaults, rest)) {
-      return String([...prefix].filter(isRuVowel).length + Number(table.defaults[rest]));
-    }
+    if (spelling.startsWith(prefix) && [...rest].length >= 3 && Object.hasOwn(table.defaults, rest)) return [prefix, rest];
   }
-  return undefined;
+  return null;
 }
 
 /** The stressed vowel number the classifier picks for words[i] (text.py _context_stress). */
@@ -403,7 +403,13 @@ function v2Compound(word, raw, table, rawFor) {
   }
   const suffix = parts.length > 1 && V2_SUFFIXES.has(spellings[spellings.length - 1]) ? spellings[spellings.length - 1] : null;
   const prefix = parts.length > 1 && spellings[0] === "кое";
-  if (!suffix && !prefix) { const [s, m] = v2Parse(word); return v2Pronunciation(s, m, raw, table); }
+  if (!suffix && !prefix) {
+    const [s, m] = v2Parse(word);
+    const split = compoundSplit(s, table), headVowels = split ? countVowels(split[0]) : 0;
+    if (split && (!m.length || (m.length === 1 && m[0] > headVowels)))
+      return [removeStress(rawFor(split[0])), v2Pronunciation(split[1], m.map((x) => x - headVowels), rawFor(split[1]), table)].join(SEPARATOR);
+    return v2Pronunciation(s, m, raw, table);
+  }
   const start = prefix ? 1 : 0, end = parts.length - (suffix ? 1 : 0);
   if (end - start !== 1) throw new UnsupportedAccent(`неподдерживаемое дефисное слово: ${word}`);
   const [base, baseMarks] = parsed[start];
@@ -470,10 +476,7 @@ export class Frontend {
         }
       }
       let vowel;
-      const compound = this.known(spelling) ? undefined : compoundStress(spelling, this.table);
-      if (compound !== undefined) {
-        vowel = compound;
-      } else if (Object.hasOwn(this.homographModel, spelling) && !spelling.includes("ё")) {
+      if (Object.hasOwn(this.homographModel, spelling) && !spelling.includes("ё")) {
         const position = (strip(text.slice(0, index)).match(CONTEXT) || []).length;
         vowel = position < context.length ? contextStress(this.homographModel[spelling], context, position) : undefined;
       } else {
@@ -580,9 +583,11 @@ export class Frontend {
         throw new UnsupportedAccent(`некорректный знак ударения: ${piece}`);
     const spellings = new Set();
     for (const words of wordLists) for (const word of words) {
-      const [spelling] = v2Parse(word);
+      const [spelling, marks] = v2Parse(word);
       spellings.add(spelling);
       for (const part of spelling.split("-")) spellings.add(part);
+      const split = compoundSplit(spelling, table);
+      if (split) for (const part of split) spellings.add(part);
     }
     const ordered = [...spellings].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
     const segments = pieces.filter(([p]) => !p).map(([, piece]) => piece.replace(ACUTE, "$1").replace(MARKED_VOWEL, ""));
