@@ -393,7 +393,7 @@ function v2Pronunciation(spelling, marks, raw, table, requireStress = false) {
   return raw;
 }
 
-function v2Compound(word, raw, table, rawFor) {
+function v2Compound(word, raw, table, rawFor, forms = {}) {
   const parts = word.split("-");
   const parsed = parts.map(v2Parse);
   const spellings = parsed.map((p) => p[0]);
@@ -408,6 +408,9 @@ function v2Compound(word, raw, table, rawFor) {
     const split = compoundSplit(s, table), headVowels = split ? countVowels(split[0]) : 0;
     if (split && (!m.length || (m.length === 1 && m[0] > headVowels)))
       return [removeStress(rawFor(split[0])), v2Pronunciation(split[1], m.map((x) => x - headVowels), rawFor(split[1]), table)].join(SEPARATOR);
+    // text.py _stress_forms: word forms outside the table whose eSpeak stress is wrong (саундтрека).
+    const known = Object.hasOwn(table.defaults, s) || Object.hasOwn(table.variants, s);
+    if (!known && Object.hasOwn(forms, s) && (!m.length || (m.length === 1 && wordStress(forms[s])[1] === String(m[0])))) return forms[s];
     return v2Pronunciation(s, m, raw, table);
   }
   const start = prefix ? 1 : 0, end = parts.length - (suffix ? 1 : 0);
@@ -435,7 +438,8 @@ function v2Compound(word, raw, table, rawFor) {
 export class Frontend {
   /** espeak: the module from tv-espeak.mjs; pronunciations: the "pronunciations" object of the model JSON;
    *  homographs: homograph_defaults.json ({word: {default}}); homographModel: homograph_model.json. */
-  constructor(espeak, pronunciations, homographs, homographModel = {}) {
+  constructor(espeak, pronunciations, homographs, homographModel = {}, stressForms = {}) {
+    this.stressForms = stressForms;         // stress_forms.json: word forms outside the table (text.py _stress_forms)
     this.homographModel = homographModel;   // homograph_model.json: per-word stress in context (text.py _context_stress)
     this.espeak = espeak;
     this.table = pronunciations;
@@ -610,7 +614,7 @@ export class Frontend {
       let contextual = rawSegments[segment++].split(/\s+/u).filter(Boolean);
       if (contextual.length !== words.length) contextual = words.map((w) => rawFor(v2Parse(w)[0]));
       words.forEach((word, k) => {
-        const raw = v2Compound(word, contextual[k], table, rawFor);
+        const raw = v2Compound(word, contextual[k], table, rawFor, this.stressForms);
         let start = symbols.length;
         for (const rawWord of raw.split(/\s+/u).filter(Boolean)) {
           const last = symbols[symbols.length - 1];

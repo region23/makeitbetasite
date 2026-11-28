@@ -10,7 +10,7 @@ const say = (message) => { statusText.textContent = message; };
 
 function startWorker() {
   if (worker) return worker;
-  worker = new Worker(new URL("app/tinyvanya-worker.mjs?v=20261128-v043", import.meta.url), { type: "module" });
+  worker = new Worker(new URL("app/tinyvanya-worker.mjs?v=20261128-v044", import.meta.url), { type: "module" });
   worker.onmessage = ({ data }) => {
     if (data.type === "progress") {
       bar.hidden = false;
