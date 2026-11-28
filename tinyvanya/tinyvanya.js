@@ -1,4 +1,15 @@
 // Малёк Ванёк demo: the model runs in a module worker on this device (app/tinyvanya-worker.mjs).
+// Several threads need cross-origin isolation; coi-sw.js provides it on GitHub Pages. The first visit reloads once
+// when the worker takes control (only where the browser supports COEP "credentialless").
+if (!self.crossOriginIsolated && "serviceWorker" in navigator && window.isSecureContext && "credentialless" in HTMLIFrameElement.prototype) {
+  navigator.serviceWorker.register(new URL("coi-sw.js", import.meta.url), { scope: new URL("./", import.meta.url).pathname }).then((registration) => {
+    let reloaded = false;
+    try { reloaded = sessionStorage.getItem("tv-coi-reload") === "1"; } catch { /* storage blocked */ }
+    const reload = () => { if (reloaded) return; try { sessionStorage.setItem("tv-coi-reload", "1"); } catch { return; } location.reload(); };
+    if (navigator.serviceWorker.controller) reload();
+    else navigator.serviceWorker.addEventListener("controllerchange", reload, { once: true });
+  }).catch(() => { /* one thread then */ });
+}
 const $ = (id) => document.getElementById(id);
 const text = $("tv-text"), go = $("tv-go"), statusText = $("tv-status-text"), bar = $("tv-bar"), fill = $("tv-bar-fill");
 const out = $("tv-out"), player = $("tv-audio"), download = $("tv-download"), speed = $("tv-speed"), speedOut = $("tv-speed-out");
