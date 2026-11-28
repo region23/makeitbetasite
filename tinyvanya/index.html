@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
-  <link rel="stylesheet" href="/tinyvanya/tinyvanya.css?v=20261127-brand">
+  <link rel="stylesheet" href="/tinyvanya/tinyvanya.css?v=20261128-v045">
   <script>(function(){var stored=localStorage.getItem('theme');var dark=stored?stored==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',dark?'dark':'light');})();</script>
 <link rel="stylesheet" href="/site-shell/site-shell.css">
 </head>
@@ -75,6 +75,8 @@
         <div class="tv-out" id="tv-out" hidden>
           <audio id="tv-audio" controls></audio>
           <a id="tv-download" download="malek-vanek.wav" href="#">Скачать WAV</a>
+          <details class="tv-phones"><summary>Что прочитала модель: фонемы и ударения</summary><p id="tv-phones" class="mono" lang="und"></p>
+            <p class="tv-phones-note">«ˈ» стоит перед ударной гласной. Если ударение не там, поставьте в тексте «+» перед нужной гласной.</p></details>
         </div>
       </div>
     </section>
@@ -167,7 +169,7 @@ python -m tiny_vanya.onnx_infer --model tiny-vanya/onnx/m1.onnx --voice M1 \
 </footer>
 <!-- site-footer:end -->
   <script src="/script.js"></script>
-  <script type="module" src="/tinyvanya/tinyvanya.js?v=20261128-v044"></script>
+  <script type="module" src="/tinyvanya/tinyvanya.js?v=20261128-v045"></script>
 <script src="/site-shell/site-shell.js" defer></script>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">

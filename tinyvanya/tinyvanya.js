@@ -10,7 +10,7 @@ const say = (message) => { statusText.textContent = message; };
 
 function startWorker() {
   if (worker) return worker;
-  worker = new Worker(new URL("app/tinyvanya-worker.mjs?v=20261128-v044", import.meta.url), { type: "module" });
+  worker = new Worker(new URL("app/tinyvanya-worker.mjs?v=20261128-v045", import.meta.url), { type: "module" });
   worker.onmessage = ({ data }) => {
     if (data.type === "progress") {
       bar.hidden = false;
@@ -53,6 +53,7 @@ async function speak() {
   if (url) URL.revokeObjectURL(url);
   url = URL.createObjectURL(wav(result.audio));
   player.src = url; download.href = url; out.hidden = false;
+  $("tv-phones").textContent = result.phonemes || "";
   player.play().catch(() => {});
   say(`${result.seconds.toFixed(1).replace(".", ",")} с речи за ${result.took.toFixed(2).replace(".", ",")} с прямо в вашем браузере.`);
 }

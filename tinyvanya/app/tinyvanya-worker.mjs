@@ -4,9 +4,9 @@
 //               {type: "error", id, message}
 import * as ort from "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.29.0/dist/ort.wasm.min.mjs";
 import TinyVanyaEspeak from "./espeak/tv-espeak.mjs";
-import { Frontend, NothingToPronounce, UnsupportedAccent } from "./tinyvanya-frontend.mjs?v=20261128-v044";
-import { Speech } from "./tinyvanya-speech.mjs?v=20261128-v044";
-import { loadEnglish } from "./tinyvanya-english.mjs?v=20261128-v044";
+import { Frontend, NothingToPronounce, UnsupportedAccent, utterances } from "./tinyvanya-frontend.mjs?v=20261128-v045";
+import { Speech } from "./tinyvanya-speech.mjs?v=20261128-v045";
+import { loadEnglish } from "./tinyvanya-english.mjs?v=20261128-v045";
 
 const RELEASE = "v0.4.2";
 const MODEL_BASE = `https://huggingface.co/region23/tiny-vanya/resolve/${RELEASE}/`;
@@ -82,6 +82,25 @@ function englishFor({ meta, frontend }) {
   return english;
 }
 
+// What the model is given, for the demo: phonemes with "ˈ" before the stressed vowel ("ˌ" secondary), words split by
+// spaces, punctuation kept.
+const SPECIAL = new Set(["<pad>", "<bos>", "<eos>"]);
+function phonemesOf(frontend, text) {
+  return utterances(text).map((piece) => {
+    let p;
+    try { p = frontend.phonemize(piece); } catch { return ""; }
+    let out = "";
+    p.symbols.forEach((symbol, i) => {
+      if (SPECIAL.has(symbol)) return;
+      if (symbol === "<sp>") { out += " "; return; }
+      if (symbol === "<unk>") { out += "?"; return; }
+      if (/^[.,!?;:…—-]$/u.test(symbol)) { out = out.trimEnd() + symbol + " "; return; }
+      out += (p.stress[i] === 1 ? "ˈ" : p.stress[i] === 2 ? "ˌ" : "") + symbol;
+    });
+    return out.trim();
+  }).filter(Boolean).join(" ");
+}
+
 self.onmessage = async ({ data }) => {
   const { id, type } = data;
   try {
@@ -91,7 +110,10 @@ self.onmessage = async ({ data }) => {
       if (/[A-Za-z]/.test(data.text)) await englishFor(await loadBase());
       const t0 = performance.now();
       const audio = await speech.speak(data.text, data.voice, data.speed ?? 1);
-      postMessage({ type: "audio", id, audio, seconds: audio.length / 24000, took: (performance.now() - t0) / 1000 }, [audio.buffer]);
+      const took = (performance.now() - t0) / 1000;
+      let phonemes = "";
+      try { phonemes = phonemesOf((await loadBase()).frontend, data.text); } catch { /* display only */ }
+      postMessage({ type: "audio", id, audio, phonemes, seconds: audio.length / 24000, took }, [audio.buffer]);
     }
   } catch (error) {
     let message = error.message || String(error);
