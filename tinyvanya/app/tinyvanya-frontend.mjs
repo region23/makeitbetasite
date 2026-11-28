@@ -249,12 +249,20 @@ export function compoundSplit(spelling, table) {
 
 /** The stressed vowel number the classifier picks for words[i] (text.py _context_stress). */
 export function contextStress(entry, words, i) {
-  const features = ["b"];
+  const features = ["b"], scheme = entry.scheme || 1;
   for (const k of [-2, -1, 1, 2]) {
     const j = i + k;
     const w = j >= 0 && j < words.length ? words[j] : j < 0 ? "^" : "$";
-    features.push(`${k}=${w}`);
-    if ([...w].length > 3) features.push(`${k}s=${[...w].slice(-3).join("")}`);
+    if (scheme === 1) {
+      features.push(`${k}=${w}`);
+      if ([...w].length > 3) features.push(`${k}s=${[...w].slice(-3).join("")}`);
+    } else features.push(`${k}=${[...w].slice(0, 4).join("")}`);
+  }
+  if (scheme === 2) {
+    const bag = new Set();
+    for (let j = Math.max(0, i - 4); j < Math.min(words.length, i + 5); j++)
+      if (j !== i && [...words[j]].length > 2) bag.add(`c=${[...words[j]].slice(0, 4).join("")}`);
+    features.push(...[...bag].sort());   // as text.py: sorted, the same sum order
   }
   const scores = entry.classes.map(() => 0);
   for (const f of features) {
@@ -267,7 +275,7 @@ export function contextStress(entry, words, i) {
 }
 
 // bilingual.py: a run of Latin words, and the one-letter prepositions read as a bare consonant before it.
-const LATIN_WORD = String.raw`[A-Za-z]+[0-9]*(?:['/-][A-Za-z0-9]+)*`;
+const LATIN_WORD = String.raw`[A-Za-z]+[0-9]*(?:['/.-][A-Za-z0-9]+)*\.?`;   // bilingual.py: the stop stays with the word ("vs.")
 const englishRun = () => new RegExp(String.raw`(\^?${LATIN_WORD}(?:\s+\^?${LATIN_WORD})*)`, "u");
 const CLITICS = { "в": ["v"], "к": ["k"], "с": ["s"] };
 function cliticBeforeEnglish(part, result) {
@@ -278,6 +286,14 @@ function cliticBeforeEnglish(part, result) {
   const symbols = [...result.symbols.slice(0, start), ...CLITICS[last], ...result.symbols.slice(end)];
   const stress = [...result.stress.slice(0, start), 0, ...result.stress.slice(end)];
   return { ...result, symbols, stress, ids: null, words: [...result.words.slice(0, -1), [start, start + 1]] };
+}
+
+// text.py _v2_spoken_greek: Greek letters by their Russian names.
+const GREEK = { "α": "альфа", "β": "бета", "γ": "гамма", "δ": "дельта", "ε": "эпсилон", "ζ": "дзета", "η": "эта", "θ": "тета", "ι": "йота", "κ": "каппа", "λ": "лямбда", "μ": "мю", "ν": "ню", "ξ": "кси", "ο": "омикрон", "π": "пи", "ρ": "ро", "σ": "сигма", "ς": "сигма", "τ": "тау", "υ": "ипсилон", "φ": "фи", "χ": "хи", "ψ": "пси", "ω": "омега" };
+const GREEK_LOWER = new RegExp("[" + Object.keys(GREEK).join("") + "]", "gu");
+const GREEK_UPPER = new RegExp("[" + Object.keys(GREEK).join("").toUpperCase() + "]", "gu");
+export function spokenGreek(text) {
+  return text.replace(GREEK_UPPER, (m) => GREEK[m.toLowerCase()]).replace(GREEK_LOWER, (m) => GREEK[m]);
 }
 
 export class NothingToPronounce extends Error {}
@@ -514,9 +530,16 @@ export class Frontend {
     const spoken = (s) => this.biPhones.has(s) || s === UNK;
     const symbols = [BOS], stress = [0], words = [], unknown = [];
     let focus = null;
-    marked.split(englishRun()).forEach((part, index) => {
+    const parts = marked.split(englishRun());
+    parts.forEach((part, index) => {
       let result;
-      if (index % 2) result = this.english(part);
+      if (index % 2) {
+        result = this.english(part);
+        // bilingual.py: an abbreviation's stop is no sentence end when the sentence goes on in small letters.
+        const n = result.symbols.length;
+        if (part.endsWith(".") && result.symbols[n - 2] === "." && index + 1 < parts.length && /^\s*[а-яёa-z0-9]/u.test(parts[index + 1]))
+          result = { ...result, symbols: [...result.symbols.slice(0, n - 2), result.symbols[n - 1]], stress: [...result.stress.slice(0, n - 2), result.stress[n - 1]] };
+      }
       else if (/[а-яё0-9]/iu.test(part)) result = cliticBeforeEnglish(part, this.phonemizeV2(part));
       else {
         for (const [punct, symbol] of chunks(part))
@@ -572,7 +595,7 @@ export class Frontend {
     if (typeof text !== "string" || !/[а-яА-ЯёЁa-zA-Z0-9]/u.test(text)) throw new NothingToPronounce("в тексте нет букв или цифр для произношения");
     const table = this.table;
     text = normalizeText(text);
-    let marked = this.inferenceHints(spokenNumbers(spokenCurrency(text)));
+    let marked = this.inferenceHints(spokenNumbers(spokenCurrency(spokenGreek(text))));
     let focus = null;
     if (marked.includes("^")) {
       // text.py: "^" before a word marks the focus of a question (intonation); it is no sound of its own.
