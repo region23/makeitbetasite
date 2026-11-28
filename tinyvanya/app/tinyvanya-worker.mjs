@@ -11,6 +11,7 @@ import { loadEnglish } from "./tinyvanya-english.mjs?v=20261128-v047";
 const RELEASE = "v0.4.2";
 const MODEL_BASE = `https://huggingface.co/region23/tiny-vanya/resolve/${RELEASE}/`;
 const CACHE = `tiny-vanya-${RELEASE}`;
+const DATA = "20261128-v047";   // version of the front-end data files (homograph model, stress forms)
 ort.env.wasm.wasmPaths = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.29.0/dist/";
 ort.env.wasm.numThreads = self.crossOriginIsolated ? Math.min(4, navigator.hardwareConcurrency || 1) : 1;
 
@@ -28,8 +29,8 @@ async function loadBase() {
     const [meta, homographs, homographModel, stressForms, espeak] = await Promise.all([
       fetch(new URL(`tinyvanya-meta.json?v=${RELEASE}`, here)).then((r) => r.json()),
       fetch(new URL("homograph_defaults.json", here)).then((r) => r.json()),
-      fetch(new URL(`homograph_model.json?v=20261128-v047`, here)).then((r) => r.json()),
-      fetch(new URL(`stress_forms.json?v=20261128-v047`, here)).then((r) => r.json()),
+      fetch(new URL(`homograph_model.json?v=${DATA}`, here)).then((r) => r.json()),
+      fetch(new URL(`stress_forms.json?v=${DATA}`, here)).then((r) => r.json()),
       TinyVanyaEspeak({ locateFile: (f) => new URL("espeak/" + f, here).href }),
     ]);
     return { meta, frontend: new Frontend(espeak, meta.pronunciations, homographs, homographModel, stressForms) };
