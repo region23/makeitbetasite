@@ -10,12 +10,14 @@ const say = (message) => { statusText.textContent = message; };
 
 function startWorker() {
   if (worker) return worker;
-  worker = new Worker(new URL("app/tinyvanya-worker.mjs?v=20261128-v04", import.meta.url), { type: "module" });
+  worker = new Worker(new URL("app/tinyvanya-worker.mjs?v=20261128-v041", import.meta.url), { type: "module" });
   worker.onmessage = ({ data }) => {
     if (data.type === "progress") {
       bar.hidden = false;
       fill.style.width = data.total ? `${(100 * data.loaded / data.total).toFixed(1)}%` : "50%";
       say(`Скачиваем ${data.voice === "M1" ? "мужской" : "женский"} голос: ${mb(data.loaded)}${data.total ? ` из ${mb(data.total)}` : ""} МБ. Это один раз.`);
+    } else if (data.type === "status") {
+      say(data.message);
     } else if (data.type === "ready") {
       ready.add(data.voice); bar.hidden = true; say("Голос загружен, озвучиваем…");
     } else if (data.type === "audio" || data.type === "error") {

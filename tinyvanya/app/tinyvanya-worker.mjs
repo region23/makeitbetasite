@@ -4,14 +4,20 @@
 //               {type: "error", id, message}
 import * as ort from "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.29.0/dist/ort.wasm.min.mjs";
 import TinyVanyaEspeak from "./espeak/tv-espeak.mjs";
-import { Frontend, NothingToPronounce, UnsupportedAccent } from "./tinyvanya-frontend.mjs?v=20261128-v04";
-import { Speech } from "./tinyvanya-speech.mjs?v=20261128-v04";
+import { Frontend, NothingToPronounce, UnsupportedAccent } from "./tinyvanya-frontend.mjs?v=20261128-v041";
+import { Speech } from "./tinyvanya-speech.mjs?v=20261128-v041";
+import { loadEnglish } from "./tinyvanya-english.mjs?v=20261128-v041";
 
 const RELEASE = "v0.4";
 const MODEL_BASE = `https://huggingface.co/region23/tiny-vanya/resolve/${RELEASE}/`;
 const CACHE = `tiny-vanya-${RELEASE}`;
 ort.env.wasm.wasmPaths = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.29.0/dist/";
 ort.env.wasm.numThreads = self.crossOriginIsolated ? Math.min(4, navigator.hardwareConcurrency || 1) : 1;
+
+// English words (v0.4): dizione in Pyodide, loaded at the first text with Latin letters. Until it loads, or if it
+// cannot, Latin words are read by the Russian front end.
+const PYODIDE = "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/";
+let english = null;
 
 let base = null;           // {meta, frontend}
 const speeches = {};       // voice -> Promise<Speech>
@@ -61,19 +67,34 @@ function speechFor(voice) {
   return speeches[voice];
 }
 
+function englishFor({ meta, frontend }) {
+  if (!english) english = (async () => {
+    postMessage({ type: "status", message: "Загружаем английское произношение: около 15 МБ, это один раз…" });
+    const { loadPyodide } = await import(PYODIDE + "pyodide.mjs");
+    const zip = () => fetch(new URL(`dizione-web.zip?v=${RELEASE}`, import.meta.url))
+      .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.arrayBuffer(); }).then((b) => new Uint8Array(b));
+    frontend.setEnglish(await loadEnglish(() => loadPyodide({ indexURL: PYODIDE }), zip), meta.symbols);
+  })().catch((error) => {
+    english = null;
+    postMessage({ type: "status", message: `Английское произношение не загрузилось (${error.message || error}); английские слова прочитаются по-русски.` });
+  });
+  return english;
+}
+
 self.onmessage = async ({ data }) => {
   const { id, type } = data;
   try {
     if (type === "load") { await speechFor(data.voice); return; }
     if (type === "speak") {
       const speech = await speechFor(data.voice);
+      if (/[A-Za-z]/.test(data.text)) await englishFor(await loadBase());
       const t0 = performance.now();
       const audio = await speech.speak(data.text, data.voice, data.speed ?? 1);
       postMessage({ type: "audio", id, audio, seconds: audio.length / 24000, took: (performance.now() - t0) / 1000 }, [audio.buffer]);
     }
   } catch (error) {
     let message = error.message || String(error);
-    if (error instanceof NothingToPronounce) message = "В тексте нет слов, которые можно прочитать по-русски.";
+    if (error instanceof NothingToPronounce) message = "В тексте нет слов, которые можно прочитать.";
     else if (error instanceof UnsupportedAccent) message = `Не получилось разобрать ударение: ${error.message}. Знак «+» ставится перед гласной: з+амок.`;
     postMessage({ type: "error", id, message });
   }

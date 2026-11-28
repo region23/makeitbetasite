@@ -266,6 +266,20 @@ export function contextStress(entry, words, i) {
   return entry.classes[best];
 }
 
+// bilingual.py: a run of Latin words, and the one-letter prepositions read as a bare consonant before it.
+const LATIN_WORD = String.raw`[A-Za-z]+[0-9]*(?:['/-][A-Za-z0-9]+)*`;
+const englishRun = () => new RegExp(String.raw`(\^?${LATIN_WORD}(?:\s+\^?${LATIN_WORD})*)`, "u");
+const CLITICS = { "в": ["v"], "к": ["k"], "с": ["s"] };
+function cliticBeforeEnglish(part, result) {
+  const words = part.toLowerCase().match(/[а-яё]+/gu) || [];
+  const last = words[words.length - 1];
+  if (!last || !CLITICS[last] || !part.trimEnd().toLowerCase().endsWith(last) || !result.words.length) return result;
+  const [start, end] = result.words[result.words.length - 1];
+  const symbols = [...result.symbols.slice(0, start), ...CLITICS[last], ...result.symbols.slice(end)];
+  const stress = [...result.stress.slice(0, start), 0, ...result.stress.slice(end)];
+  return { ...result, symbols, stress, ids: null, words: [...result.words.slice(0, -1), [start, start + 1]] };
+}
+
 export class NothingToPronounce extends Error {}
 export class UnsupportedAccent extends Error {}
 
@@ -475,10 +489,82 @@ export class Frontend {
   }
 
   /** Text -> {symbols, ids, stress, unknown}, as tiny_vanya.text.phonemize(text) with the v2 front end. */
+  /** English front end (bilingual.py): pieces(text) -> dizione Engine.pieces as plain arrays (worker: Pyodide), and
+   *  the model's 116 symbols. Without it, Latin words are read by the Russian front end, as before v0.4. */
+  setEnglish(pieces, symbols) {
+    this.englishPieces = pieces;
+    this.biSymbolToId = new Map(symbols.map((s, i) => [s, i]));
+    this.biPhones = new Set([...PHONE_SET, ...symbols.slice(SYMBOLS.length)]);
+  }
+
+  /** Text -> {symbols, ids, stress, unknown, words, focus}: bilingual.py phonemize_bilingual (accent_text None). */
   phonemize(text) {
     if (typeof text !== "string" || !/[а-яА-ЯёЁa-zA-Z0-9]/u.test(text)) throw new NothingToPronounce("в тексте нет букв или цифр для произношения");
+    text = russianLetterNames(text.replace(/\^\s+/gu, "^"));
+    if (!this.englishPieces || !englishRun().test(text)) return this.phonemizeV2(text);
+    let marked = normalizeText(text).replace(/\^\s+/gu, "^");
+    if (!/[а-яё]/iu.test(marked)) return this.english(marked);
+    const spoken = (s) => this.biPhones.has(s) || s === UNK;
+    const symbols = [BOS], stress = [0], words = [], unknown = [];
+    let focus = null;
+    marked.split(englishRun()).forEach((part, index) => {
+      let result;
+      if (index % 2) result = this.english(part);
+      else if (/[а-яё0-9]/iu.test(part)) result = cliticBeforeEnglish(part, this.phonemizeV2(part));
+      else {
+        for (const [punct, symbol] of chunks(part))
+          if (punct && symbols[symbols.length - 1] !== symbol) { symbols.push(symbol); stress.push(0); }
+        return;
+      }
+      if (spoken(symbols[symbols.length - 1]) && spoken(result.symbols[1])) { symbols.push(SP); stress.push(0); }
+      const shift = symbols.length - 1;   // each part carries its own BOS and EOS
+      symbols.push(...result.symbols.slice(1, -1));
+      stress.push(...result.stress.slice(1, -1));
+      unknown.push(...result.unknown);
+      if (focus === null && result.focus !== null && result.focus !== undefined) focus = words.length + result.focus;
+      for (const [a, b] of result.words) words.push([a + shift, b + shift]);
+    });
+    return this.result(symbols, stress, words, unknown, focus);
+  }
+
+  result(symbols, stress, words, unknown, focus) {
+    symbols.push(EOS); stress.push(0);
+    return { symbols, ids: symbols.map((s) => this.biSymbolToId.get(s)), stress, unknown, words, focus };
+  }
+
+  /** bilingual.py _english: a run of English text through dizione. */
+  english(text) {
+    const at = text.indexOf("^");
+    const marker = at >= 0, before = marker ? text.slice(0, at) : text, after = marker ? text.slice(at + 1) : "";
+    const pieces = this.englishPieces((before + after).replaceAll("^", ""));
+    let focus = 0;
+    if (marker && before.trim()) for (const [punct, ws] of this.englishPieces(before)) if (!punct) focus += ws.length;
+    const symbols = [BOS], stress = [0], words = [], unknown = [];
+    for (const [punct, piece] of pieces) {
+      if (punct) {
+        if (symbols[symbols.length - 1] !== piece) { symbols.push(piece); stress.push(0); }
+        continue;
+      }
+      for (const word of piece) {
+        const last = symbols[symbols.length - 1];
+        if (this.biPhones.has(last) || last === UNK) { symbols.push(SP); stress.push(0); }
+        const start = symbols.length;
+        for (let [phone, level] of word) {
+          if (!this.biPhones.has(phone)) { unknown.push(phone); phone = UNK; level = 0; }
+          symbols.push(phone); stress.push(level);
+        }
+        if (start < symbols.length) words.push([start, symbols.length]);
+      }
+    }
+    if (!words.length) throw new NothingToPronounce("фонемизатор не нашёл произносимых слов");
+    return this.result(symbols, stress, words, unknown, marker && focus < words.length ? focus : null);
+  }
+
+  /** Russian text -> phonemes with Dialogs v2 (text.py _phonemize_v2, accent_text None). */
+  phonemizeV2(text) {
+    if (typeof text !== "string" || !/[а-яА-ЯёЁa-zA-Z0-9]/u.test(text)) throw new NothingToPronounce("в тексте нет букв или цифр для произношения");
     const table = this.table;
-    text = normalizeText(russianLetterNames(text));
+    text = normalizeText(text);
     let marked = this.inferenceHints(spokenNumbers(spokenCurrency(text)));
     let focus = null;
     if (marked.includes("^")) {
